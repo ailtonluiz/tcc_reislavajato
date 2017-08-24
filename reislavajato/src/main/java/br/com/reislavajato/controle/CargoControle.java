@@ -26,7 +26,7 @@ import br.com.reislavajato.entidade.Cargo;
 @ViewScoped
 public class CargoControle implements Serializable {
 	CargoDao cargoDao = new CargoDao();
-
+//Teste
 	private Cargo cargo;
 	private List<Cargo> cargos;
 
