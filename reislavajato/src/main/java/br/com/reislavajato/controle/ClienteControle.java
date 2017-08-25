@@ -14,9 +14,9 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.ClienteDao;
-import br.com.reislavajato.dao.PessoaDao;
+import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.entidade.Cliente;
-import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.entidade.Cadastro;
 
 /**
  * @Criado por: ailtonluiz
@@ -27,11 +27,11 @@ import br.com.reislavajato.entidade.Pessoa;
 @ViewScoped
 public class ClienteControle implements Serializable {
 	ClienteDao clienteDao = new ClienteDao();
-	PessoaDao pessoaDao = new PessoaDao();
+	CadastroDao cadastroDao = new CadastroDao();
 
 	private Cliente cliente;
 	private List<Cliente> clientes;
-	private List<Pessoa> pessoas;
+	private List<Cadastro> cadastros;
 
 	public Cliente getCliente() {
 		return cliente;
@@ -49,19 +49,19 @@ public class ClienteControle implements Serializable {
 		this.clientes = clientes;
 	}
 
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public List<Cadastro> getPessoas() {
+		return cadastros;
 	}
 
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setPessoas(List<Cadastro> cadastros) {
+		this.cadastros = cadastros;
 	}
 
 	@PostConstruct
 	public void listar() {
 		try {
 			clientes = clienteDao.listar();
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) cliente(s)!");
 			erro.printStackTrace();
@@ -71,7 +71,7 @@ public class ClienteControle implements Serializable {
 	public void novo() {
 		try {
 			cliente = new Cliente();
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");

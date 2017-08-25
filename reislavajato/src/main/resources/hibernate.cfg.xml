@@ -24,16 +24,14 @@
 		<property name="hbm2ddl.auto">update</property>
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.reislavajato.entidade.Cargo" />
+		<mapping class="br.com.reislavajato.entidade.Cadastro" />
 		<mapping class="br.com.reislavajato.entidade.Cidade" />
 		<mapping class="br.com.reislavajato.entidade.Cliente" />
 		<mapping class="br.com.reislavajato.entidade.Estado" />
-		<mapping class="br.com.reislavajato.entidade.Financeiro" />
-		<mapping class="br.com.reislavajato.entidade.Fornecedor" />
 		<mapping class="br.com.reislavajato.entidade.Funcionario" />
 		<mapping class="br.com.reislavajato.entidade.ItemMovimento" />
 		<mapping class="br.com.reislavajato.entidade.Marca" />
 		<mapping class="br.com.reislavajato.entidade.Movimento" />
-		<mapping class="br.com.reislavajato.entidade.Pessoa" />
 		<mapping class="br.com.reislavajato.entidade.Servico" />
 		<mapping class="br.com.reislavajato.entidade.Usuario" />
 		<mapping class="br.com.reislavajato.entidade.Veiculo" />

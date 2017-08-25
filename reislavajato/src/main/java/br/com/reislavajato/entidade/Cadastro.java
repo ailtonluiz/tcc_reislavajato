@@ -9,23 +9,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
+
 @SuppressWarnings("serial")
 @Entity
-public class Fornecedor extends GenericEntity {
+public class Cadastro extends GenericEntity {
 
-	@Column(length = 18)
-	private String cnpj;
-
-	@Column(length = 18, name = "insc_estadual")
-	private String inscEstadual;
-
-	@Column(length = 100, name = "razao_social")
+	@Column(nullable = false, length = 80, name = "razao_social")
 	private String razaoSocial;
 
 	@Column(length = 100, name = "nome_fantasia")
 	private String nomeFantasia;
 
-	@Column(length = 60)
+	@CPF
+	@Column(length = 14)
+	private String cpf;
+
+	@CNPJ
+	@Column(length = 18)
+	private String cnpj;
+
+	@Column(length = 25, nullable = true)
+	private String rg;
+
+	@Column(length = 20, name = "insc_estadual")
+	private String inscEstadual;
+
+	@Column(length = 65)
 	private String rua;
 
 	@Column(length = 5)
@@ -37,20 +48,20 @@ public class Fornecedor extends GenericEntity {
 	@Column(length = 10)
 	private String cep;
 
-	@Column(length = 13)
-	private String fone;
+	@Column(length = 25)
+	private String complemento;
 
-	@Column(length = 20, name = "fone_outros")
-	private String foneOutros;
+	@Column(length = 13)
+	private String telefone;
+
+	@Column(length = 16)
+	private String celular;
 
 	@Column(length = 70)
-	private String site;
-
-	@Column(length = 100)
 	private String email;
 
-	@Column(nullable = false)
-	private Boolean status;
+	@Column(nullable = false, name = "tipo_pessoa")
+	private Character tipoPessoa;
 
 	@Column(name = "data_cadastro")
 	@Temporal(TemporalType.DATE)
@@ -59,22 +70,6 @@ public class Fornecedor extends GenericEntity {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cidade cidade;
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	public String getInscEstadual() {
-		return inscEstadual;
-	}
-
-	public void setInscEstadual(String inscEstadual) {
-		this.inscEstadual = inscEstadual;
-	}
 
 	public String getRazaoSocial() {
 		return razaoSocial;
@@ -90,6 +85,38 @@ public class Fornecedor extends GenericEntity {
 
 	public void setNomeFantasia(String nomeFantasia) {
 		this.nomeFantasia = nomeFantasia;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getInscEstadual() {
+		return inscEstadual;
+	}
+
+	public void setInscEstadual(String inscEstadual) {
+		this.inscEstadual = inscEstadual;
 	}
 
 	public String getRua() {
@@ -124,28 +151,28 @@ public class Fornecedor extends GenericEntity {
 		this.cep = cep;
 	}
 
-	public String getFone() {
-		return fone;
+	public String getComplemento() {
+		return complemento;
 	}
 
-	public void setFone(String fone) {
-		this.fone = fone;
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
-	public String getFoneOutros() {
-		return foneOutros;
+	public String getTelefone() {
+		return telefone;
 	}
 
-	public void setFoneOutros(String foneOutros) {
-		this.foneOutros = foneOutros;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
-	public String getSite() {
-		return site;
+	public String getCelular() {
+		return celular;
 	}
 
-	public void setSite(String site) {
-		this.site = site;
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 
 	public String getEmail() {
@@ -156,12 +183,12 @@ public class Fornecedor extends GenericEntity {
 		this.email = email;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	public Character getTipoPessoa() {
+		return tipoPessoa;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setTipoPessoa(Character tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
 	public Date getDataCadastro() {

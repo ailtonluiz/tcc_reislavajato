@@ -6,7 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  * @author ailtonluiz
@@ -15,6 +16,38 @@ import javax.persistence.OneToOne;
 @SuppressWarnings("serial")
 @Entity
 public class Funcionario extends GenericEntity {
+
+	@Column(length = 100, nullable = false)
+	private String nome;
+
+	@CPF
+	@Column(length = 14, nullable = false)
+	private String cpf;
+
+	@Column(length = 20)
+	private String rg;
+
+	@Column(length = 100, nullable = false)
+	private String endereco;
+
+	@Column(length = 30, nullable = false)
+	private String bairro;
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Cidade cidade;
+
+	@Column(length = 13)
+	private String telefone;
+
+	@Column(length = 16)
+	private String celular;
+
+	@Column(length = 80)
+	private String email;
+
+	@Column(length = 255)
+	private String observacao;
 
 	@Column(length = 25, name = "carteira_trabalho")
 	private String carteiraTrabalho;
@@ -47,9 +80,85 @@ public class Funcionario extends GenericEntity {
 	@JoinColumn(nullable = false)
 	private Cargo cargo;
 
-	@OneToOne
-	@JoinColumn(nullable = false)
-	private Pessoa pessoa;
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	public String getCarteiraTrabalho() {
 		return carteiraTrabalho;
@@ -129,14 +238,6 @@ public class Funcionario extends GenericEntity {
 
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
 	}
 
 }

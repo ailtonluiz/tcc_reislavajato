@@ -13,10 +13,10 @@ import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.CidadeDao;
 import br.com.reislavajato.dao.EstadoDao;
-import br.com.reislavajato.dao.PessoaDao;
+import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Estado;
-import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.entidade.Cadastro;
 
 /**
  * @Criado por: ailtonluiz
@@ -25,32 +25,32 @@ import br.com.reislavajato.entidade.Pessoa;
 @SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
-public class PessoaControle implements Serializable {
+public class CadastroControle implements Serializable {
 
-	PessoaDao pessoaDao = new PessoaDao();
+	CadastroDao cadastroDao = new CadastroDao();
 	EstadoDao estadoDao = new EstadoDao();
 	CidadeDao cidadeDao = new CidadeDao();
 
-	private Pessoa pessoa;
-	private List<Pessoa> pessoas;
+	private Cadastro cadastro;
+	private List<Cadastro> cadastros;
 	private Estado estado;
 	private List<Estado> estados;
 	private List<Cidade> cidades;
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Cadastro getCadastro() {
+		return cadastro;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setCadastro(Cadastro cadastro) {
+		this.cadastro = cadastro;
 	}
 
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public List<Cadastro> getCadastros() {
+		return cadastros;
 	}
 
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setCadastros(List<Cadastro> cadastros) {
+		this.cadastros = cadastros;
 	}
 
 	public Estado getEstado() {
@@ -80,19 +80,19 @@ public class PessoaControle implements Serializable {
 	@PostConstruct
 	public void listar() {
 		try {
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 			estados = estadoDao.listar("nome");
 			cidades = new ArrayList<Cidade>();
 
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar a(s) pessoa(s)!");
+			Messages.addGlobalError("Não foi possível listar a(s) cadastro(s)!");
 			erro.printStackTrace();
 		}
 	}
 
 	public void novo() {
 		try {
-			pessoa = new Pessoa();
+			cadastro = new Cadastro();
 			estado = new Estado();
 			estados = estadoDao.listar("nome");
 			cidades = new ArrayList<Cidade>();
@@ -104,9 +104,9 @@ public class PessoaControle implements Serializable {
 
 	public void salvar() {
 		try {
-			pessoaDao.merge(pessoa);
+			cadastroDao.merge(cadastro);
 			novo();
-			pessoas = pessoaDao.listar("nome");
+			cadastros = cadastroDao.listar("nome");
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
@@ -116,8 +116,8 @@ public class PessoaControle implements Serializable {
 
 	public void excluir(ActionEvent evento) {
 		try {
-			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
-			pessoaDao.excluir(pessoa);
+			cadastro = (Cadastro) evento.getComponent().getAttributes().get("registroSelecionado");
+			cadastroDao.excluir(cadastro);
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
@@ -128,8 +128,8 @@ public class PessoaControle implements Serializable {
 
 	public void editar(ActionEvent evento) {
 		try {
-			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
-			estado = pessoa.getCidade().getEstado();
+			cadastro = (Cadastro) evento.getComponent().getAttributes().get("registroSelecionado");
+			estado = cadastro.getCidade().getEstado();
 			listar();
 			popular();
 		} catch (RuntimeException erro) {

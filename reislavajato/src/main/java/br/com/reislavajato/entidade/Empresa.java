@@ -9,21 +9,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 @SuppressWarnings("serial")
 @Entity
-public class Pessoa extends GenericEntity {
+public class Empresa extends GenericEntity {
 
-	@Column(nullable = false, length = 80)
-	private String nome;
+	@Column(nullable = false, length = 100, name = "razao_social")
+	private String razaoSocial;
 
-	@Column(length = 14)
-	private String cpf;
+	@CNPJ
+	@Column(length = 18)
+	private String cnpj;
 
-	@Column(length = 25, nullable = true)
-	private String rg;
+	@Column(length = 25, nullable = true, name = "insc_estadual")
+	private String inscEstadual;
 
-	@Column(length = 65)
-	private String rua;
+	@Column(length = 100)
+	private String endereco;
 
 	@Column(length = 5)
 	private String numero;
@@ -40,11 +43,11 @@ public class Pessoa extends GenericEntity {
 	@Column(length = 13)
 	private String telefone;
 
-	@Column(length = 16)
-	private String celular;
-
 	@Column(length = 70)
 	private String email;
+	
+	@Column(length = 80)
+	private String contato;
 
 	@Column(name = "data_cadastro")
 	@Temporal(TemporalType.DATE)
@@ -54,36 +57,37 @@ public class Pessoa extends GenericEntity {
 	@JoinColumn(nullable = false)
 	private Cidade cidade;
 
-	public String getNome() {
-		return nome;
+
+	public String getRazaoSocial() {
+		return razaoSocial;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
-	public String getRg() {
-		return rg;
+	public String getInscEstadual() {
+		return inscEstadual;
 	}
 
-	public void setRg(String rg) {
-		this.rg = rg;
+	public void setInscEstadual(String inscEstadual) {
+		this.inscEstadual = inscEstadual;
 	}
 
-	public String getRua() {
-		return rua;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setRua(String rua) {
-		this.rua = rua;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public String getNumero() {
@@ -126,12 +130,12 @@ public class Pessoa extends GenericEntity {
 		this.telefone = telefone;
 	}
 
-	public String getCelular() {
-		return celular;
+	public String getContato() {
+		return contato;
 	}
 
-	public void setCelular(String celular) {
-		this.celular = celular;
+	public void setContato(String contato) {
+		this.contato = contato;
 	}
 
 	public String getEmail() {

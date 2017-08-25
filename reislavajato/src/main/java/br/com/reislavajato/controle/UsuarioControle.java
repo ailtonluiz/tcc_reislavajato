@@ -13,9 +13,9 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
-import br.com.reislavajato.dao.PessoaDao;
+import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.dao.UsuarioDao;
-import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.entidade.Cadastro;
 import br.com.reislavajato.entidade.Usuario;
 
 /**
@@ -27,11 +27,11 @@ import br.com.reislavajato.entidade.Usuario;
 @ViewScoped
 public class UsuarioControle implements Serializable {
 	UsuarioDao usuarioDao = new UsuarioDao();
-	PessoaDao pessoaDao = new PessoaDao();
+	CadastroDao cadastroDao = new CadastroDao();
 
 	private Usuario usuario;
 	private List<Usuario> usuarios;
-	private List<Pessoa> pessoas;
+	private List<Cadastro> cadastros;
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -49,19 +49,19 @@ public class UsuarioControle implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public List<Cadastro> getPessoas() {
+		return cadastros;
 	}
 
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setPessoas(List<Cadastro> cadastros) {
+		this.cadastros = cadastros;
 	}
 
 	@PostConstruct
 	public void listar() {
 		try {
 			usuarios = usuarioDao.listar();
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) usuário(s)!");
 			erro.printStackTrace();
@@ -71,7 +71,7 @@ public class UsuarioControle implements Serializable {
 	public void novo() {
 		try {
 			usuario = new Usuario();
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -105,7 +105,7 @@ public class UsuarioControle implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			usuario = (Usuario) evento.getComponent().getAttributes().get("registroSelecionado");
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();

@@ -27,7 +27,7 @@ public class Usuario extends GenericEntity {
 
 	@OneToOne
 	@JoinColumn(nullable = false)
-	private Pessoa pessoa;
+	private Funcionario funcionario;
 
 	public String getUsername() {
 		return username;
@@ -61,12 +61,12 @@ public class Usuario extends GenericEntity {
 		this.status = status;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 }

@@ -38,9 +38,6 @@ public class Financeiro extends GenericEntity {
 	@Column(nullable = false, length = 2, name = "tipo_docto")
 	private String tipoDocto;
 
-	@OneToOne
-	@JoinColumn(nullable = true)
-	private Fornecedor fornecedor;
 
 	@OneToOne
 	@JoinColumn(nullable = true)
@@ -96,14 +93,6 @@ public class Financeiro extends GenericEntity {
 
 	public void setTipoDocto(String tipoDocto) {
 		this.tipoDocto = tipoDocto;
-	}
-
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
 	}
 
 	public Cliente getCliente() {

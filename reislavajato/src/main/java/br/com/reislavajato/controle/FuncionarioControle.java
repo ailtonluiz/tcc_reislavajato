@@ -14,9 +14,9 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.FuncionarioDao;
-import br.com.reislavajato.dao.PessoaDao;
+import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.entidade.Funcionario;
-import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.entidade.Cadastro;
 
 /**
  * @Criado por: ailtonluiz
@@ -28,11 +28,11 @@ import br.com.reislavajato.entidade.Pessoa;
 public class FuncionarioControle implements Serializable {
 
 	FuncionarioDao funcionarioDao = new FuncionarioDao();
-	PessoaDao pessoaDao = new PessoaDao();
+	CadastroDao cadastroDao = new CadastroDao();
 
 	private Funcionario funcionario;
 	private List<Funcionario> funcionarios;
-	private List<Pessoa> pessoas;
+	private List<Cadastro> cadastros;
 
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -50,12 +50,12 @@ public class FuncionarioControle implements Serializable {
 		this.funcionarios = funcionarios;
 	}
 
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public List<Cadastro> getPessoas() {
+		return cadastros;
 	}
 
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setPessoas(List<Cadastro> cadastros) {
+		this.cadastros = cadastros;
 	}
 
 	@PostConstruct
@@ -72,7 +72,7 @@ public class FuncionarioControle implements Serializable {
 	public void novo() {
 		try {
 			funcionario = new Funcionario();
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -105,7 +105,7 @@ public class FuncionarioControle implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
-			pessoas = pessoaDao.listar();
+			cadastros = cadastroDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
