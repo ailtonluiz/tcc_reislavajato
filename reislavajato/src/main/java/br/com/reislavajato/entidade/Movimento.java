@@ -25,6 +25,9 @@ public class Movimento extends GenericEntity {
 	@Temporal(TemporalType.TIME)
 	private Date horario;
 
+	@Column(nullable = false)
+	private Long numeroOrdem;
+
 	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
 	private BigDecimal vlrTotal;
 
@@ -42,6 +45,14 @@ public class Movimento extends GenericEntity {
 
 	public void setHorario(Date horario) {
 		this.horario = horario;
+	}
+
+	public Long getNumeroOrdem() {
+		return numeroOrdem;
+	}
+
+	public void setNumeroOrdem(Long numeroOrdem) {
+		this.numeroOrdem = numeroOrdem;
 	}
 
 	public BigDecimal getVlrTotal() {
@@ -67,8 +78,5 @@ public class Movimento extends GenericEntity {
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
-	
-	
-	
 
 }

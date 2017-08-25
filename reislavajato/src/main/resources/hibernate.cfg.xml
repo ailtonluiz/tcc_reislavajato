@@ -21,7 +21,7 @@
 		<!-- Exibe os comando SQL -->
 		<property name="show_sql">true</property>
 		<!-- Cria as tabelas -->
-		<property name="hbm2ddl.auto">validate</property>
+		<property name="hbm2ddl.auto">update</property>
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.reislavajato.entidade.Cargo" />
 		<mapping class="br.com.reislavajato.entidade.Cidade" />

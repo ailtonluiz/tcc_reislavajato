@@ -22,7 +22,7 @@ import br.com.reislavajato.entidade.Veiculo;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-@SuppressWarnings({ "deprecation", "serial" })
+@SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
 public class VeiculoControle implements Serializable {
@@ -85,7 +85,6 @@ public class VeiculoControle implements Serializable {
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -97,7 +96,6 @@ public class VeiculoControle implements Serializable {
 			veiculo = (Veiculo) evento.getComponent().getAttributes().get("registroSelecionado");
 			veiculoDao.excluir(veiculo);
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
