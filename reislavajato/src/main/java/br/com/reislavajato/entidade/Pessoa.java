@@ -19,7 +19,7 @@ public class Pessoa extends GenericEntity {
 	@Column(length = 14)
 	private String cpf;
 
-	@Column(length = 25)
+	@Column(length = 25, nullable = true)
 	private String rg;
 
 	@Column(length = 65)
@@ -40,7 +40,7 @@ public class Pessoa extends GenericEntity {
 	@Column(length = 13)
 	private String telefone;
 
-	@Column(length = 14)
+	@Column(length = 16)
 	private String celular;
 
 	@Column(length = 70)

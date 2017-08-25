@@ -22,7 +22,7 @@ import br.com.reislavajato.entidade.Pessoa;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-@SuppressWarnings({ "deprecation", "serial" })
+@SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
 public class PessoaControle implements Serializable {
