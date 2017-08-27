@@ -22,7 +22,6 @@ public class Cadastro extends GenericEntity {
 	@Column(length = 100, name = "nome_fantasia")
 	private String nomeFantasia;
 
-	@CPF
 	@Column(length = 14)
 	private String cpf;
 

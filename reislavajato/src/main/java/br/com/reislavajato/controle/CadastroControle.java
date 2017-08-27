@@ -37,6 +37,10 @@ public class CadastroControle implements Serializable {
 	private List<Estado> estados;
 	private List<Cidade> cidades;
 
+	private String opcao;
+
+	private Boolean isRederiza = false;
+
 	public Cadastro getCadastro() {
 		return cadastro;
 	}
@@ -77,6 +81,22 @@ public class CadastroControle implements Serializable {
 		this.cidades = cidades;
 	}
 
+	public String getOpcao() {
+		return opcao;
+	}
+
+	public void setOpcao(String opcao) {
+		this.opcao = opcao;
+	}
+
+	public Boolean getIsRederiza() {
+		return isRederiza;
+	}
+
+	public void setIsRederiza(Boolean isRederiza) {
+		this.isRederiza = isRederiza;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
@@ -106,7 +126,7 @@ public class CadastroControle implements Serializable {
 		try {
 			cadastroDao.merge(cadastro);
 			novo();
-			cadastros = cadastroDao.listar("nome");
+			cadastros = cadastroDao.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
@@ -150,5 +170,6 @@ public class CadastroControle implements Serializable {
 			erro.printStackTrace();
 		}
 	}
+
 
 }

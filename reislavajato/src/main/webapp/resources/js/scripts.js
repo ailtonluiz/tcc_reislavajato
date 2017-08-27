@@ -27,3 +27,7 @@ PrimeFaces.locales['pt_BR'] = {
 	day : 'Dia',
 	allDayText : 'Todo o Dia'
 };
+
+
+
+
