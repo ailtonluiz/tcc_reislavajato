@@ -13,25 +13,25 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
-import br.com.reislavajato.dao.CadastroDao;
+import br.com.reislavajato.dao.FuncionarioDao;
 import br.com.reislavajato.dao.UsuarioDao;
-import br.com.reislavajato.entidade.Cadastro;
+import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.Usuario;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
-@SuppressWarnings({ "deprecation", "serial" })
+@SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
 public class UsuarioControle implements Serializable {
 	UsuarioDao usuarioDao = new UsuarioDao();
-	CadastroDao cadastroDao = new CadastroDao();
+	FuncionarioDao funcionarioDao = new FuncionarioDao();
 
 	private Usuario usuario;
 	private List<Usuario> usuarios;
-	private List<Cadastro> cadastros;
+	private List<Funcionario> funcionarios;
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -49,19 +49,19 @@ public class UsuarioControle implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public List<Cadastro> getPessoas() {
-		return cadastros;
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
 	}
 
-	public void setPessoas(List<Cadastro> cadastros) {
-		this.cadastros = cadastros;
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	@PostConstruct
 	public void listar() {
 		try {
 			usuarios = usuarioDao.listar();
-			cadastros = cadastroDao.listar();
+			funcionarios = funcionarioDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) usuário(s)!");
 			erro.printStackTrace();
@@ -71,7 +71,7 @@ public class UsuarioControle implements Serializable {
 	public void novo() {
 		try {
 			usuario = new Usuario();
-			cadastros = cadastroDao.listar();
+			funcionarios = funcionarioDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -105,7 +105,7 @@ public class UsuarioControle implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			usuario = (Usuario) evento.getComponent().getAttributes().get("registroSelecionado");
-			cadastros = cadastroDao.listar();
+			funcionarios = funcionarioDao.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();

@@ -23,7 +23,7 @@ public class Usuario extends GenericEntity {
 	private Character tipoUsuario;
 
 	@Column(nullable = false)
-	private Boolean status;
+	private Boolean status = true;
 
 	@OneToOne
 	@JoinColumn(nullable = false)
