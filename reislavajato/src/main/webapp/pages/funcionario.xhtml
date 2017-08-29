@@ -20,7 +20,7 @@
 					<f:facet name="footer">
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{funcionarioControle.novo}"
-							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2">
+							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2,:frmCadastro:pnlObs">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -31,7 +31,8 @@
 					</p:column>
 
 					<p:column headerText="Telefone" style="width:22%">
-						<h:outputText value="#{funcionario.telefone} / #{funcionario.celular}" />
+						<h:outputText
+							value="#{funcionario.telefone} / #{funcionario.celular}" />
 					</p:column>
 
 					<p:column headerText="Endereço" style="width:38%">
@@ -49,7 +50,8 @@
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{funcionarioControle.editar}"
-							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2" oncomplete="PF('dialogo').show();">
+							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2, :frmCadastro:pnlObs"
+							oncomplete="PF('dialogo').show();">
 							<f:attribute name="registroSelecionado" value="#{funcionario}" />
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -182,11 +184,18 @@
 							itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
+				
+				<h:panelGrid id="pnlObs" >
+					<p:outputLabel value="Observações:" />
+					<p:inputTextarea autoResize="true" maxlength="255" rows="3" cols="99"
+						value="#{funcionarioControle.funcionario.observacao}">
+					</p:inputTextarea>
+				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{funcionarioControle.salvar}"
-						update=":mensagem :frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2 :frmListagem:tabela" />
+						update=":mensagem :frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2, :frmCadastro:pnlObs :frmListagem:tabela" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
