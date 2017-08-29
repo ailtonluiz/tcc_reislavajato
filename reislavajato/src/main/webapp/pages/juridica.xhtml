@@ -24,6 +24,11 @@
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
+					
+					<p:column headerText="CNPJ" style="width:30%">
+						<h:outputText value="#{cadastro.cnpj}"  />
+					</p:column>
+
 					<p:column headerText="Razão Social" style="width:30%">
 						<h:outputText value="#{cadastro.razaoSocial}" />
 					</p:column>
@@ -32,9 +37,6 @@
 						<h:outputText value="#{cadastro.nomeFantasia}" />
 					</p:column>
 
-					<p:column headerText="CNPJ" style="width:30%">
-						<h:outputText value="#{cadastro.cnpj} #{cadastro.cpf}" />
-					</p:column>
 
 
 					<p:column headerText="Opções" style="width:8%">
@@ -73,12 +75,7 @@
 				<h:panelGrid id="painel" columns="1">
 
 					<p:outputLabel for="tipoPessoa" value="Tipo de pessoa" />
-					<p:selectOneRadio id="tipoPessoa"
-						value="#{cadastroControle.cadastro.tipoPessoa}">
-						<f:selectItem itemLabel="Física" itemValue="F" />
-						<f:selectItem itemLabel="Jurídica" itemValue="J" />
-					</p:selectOneRadio>
-
+			
 					<p:outputLabel for="cnpj" value="CNPJ:" />
 					<p:inputMask id="cnpj" value="#{cadastroControle.cadastro.cnpj}"
 						mask="99.999.999/9999-99" required="true"

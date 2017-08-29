@@ -30,6 +30,9 @@ public class Funcionario extends GenericEntity {
 	@Column(length = 100, nullable = false)
 	private String endereco;
 
+	@Column(length = 10, nullable = false)
+	private String cep;
+
 	@Column(length = 30, nullable = false)
 	private String bairro;
 
@@ -110,6 +113,14 @@ public class Funcionario extends GenericEntity {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getBairro() {
