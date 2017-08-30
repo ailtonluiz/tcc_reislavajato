@@ -7,7 +7,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 
-
 	<p:growl id="mensagem" />
 
 	<ui:define name="conteudo">
@@ -31,8 +30,8 @@
 						<h:outputText value="#{usuario.funcionario.nome}" />
 					</p:column>
 
-					<p:column headerText="Permissão"
-						filterBy="#{usuario.tipoUsuario}" style="width:8%">
+					<p:column headerText="Permissão" filterBy="#{usuario.tipoUsuario}"
+						style="width:8%">
 						<h:outputText value="#{usuario.tipoUsuario}" />
 					</p:column>
 
@@ -92,14 +91,14 @@
 				<h:panelGrid id="painelU" columns="2">
 
 					<h:outputLabel for="tipo" value="Tipo de usuário" />
-					<p:selectOneRadio id="tipo"
+					<p:selectOneRadio id="tipo" required="true"
+						requiredMessage="Informe o tipo de usuário"
 						value="#{usuarioControle.usuario.tipoUsuario}">
 						<f:selectItem itemLabel="Administrador" itemValue="A" />
 						<f:selectItem itemLabel="Gerente" itemValue="G" />
 						<f:selectItem itemLabel="Financeiro" itemValue="F" />
 					</p:selectOneRadio>
 				</h:panelGrid>
-
 
 				<h:panelGrid id="txtSenha" columns="4">
 					<h:outputLabel for="senha" value="Senha:" />
@@ -116,17 +115,14 @@
 
 					<h:outputLabel for="senha2" value="Confirmação:" />
 					<p:password id="senha2" minLength="4" required="true"
-						feedback="true" inline="true"
-						promptLabel="Confirme sua nova senha"
+						feedback="true" weakLabel="Fraca" inline="true" goodLabel="Boa"
+						strongLabel="Ótima" promptLabel="Confirme sua nova senha"
 						placeholder="Confirme sua senha"
 						value="#{usuarioControle.usuario.senha}"
 						requiredMessage="Confirmação de senha não pode ser nula"
 						converterMessage="Por favor informe uma senha"
 						validatorMessage="As senhas não coincidem">
-
 					</p:password>
-
-
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">

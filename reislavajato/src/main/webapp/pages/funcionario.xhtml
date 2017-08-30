@@ -7,7 +7,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 
-
 	<p:growl id="mensagem" />
 
 	<ui:define name="conteudo">
@@ -184,11 +183,11 @@
 							itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
-				
-				<h:panelGrid id="pnlObs" >
+
+				<h:panelGrid id="pnlObs">
 					<p:outputLabel value="Observações:" />
-					<p:inputTextarea autoResize="true" maxlength="255" rows="3" cols="99"
-						value="#{funcionarioControle.funcionario.observacao}">
+					<p:inputTextarea autoResize="true" maxlength="255" rows="3"
+						cols="99" value="#{funcionarioControle.funcionario.observacao}">
 					</p:inputTextarea>
 				</h:panelGrid>
 
