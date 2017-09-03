@@ -1,19 +1,28 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.CidadeDao;
 import br.com.reislavajato.dao.EstadoDao;
 import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Estado;
+import br.com.reislavajato.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 /**
  * @Criado por: ailtonluiz
@@ -105,6 +114,20 @@ public class CidadeControle implements Serializable {
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
+		}
+	}
+
+	public void imprimir() {
+		try {
+			String caminho = Faces.getRealPath("/reports/cidade.jasper");
+			Map<String, Object> parametros = new HashMap<>();
+			Connection conexao = HibernateUtil.getConexao();
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			JasperPrintManager.printReport(relatorio, true);
+
+		} catch (JRException erro) {
+			erro.printStackTrace();
+			Messages.addGlobalError("Não foi possível gerar o relatório!");
 		}
 	}
 }

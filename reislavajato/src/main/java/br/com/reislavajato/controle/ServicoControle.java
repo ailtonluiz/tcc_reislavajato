@@ -17,7 +17,7 @@ import br.com.reislavajato.entidade.Servico;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-@SuppressWarnings({ "deprecation", "serial" })
+@SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
 public class ServicoControle implements Serializable {

@@ -22,7 +22,7 @@ import br.com.reislavajato.entidade.Cadastro;
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
-@SuppressWarnings({ "deprecation", "serial" })
+@SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
 public class ClienteControle implements Serializable {

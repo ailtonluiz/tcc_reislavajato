@@ -71,12 +71,22 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-common</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+
+
+
+
 		<!-- JSF -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.glassfish</groupId> -->
 		<!-- <artifactId>javax.faces</artifactId> -->
 		<!-- <version>2.3.2</version> -->
 		<!-- </dependency> -->
+		<!-- JSF -->
 
 		<dependency>
 			<groupId>com.sun.faces</groupId>
@@ -84,16 +94,12 @@
 			<version>2.2.14</version>
 		</dependency>
 
-
+		<!-- JSF -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
 			<version>2.2.14</version>
 		</dependency>
-
-
-
-
 
 		<!-- PrimeFaces -->
 		<dependency>
@@ -139,11 +145,11 @@
 		</dependency>
 
 		<!-- JasperReports -->
-		<!-- <dependency> -->
-		<!-- <groupId>net.sf.jasperreports</groupId> -->
-		<!-- <artifactId>jasperreports</artifactId> -->
-		<!-- <version>6.1.1</version> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.1.1</version>
+		</dependency>
 
 		<!-- Apache Shiro Core -->
 		<dependency>

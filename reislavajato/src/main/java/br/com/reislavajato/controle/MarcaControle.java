@@ -17,7 +17,7 @@ import br.com.reislavajato.entidade.Marca;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-@SuppressWarnings({ "deprecation", "serial" })
+@SuppressWarnings({  "serial" })
 @ManagedBean
 @ViewScoped
 public class MarcaControle implements Serializable {
