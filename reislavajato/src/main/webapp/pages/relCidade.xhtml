@@ -17,24 +17,25 @@
 					paginator="true" value="#{cidadeControle.cidades}"
 					paginatorPosition="top" var="cidade" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Gerar Relatório" oncomplete="PF('dialogo').show();"
+						<p:commandButton value="Gerar Relatório"
+							oncomplete="PF('dialogo').show();"
 							actionListener="#{cidadeControle.imprimir}">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="Cidade" filterBy="#{cidade.nome}"
-						 filterMatchMode="contains">
+						filterMatchMode="contains">
 						<h:outputText value="#{cidade.nome}" />
 					</p:column>
 
-					<p:column headerText="UF" filterBy="#{cidade.estado}" style="width:8%">
-						<h:outputText
-							value="#{cidade.estado.sigla}" />
+					<p:column headerText="UF" filterBy="#{cidade.estado}"
+						style="width:8%">
+						<h:outputText value="#{cidade.estado.sigla}" />
 					</p:column>
 
-								</p:dataTable>
-		
+				</p:dataTable>
+
 
 			</p:panel>
 		</h:form>

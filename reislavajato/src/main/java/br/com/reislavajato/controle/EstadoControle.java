@@ -104,7 +104,7 @@ public class EstadoControle implements Serializable {
 
 	public void imprimir() {
 		try {
-			String caminho = Faces.getRealPath("/reports/estados.jasper");
+			String caminho = Faces.getRealPath("/reports/estado.jasper");
 			Map<String, Object> parametros = new HashMap<>();
 			Connection conexao = HibernateUtil.getConexao();
 			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);

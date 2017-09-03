@@ -11,7 +11,7 @@
 		<property name="connection.username">root</property>
 		<property name="connection.password">@manager#</property>
 		<!-- Pool de conexões JDBC -->
-		<property name="connection.pool_size">1</property>
+		<property name="connection.pool_size">3</property>
 		<!-- Dialeto SQL -->
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 		<!-- Gerenciamento da Sessão -->
@@ -21,12 +21,11 @@
 		<!-- Exibe os comando SQL -->
 		<property name="show_sql">true</property>
 		<!-- Cria as tabelas -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">validate</property>
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.reislavajato.entidade.Cargo" />
 		<mapping class="br.com.reislavajato.entidade.Cadastro" />
 		<mapping class="br.com.reislavajato.entidade.Cidade" />
-		<mapping class="br.com.reislavajato.entidade.Cliente" />
 		<mapping class="br.com.reislavajato.entidade.Estado" />
 		<mapping class="br.com.reislavajato.entidade.Funcionario" />
 		<mapping class="br.com.reislavajato.entidade.ItemMovimento" />

@@ -11,11 +11,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import br.com.reislavajato.dao.ClienteDao;
+import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.dao.ServicoDao;
 import br.com.reislavajato.dao.UsuarioDao;
 import br.com.reislavajato.dao.VeiculoDao;
-import br.com.reislavajato.entidade.Cliente;
+import br.com.reislavajato.entidade.Cadastro;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Usuario;
 import br.com.reislavajato.entidade.Veiculo;
@@ -24,26 +24,26 @@ import br.com.reislavajato.entidade.Veiculo;
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
-@SuppressWarnings({  "serial" })
+@SuppressWarnings({ "serial" })
 @ManagedBean
 @ViewScoped
 public class MovimentacaoControle implements Serializable {
 	UsuarioDao usuarioDao = new UsuarioDao();
-	ClienteDao clienteDao = new ClienteDao();
+	CadastroDao cadastroDao = new CadastroDao();
 	VeiculoDao veiculoDao = new VeiculoDao();
 	ServicoDao servicoDao = new ServicoDao();
 
 	private List<Usuario> usuarios;
-	private List<Cliente> clientes;
+	private List<Cadastro> cadastros;
 	private List<Veiculo> veiculos;
 	private List<Servico> servicos;
 
-	public ClienteDao getClienteDao() {
-		return clienteDao;
+	public CadastroDao getCadastroDao() {
+		return cadastroDao;
 	}
 
-	public void setClienteDao(ClienteDao clienteDao) {
-		this.clienteDao = clienteDao;
+	public void setCadastroDao(CadastroDao cadastroDao) {
+		this.cadastroDao = cadastroDao;
 	}
 
 	public List<Usuario> getUsuarios() {
@@ -54,12 +54,12 @@ public class MovimentacaoControle implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public List<Cliente> getClientes() {
-		return clientes;
+	public List<Cadastro> getCadastros() {
+		return cadastros;
 	}
 
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
+	public void setCadastros(List<Cadastro> cadastros) {
+		this.cadastros = cadastros;
 	}
 
 	public List<Veiculo> getVeiculos() {
