@@ -17,7 +17,7 @@
 					paginator="true" value="#{cidadeControle.cidades}"
 					paginatorPosition="top" var="cidade" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Gerar Relatório"
+						<p:commandButton icon="ui-icon-print" value="Gerar Relatório"
 							oncomplete="PF('dialogo').show();"
 							actionListener="#{cidadeControle.imprimir}">
 							<f:actionListener
@@ -29,7 +29,7 @@
 						<h:outputText value="#{cidade.nome}" />
 					</p:column>
 
-					<p:column headerText="UF" filterBy="#{cidade.estado}"
+					<p:column headerText="UF" filterBy="#{cidade.estado.nome}"
 						style="width:8%">
 						<h:outputText value="#{cidade.estado.sigla}" />
 					</p:column>

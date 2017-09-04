@@ -4,13 +4,17 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[bGF2YWphdG8uZXN0YWRvICwxNzcsMTUsZGYyYWZkNTQtODEzZS00Yjg0LTliMjctMDU3ZWJlYjA2
+YzVkO2xhdmFqYXRvLmNpZGFkZSAsMTUsMTUsY2ZjOTNmYWQtNzRkNi00ZDQxLWEwNDUtZmNhMzgx
+ZjQ2OWY1Ow==]]>
+	</property>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Reis Lavajato Data Adapter"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<parameter name="BUSCA_POR_ESTADO" class="java.lang.String"/>
+	<parameter name="CIDADE" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT lavajato.cidade.codigo,
 	lavajato.cidade.nome,
@@ -19,7 +23,7 @@ FROM lavajato.cidade
 	INNER JOIN lavajato.estado ON 
 	 lavajato.cidade.estado_codigo = lavajato.estado.codigo 
 WHERE 
-	 lavajato.estado.nome LIKE $P{BUSCA_POR_ESTADO} 
+	 lavajato.estado.nome LIKE $P{CIDADE} 
 ORDER BY lavajato.cidade.codigo ASC]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Long"/>
@@ -29,19 +33,20 @@ ORDER BY lavajato.cidade.codigo ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="93" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<image>
-				<reportElement x="-20" y="0" width="595" height="89" uuid="223a90c7-c94a-49b1-aba4-ce6fb4bd7694"/>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="223a90c7-c94a-49b1-aba4-ce6fb4bd7694"/>
 				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="SubTitle" x="310" y="0" width="250" height="89" forecolor="#000000" uuid="a49f9e55-5e6d-4cee-918b-ed362f3141a0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[Rua 02 Qd. E Lt. 21 Esq. c/ Rua 06
-St. Leste Universitário Goiânia - GO
-Fone: (62) 3281-8531]]></text>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="cf4799a0-8862-492c-9539-904f69e078d2"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Wood Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF" uuid="a49f9e55-5e6d-4cee-918b-ed362f3141a0"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Wood SubTitle]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -57,23 +62,16 @@ Fone: (62) 3281-8531]]></text>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="19" width="63" height="15" forecolor="#000000" uuid="6103dff8-5a99-4e50-a4ee-d9eebc2c4647"/>
-				<text><![CDATA[Código]]></text>
+				<reportElement style="Column header" x="0" y="19" width="185" height="15" uuid="7b521736-ed61-464a-9e97-d4043d274b64"/>
+				<text><![CDATA[codigo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="63" y="19" width="407" height="15" forecolor="#000000" uuid="76dcfcc7-be18-47dc-82ff-1dbb1eace8ba"/>
-				<text><![CDATA[Nome]]></text>
+				<reportElement style="Column header" x="185" y="19" width="185" height="15" uuid="9c616495-dcb1-4f32-8305-2e785d22603b"/>
+				<text><![CDATA[nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="470" y="17" width="85" height="17" forecolor="#000000" uuid="af90177e-8df3-482e-94d1-2304c4a0d70d"/>
-				<text><![CDATA[UF]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Title" x="140" y="-13" width="263" height="33" forecolor="#000000" uuid="cf4799a0-8862-492c-9539-904f69e078d2"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Relação de cidades]]></text>
+				<reportElement style="Column header" x="370" y="19" width="185" height="15" uuid="03f72f3a-f39a-4738-9677-0dc2633b3495"/>
+				<text><![CDATA[sigla]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -86,15 +84,15 @@ Fone: (62) 3281-8531]]></text>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement style="Detail" x="0" y="0" width="63" height="15" uuid="873adcbb-071b-461e-b3d5-01218b9cbc9f"/>
+				<reportElement style="Detail" x="0" y="0" width="185" height="15" uuid="142e7f0e-92a4-4a44-89bf-d16d8ae22530"/>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="63" y="0" width="407" height="15" uuid="423ad6b8-9902-4d4b-ac3c-84047bd30be1"/>
+				<reportElement style="Detail" x="185" y="0" width="185" height="15" uuid="d136f528-2b72-4472-bc1c-19cf5dba292a"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="470" y="-2" width="85" height="17" uuid="d64de4a3-1be4-4f49-a38c-750e6149a28e"/>
+				<reportElement style="Detail" x="370" y="0" width="185" height="15" uuid="4d9624a0-f78f-45f4-98ee-e147c196ad5a"/>
 				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -116,7 +114,7 @@ Fone: (62) 3281-8531]]></text>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Pág "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="fff3e988-d444-495e-be94-0eff0d0462e7"/>
