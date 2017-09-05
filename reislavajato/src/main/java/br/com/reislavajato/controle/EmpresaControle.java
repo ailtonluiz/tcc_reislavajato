@@ -17,6 +17,7 @@ import org.omnifaces.util.Messages;
 import br.com.reislavajato.dao.CidadeDao;
 import br.com.reislavajato.dao.EmpresaDao;
 import br.com.reislavajato.dao.EstadoDao;
+import br.com.reislavajato.entidade.Cadastro;
 import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Empresa;
 import br.com.reislavajato.entidade.Estado;
@@ -119,10 +120,27 @@ public class EmpresaControle implements Serializable {
 	}
 
 	public void editar(ActionEvent evento) {
-
+		try {
+			empresa = (Empresa) evento.getComponent().getAttributes().get("registroSelecionado");
+			estado = empresa.getCidade().getEstado();
+			listar();
+			popular();
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
+			erro.printStackTrace();
+		}
 	}
 
 	public void excluir(ActionEvent evento) {
+		try {
+			empresa = (Empresa) evento.getComponent().getAttributes().get("registroSelecionado");
+			empresaDao.excluir(empresa);
+			listar();
+			Messages.addGlobalInfo("Operação realizada com sucesso!");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
+			erro.printStackTrace();
+		}
 
 	}
 

@@ -78,19 +78,9 @@
 
 					<p:outputLabel for="ie" value="Inscrição Estadual:" />
 					<p:inputText id="ie" size="20" maxlength="20"
-						value="#{cadastroControle.cadastro.inscEstadual}" />
+						value="#{empresaControle.empresa.inscEstadual}" />
 				</h:panelGrid>
 
-				<h:panelGrid id="painel3" columns="4">
-					<p:outputLabel for="cpf" value="CPF:" />
-					<p:inputMask mask="999.999.999-99" id="cpf" size="14"
-						maxlength="14" value="#{cadastroControle.cadastro.cpf}" />
-
-					<p:outputLabel for="rg" value="RG:" />
-					<p:inputText id="rg" size="25" maxlength="25"
-						value="#{cadastroControle.cadastro.rg}" />
-
-				</h:panelGrid>
 
 				<h:panelGrid id="painel4" columns="2">
 					<p:outputLabel for="razao" value="Razão Social:" />
