@@ -88,6 +88,7 @@ public class EmpresaControle implements Serializable {
 	@PostConstruct
 	public void listar() {
 		try {
+			empresas = empresaDao.listar();
 			estados = estadoDao.listar("nome");
 			cidades = new ArrayList<Cidade>();
 
