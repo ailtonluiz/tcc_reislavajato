@@ -4,17 +4,13 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[bGF2YWphdG8uZXN0YWRvICwxNzcsMTUsZGYyYWZkNTQtODEzZS00Yjg0LTliMjctMDU3ZWJlYjA2
-YzVkO2xhdmFqYXRvLmNpZGFkZSAsMTUsMTUsY2ZjOTNmYWQtNzRkNi00ZDQxLWEwNDUtZmNhMzgx
-ZjQ2OWY1Ow==]]>
-	</property>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Reis Lavajato Data Adapter"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<parameter name="CIDADE" class="java.lang.String"/>
+	<parameter name="CIDADE" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT lavajato.cidade.codigo,
 	lavajato.cidade.nome,

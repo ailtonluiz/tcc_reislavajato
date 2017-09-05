@@ -19,7 +19,8 @@
 					<f:facet name="footer">
 						<p:commandButton icon="ui-icon-print" value="Gerar Relatório"
 							oncomplete="PF('dialogo').show();"
-							actionListener="#{cidadeControle.imprimir}">
+							actionListener="#{cidadeControle.imprimir}"
+							update=":frmListagem:tabela">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>

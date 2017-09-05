@@ -122,9 +122,11 @@ public class CidadeControle implements Serializable {
 		try {
 			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("frmListagem:tabela");
 			Map<String, Object> filtros = tabela.getFilters();
+			
 			String estadoNome = (String) filtros.get("estado.nome");
 
 			String caminho = Faces.getRealPath("/reports/cidade.jasper");
+			
 			Map<String, Object> parametros = new HashMap<>();
 			if (estadoNome == null) {
 				parametros.put("CIDADE", "%%");
