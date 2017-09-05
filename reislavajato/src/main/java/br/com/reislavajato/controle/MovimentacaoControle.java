@@ -16,6 +16,7 @@ import br.com.reislavajato.dao.ServicoDao;
 import br.com.reislavajato.dao.UsuarioDao;
 import br.com.reislavajato.dao.VeiculoDao;
 import br.com.reislavajato.entidade.Cadastro;
+import br.com.reislavajato.entidade.Movimento;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Usuario;
 import br.com.reislavajato.entidade.Veiculo;
@@ -33,53 +34,93 @@ public class MovimentacaoControle implements Serializable {
 	VeiculoDao veiculoDao = new VeiculoDao();
 	ServicoDao servicoDao = new ServicoDao();
 
+	private Movimento movimento;
+
 	private List<Usuario> usuarios;
 	private List<Cadastro> cadastros;
 	private List<Veiculo> veiculos;
 	private List<Servico> servicos;
 
-	public CadastroDao getCadastroDao() {
-		return cadastroDao;
+	/**
+	 * @return the movimento
+	 */
+	public Movimento getMovimento() {
+		return movimento;
 	}
 
-	public void setCadastroDao(CadastroDao cadastroDao) {
-		this.cadastroDao = cadastroDao;
+	/**
+	 * @param movimento
+	 *            the movimento to set
+	 */
+	public void setMovimento(Movimento movimento) {
+		this.movimento = movimento;
 	}
 
+	/**
+	 * @return the usuarios
+	 */
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
+	/**
+	 * @param usuarios
+	 *            the usuarios to set
+	 */
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
 
+	/**
+	 * @return the cadastros
+	 */
 	public List<Cadastro> getCadastros() {
 		return cadastros;
 	}
 
+	/**
+	 * @param cadastros
+	 *            the cadastros to set
+	 */
 	public void setCadastros(List<Cadastro> cadastros) {
 		this.cadastros = cadastros;
 	}
 
+	/**
+	 * @return the veiculos
+	 */
 	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
 
+	/**
+	 * @param veiculos
+	 *            the veiculos to set
+	 */
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
 
+	/**
+	 * @return the servicos
+	 */
 	public List<Servico> getServicos() {
 		return servicos;
 	}
 
+	/**
+	 * @param servicos
+	 *            the servicos to set
+	 */
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
 
 	@PostConstruct
 	public void listar() {
+		veiculos = veiculoDao.listar("modelo");
+		cadastros = cadastroDao.listar("razaoSocial");
+		servicos = servicoDao.listar();
 
 	}
 

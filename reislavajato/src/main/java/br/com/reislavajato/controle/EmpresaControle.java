@@ -17,15 +17,10 @@ import org.omnifaces.util.Messages;
 import br.com.reislavajato.dao.CidadeDao;
 import br.com.reislavajato.dao.EmpresaDao;
 import br.com.reislavajato.dao.EstadoDao;
-import br.com.reislavajato.entidade.Cadastro;
 import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Empresa;
 import br.com.reislavajato.entidade.Estado;
 
-/**
- * @Criado por: ailtonluiz
- * @Data: 5 de set de 2017
- */
 /**
  * @Criado por: ailtonluiz
  * @Data: 5 de set de 2017

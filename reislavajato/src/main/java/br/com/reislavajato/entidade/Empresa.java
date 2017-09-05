@@ -69,16 +69,10 @@ public class Empresa extends GenericEntity {
 		this.razaoSocial = razaoSocial;
 	}
 
-	/**
-	 * @return the fantasia
-	 */
 	public String getFantasia() {
 		return fantasia;
 	}
 
-	/**
-	 * @param fantasia the fantasia to set
-	 */
 	public void setFantasia(String fantasia) {
 		this.fantasia = fantasia;
 	}
@@ -110,7 +104,6 @@ public class Empresa extends GenericEntity {
 	public String getNumero() {
 		return numero;
 	}
-
 
 	public void setNumero(String numero) {
 		this.numero = numero;

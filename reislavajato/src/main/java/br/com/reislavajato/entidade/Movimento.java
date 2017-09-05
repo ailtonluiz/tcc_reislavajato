@@ -28,6 +28,9 @@ public class Movimento extends GenericEntity {
 	@Column(nullable = false)
 	private Long numeroOrdem;
 
+	@Column
+	private String km;
+
 	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
 	private BigDecimal vlrTotal;
 
@@ -53,6 +56,14 @@ public class Movimento extends GenericEntity {
 
 	public void setNumeroOrdem(Long numeroOrdem) {
 		this.numeroOrdem = numeroOrdem;
+	}
+
+	public String getKm() {
+		return km;
+	}
+
+	public void setKm(String km) {
+		this.km = km;
 	}
 
 	public BigDecimal getVlrTotal() {
