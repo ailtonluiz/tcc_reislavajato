@@ -1,13 +1,9 @@
 package br.com.reislavajato.entidade;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
@@ -17,6 +13,9 @@ public class Empresa extends GenericEntity {
 
 	@Column(nullable = false, length = 100, name = "razao_social")
 	private String razaoSocial;
+
+	@Column(nullable = false, length = 100, name = "fantasia")
+	private String fantasia;
 
 	@CNPJ
 	@Column(length = 18)
@@ -45,18 +44,22 @@ public class Empresa extends GenericEntity {
 
 	@Column(length = 70)
 	private String email;
-	
+
+	@Column(length = 70)
+	private String smtp;
+
+	@Column(length = 4, name = "porta_smtp")
+	private String portaSmtp;
+
+	@Column(length = 50, name = "senha_mail")
+	private String senhaMail;
+
 	@Column(length = 80)
 	private String contato;
-
-	@Column(name = "data_cadastro")
-	@Temporal(TemporalType.DATE)
-	private Date dataCadastro;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cidade cidade;
-
 
 	public String getRazaoSocial() {
 		return razaoSocial;
@@ -64,6 +67,20 @@ public class Empresa extends GenericEntity {
 
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
+	}
+
+	/**
+	 * @return the fantasia
+	 */
+	public String getFantasia() {
+		return fantasia;
+	}
+
+	/**
+	 * @param fantasia the fantasia to set
+	 */
+	public void setFantasia(String fantasia) {
+		this.fantasia = fantasia;
 	}
 
 	public String getCnpj() {
@@ -93,6 +110,7 @@ public class Empresa extends GenericEntity {
 	public String getNumero() {
 		return numero;
 	}
+
 
 	public void setNumero(String numero) {
 		this.numero = numero;
@@ -130,14 +148,6 @@ public class Empresa extends GenericEntity {
 		this.telefone = telefone;
 	}
 
-	public String getContato() {
-		return contato;
-	}
-
-	public void setContato(String contato) {
-		this.contato = contato;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -146,12 +156,36 @@ public class Empresa extends GenericEntity {
 		this.email = email;
 	}
 
-	public Date getDataCadastro() {
-		return dataCadastro;
+	public String getSmtp() {
+		return smtp;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setSmtp(String smtp) {
+		this.smtp = smtp;
+	}
+
+	public String getPortaSmtp() {
+		return portaSmtp;
+	}
+
+	public void setPortaSmtp(String portaSmtp) {
+		this.portaSmtp = portaSmtp;
+	}
+
+	public String getSenhaMail() {
+		return senhaMail;
+	}
+
+	public void setSenhaMail(String senhaMail) {
+		this.senhaMail = senhaMail;
+	}
+
+	public String getContato() {
+		return contato;
+	}
+
+	public void setContato(String contato) {
+		this.contato = contato;
 	}
 
 	public Cidade getCidade() {

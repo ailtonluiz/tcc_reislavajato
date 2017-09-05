@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
@@ -12,49 +15,49 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.CidadeDao;
+import br.com.reislavajato.dao.EmpresaDao;
 import br.com.reislavajato.dao.EstadoDao;
-import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.entidade.Cidade;
+import br.com.reislavajato.entidade.Empresa;
 import br.com.reislavajato.entidade.Estado;
-import br.com.reislavajato.entidade.Cadastro;
 
 /**
  * @Criado por: ailtonluiz
- * @Data: 13 de ago de 2017
+ * @Data: 5 de set de 2017
  */
-@SuppressWarnings({ "serial" })
-@ManagedBean
+/**
+ * @Criado por: ailtonluiz
+ * @Data: 5 de set de 2017
+ */
 @ViewScoped
-public class CadastroControle implements Serializable {
+@ManagedBean
+@SuppressWarnings("serial")
+public class EmpresaControle implements Serializable {
 
-	CadastroDao cadastroDao = new CadastroDao();
+	EmpresaDao empresaDao = new EmpresaDao();
 	EstadoDao estadoDao = new EstadoDao();
 	CidadeDao cidadeDao = new CidadeDao();
 
-	private Cadastro cadastro;
-	private List<Cadastro> cadastros;
+	private Empresa empresa;
+	private List<Empresa> empresas;
 	private Estado estado;
 	private List<Estado> estados;
 	private List<Cidade> cidades;
 
-	private String opcao;
-
-	private Boolean isRederiza = false;
-
-	public Cadastro getCadastro() {
-		return cadastro;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setCadastro(Cadastro cadastro) {
-		this.cadastro = cadastro;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
-	public List<Cadastro> getCadastros() {
-		return cadastros;
+	public List<Empresa> getEmpresas() {
+		return empresas;
 	}
 
-	public void setCadastros(List<Cadastro> cadastros) {
-		this.cadastros = cadastros;
+	public void setEmpresas(List<Empresa> empresas) {
+		this.empresas = empresas;
 	}
 
 	public Estado getEstado() {
@@ -81,81 +84,46 @@ public class CadastroControle implements Serializable {
 		this.cidades = cidades;
 	}
 
-	public String getOpcao() {
-		return opcao;
-	}
-
-	public void setOpcao(String opcao) {
-		this.opcao = opcao;
-	}
-
-	public Boolean getIsRederiza() {
-		return isRederiza;
-	}
-
-	public void setIsRederiza(Boolean isRederiza) {
-		this.isRederiza = isRederiza;
-	}
-
 	@PostConstruct
 	public void listar() {
 		try {
-			cadastros = cadastroDao.listar();
 			estados = estadoDao.listar("nome");
 			cidades = new ArrayList<Cidade>();
 
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar a(s) cadastro(s)!");
+			Messages.addFlashGlobalError("Não foi possível listar!");
 			erro.printStackTrace();
 		}
 	}
 
 	public void novo() {
 		try {
-			cadastro = new Cadastro();
+			empresa = new Empresa();
 			estado = new Estado();
 			estados = estadoDao.listar("nome");
 			cidades = new ArrayList<Cidade>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
 		}
 	}
 
 	public void salvar() {
 		try {
-			cadastroDao.merge(cadastro);
+			empresaDao.merge(empresa);
 			novo();
-			cadastros = cadastroDao.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			Messages.addGlobalError("Não foi possível realizar está operação!");
 		}
-	}
 
-	public void excluir(ActionEvent evento) {
-		try {
-			cadastro = (Cadastro) evento.getComponent().getAttributes().get("registroSelecionado");
-			cadastroDao.excluir(cadastro);
-			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
-		}
 	}
 
 	public void editar(ActionEvent evento) {
-		try {
-			cadastro = (Cadastro) evento.getComponent().getAttributes().get("registroSelecionado");
-			estado = cadastro.getCidade().getEstado();
-			listar();
-			popular();
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
-		}
+
+	}
+
+	public void excluir(ActionEvent evento) {
+
 	}
 
 	public void popular() {
@@ -170,6 +138,5 @@ public class CadastroControle implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-
 
 }
