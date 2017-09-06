@@ -6,6 +6,7 @@ package br.com.reislavajato.controle;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -46,25 +47,23 @@ public class MovimentacaoControle implements Serializable {
 	private List<Servico> servicos;
 	private List<Funcionario> funcionarios;
 
-	/**
-	 * 
-	 */
-	public MovimentacaoControle() {
+	@PostConstruct
+	public void listar() {
+
 		veiculos = veiculoDao.listar("modelo");
 		cadastros = cadastroDao.listar("razaoSocial");
 		servicos = servicoDao.listar();
 		funcionarios = funcionarioDao.listar();
+
 	}
 
-	// @PostConstruct
-	// public void listar() {
-	//
-	// veiculos = veiculoDao.listar("modelo");
-	// cadastros = cadastroDao.listar("razaoSocial");
-	// servicos = servicoDao.listar();
-	// funcionarios = funcionarioDao.listar();
-	//
-	// }
+	public void adicionar() {
+
+	}
+
+	public void remover() {
+
+	}
 
 	public void novo() {
 

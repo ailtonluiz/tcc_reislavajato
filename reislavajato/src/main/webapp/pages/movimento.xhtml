@@ -157,53 +157,88 @@
 					<p:tab title="Situação do veículo">
 					</p:tab>
 
-					<p:tab title="Serviços realizados">
+					<p:tab title="Lançamento">
+						<!-- Painel onde é mostrado os serviços disponíveis -->
 						<p:panel header="Lista de serviços">
-							<p:dataTable id="tabelaProduto"
+							<p:dataTable id="tabelaProdutos"
 								emptyMessage="Nenhum registro encontrado" paginator="true"
 								paginatorPosition="bottom"
-								value="#{movimentacaoControle}" var="servico" rows="3">
+								value="#{movimentacaoControle.servicos}" var="servico" rows="3">
 
-								<p:column headerText="Descrição" 
-									filterMatchMode="contains">
-									<h:outputText value="#{servico.funcionario.nome}" />
+								<p:column headerText="Descrição" sortBy="#{servico.descricao}"
+									filterBy="#{servico.descricao}" filterMatchMode="contains">
+									<h:outputText value="#{servico.descricao}" />
 								</p:column>
 
-								
-								<p:column headerText="Add" style="width:3%">
-									<p:commandButton icon="ui-icon-plus"
-										oncomplete="PF('dialogo').show();"
-										actionListener="#{movimentoControle.adicionar}">
-										<f:attribute name="registroSelecionado" value="#{servico}" />
-									</p:commandButton>
-								</p:column>
-
-								<p:column headerText="Funcionário"
-									filterBy="#{movimentacaoControle.itemMovimento.funcionario.nome}"
-									filterMatchMode="contains">
-									<h:outputText value="Teste">
-										<p:selectOneMenu id="func" filter="true"
-											value="#{movimentacaoControle.itemMovimento.funcionario.nome}"
-											converter="omnifaces.SelectItemsConverter" required="true"
-											requiredMessage="É obrigatório informar o Funcionário!">
-											<f:selectItem noSelectionOption="true"
-												itemLabel="Selecione um funcionário" />
-											<f:selectItems value="#{movimentacaoControle.funcionarios}"
-												var="f" itemValue="#{f}" itemLabel="#{f.nome}" />
-										</p:selectOneMenu>
+								<p:column headerText="Vlr. Serviço" style="width:8%">
+									<h:outputText value="#{servico.vlrServico}">
+										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 									</h:outputText>
 								</p:column>
 
+								<p:column headerText="Comissão" style="width:8%">
+									<h:outputText value="#{servico.percComissao}">
+										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+									</h:outputText>
+								</p:column>
 
 								<p:column headerText="Opções" style="width:8%">
 									<p:commandButton icon="ui-icon-plus"
-										actionListener="#{movimentoControle.adicionar}">
+										actionListener="#{movimentacaoControle.adicionar}">
+<!-- 										update=":formulario:tabelaCesta :formulario:painelFinalizacao"> -->
 										<f:attribute name="registroSelecionado" value="#{servico}" />
 									</p:commandButton>
 								</p:column>
 
 							</p:dataTable>
 							<!-- Fim do painel de serviços disponíveis -->
+						</p:panel>
+						<!-- Painel de inserção de serviços -->
+						<p:panel header="Serviços realizados">
+							<p:dataTable id="tabelaCesta"
+								emptyMessage="Nenhum registro encontrado" paginator="true"
+								paginatorPosition="bottom"
+								value="#{movimentacaoControle.itemMovimento}" var="itemMovimento"
+								rows="3">
+
+								<p:column headerText="Descrição">
+									<h:outputText
+										value="#{itemMovimento.servico.descricao}" />
+								</p:column>
+
+								<p:column headerText="Vlr. Serviço" style="width:8%">
+									<h:outputText value="#{itemMovimento.servico.vlrServico}">
+										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Qtd." style="width:8%">
+									<h:outputText value="#{itemMovimento.quantidade}" />
+								</p:column>
+
+								<p:column headerText="Vlr. Parcial" style="width:8%">
+									<h:outputText value="#{itemMovimento.vlrParcial}">
+										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Comissão" style="width:8%">
+									<h:outputText
+										value="#{itemMovimento.servico.percComissao}">
+										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+
+
+								<p:column headerText="Opções" style="width:8%">
+									<p:commandButton icon="ui-icon-minus"
+										actionListener="#{movimentacaoControle.remover}">
+<!-- 										update=":formulario:tabelaCesta :formulario:painelFinalizacao"> -->
+										<f:attribute name="itemSelecionado" value="#{itemMovimento}" />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
 						</p:panel>
 
 					</p:tab>
