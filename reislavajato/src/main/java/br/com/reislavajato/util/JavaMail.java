@@ -107,7 +107,7 @@ public class JavaMail {
 					tr.sendMessage(msg, msg.getAllRecipients());
 					tr.close();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				
 					System.out.println(">> Erro: Envio Mensagem");
 					e.printStackTrace();
 				}

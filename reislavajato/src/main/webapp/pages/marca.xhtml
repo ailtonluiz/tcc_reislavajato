@@ -25,9 +25,13 @@
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Marca" sortBy="#{marca.nome}"
+					<p:column headerText="Descrição" sortBy="#{marca.nome}"
 						style="width:65px">
 						<h:outputText value="#{marca.nome}" />
+					</p:column>
+					<p:column headerText="Desc. Abreviada" sortBy="#{marca.abreviada}"
+						style="width:20%">
+						<h:outputText value="#{marca.abreviada}" />
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">
@@ -63,9 +67,13 @@
 			draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
 				<h:panelGrid id="painel" columns="2">
-					<p:outputLabel for="marca" value="Marca:" />
+					<p:outputLabel for="marca" value="Descrição:" />
 					<p:inputText id="marca" size="20" maxlength="20"
 						value="#{marcaControle.marca.nome}" required="true"
+						requiredMessage="É obrigatório informar o nome da marca" />
+					<p:outputLabel for="m" value="Desc. Abreviada:" />
+					<p:inputText id="m" size="20" maxlength="20"
+						value="#{marcaControle.marca.abreviada}" required="true"
 						requiredMessage="É obrigatório informar o nome da marca" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">

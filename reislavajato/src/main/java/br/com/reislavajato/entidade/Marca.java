@@ -15,12 +15,23 @@ public class Marca extends GenericEntity {
 	@Column(nullable = false, length = 20)
 	private String nome;
 
+	@Column(nullable = false, length = 20)
+	private String abreviada;
+
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getAbreviada() {
+		return abreviada;
+	}
+
+	public void setAbreviada(String abreviada) {
+		this.abreviada = abreviada;
 	}
 
 }

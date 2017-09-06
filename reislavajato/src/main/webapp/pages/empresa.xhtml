@@ -28,8 +28,12 @@
 						<h:outputText value="#{empresa.razaoSocial}" />
 					</p:column>
 
-					<p:column headerText="Fantasia" style="width:30%">
+					<p:column headerText="Fantasia" style="width:15%">
 						<h:outputText value="#{empresa.fantasia}" />
+					</p:column>
+
+					<p:column headerText="E-mail" style="width:15%">
+						<h:outputText value="#{empresa.email}" />
 					</p:column>
 
 					<p:column headerText="CNPJ" style="width:7%">
@@ -75,7 +79,7 @@
 			<h:form id="frmCadastro">
 
 
-				<h:panelGrid id="painel2" columns="4">
+				<h:panelGrid id="painel2" columns="6">
 					<p:outputLabel for="cnpj" value="CNPJ:" />
 					<p:inputMask mask="99.999.999/9999-99" id="cnpj" size="18"
 						maxlength="18" value="#{empresaControle.empresa.cnpj}" />
@@ -83,6 +87,10 @@
 					<p:outputLabel for="ie" value="Inscrição Estadual:" />
 					<p:inputText id="ie" size="30" maxlength="30"
 						value="#{empresaControle.empresa.inscEstadual}" />
+
+					<h:outputText for="ativo" value="Ativo: " />
+					<p:selectBooleanCheckbox value="#{empresaControle.empresa.ativo}" />
+
 				</h:panelGrid>
 
 				<h:panelGrid id="painel4" columns="2">

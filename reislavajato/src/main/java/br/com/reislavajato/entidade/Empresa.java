@@ -61,6 +61,9 @@ public class Empresa extends GenericEntity {
 	@JoinColumn(nullable = false)
 	private Cidade cidade;
 
+	@Column
+	private Boolean ativo = true;
+
 	public String getRazaoSocial() {
 		return razaoSocial;
 	}
@@ -187,6 +190,14 @@ public class Empresa extends GenericEntity {
 
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

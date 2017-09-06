@@ -75,13 +75,33 @@
 				</p:submenu>
 
 				<p:submenu label="Relatórios">
-					<p:menuitem value="Lavagens" />
-					<p:menuitem value="Funcionários" />
-					<p:menuitem value="Clientes" />
-					<p:menuitem value="Estados"
-						action="/pages/relEstado.xhtml?faces-redirect=true" />
-					<p:menuitem value="Cidades"
-						action="/pages/relCidade.xhtml?faces-redirect=true" />
+					<p:submenu label="Cadastros">
+						<p:submenu label="Endereços">
+							<p:menuitem value="Estados"
+								action="/pages/relEstado.xhtml?faces-redirect=true" />
+							<p:menuitem value="Cidades"
+								action="/pages/relCidade.xhtml?faces-redirect=true" />
+						</p:submenu>
+						<p:menuitem value="Clientes" />
+						<p:submenu label="Funcionários/Usuários">
+							<p:menuitem value="Funcionários" />
+							<p:menuitem value="Usuários" />
+						</p:submenu>
+						<p:menuitem value="Fornecedores" />
+						<p:menuitem value="Serviços" />
+						<p:submenu label="Veículos">
+							<p:menuitem value="Marcas" />
+							<p:menuitem value="Veículos" />
+						</p:submenu>
+					</p:submenu>
+					<p:submenu label="Movimentações">
+						<p:menuitem value="Lavagens" />
+						<p:menuitem value="Comissões" />
+					</p:submenu>
+					<p:submenu label="Financeiro">
+						<p:menuitem value="Contas a pagar" />
+						<p:menuitem value="Contas a receber" />
+					</p:submenu>
 				</p:submenu>
 
 				<p:submenu label="Parâmetros">

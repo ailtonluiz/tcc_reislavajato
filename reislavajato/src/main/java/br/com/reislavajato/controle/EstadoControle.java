@@ -20,7 +20,7 @@ import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * @Criado por: ailtonluiz
@@ -108,8 +108,8 @@ public class EstadoControle implements Serializable {
 			Map<String, Object> parametros = new HashMap<>();
 			Connection conexao = HibernateUtil.getConexao();
 			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
-			 JasperPrintManager.printReport(relatorio, true);
-			//JasperViewer.viewReport(relatorio);
+			// JasperPrintManager.printReport(relatorio, true);
+			JasperViewer.viewReport(relatorio);
 
 		} catch (JRException erro) {
 			erro.printStackTrace();
