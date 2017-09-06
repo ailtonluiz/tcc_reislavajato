@@ -108,6 +108,7 @@ public class EmpresaControle implements Serializable {
 		try {
 			empresaDao.merge(empresa);
 			novo();
+			empresas = empresaDao.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");

@@ -46,9 +46,9 @@
 							<f:attribute name="registroSelecionado" value="#{empresa}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-pencil"
-							actionListener="#{empresaControle.editar}" update=""
+							actionListener="#{empresaControle.editar}" update=":frmCadastro"
 							oncomplete="PF('dialogo').show();">
-							<!-- :frmCadastro:painel -->
+							<!--  -->
 
 							<f:attribute name="registroSelecionado" value="#{empresa}" />
 							<f:actionListener
@@ -81,21 +81,21 @@
 						maxlength="18" value="#{empresaControle.empresa.cnpj}" />
 
 					<p:outputLabel for="ie" value="Inscrição Estadual:" />
-					<p:inputText id="ie" size="20" maxlength="20"
+					<p:inputText id="ie" size="30" maxlength="30"
 						value="#{empresaControle.empresa.inscEstadual}" />
 				</h:panelGrid>
 
 				<h:panelGrid id="painel4" columns="2">
 					<p:outputLabel for="razao" value="Razão Social:" />
 					<p:inputText id="razao"
-						value="#{empresaControle.empresa.razaoSocial}" size="82"
-						maxlength="82" required="true"
+						value="#{empresaControle.empresa.razaoSocial}" size="100"
+						maxlength="100" required="true"
 						requiredMessage="Informe a Razão Social" />
 
 					<p:outputLabel for="fantasia" value="Fantasia:" />
 					<p:inputText id="fantasia"
-						value="#{empresaControle.empresa.fantasia}" size="82"
-						maxlength="82" required="false"
+						value="#{empresaControle.empresa.fantasia}" size="100"
+						maxlength="100" required="false"
 						requiredMessage="Informe o nome Fantasia" />
 				</h:panelGrid>
 
@@ -104,8 +104,8 @@
 				<h:panelGrid id="painel5" columns="4">
 					<p:outputLabel for="endereco" value="Endereco:" />
 					<p:inputText id="endereco"
-						value="#{empresaControle.empresa.endereco}" size="77"
-						maxlength="65" required="true"
+						value="#{empresaControle.empresa.endereco}" size="87"
+						maxlength="87" required="true"
 						requiredMessage="Informe o endereco" />
 					<h:outputLabel for="num" value="Nº:" />
 					<p:inputText id="num" value="#{empresaControle.empresa.numero}"
@@ -116,11 +116,11 @@
 				<h:panelGrid id="painel6" columns="6">
 					<h:outputLabel for="comp" value="Compl.:" />
 					<p:inputText id="comp"
-						value="#{empresaControle.empresa.complemento}" size="25"
-						maxlength="25" />
+						value="#{empresaControle.empresa.complemento}" size="30"
+						maxlength="30" />
 					<h:outputLabel for="bairro" value="Bairro:" />
 					<p:inputText id="bairro" value="#{empresaControle.empresa.bairro}"
-						size="29" maxlength="40" />
+						size="39" maxlength="38" />
 					<h:outputLabel for="cep" value="CEP:" />
 					<p:inputMask id="cep" mask="99.999-999"
 						value="#{empresaControle.empresa.cep}" size="10" maxlength="10" />
@@ -138,7 +138,8 @@
 							itemValue="#{estado}"
 							itemLabel="#{estado.nome} - #{estado.sigla}" />
 						<p:ajax listener="#{empresaControle.popular}"
-							update=":frmCadastro:cidade" /> <!-- update=":frmCadastro" -->
+							update=":frmCadastro:cidade" />
+						<!-- update=":frmCadastro" -->
 					</p:selectOneMenu>
 
 					<p:outputLabel for="cidade" value="Cidade:" />
@@ -162,25 +163,27 @@
 					<p:inputText id="email" value="#{empresaControle.empresa.email}"
 						size="93" maxlength="70" />
 
-					<p:outputLabel for="smtp" value="Endereço SMTP email:" />
+					<p:outputLabel for="smtp" value="SMTP email:" />
 					<p:inputText id="smtp" size="20" maxlength="20"
 						value="#{empresaControle.empresa.smtp}" />
 
 					<p:outputLabel for="portasmtp" value="Porta SMTP:" />
 					<p:inputText id="portasmtp" size="10" maxlength="10"
 						value="#{empresaControle.empresa.portaSmtp}" />
-						
-						<p:outputLabel for="senhamail" value="Senha email:" />
+
+					<p:outputLabel for="senhamail" value="Senha email:" />
 					<p:inputText id="senhamail" size="30" maxlength="30"
 						value="#{empresaControle.empresa.senhaMail}" />
-						
-						<p:outputLabel for="contato" value="Contato:" />
+
+					<p:outputLabel for="contato" value="Contato:" />
 					<p:inputText id="contato" size="20" maxlength="20"
 						value="#{empresaControle.empresa.contato}" />
+				</h:panelGrid>
 
+				<h:panelGrid columns="4">
 					<p:commandButton value="Salvar"
 						actionListener="#{empresaControle.salvar}"
-						update=":mensagem  :frmListagem:tabela" />
+						update=":mensagem  :frmListagem:tabela :frmCadastro" />
 					<!-- :frmCadastro:painel -->
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
