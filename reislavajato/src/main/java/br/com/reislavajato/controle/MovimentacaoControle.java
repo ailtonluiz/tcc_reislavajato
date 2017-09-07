@@ -40,6 +40,7 @@ public class MovimentacaoControle implements Serializable {
 	VeiculoDao veiculoDao = new VeiculoDao();
 	CadastroDao cadastroDao = new CadastroDao();
 
+	private Funcionario funcionario;
 	private Movimento movimento;
 	private List<ItemMovimento> itensMovimento;
 	private List<Servico> servicos;
@@ -149,6 +150,16 @@ public class MovimentacaoControle implements Serializable {
 			Messages.addGlobalError("Não foi possível realizar está operação!" + erro);
 			erro.printStackTrace();
 		}
+	}
+
+	
+	
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	public ItemMovimento getItemMovimento() {
