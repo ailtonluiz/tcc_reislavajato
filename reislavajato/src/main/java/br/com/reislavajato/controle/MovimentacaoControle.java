@@ -126,6 +126,7 @@ public class MovimentacaoControle implements Serializable {
 	public void finalizar() {
 		try {
 			movimento.setHorario(new Date());
+			
 			listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível finalizar a venda" + erro);
