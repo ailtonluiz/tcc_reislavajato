@@ -4,14 +4,18 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.CidadeDao;
@@ -20,6 +24,11 @@ import br.com.reislavajato.dao.EstadoDao;
 import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Empresa;
 import br.com.reislavajato.entidade.Estado;
+import br.com.reislavajato.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * @Criado por: ailtonluiz
@@ -39,46 +48,6 @@ public class EmpresaControle implements Serializable {
 	private Estado estado;
 	private List<Estado> estados;
 	private List<Cidade> cidades;
-
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-	public List<Empresa> getEmpresas() {
-		return empresas;
-	}
-
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
 
 	@PostConstruct
 	public void listar() {
@@ -154,4 +123,58 @@ public class EmpresaControle implements Serializable {
 		}
 	}
 
+	public void imprimir() {
+		try {
+			String caminho = Faces.getRealPath("/reports/empresa.jasper");
+			Map<String, Object> parametros = new HashMap<>();
+			Connection conexao = HibernateUtil.getConexao();
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			// JasperPrintManager.printReport(relatorio, true);
+			JasperViewer.viewReport(relatorio);
+
+		} catch (JRException erro) {
+			erro.printStackTrace();
+			Messages.addGlobalError("Não foi possível gerar o relatório!");
+		}
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public List<Empresa> getEmpresas() {
+		return empresas;
+	}
+
+	public void setEmpresas(List<Empresa> empresas) {
+		this.empresas = empresas;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
 }

@@ -1,14 +1,18 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.CidadeDao;
@@ -16,6 +20,11 @@ import br.com.reislavajato.dao.EstadoDao;
 import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Estado;
+import br.com.reislavajato.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import br.com.reislavajato.entidade.Cadastro;
 
 /**
@@ -40,62 +49,6 @@ public class CadastroControle implements Serializable {
 	private String opcao;
 
 	private Boolean isRederiza = false;
-
-	public Cadastro getCadastro() {
-		return cadastro;
-	}
-
-	public void setCadastro(Cadastro cadastro) {
-		this.cadastro = cadastro;
-	}
-
-	public List<Cadastro> getCadastros() {
-		return cadastros;
-	}
-
-	public void setCadastros(List<Cadastro> cadastros) {
-		this.cadastros = cadastros;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-
-	public String getOpcao() {
-		return opcao;
-	}
-
-	public void setOpcao(String opcao) {
-		this.opcao = opcao;
-	}
-
-	public Boolean getIsRederiza() {
-		return isRederiza;
-	}
-
-	public void setIsRederiza(Boolean isRederiza) {
-		this.isRederiza = isRederiza;
-	}
 
 	@PostConstruct
 	public void listar() {
@@ -171,5 +124,75 @@ public class CadastroControle implements Serializable {
 		}
 	}
 
+	public void imprimir() {
+		try {
+			String caminho = Faces.getRealPath("/reports/cadastro.jasper");
+			Map<String, Object> parametros = new HashMap<>();
+			Connection conexao = HibernateUtil.getConexao();
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			// JasperPrintManager.printReport(relatorio, true);
+			JasperViewer.viewReport(relatorio);
+
+		} catch (JRException erro) {
+			erro.printStackTrace();
+			Messages.addGlobalError("Não foi possível gerar o relatório!");
+		}
+	}
+
+	public Cadastro getCadastro() {
+		return cadastro;
+	}
+
+	public void setCadastro(Cadastro cadastro) {
+		this.cadastro = cadastro;
+	}
+
+	public List<Cadastro> getCadastros() {
+		return cadastros;
+	}
+
+	public void setCadastros(List<Cadastro> cadastros) {
+		this.cadastros = cadastros;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
+
+	public String getOpcao() {
+		return opcao;
+	}
+
+	public void setOpcao(String opcao) {
+		this.opcao = opcao;
+	}
+
+	public Boolean getIsRederiza() {
+		return isRederiza;
+	}
+
+	public void setIsRederiza(Boolean isRederiza) {
+		this.isRederiza = isRederiza;
+	}
 
 }
