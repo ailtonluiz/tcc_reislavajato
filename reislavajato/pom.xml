@@ -151,6 +151,9 @@
 			<version>6.1.1</version>
 		</dependency>
 
+		<!-- iReports -->
+
+
 		<!-- Apache Shiro Core -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
