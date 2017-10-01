@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  * @author ailtonluiz
@@ -18,6 +19,9 @@ public class Usuario extends GenericEntity {
 
 	@Column(nullable = false, length = 50)
 	private String senha;
+
+	@Transient
+	private String senhaSemCriptografia;
 
 	@Column(nullable = false, name = "tipo_usuario")
 	private Character tipoUsuario;
@@ -43,6 +47,14 @@ public class Usuario extends GenericEntity {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getSenhaSemCriptografia() {
+		return senhaSemCriptografia;
+	}
+
+	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
+		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
 	public Character getTipoUsuario() {

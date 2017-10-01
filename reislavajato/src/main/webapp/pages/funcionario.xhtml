@@ -131,6 +131,7 @@
 						value="#{funcionarioControle.funcionario.tipoSanguineo}"
 						required="false"
 						requiredMessage="Por favor informe o tipo sanguíneo" />
+
 					<p:outputLabel for="fone" value="Fone:" />
 					<p:inputMask id="fone" mask="(99)9999-9999" size="15"
 						value="#{funcionarioControle.funcionario.telefone}"
@@ -138,7 +139,11 @@
 					<p:outputLabel for="cel" value="Cel:" />
 					<p:inputMask id="cel" mask="(99)9.9999-9999"
 						value="#{funcionarioControle.funcionario.celular}" required="true"
-						requiredMessage="Informe o telefone!" />
+						requiredMessage="Informe o celular!" />
+					<p:outputLabel value="Dt Nasc:"/>
+						<p:calendar value="#{funcionarioControle.funcionario.dtNasc}" size="15" />
+						
+					
 				</h:panelGrid>
 
 				<h:panelGrid id="painelEnd" columns="2">

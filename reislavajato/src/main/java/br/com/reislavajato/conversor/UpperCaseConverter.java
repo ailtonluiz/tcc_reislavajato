@@ -12,8 +12,8 @@ import javax.faces.convert.FacesConverter;
  * @Criado por: ailtonluiz
  * @Data: 10 de set de 2017
  */
-@FacesConverter("conversorMaisculo")
-public class ConversorMaisculo implements Converter {
+@FacesConverter("upperCaseConverter")
+public class UpperCaseConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext contexto, UIComponent componente, String valor) {
 		if (valor == null) {

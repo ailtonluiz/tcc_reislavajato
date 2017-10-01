@@ -1,11 +1,14 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -29,6 +32,10 @@ public class Funcionario extends GenericEntity {
 
 	@Column(length = 100, nullable = false)
 	private String endereco;
+
+	@Column(name = "dt_nasc")
+	@Temporal(TemporalType.DATE)
+	private Date dtNasc;
 
 	@Column(length = 10, nullable = false)
 	private String cep;
@@ -113,6 +120,14 @@ public class Funcionario extends GenericEntity {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public Date getDtNasc() {
+		return dtNasc;
+	}
+
+	public void setDtNasc(Date dtNasc) {
+		this.dtNasc = dtNasc;
 	}
 
 	public String getCep() {

@@ -112,4 +112,8 @@ public class UsuarioControle implements Serializable {
 		}
 
 	}
+
+	public void acessar() {
+
+	}
 }

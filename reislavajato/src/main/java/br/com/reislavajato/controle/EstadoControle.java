@@ -109,7 +109,7 @@ public class EstadoControle implements Serializable {
 			Connection conexao = HibernateUtil.getConexao();
 			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
 			// JasperPrintManager.printReport(relatorio, true);
-			JasperViewer.viewReport(relatorio);
+			JasperViewer.viewReport(relatorio, false);
 
 		} catch (JRException erro) {
 			erro.printStackTrace();
