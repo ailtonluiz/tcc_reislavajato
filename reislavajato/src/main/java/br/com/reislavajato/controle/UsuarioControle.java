@@ -80,7 +80,7 @@ public class UsuarioControle implements Serializable {
 
 	public void salvar() {
 		try {
-			usuarioDao.merge(usuario);
+			usuarioDao.salvar(usuario);
 			listar();
 			novo();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
