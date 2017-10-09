@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="veiculo" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eac7f807-b02f-449c-a7c4-d91bf689bd81">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[bGF2YWphdG8uZXN0YWRvIEFTICwzMjYsMTkxLDJmNjQ2NTBjLTg5NzYtNGI4MS1hZjhmLTkyOTQw
+MTIzM2FlNztsYXZhamF0by5tYXJjYSBBUyAsMjc2LDMzMCxiZWM2YmQwOS1lNTdiLTQzYzktODEz
+ZS01MzNhZjlkMTA3MTQ7bGF2YWphdG8uZW1wcmVzYSBBUyAsMzMsMzAsMThiMjJhZGMtNTVkZC00
+MGI2LThjMjQtOWU2OTI4MDZkOGVhO2xhdmFqYXRvLnZlaWN1bG8gQVMgLDQwOCwzNTUsMWU2OGYw
+NmUtYzc1Yi00NmU4LWFmMDMtMDQ5MGY2OGYzYmU2O2xhdmFqYXRvLmNpZGFkZSBBUyAsMjM0LDI0
+LGNlMGE2M2UyLTcxYTAtNGJhOC1iYTE5LWM1YWRmOTg2MmI1Yzs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Reis Lavajato Data Adapter"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT lavajato.empresa.cnpj,
+	lavajato.empresa.razao_social,
+	lavajato.empresa.telefone,
+	lavajato.empresa.endereco,
+	lavajato.empresa.bairro,
+	lavajato.empresa.cep,
+	lavajato.empresa.email,
+	lavajato.empresa.fantasia,
+	lavajato.empresa.numero,
+	lavajato.cidade.nome,
+	lavajato.estado.sigla,
+	lavajato.veiculo.codigo,
+	lavajato.veiculo.cor,
+	lavajato.veiculo.modelo,
+	lavajato.veiculo.placa_veiculo,
+	lavajato.marca.abreviada
+FROM lavajato.empresa
+	INNER JOIN lavajato.cidade ON 
+	 lavajato.empresa.cidade_codigo = lavajato.cidade.codigo 
+	INNER JOIN lavajato.estado ON 
+	 lavajato.cidade.estado_codigo = lavajato.estado.codigo ,
+	lavajato.veiculo
+	INNER JOIN lavajato.marca ON 
+	 lavajato.veiculo.marca_codigo = lavajato.marca.codigo]]>
+	</queryString>
+	<field name="cnpj" class="java.lang.String"/>
+	<field name="razao_social" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="cep" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="fantasia" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="sigla" class="java.lang.String"/>
+	<field name="codigo" class="java.lang.Long"/>
+	<field name="cor" class="java.lang.String"/>
+	<field name="modelo" class="java.lang.String"/>
+	<field name="placa_veiculo" class="java.lang.String"/>
+	<field name="abreviada" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="223a90c7-c94a-49b1-aba4-ce6fb4bd7694"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="120" y="0" width="439" height="64" uuid="00fb2a62-b07b-44e0-bbfc-c70273fddf52"/>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="b862e2eb-eaf9-476e-9db5-57ed083f99e6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="34" height="15" uuid="5178cca7-b3c8-426c-b538-8e60f2617516"/>
+				<text><![CDATA[cnpj]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="34" y="19" width="34" height="15" uuid="822ad850-73b2-438f-96c9-e8c3dfa807cb"/>
+				<text><![CDATA[razao_social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="68" y="19" width="34" height="15" uuid="e55a1145-a7cb-4537-8c64-7e95fa541c56"/>
+				<text><![CDATA[telefone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="102" y="19" width="34" height="15" uuid="1572b23a-0a92-477d-ba01-35ad96fa6c61"/>
+				<text><![CDATA[endereco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="136" y="19" width="34" height="15" uuid="971b91b4-674f-43de-baf1-403986157096"/>
+				<text><![CDATA[bairro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="170" y="19" width="34" height="15" uuid="1248c6ee-7af0-485d-b86f-1f624abafb35"/>
+				<text><![CDATA[cep]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="204" y="19" width="34" height="15" uuid="7061eb01-0421-4149-ba8e-b4d5f627623b"/>
+				<text><![CDATA[email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="238" y="19" width="34" height="15" uuid="26011511-9356-4bd6-87dd-944cad9ea447"/>
+				<text><![CDATA[fantasia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="272" y="19" width="34" height="15" uuid="ea3c0827-d073-48b5-b1fe-3ec4276bb903"/>
+				<text><![CDATA[numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="306" y="19" width="34" height="15" uuid="4d88c296-7fea-4bf8-937b-caea7a461342"/>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="340" y="19" width="34" height="15" uuid="a0534f2b-7cb0-479d-b2fa-e942db6e2ffa"/>
+				<text><![CDATA[sigla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="374" y="19" width="34" height="15" uuid="c8dfd8c4-e415-4f93-9a4d-3eea6b372e88"/>
+				<text><![CDATA[codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="408" y="19" width="34" height="15" uuid="08bbb939-8de8-4429-b93d-ba2d265e6c28"/>
+				<text><![CDATA[cor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="442" y="19" width="34" height="15" uuid="f05de54c-4ae4-4eaa-b384-0aee9bc4f528"/>
+				<text><![CDATA[modelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="476" y="19" width="34" height="15" uuid="8c5d8f7a-25ad-4221-8124-8eaff9422f7c"/>
+				<text><![CDATA[placa_veiculo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="510" y="19" width="34" height="15" uuid="04725c02-2085-4ce5-a3e8-91245cff8e4b"/>
+				<text><![CDATA[abreviada]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="39f48c34-b6ee-47f7-8876-c3aaee1eb021"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="34" height="15" uuid="c0493ce8-5bcd-4586-8f2b-8ed05e7416ab"/>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="34" y="0" width="34" height="15" uuid="49409386-6a0e-48bb-a193-0ddd1026ab95"/>
+				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="68" y="0" width="34" height="15" uuid="9cd3a1e2-7626-4116-b83e-efea983faab8"/>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="102" y="0" width="34" height="15" uuid="bb862d04-0a37-40d1-9409-a97d133e628b"/>
+				<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="136" y="0" width="34" height="15" uuid="caabf871-55b9-4104-a233-5e755460a2b3"/>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="170" y="0" width="34" height="15" uuid="d860dba8-5fc7-4330-b6b7-fe947f722178"/>
+				<textFieldExpression><![CDATA[$F{cep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="204" y="0" width="34" height="15" uuid="cca56739-e7ec-463b-bf0f-b8bc87b3eec4"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="238" y="0" width="34" height="15" uuid="999c2ff5-c94b-4b98-b836-211ed5ead716"/>
+				<textFieldExpression><![CDATA[$F{fantasia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="272" y="0" width="34" height="15" uuid="2581d378-a944-47fa-bd16-2438702ad08c"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="306" y="0" width="34" height="15" uuid="dbce7b59-f25c-4533-b9ce-c9c082e1bde1"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="340" y="0" width="34" height="15" uuid="85750da7-abaf-4291-8b3a-b7d64c2f5e5e"/>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="374" y="0" width="34" height="15" uuid="966acadd-8ae5-4125-876a-cc36e64123e0"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="408" y="0" width="34" height="15" uuid="51723832-e99f-4f9c-9e9c-63571d2f58cc"/>
+				<textFieldExpression><![CDATA[$F{cor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="442" y="0" width="34" height="15" uuid="bd7fdd54-d33e-4990-ac65-4c23528a60a7"/>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="476" y="0" width="34" height="15" uuid="d47caac3-f827-488b-92c8-caa1ef036efa"/>
+				<textFieldExpression><![CDATA[$F{placa_veiculo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="510" y="0" width="34" height="15" uuid="2e570ff0-7ba6-4eb2-9617-384333e4896f"/>
+				<textFieldExpression><![CDATA[$F{abreviada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="71ea44de-7a93-4d4f-a52c-4c16cd00015b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="e535a8ac-10a9-4f26-87e0-60b805cdf9c3"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="fff3e988-d444-495e-be94-0eff0d0462e7"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="b6dc2968-370c-49a3-a17a-642c31c3ecd6"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
