@@ -18,12 +18,9 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
-import br.com.reislavajato.dao.CidadeDao;
 import br.com.reislavajato.dao.EmpresaDao;
-import br.com.reislavajato.dao.EstadoDao;
-import br.com.reislavajato.entidade.Cidade;
 import br.com.reislavajato.entidade.Empresa;
-import br.com.reislavajato.entidade.Estado;
+import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -39,22 +36,17 @@ import net.sf.jasperreports.view.JasperViewer;
 @SuppressWarnings("serial")
 public class EmpresaControle implements Serializable {
 
-	EmpresaDao empresaDao = new EmpresaDao();
-	EstadoDao estadoDao = new EstadoDao();
-	CidadeDao cidadeDao = new CidadeDao();
+	private EmpresaDao empresaDao = new EmpresaDao();
 
 	private Empresa empresa;
 	private List<Empresa> empresas;
-	private Estado estado;
-	private List<Estado> estados;
-	private List<Cidade> cidades;
+	private List<Municipio> municipios;
 
 	@PostConstruct
 	public void listar() {
 		try {
 			empresas = empresaDao.listar();
-			estados = estadoDao.listar("nome");
-			cidades = new ArrayList<Cidade>();
+			municipios = new ArrayList<Municipio>();
 
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Não foi possível listar!");
@@ -65,9 +57,7 @@ public class EmpresaControle implements Serializable {
 	public void novo() {
 		try {
 			empresa = new Empresa();
-			estado = new Estado();
-			estados = estadoDao.listar("nome");
-			cidades = new ArrayList<Cidade>();
+			municipios = new ArrayList<Municipio>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 		}
@@ -88,9 +78,7 @@ public class EmpresaControle implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			empresa = (Empresa) evento.getComponent().getAttributes().get("registroSelecionado");
-			estado = empresa.getCidade().getEstado();
 			listar();
-			popular();
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -108,19 +96,6 @@ public class EmpresaControle implements Serializable {
 			erro.printStackTrace();
 		}
 
-	}
-
-	public void popular() {
-		try {
-			if (estado != null) {
-				cidades = cidadeDao.buscarPorEstado(estado.getCodigo());
-			} else {
-				cidades = new ArrayList<>();
-			}
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
-		}
 	}
 
 	public void imprimir() {
@@ -154,27 +129,12 @@ public class EmpresaControle implements Serializable {
 		this.empresas = empresas;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public List<Municipio> getMunicipios() {
+		return municipios;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setMunicipios(List<Municipio> municipios) {
+		this.municipios = municipios;
 	}
 
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
 }

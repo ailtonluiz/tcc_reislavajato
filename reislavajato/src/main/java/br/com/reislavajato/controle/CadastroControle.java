@@ -2,7 +2,6 @@ package br.com.reislavajato.controle;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,17 +14,15 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
-import br.com.reislavajato.dao.CidadeDao;
-import br.com.reislavajato.dao.EstadoDao;
 import br.com.reislavajato.dao.CadastroDao;
-import br.com.reislavajato.entidade.Cidade;
-import br.com.reislavajato.entidade.Estado;
+import br.com.reislavajato.dao.MunicipioDao;
+import br.com.reislavajato.entidade.Cadastro;
+import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-import br.com.reislavajato.entidade.Cadastro;
 
 /**
  * @Criado por: ailtonluiz
@@ -36,15 +33,10 @@ import br.com.reislavajato.entidade.Cadastro;
 @ViewScoped
 public class CadastroControle implements Serializable {
 
-	CadastroDao cadastroDao = new CadastroDao();
-	EstadoDao estadoDao = new EstadoDao();
-	CidadeDao cidadeDao = new CidadeDao();
-
-	private Cadastro cadastro;
+	private CadastroDao cadastroDao = new CadastroDao();
+	private MunicipioDao municipioDao = new MunicipioDao();
+	private Cadastro cadastro = new Cadastro();
 	private List<Cadastro> cadastros;
-	private Estado estado;
-	private List<Estado> estados;
-	private List<Cidade> cidades;
 
 	private String opcao;
 
@@ -54,21 +46,19 @@ public class CadastroControle implements Serializable {
 	public void listar() {
 		try {
 			cadastros = cadastroDao.listar();
-			estados = estadoDao.listar("nome");
-			cidades = new ArrayList<Cidade>();
-
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar a(s) cadastro(s)!");
 			erro.printStackTrace();
 		}
 	}
 
+	public List<Municipio> getMunicipios() {
+		return municipioDao.listarPorUf(cadastro.getMunicipio().getUf());
+	}
+
 	public void novo() {
 		try {
 			cadastro = new Cadastro();
-			estado = new Estado();
-			estados = estadoDao.listar("nome");
-			cidades = new ArrayList<Cidade>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -102,22 +92,7 @@ public class CadastroControle implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			cadastro = (Cadastro) evento.getComponent().getAttributes().get("registroSelecionado");
-			estado = cadastro.getCidade().getEstado();
 			listar();
-			popular();
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
-		}
-	}
-
-	public void popular() {
-		try {
-			if (estado != null) {
-				cidades = cidadeDao.buscarPorEstado(estado.getCodigo());
-			} else {
-				cidades = new ArrayList<>();
-			}
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -153,30 +128,6 @@ public class CadastroControle implements Serializable {
 
 	public void setCadastros(List<Cadastro> cadastros) {
 		this.cadastros = cadastros;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
 	}
 
 	public String getOpcao() {

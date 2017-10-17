@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cidade" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eac7f807-b02f-449c-a7c4-d91bf689bd81">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Municipio" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eac7f807-b02f-449c-a7c4-d91bf689bd81">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -10,17 +10,17 @@
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<parameter name="CIDADE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="MUNICIPIO" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT lavajato.cidade.codigo,
-	lavajato.cidade.nome,
+		<![CDATA[SELECT lavajato.municipio.codigo,
+	lavajato.municipio.nome,
 	lavajato.estado.sigla
-FROM lavajato.cidade
+FROM lavajato.municipio
 	INNER JOIN lavajato.estado ON 
-	 lavajato.cidade.estado_codigo = lavajato.estado.codigo 
+	 lavajato.municipio.estado_codigo = lavajato.estado.codigo 
 WHERE 
-	 lavajato.estado.nome LIKE $P{CIDADE} 
-ORDER BY lavajato.cidade.codigo ASC]]>
+	 lavajato.estado.nome LIKE $P{MUNICIPIO} 
+ORDER BY lavajato.municipio.codigo ASC]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Long"/>
 	<field name="nome" class="java.lang.String"/>

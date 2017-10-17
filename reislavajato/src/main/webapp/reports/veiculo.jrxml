@@ -27,7 +27,7 @@ LGNlMGE2M2UyLTcxYTAtNGJhOC1iYTE5LWM1YWRmOTg2MmI1Yzs=]]>
 	lavajato.empresa.email,
 	lavajato.empresa.fantasia,
 	lavajato.empresa.numero,
-	lavajato.cidade.nome,
+	lavajato.municipio.nome,
 	lavajato.estado.sigla,
 	lavajato.veiculo.codigo,
 	lavajato.veiculo.cor,
@@ -35,10 +35,10 @@ LGNlMGE2M2UyLTcxYTAtNGJhOC1iYTE5LWM1YWRmOTg2MmI1Yzs=]]>
 	lavajato.veiculo.placa_veiculo,
 	lavajato.marca.abreviada
 FROM lavajato.empresa
-	INNER JOIN lavajato.cidade ON 
-	 lavajato.empresa.cidade_codigo = lavajato.cidade.codigo 
+	INNER JOIN lavajato.municipio ON 
+	 lavajato.empresa.municipio_codigo = lavajato.municipio.codigo 
 	INNER JOIN lavajato.estado ON 
-	 lavajato.cidade.estado_codigo = lavajato.estado.codigo ,
+	 lavajato.municipio.estado_codigo = lavajato.estado.codigo ,
 	lavajato.veiculo
 	INNER JOIN lavajato.marca ON 
 	 lavajato.veiculo.marca_codigo = lavajato.marca.codigo]]>

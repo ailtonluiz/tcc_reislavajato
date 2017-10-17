@@ -2,19 +2,20 @@ package br.com.reislavajato.entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import br.com.reislavajato.enumeradores.EnumUf;
 
 @SuppressWarnings("serial")
 @Entity
-public class Cidade extends GenericEntity {
+public class Municipio extends GenericEntity {
 
 	@Column(nullable = false)
 	private String nome;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Estado estado;
+	@Enumerated(EnumType.STRING)
+	private EnumUf uf = EnumUf.AC;
 
 	public String getNome() {
 		return nome;
@@ -24,12 +25,12 @@ public class Cidade extends GenericEntity {
 		this.nome = nome;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public EnumUf getUf() {
+		return uf;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setUf(EnumUf uf) {
+		this.uf = uf;
 	}
 
 }

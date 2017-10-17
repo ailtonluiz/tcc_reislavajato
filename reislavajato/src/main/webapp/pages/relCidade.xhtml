@@ -12,27 +12,27 @@
 
 	<ui:define name="conteudo">
 		<h:form id="frmListagem">
-			<p:panel header="Listagem de cidades">
+			<p:panel header="Listagem de Municipios">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
-					paginator="true" value="#{cidadeControle.cidades}"
-					paginatorPosition="top" var="cidade" rows="5">
+					paginator="true" value="#{MunicipioControle.Municipios}"
+					paginatorPosition="top" var="Municipio" rows="5">
 					<f:facet name="footer">
 						<p:commandButton icon="ui-icon-print" value="Gerar Relatório"
 							oncomplete="PF('dialogo').show();"
-							actionListener="#{cidadeControle.imprimir}"
+							actionListener="#{MunicipioControle.imprimir}"
 							update=":frmListagem:tabela">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Cidade" filterBy="#{cidade.nome}"
+					<p:column headerText="Municipio" filterBy="#{Municipio.nome}"
 						filterMatchMode="contains">
-						<h:outputText value="#{cidade.nome}" />
+						<h:outputText value="#{Municipio.nome}" />
 					</p:column>
 
-					<p:column headerText="UF" filterBy="#{cidade.estado.nome}"
+					<p:column headerText="UF" filterBy="#{Municipio.municipio.uf.descricao}"
 						style="width:8%">
-						<h:outputText value="#{cidade.estado.sigla}" />
+						<h:outputText value="#{Municipio.municipio.uf.abreviado}" />
 					</p:column>
 
 				</p:dataTable>

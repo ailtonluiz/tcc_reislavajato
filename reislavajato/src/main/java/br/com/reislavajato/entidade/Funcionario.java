@@ -45,7 +45,7 @@ public class Funcionario extends GenericEntity {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Cidade cidade;
+	private Municipio Municipio;
 
 	@Column(length = 13)
 	private String telefone;
@@ -146,12 +146,12 @@ public class Funcionario extends GenericEntity {
 		this.bairro = bairro;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public Municipio getMunicipio() {
+		return Municipio;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setMunicipio(Municipio Municipio) {
+		this.Municipio = Municipio;
 	}
 
 	public String getTelefone() {

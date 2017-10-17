@@ -36,7 +36,7 @@
 
 					<p:column headerText="Endereço" style="width:38%">
 						<h:outputText
-							value="#{funcionario.endereco}, #{funcionario.bairro}, #{funcionario.cidade.nome} - #{funcionario.cidade.estado.sigla}" />
+							value="#{funcionario.endereco}, #{funcionario.bairro}, #{funcionario.Municipio.nome} - #{funcionario.Municipio.estado.sigla}" />
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">
@@ -165,27 +165,27 @@
 					<p:inputMask id="cep" mask="99.999-999"
 						value="#{funcionarioControle.funcionario.cep}" size="20"
 						maxlength="10" />
-					<p:outputLabel for="estado" value="Estado:" />
-					<p:selectOneMenu id="estado" filter="true"
+<!-- 					<p:outputLabel for="estado" value="Estado:" /> -->
+<!-- 					<p:selectOneMenu id="estado" filter="true" -->
+<!-- 						converter="omnifaces.SelectItemsConverter" -->
+<!-- 						value="#{funcionarioControle.estado}"> -->
+<!-- 						<f:selectItem noSelectionOption="true" -->
+<!-- 							itemLabel="Selecione um estado" /> -->
+<!-- 						<f:selectItems value="#{funcionarioControle.estados}" var="estado" -->
+<!-- 							itemValue="#{estado}" -->
+<!-- 							itemLabel="#{estado.nome} - #{estado.sigla}" /> -->
+<!-- 						<p:ajax listener="#{funcionarioControle.popular}" -->
+<!-- 							update=":frmCadastro:Municipio" /> -->
+<!-- 					</p:selectOneMenu> -->
+					<p:outputLabel for="Municipio" value="Municipio:" />
+					<p:selectOneMenu id="Municipio" filter="true" required="true"
+						requiredMessage="É necessário informar uma Municipio para realizar o cadastro"
 						converter="omnifaces.SelectItemsConverter"
-						value="#{funcionarioControle.estado}">
+						value="#{funcionarioControle.funcionario.Municipio}">
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione um estado" />
-						<f:selectItems value="#{funcionarioControle.estados}" var="estado"
-							itemValue="#{estado}"
-							itemLabel="#{estado.nome} - #{estado.sigla}" />
-						<p:ajax listener="#{funcionarioControle.popular}"
-							update=":frmCadastro:cidade" />
-					</p:selectOneMenu>
-					<p:outputLabel for="cidade" value="Cidade:" />
-					<p:selectOneMenu id="cidade" filter="true" required="true"
-						requiredMessage="É necessário informar uma cidade para realizar o cadastro"
-						converter="omnifaces.SelectItemsConverter"
-						value="#{funcionarioControle.funcionario.cidade}">
-						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione uma cidade" />
-						<f:selectItems value="#{funcionarioControle.cidades}" var="cidade"
-							itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+							itemLabel="Selecione uma Municipio" />
+						<f:selectItems value="#{funcionarioControle.Municipios}" var="Municipio"
+							itemValue="#{Municipio}" itemLabel="#{Municipio.nome}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 

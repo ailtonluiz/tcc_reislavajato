@@ -132,17 +132,17 @@
 							itemValue="#{estado}"
 							itemLabel="#{estado.nome} - #{estado.sigla}" />
 						<p:ajax listener="#{cadastroControle.popular}"
-							update=":frmCadastro:cidade" />
+							update=":frmCadastro:Municipio" />
 					</p:selectOneMenu>
-					<p:outputLabel for="cidade" value="Cidade:" />
-					<p:selectOneMenu id="cidade" filter="true" required="true"
-						requiredMessage="É necessário informar uma cidade para realizar o cadastro"
+					<p:outputLabel for="Municipio" value="Municipio:" />
+					<p:selectOneMenu id="Municipio" filter="true" required="true"
+						requiredMessage="É necessário informar uma Municipio para realizar o cadastro"
 						converter="omnifaces.SelectItemsConverter"
-						value="#{cadastroControle.cadastro.cidade}">
+						value="#{cadastroControle.cadastro.Municipio}">
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione uma cidade" />
-						<f:selectItems value="#{cadastroControle.cidades}" var="cidade"
-							itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+							itemLabel="Selecione uma Municipio" />
+						<f:selectItems value="#{cadastroControle.Municipios}" var="Municipio"
+							itemValue="#{Municipio}" itemLabel="#{Municipio.nome}" />
 					</p:selectOneMenu>
 					<p:outputLabel for="fone" value="Telefone:" />
 					<p:inputMask id="fone" mask="(99)9999-9999" required="true"

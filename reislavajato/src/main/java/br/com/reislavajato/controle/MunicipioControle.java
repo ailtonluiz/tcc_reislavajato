@@ -15,10 +15,8 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
 
-import br.com.reislavajato.dao.CidadeDao;
-import br.com.reislavajato.dao.EstadoDao;
-import br.com.reislavajato.entidade.Cidade;
-import br.com.reislavajato.entidade.Estado;
+import br.com.reislavajato.dao.MunicipioDao;
+import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -30,55 +28,28 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean
+@ManagedBean(name = "MunicipioControle")
 @ViewScoped
-public class CidadeControle implements Serializable {
+public class MunicipioControle implements Serializable {
 
-	CidadeDao cidadeDao = new CidadeDao();
-	EstadoDao estadoDao = new EstadoDao();
+	private MunicipioDao municipioDao = new MunicipioDao();
 
-	private Cidade cidade;
-	private List<Cidade> cidades;
-	private List<Estado> estados;
-
-	public Cidade getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
-	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
+	private Municipio municipio = new Municipio();
+	private List<Municipio> municipios;
 
 	@PostConstruct
 	public void listar() {
 		try {
-			cidades = cidadeDao.listar("nome");
+			municipios = municipioDao.listar("nome");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar as cidades!");
+			Messages.addGlobalError("Não foi possível listar as Municipios!");
 			erro.printStackTrace();
 		}
 	}
 
 	public void novo() {
 		try {
-			cidade = new Cidade();
-			estados = estadoDao.listar("nome");
+			municipio = new Municipio();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -87,7 +58,7 @@ public class CidadeControle implements Serializable {
 
 	public void salvar() {
 		try {
-			cidadeDao.merge(cidade);
+			municipioDao.merge(municipio);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -98,8 +69,8 @@ public class CidadeControle implements Serializable {
 
 	public void excluir(ActionEvent evento) {
 		try {
-			cidade = (Cidade) evento.getComponent().getAttributes().get("registroSelecionado");
-			cidadeDao.excluir(cidade);
+			municipio = (Municipio) evento.getComponent().getAttributes().get("registroSelecionado");
+			municipioDao.excluir(municipio);
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
@@ -110,8 +81,7 @@ public class CidadeControle implements Serializable {
 
 	public void editar(ActionEvent evento) {
 		try {
-			cidade = (Cidade) evento.getComponent().getAttributes().get("registroSelecionado");
-			estados = estadoDao.listar();
+			municipio = (Municipio) evento.getComponent().getAttributes().get("registroSelecionado");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -122,17 +92,17 @@ public class CidadeControle implements Serializable {
 		try {
 			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("frmListagem:tabela");
 			Map<String, Object> filtros = tabela.getFilters();
-			
-			String estadoNome = (String) filtros.get("estado.nome");
 
-			String caminho = Faces.getRealPath("/reports/cidade.jasper");
-			
+//			String estadoNome = (String) filtros.get("estado.nome");
+
+			String caminho = Faces.getRealPath("/reports/municipio.jasper");
+
 			Map<String, Object> parametros = new HashMap<>();
-			if (estadoNome == null) {
-				parametros.put("CIDADE", "%%");
-			} else {
-				parametros.put("CIDADE", "%" + estadoNome + "%");
-			}
+//			if (estadoNome == null) {
+//				parametros.put("municipio", "%%");
+//			} else {
+//				parametros.put("municipio", "%" + estadoNome + "%");
+//			}
 
 			Connection conexao = HibernateUtil.getConexao();
 
@@ -144,4 +114,21 @@ public class CidadeControle implements Serializable {
 			erro.printStackTrace();
 		}
 	}
+
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+	}
+
+	public List<Municipio> getMunicipios() {
+		return municipios;
+	}
+
+	public void setMunicipios(List<Municipio> municipios) {
+		this.municipios = municipios;
+	}
+
 }

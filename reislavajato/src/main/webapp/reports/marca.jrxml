@@ -18,7 +18,7 @@
 	lavajato.empresa.numero,
 	lavajato.empresa.bairro,
 	lavajato.empresa.cep,
-	lavajato.cidade.nome,
+	lavajato.municipio.nome,
 	lavajato.estado.sigla,
 	lavajato.empresa.telefone,
 	lavajato.empresa.email,
@@ -26,10 +26,10 @@
 	lavajato.marca.nome,
 	lavajato.marca.abreviada
 FROM lavajato.empresa
-	INNER JOIN lavajato.cidade ON 
-	 lavajato.empresa.cidade_codigo = lavajato.cidade.codigo 
+	INNER JOIN lavajato.municipio ON 
+	 lavajato.empresa.municipio_codigo = lavajato.municipio.codigo 
 	INNER JOIN lavajato.estado ON 
-	 lavajato.cidade.estado_codigo = lavajato.estado.codigo ,
+	 lavajato.municipio.estado_codigo = lavajato.estado.codigo ,
 	lavajato.marca]]>
 	</queryString>
 	<field name="cnpj" class="java.lang.String"/>

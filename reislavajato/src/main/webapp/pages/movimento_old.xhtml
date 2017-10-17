@@ -129,24 +129,24 @@
 								<h:panelGrid id="painel" columns="2">
 									<p:outputLabel for="estado" value="Estado" />
 									<p:selectOneMenu id="estado" filter="true"
-										value="#{cidadeControle.cidade.estado}"
+										value="#{MunicipioControle.Municipio.estado}"
 										converter="omnifaces.SelectItemsConverter" required="true"
 										requiredMessage="É obrigatório informar o estado!">
 										<f:selectItem noSelectionOption="true"
 											itemLabel="Selecione um estado" />
-										<f:selectItems value="#{cidadeControle.estados}" var="cid"
+										<f:selectItems value="#{MunicipioControle.estados}" var="cid"
 											itemValue="#{cid}" itemLabel="#{cid.nome}" />
 									</p:selectOneMenu>
 
-									<p:outputLabel for="cidade" value="Cidade:" />
-									<p:inputText id="cidade" size="20" maxlength="20"
-										value="#{cidadeControle.cidade.nome}" required="true"
-										requiredMessage="É obrigatório informar o nome da cidade" />
+									<p:outputLabel for="Municipio" value="Municipio:" />
+									<p:inputText id="Municipio" size="20" maxlength="20"
+										value="#{MunicipioControle.Municipio.nome}" required="true"
+										requiredMessage="É obrigatório informar o nome da Municipio" />
 
 								</h:panelGrid>
 								<h:panelGrid columns="2">
 									<p:commandButton value="Salvar"
-										actionListener="#{cidadeControle.salvar}" />
+										actionListener="#{MunicipioControle.salvar}" />
 									<p:commandButton value="Cancelar"
 										oncomplete="PF('dialogo').hide();" />
 								</h:panelGrid>

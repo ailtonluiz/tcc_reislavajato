@@ -67,7 +67,7 @@ public class Cadastro extends GenericEntity {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Cidade cidade;
+	private Municipio municipio = new Municipio();
 
 	public String getRazaoSocial() {
 		return razaoSocial;
@@ -197,12 +197,12 @@ public class Cadastro extends GenericEntity {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public Municipio getMunicipio() {
+		return municipio;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
 	}
 
 }

@@ -13,13 +13,10 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.CargoDao;
-import br.com.reislavajato.dao.CidadeDao;
-import br.com.reislavajato.dao.EstadoDao;
 import br.com.reislavajato.dao.FuncionarioDao;
 import br.com.reislavajato.entidade.Cargo;
-import br.com.reislavajato.entidade.Cidade;
-import br.com.reislavajato.entidade.Estado;
 import br.com.reislavajato.entidade.Funcionario;
+import br.com.reislavajato.entidade.Municipio;
 
 /**
  * @Criado por: ailtonluiz
@@ -30,16 +27,12 @@ import br.com.reislavajato.entidade.Funcionario;
 @ViewScoped
 public class FuncionarioControle implements Serializable {
 
-	FuncionarioDao funcionarioDao = new FuncionarioDao();
-	CidadeDao cidadeDao = new CidadeDao();
-	EstadoDao estadoDao = new EstadoDao();
-	CargoDao cargoDao = new CargoDao();
+	private FuncionarioDao funcionarioDao = new FuncionarioDao();
+	private CargoDao cargoDao = new CargoDao();
 
 	private Funcionario funcionario;
 	private List<Funcionario> funcionarios;
-	private Estado estado;
-	private List<Cidade> cidades;
-	private List<Estado> estados;
+	private List<Municipio> municipios;
 	private List<Cargo> cargos;
 
 	@PostConstruct
@@ -47,8 +40,7 @@ public class FuncionarioControle implements Serializable {
 		try {
 			funcionarios = funcionarioDao.listar();
 			cargos = cargoDao.listar();
-			estados = estadoDao.listar("nome");
-			cidades = new ArrayList<Cidade>();
+			municipios = new ArrayList<Municipio>();
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) funcionário(s)!");
@@ -60,8 +52,7 @@ public class FuncionarioControle implements Serializable {
 	public void novo() {
 		try {
 			funcionario = new Funcionario();
-			estados = estadoDao.listar("nome");
-			cidades = new ArrayList<Cidade>();
+			municipios = new ArrayList<Municipio>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -95,28 +86,13 @@ public class FuncionarioControle implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
-			estado = funcionario.getCidade().getEstado();
 			listar();
-			popular();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}
 	}
 
-	public void popular() {
-		try {
-			if (estado != null) {
-				cidades = cidadeDao.buscarPorEstado(estado.getCodigo());
-			} else {
-				cidades = new ArrayList<>();
-			}
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
-		}
-	}
-	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -133,28 +109,12 @@ public class FuncionarioControle implements Serializable {
 		this.funcionarios = funcionarios;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public List<Municipio> getMunicipios() {
+		return municipios;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
+	public void setMunicipios(List<Municipio> municipios) {
+		this.municipios = municipios;
 	}
 
 	public List<Cargo> getCargos() {

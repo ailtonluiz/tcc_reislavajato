@@ -25,8 +25,7 @@
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.reislavajato.entidade.Cargo" />
 		<mapping class="br.com.reislavajato.entidade.Cadastro" />
-		<mapping class="br.com.reislavajato.entidade.Cidade" />
-		<mapping class="br.com.reislavajato.entidade.Estado" />
+		<mapping class="br.com.reislavajato.entidade.Municipio" />
 		<mapping class="br.com.reislavajato.entidade.Empresa" />
 		<mapping class="br.com.reislavajato.entidade.Funcionario" />
 		<mapping class="br.com.reislavajato.entidade.ItemMovimento" />
