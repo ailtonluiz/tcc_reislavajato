@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+			<p:panel header="Listagem de Clientes">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{empresaControle.empresas}"
+					paginatorPosition="top" var="empresa" rows="5">
+					<f:facet name="footer">
+						<p:commandButton value="Novo" icon="ui-icon-plus"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{empresaControle.novo}"
+							update=":frmCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Razão Social" style="width:30%">
+						<h:outputText value="#{empresa.razaoSocial}" />
+					</p:column>
+
+					<p:column headerText="Fantasia" style="width:30%">
+						<h:outputText value="#{empresa.fantasia}" />
+					</p:column>
+
+					<p:column headerText="CNPJ" style="width:7%">
+						<h:outputText value="#{empresa.cnpj}" />
+					</p:column>
+
+
+					<p:column headerText="Opções" style="width:7%">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{empresaControle.excluir}"
+							update=":mensagem :frmListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o registro?" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{empresa}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{empresaControle.editar}"
+							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+
+							<f:attribute name="registroSelecionado" value="#{empresa}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
+		<!-- Tela de cadastros -->
+		<p:dialog header="Cadastro de empresa" widgetVar="dialogo"
+			draggable="true" resizable="false" modal="true">
+			<h:form id="frmCadastro">
+
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="cnpj" value="CNPJ:" />
+					<p:inputMask mask="99.999.999/9999-99" id="cnpj" size="18"
+						maxlength="18" value="#{empresaControle.empresa.cnpj}" />
+
+					<p:outputLabel for="ie" value="Inscrição Estadual:" />
+					<p:inputText id="ie" size="20" maxlength="20"
+						value="#{empresaControle.empresa.inscEstadual}" />
+				</h:panelGrid>
+
+
+				<h:panelGrid id="painel4" columns="2">
+					<p:outputLabel for="razao" value="Razão Social:" />
+					<p:inputText id="razao"
+						value="#{cadastroControle.cadastro.razaoSocial}" size="82"
+						maxlength="82" required="true"
+						requiredMessage="Informe a Razão Social" />
+
+					<p:outputLabel for="fantasia" value="Fantasia:" />
+					<p:inputText id="fantasia"
+						value="#{cadastroControle.cadastro.nomeFantasia}" size="82"
+						maxlength="82" required="false"
+						requiredMessage="Informe o nome Fantasia" />
+				</h:panelGrid>
+
+				<h:panelGrid id="painel5" columns="4">
+					<p:outputLabel for="rua" value="Rua:" />
+					<p:inputText id="rua" value="#{cadastroControle.cadastro.rua}"
+						size="77" maxlength="65" required="true"
+						requiredMessage="Informe o nome da rua" />
+					<h:outputLabel for="num" value="Nº:" />
+					<p:inputText id="num" value="#{cadastroControle.cadastro.numero}"
+						size="5" maxlength="5" required="true"
+						requiredMessage="Se não tiver número informe S/N" />
+				</h:panelGrid>
+
+				<h:panelGrid id="painel6" columns="6">
+					<h:outputLabel for="comp" value="Compl.:" />
+					<p:inputText id="comp"
+						value="#{cadastroControle.cadastro.complemento}" size="25"
+						maxlength="25" />
+					<h:outputLabel for="bairro" value="Bairro:" />
+					<p:inputText id="bairro"
+						value="#{cadastroControle.cadastro.bairro}" size="29"
+						maxlength="40" />
+					<h:outputLabel for="cep" value="CEP:" />
+					<p:inputMask id="cep" mask="99.999-999"
+						value="#{cadastroControle.cadastro.cep}" size="10" maxlength="10" />
+				</h:panelGrid>
+
+				<h:panelGrid id="painel7" columns="4">
+					<p:outputLabel for="estado" value="Estado:" />
+					<p:selectOneMenu id="estado" filter="true"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{cadastroControle.estado}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um estado" />
+						<f:selectItems value="#{cadastroControle.estados}" var="estado"
+							itemValue="#{estado}"
+							itemLabel="#{estado.nome} - #{estado.sigla}" />
+						<p:ajax listener="#{cadastroControle.popular}"
+							update=":frmCadastro:Municipio" />
+					</p:selectOneMenu>
+					<p:outputLabel for="Municipio" value="Municipio:" />
+					<p:selectOneMenu id="Municipio" filter="true" required="true"
+						requiredMessage="É necessário informar uma Municipio para realizar o cadastro"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{cadastroControle.cadastro.Municipio}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma Municipio" />
+						<f:selectItems value="#{cadastroControle.Municipios}" var="Municipio"
+							itemValue="#{Municipio}" itemLabel="#{Municipio.nome}" />
+					</p:selectOneMenu>
+					<p:outputLabel for="fone" value="Telefone:" />
+					<p:inputMask id="fone" mask="(99)9999-9999" required="true"
+						requiredMessage="Informe o telefone"
+						value="#{cadastroControle.cadastro.telefone}" />
+					<p:outputLabel for="cel" value="Celular:" />
+					<p:inputMask id="cel" mask="(99)9.9999-9999" required="true"
+						requiredMessage="Informe número celular"
+						value="#{cadastroControle.cadastro.celular}" />
+
+				</h:panelGrid>
+				<p:outputLabel for="email" value="E-mail:" />
+				<p:inputText id="email" value="#{cadastroControle.cadastro.email}"
+					size="93" maxlength="70" />
+				<h:panelGrid columns="2">
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{cadastroControle.salvar}"
+						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+
+	</ui:define>
+</ui:composition>
