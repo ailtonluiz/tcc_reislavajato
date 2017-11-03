@@ -20,9 +20,7 @@ public class GenericDao<Entidade> {
 
 	@SuppressWarnings("unchecked")
 	public GenericDao() {
-		this.classe = (Class<Entidade>) ((ParameterizedType) getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
-
+		this.classe = (Class<Entidade>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	// Método salvar.
@@ -59,23 +57,23 @@ public class GenericDao<Entidade> {
 			sessao.close();
 		}
 	}
-	
+
 	// Método listar com ordenação
-		@SuppressWarnings("unchecked")
-		public List<Entidade> listar(String campoOrdenacao) {
-			Session sessao = HibernateUtil.getSessionFactory().openSession();
-			try {
-				@SuppressWarnings("deprecation")
-				Criteria consulta = sessao.createCriteria(classe);
-				consulta.addOrder(Order.asc(campoOrdenacao));
-				List<Entidade> resultado = consulta.list();
-				return resultado;
-			} catch (RuntimeException erro) {
-				throw erro;
-			} finally {
-				sessao.close();
-			}
+	@SuppressWarnings("unchecked")
+	public List<Entidade> listar(String campoOrdenacao) {
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		try {
+			@SuppressWarnings("deprecation")
+			Criteria consulta = sessao.createCriteria(classe);
+			consulta.addOrder(Order.asc(campoOrdenacao));
+			List<Entidade> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
 		}
+	}
 
 	// Método buscar.
 	@SuppressWarnings("unchecked")

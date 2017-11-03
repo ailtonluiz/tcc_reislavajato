@@ -15,7 +15,7 @@ public class Municipio extends GenericEntity {
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
-	private EnumUf uf = EnumUf.AC;
+	private EnumUf uf = EnumUf.GO;
 
 	public String getNome() {
 		return nome;

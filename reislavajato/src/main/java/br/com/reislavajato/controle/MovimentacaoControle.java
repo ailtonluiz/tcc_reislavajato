@@ -8,43 +8,41 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
-import br.com.reislavajato.dao.CadastroDao;
 import br.com.reislavajato.dao.FuncionarioDao;
 import br.com.reislavajato.dao.MovimentoDao;
 import br.com.reislavajato.dao.ServicoDao;
 import br.com.reislavajato.dao.VeiculoDao;
-import br.com.reislavajato.entidade.Cadastro;
 import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.ItemMovimento;
 import br.com.reislavajato.entidade.Movimento;
+import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.neg.PessoaNeg;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = "movimentacaoControle")
 public class MovimentacaoControle implements Serializable {
 
-	ItemMovimento itemMovimento = new ItemMovimento();
-	ServicoDao servicoDao = new ServicoDao();
-	FuncionarioDao funcionarioDao = new FuncionarioDao();
-	VeiculoDao veiculoDao = new VeiculoDao();
-	CadastroDao cadastroDao = new CadastroDao();
+	private ItemMovimento itemMovimento = new ItemMovimento();
+	private ServicoDao servicoDao = new ServicoDao();
+	private FuncionarioDao funcionarioDao = new FuncionarioDao();
+	private VeiculoDao veiculoDao = new VeiculoDao();
+	private PessoaNeg pessoaNeg = new PessoaNeg();
 
 	private Funcionario funcionario;
 	private Movimento movimento;
 	private List<ItemMovimento> itensMovimento;
 	private List<Servico> servicos;
-	private List<Cadastro> cadastros;
+	private List<Pessoa> pessoas;
 	private List<Funcionario> funcionarios;
 	private List<Veiculo> veiculos;
 
@@ -80,10 +78,8 @@ public class MovimentacaoControle implements Serializable {
 		} else {
 			ItemMovimento itemMovimento = itensMovimento.get(achou);
 			itemMovimento.setQuantidade(new Short(itemMovimento.getQuantidade() + 1 + ""));
-			itemMovimento
-					.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
-			itemMovimento
-					.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
 		}
 
 		calcular();
@@ -116,8 +112,7 @@ public class MovimentacaoControle implements Serializable {
 		try {
 			funcionarios = funcionarioDao.listar();
 			veiculos = veiculoDao.listar();
-			cadastros = cadastroDao.listar();
-
+			pessoas = pessoaNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar" + erro);
 			erro.printStackTrace();
@@ -127,7 +122,7 @@ public class MovimentacaoControle implements Serializable {
 	public void finalizar() {
 		try {
 			movimento.setHorario(new Date());
-			
+
 			listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível finalizar a venda" + erro);
@@ -152,22 +147,20 @@ public class MovimentacaoControle implements Serializable {
 		}
 	}
 
-	
-	
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
-
 	public ItemMovimento getItemMovimento() {
 		return itemMovimento;
 	}
 
 	public void setItemMovimento(ItemMovimento itemMovimento) {
 		this.itemMovimento = itemMovimento;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	public Movimento getMovimento() {
@@ -194,12 +187,12 @@ public class MovimentacaoControle implements Serializable {
 		this.servicos = servicos;
 	}
 
-	public List<Cadastro> getCadastros() {
-		return cadastros;
+	public List<Pessoa> getPessoas() {
+		return pessoas;
 	}
 
-	public void setCadastros(List<Cadastro> cadastros) {
-		this.cadastros = cadastros;
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
 	}
 
 	public List<Funcionario> getFuncionarios() {

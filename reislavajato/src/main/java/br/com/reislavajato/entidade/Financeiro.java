@@ -40,7 +40,7 @@ public class Financeiro extends GenericEntity {
 
 	@OneToOne
 	@JoinColumn(nullable = true)
-	private Cadastro cadastro;
+	private Pessoa pessoa;
 
 	@OneToOne
 	@JoinColumn(nullable = false)
@@ -98,16 +98,16 @@ public class Financeiro extends GenericEntity {
 		return usuario;
 	}
 
-	public Cadastro getCadastro() {
-		return cadastro;
-	}
-
-	public void setCadastro(Cadastro cadastro) {
-		this.cadastro = cadastro;
-	}
-
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+	
 }

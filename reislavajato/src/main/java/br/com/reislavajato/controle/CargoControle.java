@@ -88,7 +88,7 @@ public class CargoControle implements Serializable {
 
 	public void imprimir() {
 		try {
-			String caminho = Faces.getRealPath("/reports/cadastro.jasper");
+			String caminho = Faces.getRealPath("/reports/pessoa.jasper");
 			Map<String, Object> parametros = new HashMap<>();
 			Connection conexao = HibernateUtil.getConexao();
 			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);

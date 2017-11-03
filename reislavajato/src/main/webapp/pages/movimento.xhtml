@@ -167,12 +167,12 @@
 
 					<p:outputLabel for="cliente" value="Cliente: " />
 					<p:selectOneMenu id="cliente"
-						value="#{movimentacaoControle.movimento.cadastro}" required="true"
+						value="#{movimentacaoControle.movimento.pessoa}" required="true"
 						requiredMessage="É necessário informar um cliente para finalizar."
 						converter="omnifaces.SelectItemsConverter" filter="true">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um cliente" />
-						<f:selectItems value="#{movimentacaoControle.cadastros}"
+						<f:selectItems value="#{movimentacaoControle.pessoas}"
 							var="cliente" itemValue="#{cliente}"
 							itemLabel="#{cliente.razaoSocial}" />
 					</p:selectOneMenu>

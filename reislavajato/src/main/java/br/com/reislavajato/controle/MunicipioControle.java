@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
@@ -29,7 +28,6 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 @SuppressWarnings({ "serial" })
 @ManagedBean(name = "MunicipioControle")
-@ViewScoped
 public class MunicipioControle implements Serializable {
 
 	private MunicipioDao municipioDao = new MunicipioDao();
@@ -47,13 +45,14 @@ public class MunicipioControle implements Serializable {
 		}
 	}
 
-	public void novo() {
+	public String novo() {
 		try {
 			municipio = new Municipio();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}
+		return "sucess";
 	}
 
 	public void salvar() {
@@ -93,16 +92,16 @@ public class MunicipioControle implements Serializable {
 			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("frmListagem:tabela");
 			Map<String, Object> filtros = tabela.getFilters();
 
-//			String estadoNome = (String) filtros.get("estado.nome");
+			// String estadoNome = (String) filtros.get("estado.nome");
 
 			String caminho = Faces.getRealPath("/reports/municipio.jasper");
 
 			Map<String, Object> parametros = new HashMap<>();
-//			if (estadoNome == null) {
-//				parametros.put("municipio", "%%");
-//			} else {
-//				parametros.put("municipio", "%" + estadoNome + "%");
-//			}
+			// if (estadoNome == null) {
+			// parametros.put("municipio", "%%");
+			// } else {
+			// parametros.put("municipio", "%" + estadoNome + "%");
+			// }
 
 			Connection conexao = HibernateUtil.getConexao();
 

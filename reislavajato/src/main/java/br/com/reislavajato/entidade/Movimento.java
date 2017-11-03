@@ -36,7 +36,7 @@ public class Movimento extends GenericEntity {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Cadastro cadastro;
+	private Pessoa pessoa;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -101,12 +101,12 @@ public class Movimento extends GenericEntity {
 		this.vlrTotal = vlrTotal;
 	}
 
-	public Cadastro getCadastro() {
-		return cadastro;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setCadastro(Cadastro cadastro) {
-		this.cadastro = cadastro;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public Veiculo getVeiculo() {
