@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import org.hibernate.validator.constraints.br.CNPJ;
-
 @Entity
 public class PessoaJuridica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
@@ -17,11 +15,8 @@ public class PessoaJuridica extends GenericEntity {
 	@Column(length = 100)
 	private String nomeFantasia;
 
-	@CNPJ
-	@Column(length = 18)
-	private Long cnpj;
+	private String cnpj;
 
-	@Column(length = 20)
 	private String inscricaoEstadual;
 	private String inscricaoMunicipal;
 	private Date dataAberturaEmpresa;
@@ -42,11 +37,11 @@ public class PessoaJuridica extends GenericEntity {
 		this.nomeFantasia = nomeFantasia;
 	}
 
-	public Long getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(Long cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 

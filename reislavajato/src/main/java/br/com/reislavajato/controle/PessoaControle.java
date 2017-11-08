@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
@@ -16,9 +15,14 @@ import org.omnifaces.util.Messages;
 
 import br.com.reislavajato.dao.MunicipioDao;
 import br.com.reislavajato.dao.PessoaDao;
+import br.com.reislavajato.entidade.Endereco;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.entidade.PessoaFisica;
+import br.com.reislavajato.entidade.PessoaJuridica;
+import br.com.reislavajato.entidade.Telefone;
 import br.com.reislavajato.util.HibernateUtil;
+import br.com.reislavajato.util.ReisLavajatoUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -40,54 +44,42 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 
 	private Boolean isRederiza = false;
 
-	// /**
-	// * @param pessoaNeg
-	// * @param pessoa
-	// * @param pessoas
-	// * @param isRederiza
-	// */
-	// public PessoaControle() {
-	// pessoa = new Pessoa();
-	// pessoaNeg = new PessoaNeg();
-	// pessoa.setPessoaJuridica(new PessoaJuridica());
-	// pessoa.setPessoaFisica(new PessoaFisica());
-	// pessoas = new ArrayList<Pessoa>();
-	// }
-
 	public List<Municipio> getMunicipios() {
 		return municipioDao.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
 	}
 
-	@Override
-	protected void atualizarListaEntidades() throws Exception {
+	public void listarPorCpfOuNome() {
 		try {
-			// if (pessoa.getPessoaFisica().getCpf() > 0L ||
-			// !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
-			// pessoas = pessoaDao.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(),
-			// pessoa.getPessoaFisica().getNome());
-			// } else if (pessoa.getPessoaJuridica().getCnpj() > 0L ||
-			// !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
-			// pessoas = pessoaDao.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(),
-			// pessoa.getPessoaJuridica().getNomeFantasia());
-			// }
+			if (pessoa.getPessoaFisica().getCpf().length() > 0
+					|| !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
+				pessoas = pessoaDao.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(),
+						pessoa.getPessoaFisica().getNome());
+			} else if (pessoa.getPessoaJuridica().getCnpj().length() > 0
+					|| !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
+				pessoas = pessoaDao.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(),
+						pessoa.getPessoaJuridica().getNomeFantasia());
+			}
 		} catch (Exception e) {
 			addMensagemErro(e.getMessage());
 		}
 	}
 
-	@PostConstruct
-	public void listar() {
-		try {
-			pessoas = pessoaDao.listar();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar a(s) pessoa(s)!");
-			erro.printStackTrace();
-		}
-	}
+	// public void listar() {
+	// try {
+	// pessoas = pessoaDao.listar();
+	// } catch (RuntimeException erro) {
+	// Messages.addGlobalError("Não foi possível listar a(s) pessoa(s)!");
+	// erro.printStackTrace();
+	// }
+	// }
 
 	public void novo() {
 		try {
 			pessoa = new Pessoa();
+			pessoaDao = new PessoaDao();
+			pessoa.setPessoaJuridica(new PessoaJuridica());
+			pessoa.setPessoaFisica(new PessoaFisica());
+			pessoas = new ArrayList<Pessoa>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
@@ -96,12 +88,18 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 
 	public void salvar() {
 		try {
-			pessoaDao.merge(pessoa);
-			novo();
+			if (pessoa.getPessoaFisica().getCpf() != null
+					&& pessoa.getPessoaFisica().getCpf().toString().length() > 0) {
+				pessoa.setPessoaJuridica(null);
+			} else {
+				pessoa.setPessoaFisica(null);
+			}
+			pessoaDao.salvar(pessoa);
+			this.novo();
 			pessoas = pessoaDao.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
+			addMensagemErroFatal(erro);
 			erro.printStackTrace();
 		}
 	}
@@ -110,10 +108,9 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		try {
 			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
 			pessoaDao.excluir(pessoa);
-			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
+			addMensagemErroFatal(erro);
 			erro.printStackTrace();
 		}
 	}
@@ -121,11 +118,20 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 	public void editar(ActionEvent evento) {
 		try {
 			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
-			listar();
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Não foi possível realizar está operação!");
+			addMensagemErroFatal(erro);
 			erro.printStackTrace();
 		}
+	}
+
+	public String limparEndereco() {
+		pessoa.setEndereco(new Endereco());
+		return null;
+	}
+
+	public String limparTelefone() {
+		pessoa.setTelefone(new Telefone());
+		return null;
 	}
 
 	public void imprimir() {

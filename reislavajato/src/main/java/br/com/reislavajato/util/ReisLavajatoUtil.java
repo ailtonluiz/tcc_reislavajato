@@ -66,7 +66,7 @@ public class ReisLavajatoUtil {
 		return ctx.getRealPath("/");
 	}
 
-	public static void gerarRelatorioFaces(String caminhoRelatorio, Collection dados, Map parametros)
+	public static void gerarRelatorioFaces(String caminhoRelatorio, @SuppressWarnings("rawtypes") Collection dados, Map parametros)
 			throws IOException, JRException {
 		FacesContext context = FacesContext.getCurrentInstance();
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dados);
@@ -76,6 +76,7 @@ public class ReisLavajatoUtil {
 		response.addHeader("Content-disposition", "inline; filename=\"" + nomePdf.replace("jasper", "pdf"));
 		ServletOutputStream out = response.getOutputStream();
 		InputStream streamRelatorio = context.getExternalContext().getResourceAsStream(caminhoRelatorio);
+		@SuppressWarnings("unchecked")
 		JasperPrint impressao = JasperFillManager.fillReport(streamRelatorio, parametros, dataSource);
 		JasperExportManager.exportReportToPdfStream(impressao, out);
 		out.close();

@@ -34,6 +34,5 @@ public class MunicipioDao extends GenericDao<Municipio> {
 		} finally {
 			sessao.close();
 		}
-
 	}
 }

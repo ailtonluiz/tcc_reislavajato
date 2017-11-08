@@ -19,8 +19,7 @@ import br.com.reislavajato.enumeradores.EnumUf;
 public class PessoaFisica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
-	@Column(length = 14, unique = true)
-	private Long cpf;
+	private String cpf;
 
 	@Column(length = 25, nullable = true)
 	private String rg;
@@ -48,11 +47,11 @@ public class PessoaFisica extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumEscolaridade escolaridade;
 
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

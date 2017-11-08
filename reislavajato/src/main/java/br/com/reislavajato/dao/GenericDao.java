@@ -20,14 +20,14 @@ public class GenericDao<Entidade> {
 
 	@SuppressWarnings("unchecked")
 	public GenericDao() {
-		this.classe = (Class<Entidade>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.classe = (Class<Entidade>) ((ParameterizedType) getClass().getGenericSuperclass())
+				.getActualTypeArguments()[0];
 	}
 
 	// Método salvar.
 	public void salvar(Entidade entidade) {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		Transaction transacao = null;
-
 		try {
 			transacao = sessao.beginTransaction();
 			sessao.save(entidade);
@@ -135,7 +135,6 @@ public class GenericDao<Entidade> {
 	public void merge(Entidade entidade) {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		Transaction transacao = null;
-
 		try {
 			transacao = sessao.beginTransaction();
 			sessao.merge(entidade);

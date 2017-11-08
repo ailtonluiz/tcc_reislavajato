@@ -41,11 +41,11 @@ public class Pessoa extends GenericEntity {
 	private Date dataCadastro;
 
 	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 
 	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
 	@Enumerated(EnumType.STRING)

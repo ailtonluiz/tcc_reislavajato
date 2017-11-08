@@ -10,7 +10,7 @@ public class PessoaNeg extends PessoaDao {
 		return listarPorCpfOuNome(cpf, nome);
 	}
 
-	public List<Pessoa> listarPorCnpjOuNome(Long cnpj, String nomeFantasia) throws Exception {
+	public List<Pessoa> listarPorCnpjOuNome(String cnpj, String nomeFantasia) throws Exception {
 		return listarPorCnpjOuNome(cnpj, nomeFantasia);
 	}
 

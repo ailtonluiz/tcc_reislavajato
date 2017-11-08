@@ -8,19 +8,6 @@ public abstract class ReisLavajatoControle {
 	protected final String msgAlteradoSucesso = "Alteração realizada com sucesso!";
 	protected final String msgExcluidoSucesso = "Exclusão realizada com Sucesso!";
 
-	public String telaListar() {
-		try {
-			atualizarListaEntidades();
-		} catch (Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Erro inesperado do sistema!", "Comunique ao analista!"));
-		}
-		return null;
-	}
-
-	protected abstract void atualizarListaEntidades() throws Exception;
-
 	protected abstract void criarEntidade();
 
 	protected void addMensagemInfo(String msg) {
