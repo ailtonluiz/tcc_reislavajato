@@ -4,29 +4,56 @@
    <p:growl id="mensagem" />
 
    <ui:define name="conteudo">
-      <!-- Tela de listagem -->
       <h:form id="frmListagem">
-         <p:panel header="Listagem de Clientes">
-            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{pessoaControle.pessoas}" paginatorPosition="top" var="pessoa" rows="5">
-               <f:facet name="footer">
-                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{pessoaControle.novo}" update=":frmPessoa:painel">
-                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                  </p:commandButton>
-               </f:facet>
-               <p:column headerText="Razão Social" style="width:30%">
-                  <h:outputText value="#{pessoa.pessoaJuridica.razaoSocial}" />
+
+         <h:panelGroup>
+            <p:panel header="Listagem de Clientes">
+               <h:panelGrid columns="2">
+                  <h:outputText value="Nome:" />
+                  <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nome}" />
+
+                  <h:outputText value="CPF:" />
+                  <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.cpf}" maxlength="14" converter="cpfConverter" />
+
+                  <h:outputText value="Nome Fantasia:" />
+                  <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.nomeFantasia}" />
+
+                  <h:outputText value="CNPJ:" />
+                  <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.cnpj}" converter="cnpjConverter" />
+               </h:panelGrid>
+               <br />
+               <p:commandButton value="Listar" action="#{pessoaControle.listarPorCpfOuNome}" update="tabela" title="Listar Pessoas" />
+            </p:panel>
+
+            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{pessoaControle.pessoas}" paginatorPosition="top" var="pessoa">
+               <p:column headerText="Razão Social" style="width:30%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
+                  <f:facet name="header">
+                     <h:outputText value="#{pessoa.pessoaJuridica.razaoSocial}" />
+                  </f:facet>
                </p:column>
 
-               <p:column headerText="Fantasia" style="width:30%">
-                  <h:outputText value="#{pessoa.pessoaJuridica.nomeFantasia}" />
+               <p:column headerText="Fantasia" style="width:30%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
+                  <f:facet name="header">
+                     <h:outputText value="#{pessoa.pessoaJuridica.nomeFantasia}" />
+                  </f:facet>
                </p:column>
 
-               <p:column headerText="CNPJ" style="width:7%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.id > 0}">
-                  <h:outputText value="#{pessoa.pessoaJuridica.cnpj}" converter="cnpjConverter" />
+               <p:column headerText="CNPJ" style="width:7%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
+                  <f:facet name="header">
+                     <h:outputText value="#{pessoa.pessoaJuridica.cnpj}" converter="cnpjConverter" />
+                  </f:facet>
                </p:column>
 
-               <p:column headerText="CPF" style="width:7%" rendered="#{pessoa.pessoaFisica.id > 0}">
-                  <h:outputText value="#{pessoa.pessoaFisica.cpf}" converter="cpfConverter" />
+               <p:column headerText="Nome" style="width:30%" rendered="#{pessoa.pessoaFisica.codigo > 0}">
+                  <f:facet name="header">
+                     <h:outputText value="#{pessoa.pessoaFisica.nome}" />
+                  </f:facet>
+               </p:column>
+
+               <p:column headerText="CPF" style="width:7%" rendered="#{pessoa.pessoaFisica.codigo > 0}">
+                  <f:facet name="header">
+                     <h:outputText value="#{pessoa.pessoaFisica.cpf}" converter="cpfConverter" />
+                  </f:facet>
                </p:column>
 
                <p:column headerText="Opções" style="width:7%">
@@ -41,15 +68,22 @@
                   </p:commandButton>
                </p:column>
 
+               <f:facet name="footer">
+                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{pessoaControle.novo}" update=":frmPessoa:painel">
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                  </p:commandButton>
+               </f:facet>
+
             </p:dataTable>
             <!-- Botão de opções -->
             <p:confirmDialog global="true">
                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
-
-         </p:panel>
+         </h:panelGroup>
       </h:form>
+
+
       <!-- Tela de cadastros -->
       <p:dialog header="Cadastro de clientes" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
 
@@ -221,7 +255,7 @@
                            <h:outputLabel value="Fixo:" for="txt_fixo" />
                            <p:inputText id="txt_fixo" value="#{pessoaControle.pessoa.telefone.fixo}" />
 
-                           <h:outputLabel value="Comercial:" for="txt_cormecial" />
+                           <h:outputLabel value="Comercial:" for="txt_comercial" />
                            <p:inputText id="txt_comercial" value="#{pessoaControle.pessoa.telefone.comercial}" />
 
                            <h:outputLabel value="Contato:" for="txt_contato" />
@@ -239,9 +273,16 @@
 
                            <p:column style="font-size: 12px; text-align: center;">
                               <f:facet name="header">
-                                 <h:outputText value="Número" />
+                                 <h:outputText value="Celular" />
                               </f:facet>
-                              <h:outputText value="#{telefone.numero}" />
+                              <h:outputText value="#{telefone.celular}" />
+                           </p:column>
+
+                           <p:column style="font-size: 12px; text-align: center;">
+                              <f:facet name="header">
+                                 <h:outputText value="Comercial" />
+                              </f:facet>
+                              <h:outputText value="#{telefone.comercial}" />
                            </p:column>
 
                            <p:column style="font-size: 12px; text-align: center;">
