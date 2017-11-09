@@ -26,14 +26,9 @@ public class MunicipioDaoJpa extends PersistenciaJpa<Municipio> implements Munic
 	@Qualifier(value = "managerEntityManagerFactory")
 	private EntityManager em;
 
+	@SuppressWarnings("unchecked")
 	public List<Municipio> listarPorUf(EnumUf uf) throws DadosInvalidosException {
 		try {
-			// select c from Cachorro c where c.nome = :nome
-			// select c from Cachorro c where c.idade = :idade
-			// select c from Cachorro c where c.idoso = false
-			// select c from Cachorro c where c.dono = :dono
-			// Query query = em.createQuery("select m from Municipio m where m.uf.descricao
-			// = :descricao");
 			Query query = em.createQuery("select m from Municipio m where m.uf = :uf");
 			query.setParameter("uf", uf);
 			return query.getResultList();
