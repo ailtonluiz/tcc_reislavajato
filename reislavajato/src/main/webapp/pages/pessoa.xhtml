@@ -90,7 +90,7 @@
          <h:form id="frmPessoa">
             <h:panelGroup>
                <p:panel id="painel">
-                  <h:panelGrid columns="2" styleClass="fonteSisgea">
+                  <h:panelGrid columns="2" >
                      <h:outputLabel value="Tipo Pessoa?" />
                      <p:selectOneRadio value="#{pessoaControle.pessoa.tipoPessoa}">
                         <p:ajax update="frmPessoa" event="change" process="@form" />
@@ -109,7 +109,7 @@
 
                   <p:tabView dynamic="true">
                      <p:tab title="Pessoa Física" rendered="#{pessoaControle.pessoa.tipoPessoa.abreviado == 'PF'}">
-                        <h:panelGrid columns="2" styleClass="fonteSisgea">
+                        <h:panelGrid columns="2">
                            <h:outputText value="Nome:" />
                            <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 160pt !important;" />
 
@@ -162,7 +162,7 @@
                      </p:tab>
 
                      <p:tab title="Pessoa Jurídica" rendered="#{pessoaControle.pessoa.tipoPessoa.abreviado == 'PJ'}">
-                        <h:panelGrid columns="2" styleClass="fonteSisgea">
+                        <h:panelGrid columns="2">
                            <h:outputText value="Razão Social:" />
                            <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.razaoSocial}" maxlength="200" style="width: 200pt !important;" />
 
@@ -181,7 +181,7 @@
                      </p:tab>
 
                      <p:tab title="Endereço" id="end">
-                        <h:panelGrid columns="2" styleClass="fonteSisgea">
+                        <h:panelGrid columns="2">
                            <h:outputLabel value="Endereço:" for="txt_endereco" />
                            <p:inputText id="txt_endereco" value="#{pessoaControle.pessoa.endereco.logradouro}" />
 
@@ -248,7 +248,7 @@
                      <br />
 
                      <p:tab title="Telefone" id="tel">
-                        <h:panelGrid columns="2" styleClass="fonteSisgea">
+                        <h:panelGrid columns="2">
                            <h:outputLabel value="Celular:" for="txt_celular" />
                            <p:inputText id="txt_celular" value="#{pessoaControle.pessoa.telefone.celular}" />
 

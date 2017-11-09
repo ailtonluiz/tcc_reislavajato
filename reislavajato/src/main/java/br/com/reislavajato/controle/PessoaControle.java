@@ -7,20 +7,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.dao.MunicipioDao;
-import br.com.reislavajato.dao.PessoaDao;
 import br.com.reislavajato.entidade.Endereco;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.entidade.PessoaFisica;
 import br.com.reislavajato.entidade.PessoaJuridica;
 import br.com.reislavajato.entidade.Telefone;
+import br.com.reislavajato.neg.PessoaNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import br.com.reislavajato.util.ReisLavajatoUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -33,11 +35,12 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean(name = "pessoaControle")
+@Controller("pessoaControle")
 public class PessoaControle extends ReisLavajatoControle implements Serializable {
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	// private PessoaNeg pessoaNeg = new PessoaNeg();
-	private PessoaDao pessoaDao = new PessoaDao();
+	private PessoaNeg pessoaNeg = context.getBean(PessoaNeg.class);
+
 	private MunicipioDao municipioDao = new MunicipioDao();
 	private Pessoa pessoa = new Pessoa();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
@@ -52,11 +55,11 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		try {
 			if (pessoa.getPessoaFisica().getCpf().length() > 0
 					|| !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
-				pessoas = pessoaDao.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(),
+				pessoas = pessoaNeg.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(),
 						pessoa.getPessoaFisica().getNome());
 			} else if (pessoa.getPessoaJuridica().getCnpj().length() > 0
 					|| !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
-				pessoas = pessoaDao.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(),
+				pessoas = pessoaNeg.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(),
 						pessoa.getPessoaJuridica().getNomeFantasia());
 			}
 		} catch (Exception e) {
@@ -64,19 +67,9 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		}
 	}
 
-	// public void listar() {
-	// try {
-	// pessoas = pessoaDao.listar();
-	// } catch (RuntimeException erro) {
-	// Messages.addGlobalError("Não foi possível listar a(s) pessoa(s)!");
-	// erro.printStackTrace();
-	// }
-	// }
-
 	public void novo() {
 		try {
 			pessoa = new Pessoa();
-			pessoaDao = new PessoaDao();
 			pessoa.setPessoaJuridica(new PessoaJuridica());
 			pessoa.setPessoaFisica(new PessoaFisica());
 			pessoas = new ArrayList<Pessoa>();
@@ -94,9 +87,9 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 			} else {
 				pessoa.setPessoaFisica(null);
 			}
-			pessoaDao.salvar(pessoa);
+			// pessoaNeg.incluir(pessoa);
 			this.novo();
-			pessoas = pessoaDao.listar();
+			// pessoas = pessoaNeg.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -107,7 +100,7 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 	public void excluir(ActionEvent evento) {
 		try {
 			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
-			pessoaDao.excluir(pessoa);
+			// pessoaNeg.excluir(pessoa);
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);

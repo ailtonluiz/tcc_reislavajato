@@ -36,7 +36,7 @@ public class MovimentacaoControle implements Serializable {
 	private ServicoDao servicoDao = new ServicoDao();
 	private FuncionarioDao funcionarioDao = new FuncionarioDao();
 	private VeiculoDao veiculoDao = new VeiculoDao();
-	private PessoaNeg pessoaNeg = new PessoaNeg();
+	private PessoaNeg pessoaNeg;
 
 	private Funcionario funcionario;
 	private Movimento movimento;
@@ -112,7 +112,7 @@ public class MovimentacaoControle implements Serializable {
 		try {
 			funcionarios = funcionarioDao.listar();
 			veiculos = veiculoDao.listar();
-			pessoas = pessoaNeg.listar();
+//			pessoas = pessoaNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar" + erro);
 			erro.printStackTrace();

@@ -5,8 +5,15 @@
 	<!-- Nome da Aplicação -->
 	<display-name>Reis Lavajato</display-name>
 	<context-param>
-		<param-name>javax.faces.CONFIG_FILES
-		</param-name>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/applicationContext.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>openEntityManagerInViewPhaseListenerBeanName</param-name>
+		<param-value>openEntityManagerInViewPhaseListener</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value>/WEB-INF/faces-config.xml</param-value>
 	</context-param>
 	<context-param>
@@ -28,9 +35,14 @@
 		<param-value>bootstrap</param-value>
 		<!--cruze cupertino overcast -->
 	</context-param>
+
 	<listener>
-		<listener-class>br.com.reislavajato.util.HibernateContexto</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -63,4 +75,11 @@
 	<welcome-file-list>
 		<welcome-file>pages/autenticacao.xhtml</welcome-file>
 	</welcome-file-list>
+
+	<locale-encoding-mapping-list>
+		<locale-encoding-mapping>
+			<locale>pt</locale>
+			<encoding>utf-8</encoding>
+		</locale-encoding-mapping>
+	</locale-encoding-mapping-list>
 </web-app>
