@@ -6,16 +6,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
-import br.com.reislavajato.dao.MunicipioDao;
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Municipio;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.MunicipioNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -27,18 +29,19 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean(name = "MunicipioControle")
+@Controller("MunicipioControle")
 public class MunicipioControle implements Serializable {
 
-	private MunicipioDao municipioDao = new MunicipioDao();
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
 
 	private Municipio municipio = new Municipio();
 	private List<Municipio> municipios;
 
-	@PostConstruct
-	public void listar() {
+	public void listarPorUf() throws DadosInvalidosException {
 		try {
-			municipios = municipioDao.listar("nome");
+			municipios = municipioNeg.listarPorUf(municipio.getUf());
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar as Municipios!");
 			erro.printStackTrace();
@@ -55,22 +58,20 @@ public class MunicipioControle implements Serializable {
 		return "sucess";
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
-			municipioDao.merge(municipio);
-			novo();
-			listar();
+			municipioNeg.incluir(municipio);
+			this.novo();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 		}
 	}
 
-	public void excluir(ActionEvent evento) {
+	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			municipio = (Municipio) evento.getComponent().getAttributes().get("registroSelecionado");
-			municipioDao.excluir(municipio);
-			listar();
+			municipioNeg.excluir(municipio);
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");

@@ -3,7 +3,7 @@ package br.com.reislavajato.dao;
 import java.util.List;
 
 import br.com.reislavajato.entidade.Pessoa;
-import br.com.reislavajato.neg.excessao.DadosInvalidosException;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 
 public interface PessoaDao extends Persistencia<Pessoa> {
 

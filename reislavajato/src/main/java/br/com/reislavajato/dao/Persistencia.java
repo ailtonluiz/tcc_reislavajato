@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.reislavajato.neg.excessao.DadosInvalidosException;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 
 public interface Persistencia<E> extends Serializable {
 	EntityManager getEntityManager();

@@ -1,4 +1,4 @@
-package br.com.reislavajato.neg.excessao;
+package br.com.reislavajato.excessao;
 
 public class DadosInvalidosException extends Exception {
 	private static final long serialVersionUID = -2849527354265573263L;

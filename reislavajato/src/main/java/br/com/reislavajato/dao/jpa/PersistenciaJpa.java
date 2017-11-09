@@ -13,7 +13,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import br.com.reislavajato.dao.Persistencia;
-import br.com.reislavajato.neg.excessao.DadosInvalidosException;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 
 public class PersistenciaJpa<E> implements Persistencia<E> {
 	private static final long serialVersionUID = -3629350481384523952L;

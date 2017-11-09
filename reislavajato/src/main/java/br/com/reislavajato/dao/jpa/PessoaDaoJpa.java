@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.reislavajato.dao.PessoaDao;
 import br.com.reislavajato.entidade.Pessoa;
-import br.com.reislavajato.neg.excessao.DadosInvalidosException;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 
 @Repository()
 public class PessoaDaoJpa extends PersistenciaJpa<Pessoa> implements PessoaDao {

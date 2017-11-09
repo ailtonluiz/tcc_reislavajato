@@ -15,13 +15,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
-import br.com.reislavajato.dao.MunicipioDao;
 import br.com.reislavajato.entidade.Endereco;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.entidade.PessoaFisica;
 import br.com.reislavajato.entidade.PessoaJuridica;
 import br.com.reislavajato.entidade.Telefone;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.MunicipioNeg;
 import br.com.reislavajato.neg.PessoaNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import br.com.reislavajato.util.ReisLavajatoUtil;
@@ -40,15 +41,16 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private PessoaNeg pessoaNeg = context.getBean(PessoaNeg.class);
+	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
 
-	private MunicipioDao municipioDao = new MunicipioDao();
 	private Pessoa pessoa = new Pessoa();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
 	private Boolean isRederiza = false;
 
-	public List<Municipio> getMunicipios() {
-		return municipioDao.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
+	public List<Municipio> getMunicipios() throws DadosInvalidosException {
+		List<Municipio> municipios = municipioNeg.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
+		return municipios;
 	}
 
 	public void listarPorCpfOuNome() {

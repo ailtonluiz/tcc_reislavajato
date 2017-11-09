@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.reislavajato.dao.PessoaDao;
 import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.PessoaNeg;
-import br.com.reislavajato.neg.excessao.DadosInvalidosException;
 
 @Service
 public class PessoaNegImpl extends NegocioGenerico<Pessoa> implements PessoaNeg {

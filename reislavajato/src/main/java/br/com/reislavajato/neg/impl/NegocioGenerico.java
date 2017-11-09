@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.reislavajato.dao.Persistencia;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.Negocio;
-import br.com.reislavajato.neg.excessao.DadosInvalidosException;
 
 public class NegocioGenerico<E> implements Negocio<E> {
 
