@@ -109,5 +109,5 @@ public class Financeiro extends GenericEntity {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 }

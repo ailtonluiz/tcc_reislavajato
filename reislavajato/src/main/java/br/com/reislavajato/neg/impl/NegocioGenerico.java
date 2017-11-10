@@ -1,6 +1,5 @@
 package br.com.reislavajato.neg.impl;
 
-
 import java.util.List;
 
 import javax.persistence.EntityExistsException;

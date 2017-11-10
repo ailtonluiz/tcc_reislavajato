@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class Telefone extends GenericEntity {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String celular;
 	private String fixo;
 	private String comercial;

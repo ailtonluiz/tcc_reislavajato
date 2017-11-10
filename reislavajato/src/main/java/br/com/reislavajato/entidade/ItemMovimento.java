@@ -87,6 +87,4 @@ public class ItemMovimento extends GenericEntity {
 		this.funcionario = funcionario;
 	}
 
-	
-	
 }

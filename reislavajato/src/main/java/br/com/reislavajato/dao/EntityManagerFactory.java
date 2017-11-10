@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-
 @SuppressWarnings("serial")
 public class EntityManagerFactory implements Serializable {
 	public static final String PERSISTENCE_UNIT = "reislavajato";

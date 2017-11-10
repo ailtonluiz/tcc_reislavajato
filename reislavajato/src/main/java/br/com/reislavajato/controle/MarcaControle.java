@@ -7,15 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
-import br.com.reislavajato.dao.MarcaDao;
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Marca;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.MarcaNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -27,18 +30,19 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean
+@Controller
 @ViewScoped
-public class MarcaControle implements Serializable {
+public class MarcaControle extends ReisLavajatoControle implements Serializable {
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	MarcaDao marcaDao = new MarcaDao();
+	private MarcaNeg marcaNeg = context.getBean(MarcaNeg.class);
 	private Marca marca;
 	private List<Marca> marcas;
 
 	@PostConstruct
-	public void listar() {
+	public void listar() throws DadosInvalidosException {
 		try {
-			marcas = marcaDao.listar();
+			marcas = marcaNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar a(s) marca(s)!");
 			erro.printStackTrace();
@@ -49,9 +53,9 @@ public class MarcaControle implements Serializable {
 		marca = new Marca();
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
-			marcaDao.merge(marca);
+			marcaNeg.incluir(marca);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -61,10 +65,10 @@ public class MarcaControle implements Serializable {
 		}
 	}
 
-	public void excluir(ActionEvent evento) {
+	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			marca = (Marca) evento.getComponent().getAttributes().get("registroSelecionado");
-			marcaDao.excluir(marca);
+			marcaNeg.excluir(marca);
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
@@ -110,5 +114,16 @@ public class MarcaControle implements Serializable {
 
 	public void setMarcas(List<Marca> marcas) {
 		this.marcas = marcas;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
+	 */
+	@Override
+	protected void criarEntidade() {
+		// TODO Auto-generated method stub
+
 	}
 }

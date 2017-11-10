@@ -9,6 +9,6 @@ import br.com.reislavajato.entidade.ItemMovimento;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-public class ItemMovimentoDao extends GenericDao<ItemMovimento>{
+public interface ItemMovimentoDao extends Persistencia<ItemMovimento> {
 
 }

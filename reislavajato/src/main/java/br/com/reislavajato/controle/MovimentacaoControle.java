@@ -7,37 +7,40 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
-import br.com.reislavajato.dao.FuncionarioDao;
-import br.com.reislavajato.dao.MovimentoDao;
-import br.com.reislavajato.dao.ServicoDao;
-import br.com.reislavajato.dao.VeiculoDao;
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.ItemMovimento;
 import br.com.reislavajato.entidade.Movimento;
 import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
-import br.com.reislavajato.neg.PessoaNeg;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.FuncionarioNeg;
+import br.com.reislavajato.neg.MovimentoNeg;
+import br.com.reislavajato.neg.ServicoNeg;
+import br.com.reislavajato.neg.VeiculoNeg;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean(name = "movimentacaoControle")
-public class MovimentacaoControle implements Serializable {
+@Controller("movimentacaoControle")
+public class MovimentacaoControle extends ReisLavajatoControle implements Serializable {
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private ItemMovimento itemMovimento = new ItemMovimento();
-	private ServicoDao servicoDao = new ServicoDao();
-	private FuncionarioDao funcionarioDao = new FuncionarioDao();
-	private VeiculoDao veiculoDao = new VeiculoDao();
-	private PessoaNeg pessoaNeg;
+	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
+	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
+	private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
+	private MovimentoNeg movimentoNeg = context.getBean(MovimentoNeg.class);
 
+	private ItemMovimento itemMovimento;
 	private Funcionario funcionario;
 	private Movimento movimento;
 	private List<ItemMovimento> itensMovimento;
@@ -47,11 +50,11 @@ public class MovimentacaoControle implements Serializable {
 	private List<Veiculo> veiculos;
 
 	@PostConstruct
-	public void novo() {
+	public void novo() throws DadosInvalidosException {
 		try {
 			movimento = new Movimento();
 			movimento.setVlrTotal(new BigDecimal("0.00"));
-			servicos = servicoDao.listar("descricao");
+			servicos = servicoNeg.listar();
 			itensMovimento = new ArrayList<>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível carregar as informações");
@@ -78,8 +81,10 @@ public class MovimentacaoControle implements Serializable {
 		} else {
 			ItemMovimento itemMovimento = itensMovimento.get(achou);
 			itemMovimento.setQuantidade(new Short(itemMovimento.getQuantidade() + 1 + ""));
-			itemMovimento.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
-			itemMovimento.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento
+					.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento
+					.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
 		}
 
 		calcular();
@@ -108,21 +113,20 @@ public class MovimentacaoControle implements Serializable {
 		}
 	}
 
-	public void listar() {
+	public void listar() throws DadosInvalidosException {
 		try {
-			funcionarios = funcionarioDao.listar();
-			veiculos = veiculoDao.listar();
-//			pessoas = pessoaNeg.listar();
+			funcionarios = funcionarioNeg.listar();
+			veiculos = veiculoNeg.listar();
+			// pessoas = pessoaNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar" + erro);
 			erro.printStackTrace();
 		}
 	}
 
-	public void finalizar() {
+	public void finalizar() throws DadosInvalidosException {
 		try {
 			movimento.setHorario(new Date());
-
 			listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível finalizar a venda" + erro);
@@ -130,14 +134,14 @@ public class MovimentacaoControle implements Serializable {
 		}
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
 			if (movimento.getVlrTotal().signum() == 0) {
 				Messages.addGlobalError("Valor total não pode ser 'R$: 0,00'");
 				return;
 			}
-			MovimentoDao movimentoDao = new MovimentoDao();
-			movimentoDao.salvar(movimento, itensMovimento);
+			movimentoNeg.incluir(movimento);
+			// movimentoNeg.incluir(itensMovimento);
 			novo();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 
@@ -209,6 +213,17 @@ public class MovimentacaoControle implements Serializable {
 
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
+	 */
+	@Override
+	protected void criarEntidade() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

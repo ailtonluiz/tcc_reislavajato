@@ -2,8 +2,7 @@ package br.com.reislavajato.enumeradores;
 
 public enum EnumSimNao implements Enumerador {
 
-	SIM("S", "Sim"), 
-	NAO("N", "Não");
+	SIM("S", "Sim"), NAO("N", "Não");
 
 	private final String abreviado;
 	private final String descricao;

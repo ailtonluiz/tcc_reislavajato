@@ -66,8 +66,8 @@ public class ReisLavajatoUtil {
 		return ctx.getRealPath("/");
 	}
 
-	public static void gerarRelatorioFaces(String caminhoRelatorio, @SuppressWarnings("rawtypes") Collection dados, Map parametros)
-			throws IOException, JRException {
+	public static void gerarRelatorioFaces(String caminhoRelatorio, @SuppressWarnings("rawtypes") Collection dados,
+			Map parametros) throws IOException, JRException {
 		FacesContext context = FacesContext.getCurrentInstance();
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dados);
 		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();

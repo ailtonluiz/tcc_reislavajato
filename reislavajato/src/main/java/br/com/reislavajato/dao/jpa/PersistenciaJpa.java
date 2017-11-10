@@ -20,11 +20,13 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 
 	public Class<E> classeEntidade;
 
+	@SuppressWarnings("unchecked")
 	public PersistenciaJpa() {
 		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
 				.getActualTypeArguments()[0];
 	}
 
+	@SuppressWarnings("unchecked")
 	public PersistenciaJpa(Class<E> classeEntidade) {
 		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
 				.getActualTypeArguments()[0];
@@ -91,6 +93,7 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<E> listar() throws DadosInvalidosException {
 		try {
 			Query query = em.createQuery("select e from " + classeEntidade.getSimpleName() + " e");

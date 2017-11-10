@@ -30,7 +30,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 @SuppressWarnings({ "serial" })
 @Controller("MunicipioControle")
-public class MunicipioControle implements Serializable {
+public class MunicipioControle extends ReisLavajatoControle implements Serializable {
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
@@ -91,6 +91,7 @@ public class MunicipioControle implements Serializable {
 	public void imprimir() {
 		try {
 			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("frmListagem:tabela");
+			@SuppressWarnings("unused")
 			Map<String, Object> filtros = tabela.getFilters();
 
 			// String estadoNome = (String) filtros.get("estado.nome");
@@ -129,6 +130,17 @@ public class MunicipioControle implements Serializable {
 
 	public void setMunicipios(List<Municipio> municipios) {
 		this.municipios = municipios;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
+	 */
+	@Override
+	protected void criarEntidade() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

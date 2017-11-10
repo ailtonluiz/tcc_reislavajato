@@ -29,10 +29,10 @@ import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 public class Pessoa extends GenericEntity {
 
 	private Boolean cadastroAtivo = true;
-	
+
 	@Enumerated(EnumType.STRING)
 	private EnumSimNao permitirEnvioEmail = EnumSimNao.SIM;
-	
+
 	@Column(length = 70)
 	private String email;
 
@@ -72,7 +72,7 @@ public class Pessoa extends GenericEntity {
 	public void setCadastroAtivo(Boolean cadastroAtivo) {
 		this.cadastroAtivo = cadastroAtivo;
 	}
-	
+
 	public EnumSimNao getPermitirEnvioEmail() {
 		return permitirEnvioEmail;
 	}

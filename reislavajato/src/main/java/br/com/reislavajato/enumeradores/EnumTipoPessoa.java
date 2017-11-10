@@ -2,8 +2,7 @@ package br.com.reislavajato.enumeradores;
 
 public enum EnumTipoPessoa implements Enumerador {
 
-	PF("PF", "Pessoa Física"), 
-	PJ("PJ", "Pessoa Jurídica");
+	PF("PF", "Pessoa Física"), PJ("PJ", "Pessoa Jurídica");
 
 	private final String abreviado;
 	private final String descricao;

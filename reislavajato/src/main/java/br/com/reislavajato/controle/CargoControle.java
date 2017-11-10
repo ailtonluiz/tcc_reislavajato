@@ -10,15 +10,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
-import br.com.reislavajato.dao.CargoDao;
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cargo;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.CargoNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,20 +32,21 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-// teste Delmondes
 @SuppressWarnings({ "serial" })
-@ManagedBean
+@Controller
 @ViewScoped
-public class CargoControle implements Serializable {
-	CargoDao cargoDao = new CargoDao();
-	// Teste
+public class CargoControle extends ReisLavajatoControle implements Serializable {
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
+
 	private Cargo cargo;
 	private List<Cargo> cargos;
 
 	@PostConstruct
-	public void listar() {
+	public void listar() throws DadosInvalidosException {
 		try {
-			cargos = cargoDao.listar();
+			cargos = cargoNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) cargo(s)!");
 			erro.printStackTrace();
@@ -53,9 +57,9 @@ public class CargoControle implements Serializable {
 		cargo = new Cargo();
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
-			cargoDao.merge(cargo);
+			cargoNeg.incluir(cargo);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -65,10 +69,10 @@ public class CargoControle implements Serializable {
 		}
 	}
 
-	public void excluir(ActionEvent evento) {
+	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			cargo = (Cargo) evento.getComponent().getAttributes().get("registroSelecionado");
-			cargoDao.excluir(cargo);
+			cargoNeg.excluir(cargo);
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
@@ -115,6 +119,17 @@ public class CargoControle implements Serializable {
 
 	public void setCargos(List<Cargo> cargos) {
 		this.cargos = cargos;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
+	 */
+	@Override
+	protected void criarEntidade() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

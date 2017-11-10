@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
+import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.enumeradores.EnumEscolaridade;
 import br.com.reislavajato.enumeradores.EnumEstadoCivil;
@@ -14,7 +14,7 @@ import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.enumeradores.EnumUf;
 
-@ManagedBean(name = "ControleEnumerador")
+@Controller("ControleEnumerador")
 public class ControleEnumerador implements Serializable {
 	private static final long serialVersionUID = 644427377876725108L;
 

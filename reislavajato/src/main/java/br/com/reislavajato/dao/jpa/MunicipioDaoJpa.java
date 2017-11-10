@@ -14,7 +14,7 @@ import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.enumeradores.EnumUf;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 
-@Repository()
+@Repository
 public class MunicipioDaoJpa extends PersistenciaJpa<Municipio> implements MunicipioDao {
 	private static final long serialVersionUID = 408564091923202102L;
 

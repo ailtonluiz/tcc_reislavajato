@@ -11,16 +11,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
-import br.com.reislavajato.dao.EmpresaDao;
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Empresa;
 import br.com.reislavajato.entidade.Municipio;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.EmpresaNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -32,20 +35,21 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Data: 5 de set de 2017
  */
 @ViewScoped
-@ManagedBean
+@Controller
 @SuppressWarnings("serial")
-public class EmpresaControle implements Serializable {
+public class EmpresaControle extends ReisLavajatoControle implements Serializable {
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private EmpresaDao empresaDao = new EmpresaDao();
+	private EmpresaNeg empresaNeg = context.getBean(EmpresaNeg.class);
 
 	private Empresa empresa;
 	private List<Empresa> empresas;
 	private List<Municipio> municipios;
 
 	@PostConstruct
-	public void listar() {
+	public void listar() throws DadosInvalidosException {
 		try {
-			empresas = empresaDao.listar();
+			empresas = empresaNeg.listar();
 			municipios = new ArrayList<Municipio>();
 
 		} catch (RuntimeException erro) {
@@ -63,11 +67,11 @@ public class EmpresaControle implements Serializable {
 		}
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
-			empresaDao.merge(empresa);
+			empresaNeg.incluir(empresa);
 			novo();
-			empresas = empresaDao.listar();
+			empresas = empresaNeg.listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
@@ -75,7 +79,7 @@ public class EmpresaControle implements Serializable {
 
 	}
 
-	public void editar(ActionEvent evento) {
+	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			empresa = (Empresa) evento.getComponent().getAttributes().get("registroSelecionado");
 			listar();
@@ -85,10 +89,10 @@ public class EmpresaControle implements Serializable {
 		}
 	}
 
-	public void excluir(ActionEvent evento) {
+	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			empresa = (Empresa) evento.getComponent().getAttributes().get("registroSelecionado");
-			empresaDao.excluir(empresa);
+			empresaNeg.excluir(empresa);
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
@@ -135,6 +139,17 @@ public class EmpresaControle implements Serializable {
 
 	public void setMunicipios(List<Municipio> municipios) {
 		this.municipios = municipios;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
+	 */
+	@Override
+	protected void criarEntidade() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

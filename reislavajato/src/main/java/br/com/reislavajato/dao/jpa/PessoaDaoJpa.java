@@ -14,7 +14,7 @@ import br.com.reislavajato.dao.PessoaDao;
 import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 
-@Repository()
+@Repository
 public class PessoaDaoJpa extends PersistenciaJpa<Pessoa> implements PessoaDao {
 	private static final long serialVersionUID = 408564091923202102L;
 

@@ -4,48 +4,36 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
-import br.com.reislavajato.dao.ServicoDao;
+import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Servico;
+import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.ServicoNeg;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@ManagedBean
+@Controller
 @ViewScoped
-public class ServicoControle implements Serializable {
+public class ServicoControle extends ReisLavajatoControle implements Serializable {
+	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	ServicoDao servicoDao = new ServicoDao();
+	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
 	private Servico servico;
 	private List<Servico> servicos;
 
-	public Servico getServico() {
-		return servico;
-	}
-
-	public void setServico(Servico servico) {
-		this.servico = servico;
-	}
-
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
-	}
-
 	@PostConstruct
-	public void listar() {
+	public void listar() throws DadosInvalidosException {
 		try {
-			servicos = servicoDao.listar();
+			servicos = servicoNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) serviço(s)!");
 			erro.printStackTrace();
@@ -56,9 +44,9 @@ public class ServicoControle implements Serializable {
 		servico = new Servico();
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
-			servicoDao.merge(servico);
+			servicoNeg.incluir(servico);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -68,10 +56,10 @@ public class ServicoControle implements Serializable {
 		}
 	}
 
-	public void excluir(ActionEvent evento) {
+	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			servico = (Servico) evento.getComponent().getAttributes().get("registroSelecionado");
-			servicoDao.excluir(servico);
+			servicoNeg.excluir(servico);
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
@@ -86,5 +74,16 @@ public class ServicoControle implements Serializable {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
+	 */
+	@Override
+	protected void criarEntidade() {
+		// TODO Auto-generated method stub
+
 	}
 }
