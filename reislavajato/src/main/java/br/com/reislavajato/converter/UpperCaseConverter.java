@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.com.reislavajato.conversor;
+package br.com.reislavajato.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

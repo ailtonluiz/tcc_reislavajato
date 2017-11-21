@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package br.com.reislavajato.controle;
 
 import java.io.IOException;

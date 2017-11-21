@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package br.com.reislavajato.util;
 
 /**

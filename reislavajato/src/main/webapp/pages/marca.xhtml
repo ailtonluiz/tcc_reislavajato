@@ -18,7 +18,7 @@
 					paginator="true" value="#{marcaControle.marcas}"
 					paginatorPosition="top" var="marca" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						<p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();"
 							actionListener="#{marcaControle.novo}"
 							update=":frmCadastro:painel">
 							<f:actionListener
@@ -77,10 +77,10 @@
 						requiredMessage="É obrigatório informar o nome da marca" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
+					<p:commandButton value="Salvar" icon="ui-icon-check"
 						actionListener="#{marcaControle.salvar}"
 						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

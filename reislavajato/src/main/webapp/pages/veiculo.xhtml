@@ -18,7 +18,7 @@
 					paginator="true" value="#{veiculoControle.veiculos}"
 					paginatorPosition="top" var="veiculo" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						<p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();"
 							actionListener="#{veiculoControle.novo}"
 							update=":frmCadastro:painel">
 							<f:actionListener

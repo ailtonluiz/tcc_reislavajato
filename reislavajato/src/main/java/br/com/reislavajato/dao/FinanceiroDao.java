@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package br.com.reislavajato.dao;
 
 import br.com.reislavajato.entidade.Financeiro;

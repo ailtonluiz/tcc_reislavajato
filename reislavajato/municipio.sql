@@ -1,4 +1,4 @@
-Insert into Municipio (codigo, nome, uf) values ('1100015','Alta Floresta D''Oeste', 'Rondônia');
+Insert into Municipio (codigo, nome, uf) values ('1100015','Alta Floresta DOeste', 'Rondônia');
 Insert into Municipio (codigo, nome, uf) values ('1100023','Ariquemes', 'Rondônia');
 Insert into Municipio (codigo, nome, uf) values ('1100031','Cabixi', 'Rondônia');
 Insert into Municipio (codigo, nome, uf) values ('1100049','Cacoal', 'Rondônia');
