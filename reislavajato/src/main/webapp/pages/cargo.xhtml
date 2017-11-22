@@ -69,10 +69,10 @@
 						requiredMessage="É obrigatório informar o nome do cargo" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
+					<p:commandButton value="Salvar" icon="ui-icon-check"
 						actionListener="#{cargoControle.salvar}"
 						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

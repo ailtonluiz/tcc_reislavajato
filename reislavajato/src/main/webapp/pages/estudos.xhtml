@@ -12,12 +12,12 @@
 	<ui:define name="conteudo">
 		<!-- Tela de listagem -->
 		<h:form id="frmListagem">
-			<p:panel header="Listagem de funcionários">
+			<p:panel header="Teste Telmo Certim!!">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
 					paginator="true" value="#{funcionarioControle.funcionarios}"
 					paginatorPosition="top" var="funcionario" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus"
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{funcionarioControle.novo}"
 							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2,:frmCadastro:pnlObs">
 							<f:actionListener
@@ -197,10 +197,10 @@
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar" icon="ui-icon-check"
+					<p:commandButton value="Salvar"
 						actionListener="#{funcionarioControle.salvar}"
 						update=":mensagem :frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2, :frmCadastro:pnlObs :frmListagem:tabela" />
-					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
+					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

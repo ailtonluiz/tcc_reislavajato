@@ -129,15 +129,9 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		this.cargos = cargos;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
 	@Override
 	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

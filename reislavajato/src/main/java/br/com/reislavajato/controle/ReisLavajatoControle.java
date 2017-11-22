@@ -7,6 +7,7 @@ public abstract class ReisLavajatoControle {
 	protected final String msgIncluidoSucesso = "Inclusão realizada com Sucesso!";
 	protected final String msgAlteradoSucesso = "Alteração realizada com sucesso!";
 	protected final String msgExcluidoSucesso = "Exclusão realizada com Sucesso!";
+	protected final String msgErro = "Ocorreu um erro";
 
 	protected abstract void criarEntidade();
 
