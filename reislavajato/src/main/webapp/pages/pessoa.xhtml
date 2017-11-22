@@ -1,313 +1,416 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-   <p:growl id="mensagem" />
+	<p:growl id="mensagem" />
+<!-- Teste SVN -->
+	<ui:define name="conteudo">
+		<h:form id="frmListagem">
 
-   <ui:define name="conteudo">
-      <h:form id="frmListagem">
+			<h:panelGroup>
+				<p:panel header="Listagem de Clientes">
+					<h:panelGrid columns="2">
+						<h:outputText value="Nome:" />
+						<p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nome}" />
 
-         <h:panelGroup>
-            <p:panel header="Listagem de Clientes">
-               <h:panelGrid columns="2">
-                  <h:outputText value="Nome:" />
-                  <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nome}" />
+						<h:outputText value="CPF:" />
+						<p:inputText value="#{pessoaControle.pessoa.pessoaFisica.cpf}"
+							maxlength="14" converter="cpfConverter" />
 
-                  <h:outputText value="CPF:" />
-                  <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.cpf}" maxlength="14" converter="cpfConverter" />
+						<h:outputText value="Nome Fantasia:" />
+						<p:inputText
+							value="#{pessoaControle.pessoa.pessoaJuridica.nomeFantasia}" />
 
-                  <h:outputText value="Nome Fantasia:" />
-                  <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.nomeFantasia}" />
+						<h:outputText value="CNPJ:" />
+						<p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.cnpj}"
+							converter="cnpjConverter" />
+					</h:panelGrid>
+					<br />
+					<p:commandButton value="Listar"
+						action="#{pessoaControle.listarPorCpfOuNome}" update="tabela"
+						title="Listar Pessoas" />
+				</p:panel>
 
-                  <h:outputText value="CNPJ:" />
-                  <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.cnpj}" converter="cnpjConverter" />
-               </h:panelGrid>
-               <br />
-               <p:commandButton value="Listar" action="#{pessoaControle.listarPorCpfOuNome}" update="tabela" title="Listar Pessoas" />
-            </p:panel>
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{pessoaControle.pessoas}"
+					paginatorPosition="top" var="pessoa">
+					<p:column headerText="Razão Social" style="width:30%"
+						rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
+						<f:facet name="header">
+							<h:outputText value="#{pessoa.pessoaJuridica.razaoSocial}" />
+						</f:facet>
+					</p:column>
 
-            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{pessoaControle.pessoas}" paginatorPosition="top" var="pessoa">
-               <p:column headerText="Razão Social" style="width:30%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
-                  <f:facet name="header">
-                     <h:outputText value="#{pessoa.pessoaJuridica.razaoSocial}" />
-                  </f:facet>
-               </p:column>
+					<p:column headerText="Fantasia" style="width:30%"
+						rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
+						<f:facet name="header">
+							<h:outputText value="#{pessoa.pessoaJuridica.nomeFantasia}" />
+						</f:facet>
+					</p:column>
 
-               <p:column headerText="Fantasia" style="width:30%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
-                  <f:facet name="header">
-                     <h:outputText value="#{pessoa.pessoaJuridica.nomeFantasia}" />
-                  </f:facet>
-               </p:column>
+					<p:column headerText="CNPJ" style="width:7%"
+						rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
+						<f:facet name="header">
+							<h:outputText value="#{pessoa.pessoaJuridica.cnpj}"
+								converter="cnpjConverter" />
+						</f:facet>
+					</p:column>
 
-               <p:column headerText="CNPJ" style="width:7%" rendered="#{pessoa.pessoaJuridica != null and pessoa.pessoaJuridica.codigo > 0}">
-                  <f:facet name="header">
-                     <h:outputText value="#{pessoa.pessoaJuridica.cnpj}" converter="cnpjConverter" />
-                  </f:facet>
-               </p:column>
+					<p:column headerText="Nome" style="width:30%"
+						rendered="#{pessoa.pessoaFisica.codigo > 0}">
+						<f:facet name="header">
+							<h:outputText value="#{pessoa.pessoaFisica.nome}" />
+						</f:facet>
+					</p:column>
 
-               <p:column headerText="Nome" style="width:30%" rendered="#{pessoa.pessoaFisica.codigo > 0}">
-                  <f:facet name="header">
-                     <h:outputText value="#{pessoa.pessoaFisica.nome}" />
-                  </f:facet>
-               </p:column>
+					<p:column headerText="CPF" style="width:7%"
+						rendered="#{pessoa.pessoaFisica.codigo > 0}">
+						<f:facet name="header">
+							<h:outputText value="#{pessoa.pessoaFisica.cpf}"
+								converter="cpfConverter" />
+						</f:facet>
+					</p:column>
 
-               <p:column headerText="CPF" style="width:7%" rendered="#{pessoa.pessoaFisica.codigo > 0}">
-                  <f:facet name="header">
-                     <h:outputText value="#{pessoa.pessoaFisica.cpf}" converter="cpfConverter" />
-                  </f:facet>
-               </p:column>
+					<p:column headerText="Opções" style="width:7%">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{pessoaControle.excluir}"
+							update=":mensagem :frmListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o registro?" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{pessoa}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{pessoaControle.editar}"
+							update=":frmPessoa:painel" oncomplete="PF('dialogo').show();">
 
-               <p:column headerText="Opções" style="width:7%">
-                  <p:commandButton icon="ui-icon-trash" actionListener="#{pessoaControle.excluir}" update=":mensagem :frmListagem:tabela">
-                     <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
-                     <f:attribute name="registroSelecionado" value="#{pessoa}" />
-                  </p:commandButton>
-                  <p:commandButton icon="ui-icon-pencil" actionListener="#{pessoaControle.editar}" update=":frmPessoa:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="registroSelecionado" value="#{pessoa}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
 
-                     <f:attribute name="registroSelecionado" value="#{pessoa}" />
-                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                  </p:commandButton>
-               </p:column>
+					<f:facet name="footer">
+						<p:commandButton value="Novo" icon="ui-icon-plus"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{pessoaControle.novo}"
+							update=":frmPessoa:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
 
-               <f:facet name="footer">
-                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{pessoaControle.novo}" update=":frmPessoa:painel">
-                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                  </p:commandButton>
-               </f:facet>
-
-            </p:dataTable>
-            <!-- Botão de opções -->
-            <p:confirmDialog global="true">
-               <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-               <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-         </h:panelGroup>
-      </h:form>
+				</p:dataTable>
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:panelGroup>
+		</h:form>
 
 
-      <!-- Tela de cadastros -->
-      <p:dialog header="Cadastro de clientes" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
+		<!-- Tela de cadastros -->
+		<p:dialog header="Cadastro de clientes" widgetVar="dialogo"
+			draggable="true" resizable="false" modal="true">
 
-         <h:form id="frmPessoa">
-            <h:panelGroup>
-               <p:panel id="painel">
-                  <h:panelGrid columns="2" >
-                     <h:outputLabel value="Tipo Pessoa?" />
-                     <p:selectOneRadio value="#{pessoaControle.pessoa.tipoPessoa}">
-                        <p:ajax update="frmPessoa" event="change" process="@form" />
-                        <f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                     </p:selectOneRadio>
+			<h:form id="frmPessoa">
+				<h:panelGroup>
+					<p:panel id="painel">
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Tipo Pessoa?" />
+							<p:selectOneRadio value="#{pessoaControle.pessoa.tipoPessoa}">
+								<p:ajax update="frmPessoa" event="change" process="@form" />
+								<f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}"
+									var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+							</p:selectOneRadio>
 
-                     <h:outputText value="E-Mail:" />
-                     <p:inputText value="#{pessoaControle.pessoa.email}" />
+							<h:outputText value="E-Mail:" />
+							<p:inputText value="#{pessoaControle.pessoa.email}" />
 
-                     <h:outputText value="Permitir Envio?" />
-                     <p:selectOneRadio value="#{pessoaControle.pessoa.permitirEnvioEmail}">
-                        <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                     </p:selectOneRadio>
+							<h:outputText value="Permitir Envio?" />
+							<p:selectOneRadio
+								value="#{pessoaControle.pessoa.permitirEnvioEmail}">
+								<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
+									var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+							</p:selectOneRadio>
 
-                  </h:panelGrid>
+						</h:panelGrid>
 
-                  <p:tabView dynamic="true">
-                     <p:tab title="Pessoa Física" rendered="#{pessoaControle.pessoa.tipoPessoa.abreviado == 'PF'}">
-                        <h:panelGrid columns="2">
-                           <h:outputText value="Nome:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 160pt !important;" />
+						<p:tabView dynamic="true">
+							<p:tab title="Pessoa Física"
+								rendered="#{pessoaControle.pessoa.tipoPessoa.abreviado == 'PF'}">
+								<h:panelGrid columns="2">
+									<h:outputText value="Nome:" />
+									<p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nome}"
+										maxlength="50" style="width: 160pt !important;" />
 
-                           <h:outputText value="Nome da Mãe:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nomeMae}" maxlength="50" style="width: 160pt !important;" />
+									<h:outputText value="Nome da Mãe:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaFisica.nomeMae}"
+										maxlength="50" style="width: 160pt !important;" />
 
-                           <h:outputText value="Nome do Pai:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.nomePai}" maxlength="50" style="width: 160pt !important;" />
+									<h:outputText value="Nome do Pai:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaFisica.nomePai}"
+										maxlength="50" style="width: 160pt !important;" />
 
-                           <h:outputText value="CPF:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.cpf}" onkeypress="fcSaltaTAB(this, 13);" maxlength="14" onBlur="javascript:validaCPF(this), formataCPF(this);" onkeyup="javascript:maskCPF(this)"
-                              style="width: 150pt !important;" converter="cpfConverter" />
+									<h:outputText value="CPF:" />
+									<p:inputText value="#{pessoaControle.pessoa.pessoaFisica.cpf}"
+										onkeypress="fcSaltaTAB(this, 13);" maxlength="14"
+										onBlur="javascript:validaCPF(this), formataCPF(this);"
+										onkeyup="javascript:maskCPF(this)"
+										style="width: 150pt !important;" converter="cpfConverter" />
 
-                           <h:outputText value="RG:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaFisica.rg}" />
+									<h:outputText value="RG:" />
+									<p:inputText value="#{pessoaControle.pessoa.pessoaFisica.rg}" />
 
-                           <h:outputText value="Data Expedição RG:" />
-                           <p:calendar value="#{pessoaControle.pessoa.pessoaFisica.dataExpedicaoRG}" onkeypress="fcSaltaTAB(this, 9);" maxlength="10" onkeyup="maskData(this)" converterMessage="Data inválida" pattern="dd/MM/yyyy" navigator="true"
-                              locale="pt" />
+									<h:outputText value="Data Expedição RG:" />
+									<p:calendar
+										value="#{pessoaControle.pessoa.pessoaFisica.dataExpedicaoRG}"
+										onkeypress="fcSaltaTAB(this, 9);" maxlength="10"
+										onkeyup="maskData(this)" converterMessage="Data inválida"
+										pattern="dd/MM/yyyy" navigator="true" locale="pt" />
 
-                           <h:outputText value="Órgão RG:" />
-                           <p:selectOneMenu value="#{pessoaControle.pessoa.pessoaFisica.orgaoRG}">
-                              <f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           </p:selectOneMenu>
+									<h:outputText value="Órgão RG:" />
+									<p:selectOneMenu
+										value="#{pessoaControle.pessoa.pessoaFisica.orgaoRG}">
+										<f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}"
+											var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									</p:selectOneMenu>
 
-                           <h:outputText value="UF - RG:" />
-                           <p:selectOneMenu value="#{pessoaControle.pessoa.pessoaFisica.ufExpedicaoRg}">
-                              <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           </p:selectOneMenu>
+									<h:outputText value="UF - RG:" />
+									<p:selectOneMenu
+										value="#{pessoaControle.pessoa.pessoaFisica.ufExpedicaoRg}">
+										<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+											var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									</p:selectOneMenu>
 
-                           <h:outputText value="Data Nascimento:" />
-                           <p:calendar value="#{pessoaControle.pessoa.pessoaFisica.dataNascimento}" onkeypress="fcSaltaTAB(this, 9);" maxlength="10" onkeyup="maskData(this)" converterMessage="Data inválida" pattern="dd/MM/yyyy" navigator="true"
-                              locale="pt" />
+									<h:outputText value="Data Nascimento:" />
+									<p:calendar
+										value="#{pessoaControle.pessoa.pessoaFisica.dataNascimento}"
+										onkeypress="fcSaltaTAB(this, 9);" maxlength="10"
+										onkeyup="maskData(this)" converterMessage="Data inválida"
+										pattern="dd/MM/yyyy" navigator="true" locale="pt" />
 
-                           <h:outputText value="Sexo:" />
-                           <p:selectOneRadio value="#{pessoaControle.pessoa.pessoaFisica.sexo}">
-                              <f:selectItems value="#{ControleEnumerador.listaEnumSexo}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           </p:selectOneRadio>
+									<h:outputText value="Sexo:" />
+									<p:selectOneRadio
+										value="#{pessoaControle.pessoa.pessoaFisica.sexo}">
+										<f:selectItems value="#{ControleEnumerador.listaEnumSexo}"
+											var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									</p:selectOneRadio>
 
-                           <h:outputText value="Estado Civil:" />
-                           <p:selectOneMenu value="#{pessoaControle.pessoa.pessoaFisica.estadoCivil}">
-                              <f:selectItems value="#{ControleEnumerador.listaEnumEstadoCivil}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           </p:selectOneMenu>
+									<h:outputText value="Estado Civil:" />
+									<p:selectOneMenu
+										value="#{pessoaControle.pessoa.pessoaFisica.estadoCivil}">
+										<f:selectItems
+											value="#{ControleEnumerador.listaEnumEstadoCivil}" var="item"
+											itemLabel="#{item.descricao}" itemValue="#{item}" />
+									</p:selectOneMenu>
 
-                           <h:outputText value="Escolaridade:" />
-                           <p:selectOneMenu value="#{pessoaControle.pessoa.pessoaFisica.escolaridade}">
-                              <f:selectItems value="#{ControleEnumerador.listaEnumEscolaridade}" />
-                           </p:selectOneMenu>
-                        </h:panelGrid>
-                     </p:tab>
+									<h:outputText value="Escolaridade:" />
+									<p:selectOneMenu
+										value="#{pessoaControle.pessoa.pessoaFisica.escolaridade}">
+										<f:selectItems
+											value="#{ControleEnumerador.listaEnumEscolaridade}" />
+									</p:selectOneMenu>
+								</h:panelGrid>
+							</p:tab>
 
-                     <p:tab title="Pessoa Jurídica" rendered="#{pessoaControle.pessoa.tipoPessoa.abreviado == 'PJ'}">
-                        <h:panelGrid columns="2">
-                           <h:outputText value="Razão Social:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.razaoSocial}" maxlength="200" style="width: 200pt !important;" />
+							<p:tab title="Pessoa Jurídica"
+								rendered="#{pessoaControle.pessoa.tipoPessoa.abreviado == 'PJ'}">
+								<h:panelGrid columns="2">
+									<h:outputText value="Razão Social:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaJuridica.razaoSocial}"
+										maxlength="200" style="width: 200pt !important;" />
 
-                           <h:outputText value="Nome Fantasia:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.nomeFantasia}" maxlength="200" style="width: 200pt !important;" />
+									<h:outputText value="Nome Fantasia:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaJuridica.nomeFantasia}"
+										maxlength="200" style="width: 200pt !important;" />
 
-                           <h:outputText value="CNPJ:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.cnpj}" maxlength="100" style="width: 160pt !important;" />
+									<h:outputText value="CNPJ:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaJuridica.cnpj}"
+										maxlength="100" style="width: 160pt !important;" />
 
-                           <h:outputText value="Inscrição Estadual:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.inscricaoEstadual}" maxlength="200" style="width: 200pt !important;" />
+									<h:outputText value="Inscrição Estadual:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaJuridica.inscricaoEstadual}"
+										maxlength="200" style="width: 200pt !important;" />
 
-                           <h:outputText value="Inscrição Municipal:" />
-                           <p:inputText value="#{pessoaControle.pessoa.pessoaJuridica.inscricaoMunicipal}" maxlength="200" style="width: 200pt !important;" />
-                        </h:panelGrid>
-                     </p:tab>
+									<h:outputText value="Inscrição Municipal:" />
+									<p:inputText
+										value="#{pessoaControle.pessoa.pessoaJuridica.inscricaoMunicipal}"
+										maxlength="200" style="width: 200pt !important;" />
+								</h:panelGrid>
+							</p:tab>
 
-                     <p:tab title="Endereço" id="end">
-                        <h:panelGrid columns="2">
-                           <h:outputLabel value="Endereço:" for="txt_endereco" />
-                           <p:inputText id="txt_endereco" value="#{pessoaControle.pessoa.endereco.logradouro}" />
+							<p:tab title="Endereço" id="end">
+								<h:panelGrid columns="2">
+									<h:outputLabel value="Endereço:" for="txt_endereco" />
+									<p:inputText id="txt_endereco"
+										value="#{pessoaControle.pessoa.endereco.logradouro}" />
 
-                           <h:outputLabel value="Número:" for="txt_numero" />
-                           <p:inputText id="txt_numero" value="#{pessoaControle.pessoa.endereco.numero}" />
+									<h:outputLabel value="Número:" for="txt_numero" />
+									<p:inputText id="txt_numero"
+										value="#{pessoaControle.pessoa.endereco.numero}" />
 
-                           <h:outputLabel value="Bairro:" for="txt_bairro" />
-                           <p:inputText id="txt_bairro" value="#{pessoaControle.pessoa.endereco.bairro}" />
+									<h:outputLabel value="Bairro:" for="txt_bairro" />
+									<p:inputText id="txt_bairro"
+										value="#{pessoaControle.pessoa.endereco.bairro}" />
 
-                           <h:outputText value="UF" />
-                           <p:selectOneMenu value="#{pessoaControle.pessoa.endereco.municipio.uf}">
-                              <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                              <p:ajax update="municipio" />
-                           </p:selectOneMenu>
+									<h:outputText value="UF" />
+									<p:selectOneMenu
+										value="#{pessoaControle.pessoa.endereco.municipio.uf}">
+										<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+											var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+										<p:ajax update="municipio" />
+									</p:selectOneMenu>
 
-                           <p:outputLabel for="municipio" value="Município:" />
-                           <p:selectOneMenu id="municipio" filter="true" required="true" requiredMessage="É necessário informar uma Município para realizar o cadastro" converter="omnifaces.SelectItemsConverter"
-                              value="#{pessoaControle.pessoa.endereco.municipio}">
-                              <f:selectItem noSelectionOption="true" itemLabel="Selecione um Município" />
-                              <f:selectItems value="#{pessoaControle.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nome}" />
-                           </p:selectOneMenu>
+									<p:outputLabel for="municipio" value="Município:" />
+									<p:selectOneMenu id="municipio" filter="true" required="true"
+										requiredMessage="É necessário informar uma Município para realizar o cadastro"
+										converter="omnifaces.SelectItemsConverter"
+										value="#{pessoaControle.pessoa.endereco.municipio}">
+										<f:selectItem noSelectionOption="true"
+											itemLabel="Selecione um Município" />
+										<f:selectItems value="#{pessoaControle.municipios}"
+											var="municipio" itemValue="#{municipio}"
+											itemLabel="#{municipio.nome}" />
+									</p:selectOneMenu>
 
-                           <h:outputLabel value="CEP:" for="txt_cep" />
-                           <p:inputText id="txt_cep" value="#{pessoaControle.pessoa.endereco.cep}" />
+									<h:outputLabel value="CEP:" for="txt_cep" />
+									<p:inputText id="txt_cep"
+										value="#{pessoaControle.pessoa.endereco.cep}" />
 
-                           <p:commandButton value="Limpar Campos" type="reset" />
-                           <p:commandButton value="Adicionar" update="enderecosTable" process="end" action="#{pessoaControle.limparEndereco}">
-                              <p:collector value="#{pessoaControle.pessoa.endereco}" addTo="#{pessoaControle.pessoa.enderecos}" />
-                           </p:commandButton>
-                        </h:panelGrid>
-                        <br />
+									<p:commandButton value="Limpar Campos" type="reset" />
+									<p:commandButton value="Adicionar" update="enderecosTable"
+										process="end" action="#{pessoaControle.limparEndereco}">
+										<p:collector value="#{pessoaControle.pessoa.endereco}"
+											addTo="#{pessoaControle.pessoa.enderecos}" />
+									</p:commandButton>
+								</h:panelGrid>
+								<br />
 
-                        <p:dataTable id="enderecosTable" value="#{pessoaControle.pessoa.enderecosLista}" var="endereco" emptyMessage="Nenhum registro na lista">
+								<p:dataTable id="enderecosTable"
+									value="#{pessoaControle.pessoa.enderecosLista}" var="endereco"
+									emptyMessage="Nenhum registro na lista">
 
-                           <p:column style="font-size: 12px;">
-                              <f:facet name="header">
-                                 <h:outputText value="Endereco" />
-                              </f:facet>
-                              <h:outputText value="#{endereco.logradouro}" />
-                           </p:column>
+									<p:column style="font-size: 12px;">
+										<f:facet name="header">
+											<h:outputText value="Endereco" />
+										</f:facet>
+										<h:outputText value="#{endereco.logradouro}" />
+									</p:column>
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <f:facet name="header">
-                                 <h:outputText value="Bairro" />
-                              </f:facet>
-                              <h:outputText value="#{endereco.bairro}" />
-                           </p:column>
+									<p:column style="font-size: 12px; text-align: center;">
+										<f:facet name="header">
+											<h:outputText value="Bairro" />
+										</f:facet>
+										<h:outputText value="#{endereco.bairro}" />
+									</p:column>
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <f:facet name="header">
-                                 <h:outputText value="CEP" />
-                              </f:facet>
-                              <h:outputText value="#{endereco.cep}" />
-                           </p:column>
+									<p:column style="font-size: 12px; text-align: center;">
+										<f:facet name="header">
+											<h:outputText value="CEP" />
+										</f:facet>
+										<h:outputText value="#{endereco.cep}" />
+									</p:column>
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <p:commandLink value="Remover" update="enderecosTable" process="enderecosTable">
-                                 <p:collector value="#{endereco}" removeFrom="#{pessoaControle.pessoa.enderecos}" />
-                              </p:commandLink>
-                           </p:column>
-                        </p:dataTable>
-                     </p:tab>
+									<p:column style="font-size: 12px; text-align: center;">
+										<p:commandLink value="Remover" update="enderecosTable"
+											process="enderecosTable">
+											<p:collector value="#{endereco}"
+												removeFrom="#{pessoaControle.pessoa.enderecos}" />
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</p:tab>
 
-                     <br />
+							<br />
 
-                     <p:tab title="Telefone" id="tel">
-                        <h:panelGrid columns="2">
-                           <h:outputLabel value="Celular:" for="txt_celular" />
-                           <p:inputText id="txt_celular" value="#{pessoaControle.pessoa.telefone.celular}" />
+							<p:tab title="Telefone" id="tel">
+								<h:panelGrid columns="2">
+									<h:outputLabel value="Celular:" for="txt_celular" />
+									<p:inputText id="txt_celular"
+										value="#{pessoaControle.pessoa.telefone.celular}" />
 
-                           <h:outputLabel value="Fixo:" for="txt_fixo" />
-                           <p:inputText id="txt_fixo" value="#{pessoaControle.pessoa.telefone.fixo}" />
+									<h:outputLabel value="Fixo:" for="txt_fixo" />
+									<p:inputText id="txt_fixo"
+										value="#{pessoaControle.pessoa.telefone.fixo}" />
 
-                           <h:outputLabel value="Comercial:" for="txt_comercial" />
-                           <p:inputText id="txt_comercial" value="#{pessoaControle.pessoa.telefone.comercial}" />
+									<h:outputLabel value="Comercial:" for="txt_comercial" />
+									<p:inputText id="txt_comercial"
+										value="#{pessoaControle.pessoa.telefone.comercial}" />
 
-                           <h:outputLabel value="Contato:" for="txt_contato" />
-                           <p:inputText id="txt_contato" value="#{pessoaControle.pessoa.telefone.contato}" />
+									<h:outputLabel value="Contato:" for="txt_contato" />
+									<p:inputText id="txt_contato"
+										value="#{pessoaControle.pessoa.telefone.contato}" />
 
-                           <p:commandButton value="Limpar Campos" type="reset" />
-                           <p:commandButton id="btn_add_tel" value="Adicionar" update="telefonesTable" process="tel" action="#{pessoaControle.limparTelefone}">
-                              <p:collector value="#{pessoaControle.pessoa.telefone}" addTo="#{pessoaControle.pessoa.telefones}" />
-                           </p:commandButton>
-                        </h:panelGrid>
+									<p:commandButton value="Limpar Campos" type="reset" />
+									<p:commandButton id="btn_add_tel" value="Adicionar"
+										update="telefonesTable" process="tel"
+										action="#{pessoaControle.limparTelefone}">
+										<p:collector value="#{pessoaControle.pessoa.telefone}"
+											addTo="#{pessoaControle.pessoa.telefones}" />
+									</p:commandButton>
+								</h:panelGrid>
 
-                        <br />
+								<br />
 
-                        <p:dataTable id="telefonesTable" value="#{pessoaControle.pessoa.telefonesLista}" var="telefone" emptyMessage="Nenhum registro na lista">
+								<p:dataTable id="telefonesTable"
+									value="#{pessoaControle.pessoa.telefonesLista}" var="telefone"
+									emptyMessage="Nenhum registro na lista">
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <f:facet name="header">
-                                 <h:outputText value="Celular" />
-                              </f:facet>
-                              <h:outputText value="#{telefone.celular}" />
-                           </p:column>
+									<p:column style="font-size: 12px; text-align: center;">
+										<f:facet name="header">
+											<h:outputText value="Celular" />
+										</f:facet>
+										<h:outputText value="#{telefone.celular}" />
+									</p:column>
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <f:facet name="header">
-                                 <h:outputText value="Comercial" />
-                              </f:facet>
-                              <h:outputText value="#{telefone.comercial}" />
-                           </p:column>
+									<p:column style="font-size: 12px; text-align: center;">
+										<f:facet name="header">
+											<h:outputText value="Comercial" />
+										</f:facet>
+										<h:outputText value="#{telefone.comercial}" />
+									</p:column>
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <f:facet name="header">
-                                 <h:outputText value="Contato" />
-                              </f:facet>
-                              <h:outputText value="#{telefone.contato}" />
-                           </p:column>
+									<p:column style="font-size: 12px; text-align: center;">
+										<f:facet name="header">
+											<h:outputText value="Contato" />
+										</f:facet>
+										<h:outputText value="#{telefone.contato}" />
+									</p:column>
 
-                           <p:column style="font-size: 12px; text-align: center;">
-                              <p:commandLink value="Remover" update="telefonesTable" process="telefonesTable">
-                                 <p:collector value="#{telefone}" removeFrom="#{pessoaControle.pessoa.telefones}" />
-                              </p:commandLink>
-                           </p:column>
-                        </p:dataTable>
-                     </p:tab>
-                  </p:tabView>
-               </p:panel>
-            </h:panelGroup>
-            <h:panelGrid columns="2">
-               <p:commandButton value="Salvar" actionListener="#{pessoaControle.salvar}" update=":mensagem :frmPessoa:painel :frmListagem:tabela" />
-               <p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
-            </h:panelGrid>
-         </h:form>
-      </p:dialog>
+									<p:column style="font-size: 12px; text-align: center;">
+										<p:commandLink value="Remover" update="telefonesTable"
+											process="telefonesTable">
+											<p:collector value="#{telefone}"
+												removeFrom="#{pessoaControle.pessoa.telefones}" />
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</p:tab>
+						</p:tabView>
+					</p:panel>
+				</h:panelGroup>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{pessoaControle.salvar}"
+						update=":mensagem :frmPessoa:painel :frmListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 
-   </ui:define>
+	</ui:define>
 </ui:composition>
