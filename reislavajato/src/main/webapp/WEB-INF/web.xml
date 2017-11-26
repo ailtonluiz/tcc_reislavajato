@@ -33,7 +33,7 @@
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>bootstrap</param-value>
-		<!--cruze cupertino overcast -->
+		<!--cruze cupertino overcast  bootstrap excite-bike-->
 	</context-param>
 
 	<listener>

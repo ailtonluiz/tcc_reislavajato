@@ -49,7 +49,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 			servicoNeg.incluir(servico);
 			novo();
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			Messages.addGlobalInfo("Operação realizada com sucesso! ");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();

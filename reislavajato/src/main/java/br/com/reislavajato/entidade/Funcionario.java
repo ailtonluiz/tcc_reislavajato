@@ -2,13 +2,19 @@ package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -29,9 +35,6 @@ public class Funcionario extends GenericEntity {
 
 	@Column(length = 20)
 	private String rg;
-
-	@Column(length = 100, nullable = false)
-	private String endereco;
 
 	@Column(name = "dt_nasc")
 	@Temporal(TemporalType.DATE)
@@ -90,6 +93,15 @@ public class Funcionario extends GenericEntity {
 	@JoinColumn(nullable = false)
 	private Cargo cargo;
 
+	@Transient
+	private Endereco endereco = new Endereco();
+	
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "funcionario_id")
+	private Set<Endereco> enderecos = new HashSet<Endereco>();
+
+
 	public String getNome() {
 		return nome;
 	}
@@ -114,12 +126,9 @@ public class Funcionario extends GenericEntity {
 		this.rg = rg;
 	}
 
-	public String getEndereco() {
-		return endereco;
-	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
 	public Date getDtNasc() {
@@ -265,5 +274,19 @@ public class Funcionario extends GenericEntity {
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Set<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(Set<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+	
+	
 
 }

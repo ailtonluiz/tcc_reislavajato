@@ -14,7 +14,7 @@
 		<!-- Tela de listagem -->
 		<h:form id="frmListagem">
 			<p:panel header="Listagem de marcas">
-				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" 
 					paginator="true" value="#{marcaControle.marcas}"
 					paginatorPosition="top" var="marca" rows="5">
 					<f:facet name="footer">
@@ -25,6 +25,10 @@
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
+					<p:column headerText="Código" sortBy="#{marca.codigo}"
+						style="width:4%">
+						<h:outputText value="#{marca.codigo}" />
+					</p:column>
 					<p:column headerText="Descrição" sortBy="#{marca.nome}"
 						style="width:65px">
 						<h:outputText value="#{marca.nome}" />
@@ -63,7 +67,7 @@
 			</p:panel>
 		</h:form>
 		<!-- Tela de Cadastros -->
-		<p:dialog header="Cadastro de Marcas" widgetVar="dialogo"
+		<p:dialog header="Cadastro de Marcas" widgetVar="dialogo" responsive="true" 
 			draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
 				<h:panelGrid id="painel" columns="2">

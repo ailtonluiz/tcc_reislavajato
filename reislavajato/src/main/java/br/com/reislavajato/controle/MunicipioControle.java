@@ -29,7 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@Controller("MunicipioControle")
+@Controller("municipioControle")
 public class MunicipioControle extends ReisLavajatoControle implements Serializable {
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -47,6 +47,14 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 			erro.printStackTrace();
 		}
 	}
+	public void listar() throws DadosInvalidosException {
+		try{
+			municipios = municipioNeg.listar();
+		} catch(RuntimeException erro){
+			addMensagemAviso(msgErro);
+			erro.printStackTrace();
+		}
+	}
 
 	public String novo() {
 		try {
@@ -61,6 +69,7 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 	public void salvar() throws DadosInvalidosException {
 		try {
 			municipioNeg.incluir(municipio);
+			listar();
 			this.novo();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {

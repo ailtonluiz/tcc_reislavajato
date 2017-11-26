@@ -19,7 +19,7 @@
 					<f:facet name="footer">
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus"
 							actionListener="#{funcionarioControle.novo}"
-							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2,:frmCadastro:pnlObs">
+							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:pnlObs"> <!-- :frmCadastro:painelEnd, :frmCadastro:painelEnd2, -->
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -29,15 +29,15 @@
 						<h:outputText value="#{funcionario.nome}" />
 					</p:column>
 
-					<p:column headerText="Telefone" style="width:22%">
-						<h:outputText
-							value="#{funcionario.telefone} / #{funcionario.celular}" />
-					</p:column>
+<!-- 					<p:column headerText="Telefone" style="width:22%"> -->
+<!-- 						<h:outputText -->
+<!-- 							value="#{funcionario.telefone} / #{funcionario.celular}" /> -->
+<!-- 					</p:column> -->
 
-					<p:column headerText="Endereço" style="width:38%">
-						<h:outputText
-							value="#{funcionario.endereco}, #{funcionario.bairro}, #{funcionario.Municipio.nome} - #{funcionario.Municipio.estado.sigla}" />
-					</p:column>
+<!-- 					<p:column headerText="Endereço" style="width:38%"> -->
+<!-- 						<h:outputText -->
+<!-- 							value="#{funcionario.endereco}, #{funcionario.bairro}, #{funcionario.Municipio.nome} - #{funcionario.Municipio.estado.sigla}" /> -->
+<!-- 					</p:column> -->
 
 					<p:column headerText="Opções" style="width:8%">
 						<p:commandButton icon="ui-icon-trash"
@@ -165,23 +165,37 @@
 					<p:inputMask id="cep" mask="99.999-999"
 						value="#{funcionarioControle.funcionario.cep}" size="20"
 						maxlength="10" />
-<!-- 					<p:outputLabel for="estado" value="Estado:" /> -->
-<!-- 					<p:selectOneMenu id="estado" filter="true" -->
-<!-- 						converter="omnifaces.SelectItemsConverter" -->
-<!-- 						value="#{funcionarioControle.estado}"> -->
-<!-- 						<f:selectItem noSelectionOption="true" -->
-<!-- 							itemLabel="Selecione um estado" /> -->
-<!-- 						<f:selectItems value="#{funcionarioControle.estados}" var="estado" -->
-<!-- 							itemValue="#{estado}" -->
-<!-- 							itemLabel="#{estado.nome} - #{estado.sigla}" /> -->
-<!-- 						<p:ajax listener="#{funcionarioControle.popular}" -->
-<!-- 							update=":frmCadastro:Municipio" /> -->
-<!-- 					</p:selectOneMenu> -->
+						
+						
+					<!-- 					<p:outputLabel for="estado" value="Estado:" /> -->
+					<!-- 					<p:selectOneMenu id="estado" filter="true" -->
+					<!-- 						converter="omnifaces.SelectItemsConverter" -->
+					<!-- 						value="#{funcionarioControle.estado}"> -->
+					<!-- 						<f:selectItem noSelectionOption="true" -->
+					<!-- 							itemLabel="Selecione um estado" /> -->
+					<!-- 						<f:selectItems value="#{funcionarioControle.estados}" var="estado" -->
+					<!-- 							itemValue="#{estado}" -->
+					<!-- 							itemLabel="#{estado.nome} - #{estado.sigla}" /> -->
+					<!-- 						<p:ajax listener="#{funcionarioControle.popular}" -->
+					<!-- 							update=":frmCadastro:Municipio" /> -->
+					<!-- 					</p:selectOneMenu> -->
+					
+					
+					<h:outputText value="Estado" />
+									<p:selectOneMenu
+										value="#{funcionarioControle.endereco.municipio.uf}">
+										<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+											var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+										<p:ajax update="municipio" />
+									</p:selectOneMenu>
+					
+					
+					
+					
 					<p:outputLabel for="Municipio" value="Municipio:" />
 					<p:selectOneMenu id="Municipio" filter="true" required="true"
 						requiredMessage="É necessário informar uma Municipio para realizar o cadastro"
-						converter="omnifaces.SelectItemsConverter"
-						value="#{funcionarioControle.funcionario.Municipio}">
+						converter="omnifaces.SelectItemsConverter" value="#{funcionarioControle.funcionario.municipio}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione uma Municipio" />
 						<f:selectItems value="#{funcionarioControle.Municipios}" var="Municipio"
