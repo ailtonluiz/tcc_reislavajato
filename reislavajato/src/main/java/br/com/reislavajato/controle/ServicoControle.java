@@ -86,4 +86,22 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		// TODO Auto-generated method stub
 
 	}
+
+	public Servico getServico() {
+		return servico;
+	}
+
+	public void setServico(Servico servico) {
+		this.servico = servico;
+	}
+
+	public List<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
+	}
+	
+	
 }

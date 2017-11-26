@@ -18,7 +18,7 @@
 					paginator="true" value="#{servicoControle.servicos}"
 					paginatorPosition="top" var="servico" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus"
 							actionListener="#{servicoControle.novo}"
 							update=":frmCadastro:painel">
 							<f:actionListener
@@ -101,9 +101,9 @@
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
-						actionListener="#{servicoControle.salvar}"
+						actionListener="#{servicoControle.salvar}" icon="ui-icon-check"
 						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>
