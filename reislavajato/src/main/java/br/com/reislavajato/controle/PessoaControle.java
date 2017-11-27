@@ -55,21 +55,18 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 
 	public void listarPorCpfOuNome() {
 		try {
-			if (pessoa.getPessoaFisica().getCpf().length() > 0
-					|| !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
-				pessoas = pessoaNeg.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(),
-						pessoa.getPessoaFisica().getNome());
-			} else if (pessoa.getPessoaJuridica().getCnpj().length() > 0
-					|| !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
-				pessoas = pessoaNeg.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(),
-						pessoa.getPessoaJuridica().getNomeFantasia());
+			if (pessoa.getPessoaFisica().getCpf().length() > 0 || !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
+				pessoas = pessoaNeg.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(), pessoa.getPessoaFisica().getNome());
+			} else if (pessoa.getPessoaJuridica().getCnpj().length() > 0 || !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
+				pessoas = pessoaNeg.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(), pessoa.getPessoaJuridica().getNomeFantasia());
 			}
 		} catch (Exception e) {
 			addMensagemErro(e.getMessage());
 		}
 	}
 
-	public void novo() {
+	@Override
+	protected String novo() {
 		try {
 			pessoa = new Pessoa();
 			pessoa.setPessoaJuridica(new PessoaJuridica());
@@ -79,12 +76,12 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}
+		return "sucesso";
 	}
 
 	public void salvar() {
 		try {
-			if (pessoa.getPessoaFisica().getCpf() != null
-					&& pessoa.getPessoaFisica().getCpf().toString().length() > 0) {
+			if (pessoa.getPessoaFisica().getCpf() != null && pessoa.getPessoaFisica().getCpf().toString().length() > 0) {
 				pessoa.setPessoaJuridica(null);
 			} else {
 				pessoa.setPessoaFisica(null);
@@ -166,15 +163,5 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 
 	public void setIsRederiza(Boolean isRederiza) {
 		this.isRederiza = isRederiza;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
 	}
 }

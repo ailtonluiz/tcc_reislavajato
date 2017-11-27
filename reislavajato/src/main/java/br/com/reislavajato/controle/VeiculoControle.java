@@ -46,14 +46,15 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
-	public void novo() throws DadosInvalidosException {
+	@Override
+	protected String novo() {
 		try {
 			veiculo = new Veiculo();
 			marcas = marcaNeg.listar();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+		} catch (RuntimeException | DadosInvalidosException erro) {
+			addMensagemErroFatal(erro);
 		}
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -112,17 +113,6 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 
 	public void setMarcas(List<Marca> marcas) {
 		this.marcas = marcas;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
@@ -53,8 +50,10 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 		}
 	}
 
-	public void novo() {
+	@Override
+	protected String novo() {
 		cargo = new Cargo();
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -119,17 +118,6 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 
 	public void setCargos(List<Cargo> cargos) {
 		this.cargos = cargos;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

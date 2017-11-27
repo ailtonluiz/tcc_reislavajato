@@ -50,7 +50,7 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 	private List<Veiculo> veiculos;
 
 	@PostConstruct
-	public void novo() throws DadosInvalidosException {
+	protected String novo() {
 		try {
 			movimento = new Movimento();
 			movimento.setVlrTotal(new BigDecimal("0.00"));
@@ -59,7 +59,10 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível carregar as informações");
 			erro.printStackTrace();
+		} catch (DadosInvalidosException e) {
+			e.printStackTrace();
 		}
+		return "sucesso";
 	}
 
 	public void adicionar(ActionEvent evento) {
@@ -81,10 +84,8 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 		} else {
 			ItemMovimento itemMovimento = itensMovimento.get(achou);
 			itemMovimento.setQuantidade(new Short(itemMovimento.getQuantidade() + 1 + ""));
-			itemMovimento
-					.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
-			itemMovimento
-					.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
 		}
 
 		calcular();
@@ -214,16 +215,4 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

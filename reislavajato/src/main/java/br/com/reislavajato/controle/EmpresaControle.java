@@ -58,13 +58,15 @@ public class EmpresaControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
-	public void novo() {
+	@Override
+	protected String novo() {
 		try {
 			empresa = new Empresa();
 			municipios = new ArrayList<Municipio>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 		}
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -139,17 +141,6 @@ public class EmpresaControle extends ReisLavajatoControle implements Serializabl
 
 	public void setMunicipios(List<Municipio> municipios) {
 		this.municipios = municipios;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

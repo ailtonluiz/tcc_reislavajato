@@ -69,15 +69,11 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 		this.usuarioLogado = usuarioLogado;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
 	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
+	protected String novo() {
+		usuario = new Usuario();
+		usuarioLogado = new Usuario();
+		return "sucesso";
 	}
 
 }

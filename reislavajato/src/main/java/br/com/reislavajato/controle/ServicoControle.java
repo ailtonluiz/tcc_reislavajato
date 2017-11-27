@@ -40,8 +40,10 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
-	public void novo() {
+	@Override
+	protected String novo() {
 		servico = new Servico();
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -76,17 +78,6 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
-	}
-
 	public Servico getServico() {
 		return servico;
 	}
@@ -102,6 +93,5 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
-	
-	
+
 }

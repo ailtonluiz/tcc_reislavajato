@@ -9,4 +9,7 @@ import br.com.reislavajato.excessao.DadosInvalidosException;
 public interface MunicipioNeg extends Negocio<Municipio> {
 
 	List<Municipio> listarPorUf(EnumUf uf) throws DadosInvalidosException;
+	
+	List<Municipio> listarPorNome(String nome) throws DadosInvalidosException;
+
 }

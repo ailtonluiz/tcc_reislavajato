@@ -58,7 +58,8 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	}
 
-	public void novo() {
+	@Override
+	protected String novo() {
 		try {
 			funcionario = new Funcionario();
 			funcionarios = new ArrayList<Funcionario>();
@@ -66,6 +67,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -132,11 +134,6 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void setCargos(List<Cargo> cargos) {
 		this.cargos = cargos;
-	}
-
-	@Override
-	protected void criarEntidade() {
-
 	}
 
 }

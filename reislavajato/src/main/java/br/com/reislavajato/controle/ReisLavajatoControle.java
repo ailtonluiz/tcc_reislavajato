@@ -9,7 +9,7 @@ public abstract class ReisLavajatoControle {
 	protected final String msgExcluidoSucesso = "Exclusão realizada com Sucesso!";
 	protected final String msgErro = "Ocorreu um erro";
 
-	protected abstract void criarEntidade();
+	protected abstract String novo();
 
 	protected void addMensagemInfo(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg, ""));

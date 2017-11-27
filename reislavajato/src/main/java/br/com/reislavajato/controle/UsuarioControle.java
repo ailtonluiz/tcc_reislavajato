@@ -46,14 +46,15 @@ public class UsuarioControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
-	public void novo() throws DadosInvalidosException {
+	@Override
+	protected String novo() {
 		try {
 			usuario = new Usuario();
 			funcionarios = funcionarioNeg.listar();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+		} catch (RuntimeException | DadosInvalidosException erro) {
+			addMensagemErroFatal(erro);
 		}
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -113,17 +114,6 @@ public class UsuarioControle extends ReisLavajatoControle implements Serializabl
 
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

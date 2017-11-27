@@ -1,16 +1,10 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Faces;
-import org.omnifaces.util.Messages;
-import org.primefaces.component.datatable.DataTable;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -18,11 +12,6 @@ import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.MunicipioNeg;
-import br.com.reislavajato.util.HibernateUtil;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * @Criado por: ailtonluiz
@@ -36,44 +25,52 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 
 	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
 
-	private Municipio municipio = new Municipio();
+	private Municipio municipio;
 	private List<Municipio> municipios;
+
+	public MunicipioControle() {
+		this.novo();
+	}
+
+	@Override
+	public String novo() {
+		try {
+			municipio = new Municipio();
+		} catch (RuntimeException erro) {
+			addMensagemErroFatal(erro);
+		}
+		return "sucess";
+	}
 
 	public void listarPorUf() throws DadosInvalidosException {
 		try {
 			municipios = municipioNeg.listarPorUf(municipio.getUf());
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar as Municipios!");
-			erro.printStackTrace();
-		}
-	}
-	public void listar() throws DadosInvalidosException {
-		try{
-			municipios = municipioNeg.listar();
-		} catch(RuntimeException erro){
-			addMensagemAviso(msgErro);
-			erro.printStackTrace();
+			addMensagemErro("Não foi possível listar os Municípios!");
+			addMensagemErroFatal(erro);
 		}
 	}
 
-	public String novo() {
+	public void listarPorNome() throws DadosInvalidosException {
 		try {
-			municipio = new Municipio();
+			if (municipio.getNome().length() > 0 && !municipio.getNome().equals("")) {
+				municipios = municipioNeg.listarPorNome(municipio.getNome());
+			} else {
+				listarPorUf();
+			}
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErro("Não foi possível listar os Municípios!");
+			addMensagemErroFatal(erro);
 		}
-		return "sucess";
 	}
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			municipioNeg.incluir(municipio);
-			listar();
+			municipioNeg.alterar(municipio);
 			this.novo();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -81,47 +78,20 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 		try {
 			municipio = (Municipio) evento.getComponent().getAttributes().get("registroSelecionado");
 			municipioNeg.excluir(municipio);
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
+
 		}
 	}
 
-	public void editar(ActionEvent evento) {
+	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			municipio = (Municipio) evento.getComponent().getAttributes().get("registroSelecionado");
+			municipioNeg.alterar(municipio);
+			addMensagemInfo(msgAlteradoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
-		}
-	}
-
-	public void imprimir() {
-		try {
-			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("frmListagem:tabela");
-			@SuppressWarnings("unused")
-			Map<String, Object> filtros = tabela.getFilters();
-
-			// String estadoNome = (String) filtros.get("estado.nome");
-
-			String caminho = Faces.getRealPath("/reports/municipio.jasper");
-
-			Map<String, Object> parametros = new HashMap<>();
-			// if (estadoNome == null) {
-			// parametros.put("municipio", "%%");
-			// } else {
-			// parametros.put("municipio", "%" + estadoNome + "%");
-			// }
-
-			Connection conexao = HibernateUtil.getConexao();
-
-			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
-			JasperViewer.viewReport(relatorio);
-
-		} catch (JRException erro) {
-			Messages.addGlobalError("Não foi possível gerar o relatório!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -139,17 +109,6 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 
 	public void setMunicipios(List<Municipio> municipios) {
 		this.municipios = municipios;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

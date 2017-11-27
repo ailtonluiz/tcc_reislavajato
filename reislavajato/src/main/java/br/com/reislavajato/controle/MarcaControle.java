@@ -49,8 +49,10 @@ public class MarcaControle extends ReisLavajatoControle implements Serializable 
 		}
 	}
 
-	public void novo() {
+	@Override
+	protected String novo() {
 		marca = new Marca();
+		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
@@ -114,16 +116,5 @@ public class MarcaControle extends ReisLavajatoControle implements Serializable 
 
 	public void setMarcas(List<Marca> marcas) {
 		this.marcas = marcas;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.controle.ReisLavajatoControle#criarEntidade()
-	 */
-	@Override
-	protected void criarEntidade() {
-		// TODO Auto-generated method stub
-
 	}
 }
