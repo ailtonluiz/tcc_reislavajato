@@ -25,6 +25,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ReisLavajatoUtil {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+	public static boolean validaCep(String cep) {
+		if (!cep.matches("\\d{8}")) {
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean ehVazio(String valor) {
 		return valor == null || valor.trim().length() == 0;
 	}
@@ -66,8 +73,7 @@ public class ReisLavajatoUtil {
 		return ctx.getRealPath("/");
 	}
 
-	public static void gerarRelatorioFaces(String caminhoRelatorio, @SuppressWarnings("rawtypes") Collection dados,
-			Map parametros) throws IOException, JRException {
+	public static void gerarRelatorioFaces(String caminhoRelatorio, @SuppressWarnings("rawtypes") Collection dados, Map parametros) throws IOException, JRException {
 		FacesContext context = FacesContext.getCurrentInstance();
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dados);
 		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();

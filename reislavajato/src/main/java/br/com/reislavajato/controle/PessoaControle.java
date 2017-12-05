@@ -1,35 +1,25 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Faces;
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
-import br.com.reislavajato.entidade.Endereco;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.entidade.PessoaFisica;
 import br.com.reislavajato.entidade.PessoaJuridica;
-import br.com.reislavajato.entidade.Telefone;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.MunicipioNeg;
 import br.com.reislavajato.neg.PessoaNeg;
-import br.com.reislavajato.util.HibernateUtil;
+import br.com.reislavajato.util.ClienteWs;
+import br.com.reislavajato.util.Numero;
 import br.com.reislavajato.util.ReisLavajatoUtil;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * @Criado por: ailtonluiz
@@ -43,14 +33,16 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 	private PessoaNeg pessoaNeg = context.getBean(PessoaNeg.class);
 	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
 
-	private Pessoa pessoa = new Pessoa();
-	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
+	private Pessoa pessoa;
+	private List<Pessoa> pessoas;
 
-	private Boolean isRederiza = false;
+	public PessoaControle() {
+		this.pessoa = new Pessoa();
+		this.pessoas = new ArrayList<Pessoa>();
+	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		List<Municipio> municipios = municipioNeg.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
-		return municipios;
+		return municipioNeg.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
 	}
 
 	public void listarPorCpfOuNome() {
@@ -65,45 +57,48 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		}
 	}
 
+	public void buscarCep() throws DadosInvalidosException {
+		try {
+			pessoa.setEndereco(ClienteWs.getEnderecoPorCep(Numero.removerFormatoCEP(pessoa.getEndereco().getCep())));
+		} catch (Exception e) {
+			addMensagemErroFatal(e);
+		}
+	}
+
 	@Override
-	protected String novo() {
+	public String novo() {
 		try {
 			pessoa = new Pessoa();
 			pessoa.setPessoaJuridica(new PessoaJuridica());
 			pessoa.setPessoaFisica(new PessoaFisica());
-			pessoas = new ArrayList<Pessoa>();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 		return "sucesso";
 	}
 
-	public void salvar() {
+	public void salvar() throws DadosInvalidosException {
 		try {
 			if (pessoa.getPessoaFisica().getCpf() != null && pessoa.getPessoaFisica().getCpf().toString().length() > 0) {
 				pessoa.setPessoaJuridica(null);
 			} else {
 				pessoa.setPessoaFisica(null);
 			}
-			// pessoaNeg.incluir(pessoa);
+			pessoaNeg.incluir(pessoa);
 			this.novo();
-			// pessoas = pessoaNeg.listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
-			erro.printStackTrace();
 		}
 	}
 
-	public void excluir(ActionEvent evento) {
+	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
-			// pessoaNeg.excluir(pessoa);
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			pessoaNeg.excluir(pessoa);
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
-			erro.printStackTrace();
 		}
 	}
 
@@ -112,32 +107,6 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
-			erro.printStackTrace();
-		}
-	}
-
-	public String limparEndereco() {
-		pessoa.setEndereco(new Endereco());
-		return null;
-	}
-
-	public String limparTelefone() {
-		pessoa.setTelefone(new Telefone());
-		return null;
-	}
-
-	public void imprimir() {
-		try {
-			String caminho = Faces.getRealPath("/reports/pessoa.jasper");
-			Map<String, Object> parametros = new HashMap<>();
-			Connection conexao = HibernateUtil.getConexao();
-			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
-			// JasperPrintManager.printReport(relatorio, true);
-			JasperViewer.viewReport(relatorio);
-
-		} catch (JRException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError("Não foi possível gerar o relatório!");
 		}
 	}
 
@@ -157,11 +126,4 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		this.pessoas = pessoas;
 	}
 
-	public Boolean getIsRederiza() {
-		return isRederiza;
-	}
-
-	public void setIsRederiza(Boolean isRederiza) {
-		this.isRederiza = isRederiza;
-	}
 }

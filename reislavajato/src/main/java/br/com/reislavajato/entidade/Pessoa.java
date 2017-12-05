@@ -1,32 +1,23 @@
 package br.com.reislavajato.entidade;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 
 import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 
-@SuppressWarnings("serial")
 @Entity
 public class Pessoa extends GenericEntity {
+	private static final long serialVersionUID = 1L;
 
 	private Boolean cadastroAtivo = true;
 
@@ -51,19 +42,13 @@ public class Pessoa extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumTipoPessoa tipoPessoa = EnumTipoPessoa.PF;
 
-	@Transient
+	@OneToOne
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Endereco endereco = new Endereco();
 
-	@Transient
+	@OneToOne
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Telefone telefone = new Telefone();
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "pessoa_id")
-	private Set<Endereco> enderecos = new HashSet<Endereco>();
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "pessoa_id")
-	private Set<Telefone> telefones = new HashSet<Telefone>();
 
 	public Boolean getCadastroAtivo() {
 		return cadastroAtivo;
@@ -135,48 +120,6 @@ public class Pessoa extends GenericEntity {
 
 	public void setTelefone(Telefone telefone) {
 		this.telefone = telefone;
-	}
-
-	public Set<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(Set<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public Set<Telefone> getTelefones() {
-		return telefones;
-	}
-
-	public void setTelefones(Set<Telefone> telefones) {
-		this.telefones = telefones;
-	}
-
-	public List<Endereco> getEnderecosLista() {
-		List<Endereco> lista = new ArrayList<Endereco>(enderecos);
-		return lista;
-	}
-
-	public List<Telefone> getTelefonesLista() {
-		List<Telefone> lista = new ArrayList<Telefone>(telefones);
-		return lista;
-	}
-
-	public void addEndereco(Endereco endereco) {
-		enderecos.add(endereco);
-	}
-
-	public void addTelefone(Telefone telefone) {
-		telefones.add(telefone);
-	}
-
-	public void removeEndereco(Endereco endereco) {
-		enderecos.remove(endereco);
-	}
-
-	public void removeTelefone(Telefone telefone) {
-		telefones.remove(telefone);
 	}
 
 }
