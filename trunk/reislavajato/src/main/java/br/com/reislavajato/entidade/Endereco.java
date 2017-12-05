@@ -13,11 +13,11 @@ public class Endereco extends GenericEntity {
 	@Cascade(org.hibernate.annotations.CascadeType.PERSIST)
 	private Municipio municipio = new Municipio();
 
-	private String logradouro;
-	private String numero;
-	private String bairro;
 	private String cep;
-	private boolean ativo = true;
+	private String logradouro;
+	private String complemento;
+	private String bairro;
+	private String numero;
 
 	public Municipio getMunicipio() {
 		return municipio;
@@ -25,30 +25,6 @@ public class Endereco extends GenericEntity {
 
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
 	}
 
 	public String getCep() {
@@ -59,12 +35,36 @@ public class Endereco extends GenericEntity {
 		this.cep = cep;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 }
