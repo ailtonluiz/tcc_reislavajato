@@ -21,7 +21,7 @@
                   <p:inputMask mask="99999999/9999-99" value="#{pessoaControle.pessoa.pessoaJuridica.cnpj}" converter="#{cnpjConverter}" />
                </h:panelGrid>
                <br />
-               <p:commandButton value="Listar" action="#{pessoaControle.listarPorCpfOuNome}" update=":frmListagem:tabela" title="Listar Pessoas" />
+               <p:commandButton value="Listar" action="#{pessoaControle.listarPorCpfOuNome}" update="tabela" title="Listar Pessoas" />
             </p:panel>
 
             <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{pessoaControle.pessoas}" paginatorPosition="top" var="pessoa">
@@ -56,7 +56,7 @@
                </p:column>
 
                <p:column headerText="Opções" style="width:7%">
-                  <p:commandButton icon="ui-icon-trash" actionListener="#{pessoaControle.excluir}" update=":frmListagem:mensagem :frmListagem:tabela">
+                  <p:commandButton icon="ui-icon-trash" actionListener="#{pessoaControle.excluir}" update="tabela">
                      <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
                      <f:attribute name="registroSelecionado" value="#{pessoa}" />
                   </p:commandButton>
@@ -67,7 +67,7 @@
                </p:column>
 
                <f:facet name="footer">
-                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{pessoaControle.novo}" update=":frmListagem:painelList">
+                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{pessoaControle.novo}" update="frmListagem">
                      <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                   </p:commandButton>
                </f:facet>
@@ -184,8 +184,8 @@
                               <p:ajax update="municipio" />
                            </p:selectOneMenu>
 
-                           <p:outputLabel for="municipio" value="Município:" />
-                           <p:selectOneMenu id="municipio" filter="true" required="true" requiredMessage="Informe um Município" converter="omnifaces.SelectItemsConverter" value="#{pessoaControle.pessoa.endereco.municipio}">
+                           <p:outputLabel value="Município:" />
+                           <p:selectOneMenu id="municipio" filter="true" converter="omnifaces.SelectItemsConverter" value="#{pessoaControle.pessoa.endereco.municipio}">
                               <f:selectItem noSelectionOption="true" itemLabel="Selecione um Município" />
                               <f:selectItems value="#{pessoaControle.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nome}" />
                            </p:selectOneMenu>
@@ -230,7 +230,7 @@
                </p:panel>
             </h:panelGroup>
             <h:panelGrid columns="2">
-               <p:commandButton value="Salvar" actionListener="#{pessoaControle.salvar}" update=":mensagem :frmPessoa:painelCad :frmListagem:tabela" />
+               <p:commandButton value="Salvar" actionListener="#{pessoaControle.salvar}" update="painelCad" />
                <p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
             </h:panelGrid>
          </h:form>

@@ -29,23 +29,23 @@ public class PessoaFisica extends GenericEntity {
 	private String nomeMae;
 	private String nomePai;
 
-	@Enumerated(EnumType.STRING)
-	private EnumSexo sexo = EnumSexo.MASCULINO;
-
 	@Temporal(TemporalType.DATE)
 	private Date dataExpedicaoRG;
 
 	@Enumerated(EnumType.STRING)
-	private EnumUf ufExpedicaoRg;
+	private EnumSexo sexo = EnumSexo.MASCULINO;
 
 	@Enumerated(EnumType.STRING)
-	private EnumOrgaoRG orgaoRG;
+	private EnumUf ufExpedicaoRg = EnumUf.GO;
 
 	@Enumerated(EnumType.STRING)
-	private EnumEstadoCivil estadoCivil;
+	private EnumOrgaoRG orgaoRG = EnumOrgaoRG.SSP;
 
 	@Enumerated(EnumType.STRING)
-	private EnumEscolaridade escolaridade;
+	private EnumEstadoCivil estadoCivil = EnumEstadoCivil.CASADO;
+
+	@Enumerated(EnumType.STRING)
+	private EnumEscolaridade escolaridade = EnumEscolaridade.SEGUNDO_GRAU;
 
 	public String getCpf() {
 		return cpf;
