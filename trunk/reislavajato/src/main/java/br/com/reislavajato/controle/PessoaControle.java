@@ -1,7 +1,6 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -37,24 +36,17 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 	private List<Pessoa> pessoas;
 
 	public PessoaControle() {
-		this.pessoa = new Pessoa();
-		this.pessoas = new ArrayList<Pessoa>();
+		this.novo();
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		return municipioNeg.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
-	}
 
-	public void listarPorCpfOuNome() {
-		try {
-			if (pessoa.getPessoaFisica().getCpf().length() > 0 || !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
-				pessoas = pessoaNeg.listarPorCpfOuNome(pessoa.getPessoaFisica().getCpf(), pessoa.getPessoaFisica().getNome());
-			} else if (pessoa.getPessoaJuridica().getCnpj().length() > 0 || !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
-				pessoas = pessoaNeg.listarPorCnpjOuNome(pessoa.getPessoaJuridica().getCnpj(), pessoa.getPessoaJuridica().getNomeFantasia());
-			}
-		} catch (Exception e) {
-			addMensagemErro(e.getMessage());
+		if (pessoa.getEndereco().getMunicipio().getCodigo() == null || pessoa.getEndereco().getMunicipio().getCodigo() == 0L) {
+			return municipioNeg.listarPorUf(pessoa.getEndereco().getMunicipio().getUf());
+		} else {
+			return municipioNeg.listarPorNome(pessoa.getEndereco().getMunicipio().getNome());
 		}
+
 	}
 
 	public void buscarCep() throws DadosInvalidosException {
@@ -65,12 +57,24 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		}
 	}
 
+	public void listarPorCpfOuNome() {
+		try {
+			if (pessoa.getPessoaFisica().getCpf().length() > 0 || !ReisLavajatoUtil.ehVazio(pessoa.getPessoaFisica().getNome())) {
+				pessoas = pessoaNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(pessoa.getPessoaFisica().getCpf()), pessoa.getPessoaFisica().getNome());
+			} else if (pessoa.getPessoaJuridica().getCnpj().length() > 0 || !ReisLavajatoUtil.ehVazio(pessoa.getPessoaJuridica().getNomeFantasia())) {
+				pessoas = pessoaNeg.listarPorCnpjOuNome(Numero.removerFormatoCNPJ(pessoa.getPessoaJuridica().getCnpj()), pessoa.getPessoaJuridica().getNomeFantasia());
+			}
+		} catch (Exception e) {
+			addMensagemErro(e.getMessage());
+		}
+	}
+
 	@Override
 	public String novo() {
 		try {
-			pessoa = new Pessoa();
-			pessoa.setPessoaJuridica(new PessoaJuridica());
-			pessoa.setPessoaFisica(new PessoaFisica());
+			this.pessoa = new Pessoa();
+			this.pessoa.setPessoaJuridica(new PessoaJuridica());
+			this.pessoa.setPessoaFisica(new PessoaFisica());
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

@@ -4,12 +4,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import br.com.reislavajato.enumeradores.EnumUf;
 
-@SuppressWarnings("serial")
 @Entity
-public class Municipio extends GenericEntity {
+public class Municipio {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(unique = true, nullable = false)
+	private Long codigo;
 
 	@Column(nullable = false)
 	private String nome;
@@ -31,6 +40,14 @@ public class Municipio extends GenericEntity {
 
 	public void setUf(EnumUf uf) {
 		this.uf = uf;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	@Override

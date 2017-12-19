@@ -29,7 +29,7 @@ public class Pessoa extends GenericEntity {
 
 	@Column(name = "data_cadastro")
 	@Temporal(TemporalType.DATE)
-	private Date dataCadastro;
+	private Date dataCadastro = new Date();
 
 	@OneToOne
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
