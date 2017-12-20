@@ -40,14 +40,14 @@ public class Funcionario extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dtNasc;
 
-	@Column(length = 10, nullable = false)
+	@Column(length = 10)
 	private String cep;
 
-	@Column(length = 30, nullable = false)
+	@Column(length = 30)
 	private String bairro;
 
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn
 	private Municipio Municipio;
 
 	@Column(length = 13)

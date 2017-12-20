@@ -5,18 +5,23 @@
 
 	<persistence-unit name="reisLavajato">
 		<description> Reis Lavajato</description>
+
+		<!-- provedor/implementação do JPA -->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<properties>
+			<!-- dados da conexão -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/lavajato" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="@manager#" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
+			<!-- propriedades do hibernate -->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.ejb.cfgfile" value="META-INF/hibernate.cfg.xml" />
 		</properties>
+		
 
 	</persistence-unit>
 </persistence>

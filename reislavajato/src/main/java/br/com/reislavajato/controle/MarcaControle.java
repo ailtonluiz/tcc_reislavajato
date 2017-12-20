@@ -50,7 +50,7 @@ public class MarcaControle extends ReisLavajatoControle implements Serializable 
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		marca = new Marca();
 		return "sucesso";
 	}

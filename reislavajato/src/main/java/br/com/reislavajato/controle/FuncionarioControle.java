@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
@@ -27,24 +28,27 @@ import br.com.reislavajato.neg.MunicipioNeg;
  */
 @SuppressWarnings({ "serial" })
 @Controller("funcionarioControle")
+@ViewScoped
 public class FuncionarioControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
 	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
-	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
+	// private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
 
 	private Funcionario funcionario = new Funcionario();
 	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	private List<Cargo> cargos;
 
-	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		List<Municipio> municipios = municipioNeg.listarPorUf(funcionario.getEndereco().getMunicipio().getUf());
-		return municipios;
-	}
+	/**
+	 * public List<Municipio> getMunicipios() throws DadosInvalidosException {
+	 * List<Municipio> municipios =
+	 * municipioNeg.listarPorUf(funcionario.getEndereco().getMunicipio().getUf());
+	 * return municipios; }
+	 */
 
-	@PostConstruct
+	// @PostConstruct
 	public void listar() throws DadosInvalidosException {
 		try {
 			funcionarios = funcionarioNeg.listar();
@@ -59,11 +63,12 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		try {
 			funcionario = new Funcionario();
 			funcionarios = new ArrayList<Funcionario>();
-		} catch (RuntimeException erro) {
+			cargos = cargoNeg.listar();
+		} catch (RuntimeException | DadosInvalidosException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}

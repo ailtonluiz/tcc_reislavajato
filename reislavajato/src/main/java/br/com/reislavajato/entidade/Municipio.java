@@ -35,7 +35,7 @@ public class Municipio {
 	}
 
 	public EnumUf getUf() {
-		return uf;
+		return this.uf;
 	}
 
 	public void setUf(EnumUf uf) {

@@ -56,6 +56,7 @@
 					</p:column>
 
 				</p:dataTable>
+				
 				<!-- Botão de opções -->
 				<p:confirmDialog global="true">
 					<p:commandButton value="Sim" type="button"
@@ -66,6 +67,7 @@
 
 			</p:panel>
 		</h:form>
+		
 		<!-- Tela de Cadastros -->
 		<p:dialog header="Cadastro de Marcas" widgetVar="dialogo" responsive="true" 
 			draggable="true" resizable="false" modal="true">
@@ -75,11 +77,13 @@
 					<p:inputText id="marca" size="20" maxlength="20"
 						value="#{marcaControle.marca.nome}" required="true"
 						requiredMessage="É obrigatório informar a marca" />
+						
 					<p:outputLabel for="m" value="Desc. Abreviada:" />
 					<p:inputText id="m" size="20" maxlength="20"
 						value="#{marcaControle.marca.abreviada}" required="true"
 						requiredMessage="É obrigatório informar o nome da marca" />
 				</h:panelGrid>
+				
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar" icon="ui-icon-check"
 						actionListener="#{marcaControle.salvar}"

@@ -17,27 +17,32 @@
 					paginator="true" value="#{funcionarioControle.funcionarios}"
 					paginatorPosition="top" var="funcionario" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus"
+						<p:commandButton value="Novo" icon="ui-icon-plus"
+							oncomplete="PF('dialogo').show();"
 							actionListener="#{funcionarioControle.novo}"
-							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:pnlObs"> <!-- :frmCadastro:painelEnd, :frmCadastro:painelEnd2, -->
+							update=":frmCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Nome" filterBy="#{funcionario.nome}"
-						filterMatchMode="contains">
+
+					<p:column headerText="Nome" sortBy="#{funcionario.nome}"
+						filterBy="#{funcionario.nome}" filterMatchMode="contains">
 						<h:outputText value="#{funcionario.nome}" />
 					</p:column>
 
-<!-- 					<p:column headerText="Telefone" style="width:22%"> -->
-<!-- 						<h:outputText -->
-<!-- 							value="#{funcionario.telefone} / #{funcionario.celular}" /> -->
-<!-- 					</p:column> -->
+					<p:column headerText="CPF" filterBy="#{funcionario.cpf}"
+						style="width:10%">
+						<h:outputText value="#{funcionario.cpf}" />
+					</p:column>
 
-<!-- 					<p:column headerText="Endereço" style="width:38%"> -->
-<!-- 						<h:outputText -->
-<!-- 							value="#{funcionario.endereco}, #{funcionario.bairro}, #{funcionario.Municipio.nome} - #{funcionario.Municipio.estado.sigla}" /> -->
-<!-- 					</p:column> -->
+					<p:column headerText="Telefone" style="width:22%">
+						<h:outputText
+							value="#{funcionario.telefone} - #{funcionario.celular}" />
+					</p:column>
+
+
+
 
 					<p:column headerText="Opções" style="width:8%">
 						<p:commandButton icon="ui-icon-trash"
@@ -47,10 +52,10 @@
 								message="Deseja excluir o registro?" icon="ui-icon-alert" />
 							<f:attribute name="registroSelecionado" value="#{funcionario}" />
 						</p:commandButton>
+
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{funcionarioControle.editar}"
-							update=":frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2, :frmCadastro:pnlObs"
-							oncomplete="PF('dialogo').show();">
+							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
 							<f:attribute name="registroSelecionado" value="#{funcionario}" />
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -58,6 +63,8 @@
 					</p:column>
 
 				</p:dataTable>
+
+
 				<!-- Botão de opções -->
 				<p:confirmDialog global="true">
 					<p:commandButton value="Sim" type="button"
@@ -68,17 +75,30 @@
 
 			</p:panel>
 		</h:form>
+
+
 		<!-- Tela de Cadastros -->
 		<p:dialog header="Cadastro de funcionários" widgetVar="dialogo"
 			draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
-				<!-- Painel Nome -->
-				<h:panelGrid id="pnlNome" columns="3">
-					<p:outputLabel for="nome" value="Nome: " />
-					<p:inputText id="nome" size="61" maxlength="50"
-						value="#{funcionarioControle.funcionario.nome}" rendered="true"
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" size="20" maxlength="20"
+						value="#{funcionarioControle.funcionario.nome}" required="true"
 						requiredMessage="Por favor informe o nome do funcionário" />
-					<p:selectOneMenu id="cargo" filter="true" required="true"
+
+					<p:outputLabel for="cpf" value="CPF:" />
+					<p:inputMask mask="999.999.999-99" id="cpf" size="15"
+						maxlength="15" value="#{funcionarioControle.funcionario.cpf}"
+						required="true"
+						requiredMessage="É obrigatório informar o CPF do funcionário" />
+
+					<p:outputLabel for="rg" value="RG:" />
+					<p:inputText id="rg" size="20" maxlength="50"
+						value="#{funcionarioControle.funcionario.rg}" required="false"
+						requiredMessage="Por favor informe o RG do funcionário" />
+						
+						<p:selectOneMenu id="cargo" filter="true" required="true"
 						requiredMessage="É necessário informar um cargo para realizar o cadastro"
 						converter="omnifaces.SelectItemsConverter"
 						value="#{funcionarioControle.funcionario.cargo}">
@@ -87,133 +107,13 @@
 						<f:selectItems value="#{funcionarioControle.cargos}" var="cargo"
 							itemValue="#{cargo}" itemLabel="#{cargo.nomeCargo}" />
 					</p:selectOneMenu>
-				</h:panelGrid>
-				<!-- Painel Documentos -->
-				<h:panelGrid id="pnlDocto" columns="6">
-					<p:outputLabel for="cpf" value="CPF:" />
-					<p:inputMask mask="999.999.999-99" id="cpf" size="15"
-						maxlength="15" value="#{funcionarioControle.funcionario.cpf}"
-						required="true"
-						requiredMessage="É obrigatório informar o CPF do funcionário" />
-					<p:outputLabel for="rg" value="RG:" />
-					<p:inputText id="rg" size="20" maxlength="50"
-						value="#{funcionarioControle.funcionario.rg}" required="false"
-						requiredMessage="Por favor informe o RG do funcionário" />
-					<p:outputLabel for="ctps" value="CTPS:" />
-					<p:inputText id="ctps" size="15" maxlength="50"
-						value="#{funcionarioControle.funcionario.carteiraTrabalho}"
-						required="false"
-						requiredMessage="Por favor informe o CTPS do funcionário" />
-					<p:outputLabel for="titulo" value="T. Eleitoral:" />
-					<p:inputText id="titulo" size="15" maxlength="8"
-						value="#{funcionarioControle.funcionario.tituloEleitor}"
-						required="false"
-						requiredMessage="Por favor informe o Título Eleitoral do funcionário" />
-					<p:outputLabel for="zona" value="Zona:" />
-					<p:inputText id="zona" size="20" maxlength="5"
-						value="#{funcionarioControle.funcionario.zona}" required="false"
-						requiredMessage="Por favor informe o Título Eleitoral do funcionário" />
-					<p:outputLabel for="secao" value="Seção:" />
-					<p:inputText id="secao" size="15" maxlength="5"
-						value="#{funcionarioControle.funcionario.secao}" required="false"
-						requiredMessage="Por favor informe o Título Eleitoral do funcionário" />
-					<p:outputLabel for="cnh" value="CNH:" />
-					<p:inputText id="cnh" size="15" maxlength="15"
-						value="#{funcionarioControle.funcionario.cnh}" required="false"
-						requiredMessage="Por favor informe a CNH do funcionário" />
-					<p:outputLabel for="cat" value="Categoria:" />
-					<p:inputText id="cat" size="20" maxlength="2"
-						value="#{funcionarioControle.funcionario.categoria}"
-						required="false"
-						requiredMessage="Por favor informe a categoria da CNH do funcionário" />
-					<p:outputLabel for="tipo" value="Tipo sang.:" />
-					<p:inputText id="tipo" size="15" maxlength="3"
-						value="#{funcionarioControle.funcionario.tipoSanguineo}"
-						required="false"
-						requiredMessage="Por favor informe o tipo sanguíneo" />
 
-					<p:outputLabel for="fone" value="Fone:" />
-					<p:inputMask id="fone" mask="(99)9999-9999" size="15"
-						value="#{funcionarioControle.funcionario.telefone}"
-						required="true" requiredMessage="Informe o telefone!" />
-					<p:outputLabel for="cel" value="Cel:" />
-					<p:inputMask id="cel" mask="(99)9.9999-9999"
-						value="#{funcionarioControle.funcionario.celular}" required="true"
-						requiredMessage="Informe o celular!" />
-					<p:outputLabel value="Dt Nasc:"/>
-						<p:calendar value="#{funcionarioControle.funcionario.dtNasc}" size="15" />
-						
-					
 				</h:panelGrid>
-
-				<h:panelGrid id="painelEnd" columns="2">
-					<p:outputLabel for="mail" value="E-mail:" />
-					<p:inputText id="mail"
-						value="#{funcionarioControle.funcionario.email}" size="91" />
-					<p:outputLabel for="end" value="Rua:" />
-					<p:inputText id="end" size="91"
-						value="#{funcionarioControle.funcionario.endereco}"
-						required="true" requiredMessage="Informe o endereço!" />
-				</h:panelGrid>
-
-				<h:panelGrid id="painelEnd2" columns="4">
-					<p:outputLabel for="bairro" value="Bairro:" />
-					<p:inputText id="bairro" size="38"
-						value="#{funcionarioControle.funcionario.bairro}" required="true"
-						requiredMessage="Informe o Bairro!" />
-					<h:outputLabel for="cep" value="CEP:" />
-					<p:inputMask id="cep" mask="99.999-999"
-						value="#{funcionarioControle.funcionario.cep}" size="20"
-						maxlength="10" />
-						
-						
-					<!-- 					<p:outputLabel for="estado" value="Estado:" /> -->
-					<!-- 					<p:selectOneMenu id="estado" filter="true" -->
-					<!-- 						converter="omnifaces.SelectItemsConverter" -->
-					<!-- 						value="#{funcionarioControle.estado}"> -->
-					<!-- 						<f:selectItem noSelectionOption="true" -->
-					<!-- 							itemLabel="Selecione um estado" /> -->
-					<!-- 						<f:selectItems value="#{funcionarioControle.estados}" var="estado" -->
-					<!-- 							itemValue="#{estado}" -->
-					<!-- 							itemLabel="#{estado.nome} - #{estado.sigla}" /> -->
-					<!-- 						<p:ajax listener="#{funcionarioControle.popular}" -->
-					<!-- 							update=":frmCadastro:Municipio" /> -->
-					<!-- 					</p:selectOneMenu> -->
-					
-					
-					<h:outputText value="Estado" />
-									<p:selectOneMenu
-										value="#{funcionarioControle.endereco.municipio.uf}">
-										<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
-											var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-										<p:ajax update="municipio" />
-									</p:selectOneMenu>
-					
-					
-					
-					
-					<p:outputLabel for="Municipio" value="Municipio:" />
-					<p:selectOneMenu id="Municipio" filter="true" required="true"
-						requiredMessage="É necessário informar uma Municipio para realizar o cadastro"
-						converter="omnifaces.SelectItemsConverter" value="#{funcionarioControle.funcionario.municipio}">
-						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione uma Municipio" />
-						<f:selectItems value="#{funcionarioControle.Municipios}" var="Municipio"
-							itemValue="#{Municipio}" itemLabel="#{Municipio.nome}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-
-				<h:panelGrid id="pnlObs">
-					<p:outputLabel value="Observações:" />
-					<p:inputTextarea autoResize="true" maxlength="255" rows="3"
-						cols="99" value="#{funcionarioControle.funcionario.observacao}">
-					</p:inputTextarea>
-				</h:panelGrid>
-
 				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar" icon="ui-icon-check"
+					<p:commandButton value="Salvar"
 						actionListener="#{funcionarioControle.salvar}"
-						update=":mensagem :frmCadastro:pnlNome, :frmCadastro:pnlDocto, :frmCadastro:painelEnd, :frmCadastro:painelEnd2, :frmCadastro:pnlObs :frmListagem:tabela" />
+						icon="ui-icon-check"
+						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
 					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
