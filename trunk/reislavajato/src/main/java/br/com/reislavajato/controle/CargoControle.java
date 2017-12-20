@@ -51,7 +51,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		cargo = new Cargo();
 		return "sucesso";
 	}
