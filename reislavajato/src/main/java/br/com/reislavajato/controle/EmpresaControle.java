@@ -5,7 +5,6 @@ package br.com.reislavajato.controle;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Empresa;
-import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.EmpresaNeg;
 import br.com.reislavajato.util.HibernateUtil;
@@ -44,13 +42,11 @@ public class EmpresaControle extends ReisLavajatoControle implements Serializabl
 
 	private Empresa empresa;
 	private List<Empresa> empresas;
-	private List<Municipio> municipios;
 
 	@PostConstruct
 	public void listar() throws DadosInvalidosException {
 		try {
 			empresas = empresaNeg.listar();
-			municipios = new ArrayList<Municipio>();
 
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Não foi possível listar!");
@@ -59,10 +55,10 @@ public class EmpresaControle extends ReisLavajatoControle implements Serializabl
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		try {
 			empresa = new Empresa();
-			municipios = new ArrayList<Municipio>();
+
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 		}
@@ -133,14 +129,6 @@ public class EmpresaControle extends ReisLavajatoControle implements Serializabl
 
 	public void setEmpresas(List<Empresa> empresas) {
 		this.empresas = empresas;
-	}
-
-	public List<Municipio> getMunicipios() {
-		return municipios;
-	}
-
-	public void setMunicipios(List<Municipio> municipios) {
-		this.municipios = municipios;
 	}
 
 }
