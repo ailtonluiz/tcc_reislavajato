@@ -114,8 +114,8 @@
 		</h:form>
 
 		<!-- Tela de cadastros -->
-		<p:dialog header="Cadastro de clientes" widgetVar="dialogo"
-			draggable="true" resizable="true" modal="true">
+		<p:dialog header="Cadastro de clientes" widgetVar="dialogo" 
+			draggable="true" resizable="false" modal="true">
 
 			<h:form id="frmPessoa">
 				<h:panelGroup>
@@ -128,10 +128,10 @@
 									var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 							</p:selectOneRadio>
 
-							<h:outputText value="E-Mail:" />
+							<h:outputText value="E-mail:" />
 							<p:inputText value="#{pessoaControle.pessoa.email}" />
 
-							<h:outputText value="Permitir Envio?" />
+							<h:outputText value="Permitir envio?" />
 							<p:selectOneRadio
 								value="#{pessoaControle.pessoa.permitirEnvioEmail}">
 								<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
@@ -317,9 +317,9 @@
 					</p:panel>
 				</h:panelGroup>
 				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
+					<p:commandButton value="Salvar" icon="ui-icon-check"
 						actionListener="#{pessoaControle.salvar}" update="painelCad" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

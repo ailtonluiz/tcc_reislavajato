@@ -2,8 +2,6 @@ package br.com.reislavajato.entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
@@ -57,9 +55,6 @@ public class Empresa extends GenericEntity {
 	@Column(length = 80)
 	private String contato;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Municipio Municipio;
 
 	@Column
 	private Boolean ativo = true;
@@ -184,13 +179,6 @@ public class Empresa extends GenericEntity {
 		this.contato = contato;
 	}
 
-	public Municipio getMunicipio() {
-		return Municipio;
-	}
-
-	public void setMunicipio(Municipio Municipio) {
-		this.Municipio = Municipio;
-	}
 
 	public Boolean getAtivo() {
 		return ativo;
