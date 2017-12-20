@@ -45,4 +45,16 @@ public class MunicipioDaoJpa extends PersistenciaJpa<Municipio> implements Munic
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
+	public List<Municipio> listarPorNomeeUF(String nome, EnumUf uf) throws DadosInvalidosException {
+		try {
+			Query query = em.createQuery("select m from Municipio m where m.nome like :nome and m.uf = :uf");
+			query.setParameter("nome", nome);
+			query.setParameter("uf", uf);
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new DadosInvalidosException(e.getMessage());
+		}
+	}
+	
+	
 }

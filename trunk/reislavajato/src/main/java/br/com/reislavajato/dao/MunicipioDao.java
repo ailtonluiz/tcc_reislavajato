@@ -18,5 +18,6 @@ public interface MunicipioDao extends Persistencia<Municipio> {
 	List<Municipio> listarPorUf(EnumUf uf) throws DadosInvalidosException;
 
 	List<Municipio> listarPorNome(String nome) throws DadosInvalidosException;
+	List<Municipio> listarPorNomeeUF(String nome, EnumUf uf) throws DadosInvalidosException;
 
 }
