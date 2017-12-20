@@ -50,11 +50,24 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 			addMensagemErroFatal(erro);
 		}
 	}
-
+	
 	public void listarPorNome() throws DadosInvalidosException {
 		try {
 			if (municipio.getNome().length() > 0 && !municipio.getNome().equals("")) {
 				municipios = municipioNeg.listarPorNome(municipio.getNome());
+			} else {
+				listarPorUf();
+			}
+		} catch (RuntimeException erro) {
+			addMensagemErro("Não foi possível listar os Municípios!");
+			addMensagemErroFatal(erro);
+		}
+	}
+
+	public void listarPorNomeeUF() throws DadosInvalidosException {
+		try {
+			if (municipio.getNome().length() > 0 && !municipio.getNome().equals("")) {
+				municipios = municipioNeg.listarPorNomeeUF(municipio.getNome(), municipio.getUf());
 			} else {
 				listarPorUf();
 			}

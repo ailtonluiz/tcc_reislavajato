@@ -30,6 +30,11 @@ public class MunicipioNegImpl extends NegocioGenerico<Municipio> implements Muni
 	public List<Municipio> listarPorNome(String nome) throws DadosInvalidosException {
 		return ((MunicipioDao) persistencia).listarPorNome(nome);
 	}
+	
+	@Transactional
+	public List<Municipio> listarPorNomeeUF(String nome, EnumUf uf) throws DadosInvalidosException {
+		return ((MunicipioDao) persistencia).listarPorNomeeUF(nome, uf);
+	}
 
 
 }
