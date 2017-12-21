@@ -106,9 +106,11 @@ public class PessoaControle extends ReisLavajatoControle implements Serializable
 		}
 	}
 
-	public void editar(ActionEvent evento) {
+	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			pessoa = (Pessoa) evento.getComponent().getAttributes().get("registroSelecionado");
+			pessoaNeg.alterar(pessoa);
+			addMensagemInfo(msgAlteradoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
