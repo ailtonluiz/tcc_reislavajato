@@ -1,32 +1,20 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
-import br.com.reislavajato.entidade.Cargo;
 import br.com.reislavajato.entidade.FuncaoCargo;
 import br.com.reislavajato.excessao.DadosInvalidosException;
-import br.com.reislavajato.neg.CargoNeg;
 import br.com.reislavajato.neg.FuncaoCargoNeg;
-import br.com.reislavajato.util.HibernateUtil;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * @Criado por: ailtonluiz
@@ -35,39 +23,33 @@ import net.sf.jasperreports.view.JasperViewer;
 @SuppressWarnings({ "serial" })
 @Controller
 @ViewScoped
-public class CargoControle extends ReisLavajatoControle implements Serializable {
+public class FuncaoCargoControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
 	private FuncaoCargoNeg funcaoCargoNeg = context.getBean(FuncaoCargoNeg.class);
 
-	private Cargo cargo = new Cargo();
-	private List<Cargo> cargos;
+	private FuncaoCargo funcaoCargo;
+	private List<FuncaoCargo> funcoesCargo;
 
 	@PostConstruct
 	public void listar() throws DadosInvalidosException {
 		try {
-			cargos = cargoNeg.listar();
+			funcoesCargo = funcaoCargoNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) cargo(s)!");
 			erro.printStackTrace();
 		}
 	}
 
-	public List<FuncaoCargo> getFuncoesCargo() throws DadosInvalidosException {
-		return funcaoCargoNeg.listar();
-	}
-
 	@Override
 	public String novo() {
-		cargos = new ArrayList<Cargo>();
-		cargo = new Cargo();
+		funcaoCargo = new FuncaoCargo();
 		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			cargoNeg.incluir(cargo);
+			funcaoCargoNeg.incluir(funcaoCargo);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -79,8 +61,8 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
-			cargo = (Cargo) evento.getComponent().getAttributes().get("registroSelecionado");
-			cargoNeg.excluir(cargo);
+			funcaoCargo = (FuncaoCargo) evento.getComponent().getAttributes().get("registroSelecionado");
+			funcaoCargoNeg.excluir(funcaoCargo);
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
@@ -91,42 +73,27 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 
 	public void editar(ActionEvent evento) {
 		try {
-			cargo = (Cargo) evento.getComponent().getAttributes().get("registroSelecionado");
+			funcaoCargo = (FuncaoCargo) evento.getComponent().getAttributes().get("registroSelecionado");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();
 		}
 	}
 
-	public void imprimir() {
-		try {
-			String caminho = Faces.getRealPath("/reports/pessoa.jasper");
-			Map<String, Object> parametros = new HashMap<>();
-			Connection conexao = HibernateUtil.getConexao();
-			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
-			// JasperPrintManager.printReport(relatorio, true);
-			JasperViewer.viewReport(relatorio);
-
-		} catch (JRException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError("Não foi possível gerar o relatório!");
-		}
+	public FuncaoCargo getFuncaoCargo() {
+		return funcaoCargo;
 	}
 
-	public Cargo getCargo() {
-		return cargo;
+	public void setFuncaoCargo(FuncaoCargo funcaoCargo) {
+		this.funcaoCargo = funcaoCargo;
 	}
 
-	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
+	public List<FuncaoCargo> getFuncoesCargo() {
+		return funcoesCargo;
 	}
 
-	public List<Cargo> getCargos() {
-		return cargos;
-	}
-
-	public void setCargos(List<Cargo> cargos) {
-		this.cargos = cargos;
+	public void setFuncoesCargo(List<FuncaoCargo> funcoesCargo) {
+		this.funcoesCargo = funcoesCargo;
 	}
 
 }
