@@ -52,7 +52,7 @@ public class Funcionario extends GenericEntity {
 	private EnumTipoSanguineo tipoSanguineo = EnumTipoSanguineo.O;
 
 	@Enumerated(EnumType.STRING)
-	private EnumFatorRH fatoRH = EnumFatorRH.POSITIVO;
+	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
 
 	@Column(precision = 10, scale = 2)
 	private BigDecimal comissao;
@@ -134,12 +134,12 @@ public class Funcionario extends GenericEntity {
 		this.tipoSanguineo = tipoSanguineo;
 	}
 
-	public EnumFatorRH getFatoRH() {
-		return fatoRH;
+	public EnumFatorRH getFatorRH() {
+		return fatorRH;
 	}
 
-	public void setFatoRH(EnumFatorRH fatoRH) {
-		this.fatoRH = fatoRH;
+	public void setFatorRH(EnumFatorRH fatorRH) {
+		this.fatorRH = fatorRH;
 	}
 
 	public BigDecimal getComissao() {

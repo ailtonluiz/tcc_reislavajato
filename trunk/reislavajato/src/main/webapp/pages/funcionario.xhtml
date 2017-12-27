@@ -119,7 +119,7 @@
                   </p:tab>
 
                   <p:tab title="Dados empregatícios ">
-                     <h:panelGrid columns="2">
+                     <h:panelGrid columns="2" id="dadosEmpregaticio">
 
                         <h:outputText value="Carteria de Trabalho:" />
                         <p:inputText value="#{funcionarioControle.funcionario.carteiraTrabalho}" />
@@ -157,7 +157,7 @@
 
                         <h:outputText value="Comissão:" />
                         <p:inputNumber value="#{funcionarioControle.funcionario.comissao}" symbol="%" symbolPosition="s" required="true" emptyValue="empty">
-                           <p:ajax update="output5" />
+                           <p:ajax update="dadosEmpregaticio" />
                         </p:inputNumber>
 
                         <h:outputText value="Cargo:" />

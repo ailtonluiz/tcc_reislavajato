@@ -6,12 +6,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
 import br.com.reislavajato.enumeradores.EnumEscolaridade;
 import br.com.reislavajato.enumeradores.EnumEstadoCivil;
+import br.com.reislavajato.enumeradores.EnumFatorRH;
 import br.com.reislavajato.enumeradores.EnumOrgaoRG;
+import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumSexo;
 import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
+import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
 import br.com.reislavajato.enumeradores.EnumUf;
 
 @Controller("ControleEnumerador")
@@ -74,4 +78,35 @@ public class ControleEnumerador implements Serializable {
 		return retorno;
 	}
 
+	public List<EnumCategoriaCNH> getListaEnumCategoriaCNH() {
+		List<EnumCategoriaCNH> retorno = new ArrayList<EnumCategoriaCNH>();
+		for (EnumCategoriaCNH enumerador : EnumCategoriaCNH.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumFatorRH> getListaEnumFatorRH() {
+		List<EnumFatorRH> retorno = new ArrayList<EnumFatorRH>();
+		for (EnumFatorRH enumerador : EnumFatorRH.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumPerfil> getListaEnumPerfil() {
+		List<EnumPerfil> retorno = new ArrayList<EnumPerfil>();
+		for (EnumPerfil enumerador : EnumPerfil.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumTipoSanguineo> getListaEnumTipoSanguineo() {
+		List<EnumTipoSanguineo> retorno = new ArrayList<EnumTipoSanguineo>();
+		for (EnumTipoSanguineo enumerador : EnumTipoSanguineo.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
 }
