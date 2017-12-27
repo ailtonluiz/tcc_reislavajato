@@ -19,6 +19,8 @@ import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 public class Pessoa extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
+	private String observacao;
+
 	private Boolean cadastroAtivo = true;
 
 	@Enumerated(EnumType.STRING)
@@ -26,6 +28,9 @@ public class Pessoa extends GenericEntity {
 
 	@Column(length = 70)
 	private String email;
+
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
 
 	@Column(name = "data_cadastro")
 	@Temporal(TemporalType.DATE)
@@ -120,6 +125,22 @@ public class Pessoa extends GenericEntity {
 
 	public void setTelefone(Telefone telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 }

@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
 <h:head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
    <title>Reis Lavajato</title>
    <h:outputStylesheet library="css" name="estilos.css" />
-   <h:outputScript library="js" name="scripts.js" />
+   <h:outputScript library="js" name="jquery.maskMoney.js" />
 
-   <link rel="icon" type="image/x-icon" href="img/icon.ico" />
-
+   <link rel="icon" type="image/x-icon" href="../images/icon.icon" />
 
 </h:head>
 <h:body>
+   <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+      <f:facet name="start">
+         <h:graphicImage library="img" name="loading.gif" />
+      </f:facet>
+      <f:facet name="complete">
+         <h:outputText value="ABACAXI" />
+      </f:facet>
+   </p:ajaxStatus>
 
    <p:growl id="mensagem" />
-
 
    <div id="geral">
       <div id="topo" class="divTopo">
@@ -24,34 +35,55 @@
    <div id="cabecalho">
       <h:form id="frmMenu">
          <script type="text/javascript">
-          PrimeFaces.locales['pt'] = {
-                    closeText: 'Fechar',
-                    prevText: 'Anterior',
-                    nextText: 'Próximo',
-                    currentText: 'Começo',
-                    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-                    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
-                    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-                    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
-                    dayNamesMin: ['D','S','T','Q','Q','S','S'],
-                    weekHeader: 'Semana',
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: false,
-                    yearSuffix: '',
-                    timeOnlyTitle: 'Horas',
-                    timeText: 'Tempo',
-                    hourText: 'Hora',
-                    minuteText: 'Minuto',
-                    secondText: 'Segundo',
-                    currentText: 'Data/Hora Atual',
-                    ampm: false,
-                    month: 'Mês',
-                    week: 'Semana',
-                    day: 'Dia',
-                    allDayText : 'Todo Dia'
-             };
-      </script>
+			PrimeFaces.locales['pt'] = {
+				closeText : 'Fechar',
+				prevText : 'Anterior',
+				nextText : 'Próximo',
+				currentText : 'Começo',
+				monthNames : [ 'Janeiro',
+						'Fevereiro', 'Março',
+						'Abril', 'Maio', 'Junho',
+						'Julho', 'Agosto',
+						'Setembro', 'Outubro',
+						'Novembro', 'Dezembro' ],
+				monthNamesShort : [ 'Jan', 'Fev',
+						'Mar', 'Abr', 'Mai', 'Jun',
+						'Jul', 'Ago', 'Set', 'Out',
+						'Nov', 'Dez' ],
+				dayNames : [ 'Domingo', 'Segunda',
+						'Terça', 'Quarta',
+						'Quinta', 'Sexta', 'Sábado' ],
+				dayNamesShort : [ 'Dom', 'Seg',
+						'Ter', 'Qua', 'Qui', 'Sex',
+						'Sáb' ],
+				dayNamesMin : [ 'D', 'S', 'T', 'Q',
+						'Q', 'S', 'S' ],
+				weekHeader : 'Semana',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Horas',
+				timeText : 'Tempo',
+				hourText : 'Hora',
+				minuteText : 'Minuto',
+				secondText : 'Segundo',
+				currentText : 'Data/Hora Atual',
+				ampm : false,
+				month : 'Mês',
+				week : 'Semana',
+				day : 'Dia',
+				allDayText : 'Todo Dia'
+			};
+		</script>
+        <script>
+        	 function configurarMoeda() {
+            	$(".moeda").maskMoney({ decimal: ",", thousands: ".", allowZero: true });
+         	}	
+         	$(document).ready(function() {
+    	        configurarMoeda();
+	         });
+        </script>
 
          <p:menubar>
             <p:submenu label="Cadastros">
@@ -129,14 +161,9 @@
    <div id="conteudo">
       <div id="geral">
          <div id="topo" class="divTopo">
-
             <ui:insert name="conteudo" />
          </div>
-
-
-
       </div>
    </div>
-
 </h:body>
 </html>

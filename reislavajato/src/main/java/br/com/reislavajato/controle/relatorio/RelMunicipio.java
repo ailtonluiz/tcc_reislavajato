@@ -22,7 +22,7 @@ import br.com.reislavajato.util.ReisLavajatoUtil;
 import net.sf.jasperreports.engine.JRException;
 
 @Controller("RelMunicipioControle")
-public class RelMunicipioControle extends ReisLavajatoControle implements Serializable {
+public class RelMunicipio extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = 2830538108928145303L;
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -32,7 +32,7 @@ public class RelMunicipioControle extends ReisLavajatoControle implements Serial
 	private Municipio municipio = new Municipio();
 	private List<Municipio> municipios;
 
-	public RelMunicipioControle() {
+	public RelMunicipio() {
 		this.novo();
 	}
 

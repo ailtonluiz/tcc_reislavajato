@@ -15,37 +15,37 @@ import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.controle.ReisLavajatoControle;
-import br.com.reislavajato.entidade.Pessoa;
+import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.excessao.DadosInvalidosException;
-import br.com.reislavajato.neg.PessoaNeg;
+import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.util.ReisLavajatoUtil;
 import net.sf.jasperreports.engine.JRException;
 
 @Controller("RelPessoaControle")
-public class RelPessoaControle extends ReisLavajatoControle implements Serializable {
+public class RelFuncionario extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = 2830538108928145303L;
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private PessoaNeg pessoaNeg = context.getBean(PessoaNeg.class);
+	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
 
-	private Pessoa pessoa = new Pessoa();
-	private List<Pessoa> pessoas;
+	private Funcionario funcionario = new Funcionario();
+	private List<Funcionario> funcionarios;
 
-	public RelPessoaControle() {
+	public RelFuncionario() {
 		this.novo();
 	}
 
 	@Override
 	protected String novo() {
-		pessoa = new Pessoa();
-		pessoas = new ArrayList<Pessoa>();
+		funcionario = new Funcionario();
+		funcionarios = new ArrayList<Funcionario>();
 		return "sucesso";
 	}
 
 	protected void atualizarListaEntidades() throws Exception {
 		try {
-			pessoas = pessoaNeg.listar();
+			funcionarios = funcionarioNeg.listar();
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
@@ -77,16 +77,18 @@ public class RelPessoaControle extends ReisLavajatoControle implements Serializa
 		Map parametros = new HashMap();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			if (pessoas.size() == 0) {
+			if (funcionarios.size() == 0) {
 				throw new DadosInvalidosException("Não foram encontrados Pessoas!");
 			}
 
-			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper") + "/";
+			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper")
+					+ "/";
 			parametros.put("SUBREPORT_DIR", caminhoSubreport);
-			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens") + "/";
+			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens")
+					+ "/";
 			parametros.put("IMAGES_DIR", caminhoImagem);
 
-			ReisLavajatoUtil.gerarRelatorioFaces("jasper/relDiscentes.jasper", pessoas, parametros);
+			ReisLavajatoUtil.gerarRelatorioFaces("jasper/relDiscentes.jasper", funcionarios, parametros);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JRException e) {
@@ -97,34 +99,20 @@ public class RelPessoaControle extends ReisLavajatoControle implements Serializa
 		return null;
 	}
 
-	/**
-	 * @return the pessoa
-	 */
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	/**
-	 * @param pessoa
-	 *            the pessoa to set
-	 */
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
-	/**
-	 * @return the pessoas
-	 */
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
 	}
 
-	/**
-	 * @param pessoas
-	 *            the pessoas to set
-	 */
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 }
