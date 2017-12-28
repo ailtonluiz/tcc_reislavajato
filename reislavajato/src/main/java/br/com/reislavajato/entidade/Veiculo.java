@@ -1,9 +1,10 @@
 package br.com.reislavajato.entidade;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import br.com.reislavajato.enumeradores.EnumMarca;
 
 /**
  * @Criado por: ailtonluiz
@@ -13,41 +14,21 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Veiculo extends GenericEntity {
 
-	@Column(length = 8, nullable = false, name = "placa_veiculo")
-	private String placaVeiculo;
+	private String placa;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Marca marca;
+	private String cor;
+	
+	@Enumerated(EnumType.STRING)
+	private EnumMarca marca = EnumMarca.FIAT;
 
-	@Column(length = 25)
 	private String modelo;
 
-	@Column(length = 15)
-	private String cor;
-
-	public String getPlacaVeiculo() {
-		return placaVeiculo;
+	public String getPlaca() {
+		return placa;
 	}
 
-	public void setPlacaVeiculo(String placaVeiculo) {
-		this.placaVeiculo = placaVeiculo;
-	}
-
-	public Marca getMarca() {
-		return marca;
-	}
-
-	public void setMarca(Marca marca) {
-		this.marca = marca;
-	}
-
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
+	public void setPlaca(String placa) {
+		this.placa = placa;
 	}
 
 	public String getCor() {
@@ -58,4 +39,19 @@ public class Veiculo extends GenericEntity {
 		this.cor = cor;
 	}
 
+	public EnumMarca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(EnumMarca marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
 }

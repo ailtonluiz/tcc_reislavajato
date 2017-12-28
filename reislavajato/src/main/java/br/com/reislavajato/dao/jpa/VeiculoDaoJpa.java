@@ -5,13 +5,20 @@ package br.com.reislavajato.dao.jpa;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import br.com.reislavajato.dao.VeiculoDao;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.enumeradores.EnumMarca;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.util.HibernateUtil;
 
 /**
@@ -24,6 +31,20 @@ public class VeiculoDaoJpa extends PersistenciaJpa<Veiculo> implements VeiculoDa
 
 	public VeiculoDaoJpa() {
 		super(Veiculo.class);
+	}
+
+	@PersistenceContext(unitName = "reisLavajato")
+	@Qualifier(value = "managerEntityManagerFactory")
+	private EntityManager em;
+
+	public List<Veiculo> listarVeiculoPorMarca(EnumMarca marca) throws DadosInvalidosException {
+		try {
+			Query query = em.createQuery("select veiculo from Veiculo veiculo where veiculo.marca = :marca");
+			query.setParameter("marca", marca);
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new DadosInvalidosException(e.getMessage());
+		}
 	}
 
 	public List<Veiculo> listarOrdenado() {
