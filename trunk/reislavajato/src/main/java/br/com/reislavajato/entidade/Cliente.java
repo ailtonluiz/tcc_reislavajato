@@ -1,11 +1,16 @@
 package br.com.reislavajato.entidade;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 
@@ -25,6 +30,30 @@ public class Cliente extends GenericEntity {
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Set<Veiculo> veiculos = new HashSet<Veiculo>();
 
+	@Transient // usado para popular a lista de veiculos
+	private Veiculo veiculo = new Veiculo();
+
+	@OneToMany
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private Set<Servico> servicos = new HashSet<Servico>();
+
+	@Column(precision = 10, scale = 2)
+	private BigDecimal descontoServico;
+
+	// getters and setters
+	public void addVeiculo(Veiculo veiculo) {
+		veiculos.add(veiculo);
+	}
+
+	public void removeVeiculo(Veiculo veiculo) {
+		veiculos.remove(veiculo);
+	}
+
+	public List<Veiculo> getVeiculosLista() {
+		List<Veiculo> lista = new ArrayList<Veiculo>(veiculos);
+		return lista;
+	}
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -40,5 +69,29 @@ public class Cliente extends GenericEntity {
 	public void setVeiculos(Set<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
-	
+
+	public Set<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(Set<Servico> servicos) {
+		this.servicos = servicos;
+	}
+
+	public BigDecimal getDescontoServico() {
+		return descontoServico;
+	}
+
+	public void setDescontoServico(BigDecimal descontoServico) {
+		this.descontoServico = descontoServico;
+	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+
 }

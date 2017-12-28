@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -41,13 +40,12 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 			veiculos = veiculoNeg.listar();
 			marcas = marcaNeg.listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar o(s) veículo(s)!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		try {
 			veiculo = new Veiculo();
 			marcas = marcaNeg.listar();
@@ -62,10 +60,9 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 			veiculoNeg.incluir(veiculo);
 			novo();
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -74,20 +71,20 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 			veiculo = (Veiculo) evento.getComponent().getAttributes().get("registroSelecionado");
 			veiculoNeg.excluir(veiculo);
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			veiculo = (Veiculo) evento.getComponent().getAttributes().get("registroSelecionado");
+			veiculoNeg.alterar(veiculo);
 			marcas = marcaNeg.listar();
+			addMensagemInfo(msgAlteradoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 

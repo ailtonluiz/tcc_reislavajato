@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -27,7 +26,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
-	private Servico servico;
+	private Servico servico = new Servico();
 	private List<Servico> servicos;
 
 	@PostConstruct
@@ -35,13 +34,12 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		try {
 			servicos = servicoNeg.listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar o(s) serviço(s)!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		servico = new Servico();
 		return "sucesso";
 	}
@@ -51,10 +49,9 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 			servicoNeg.incluir(servico);
 			novo();
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso! ");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -62,10 +59,9 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		try {
 			servico = (Servico) evento.getComponent().getAttributes().get("registroSelecionado");
 			servicoNeg.excluir(servico);
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -73,8 +69,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		try {
 			servico = (Servico) evento.getComponent().getAttributes().get("registroSelecionado");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 

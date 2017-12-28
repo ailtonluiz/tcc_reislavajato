@@ -10,6 +10,7 @@ import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
 import br.com.reislavajato.enumeradores.EnumEscolaridade;
 import br.com.reislavajato.enumeradores.EnumEstadoCivil;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
+import br.com.reislavajato.enumeradores.EnumMarca;
 import br.com.reislavajato.enumeradores.EnumOrgaoRG;
 import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumSexo;
@@ -109,4 +110,13 @@ public class ControleEnumerador implements Serializable {
 		}
 		return retorno;
 	}
+
+	public List<EnumMarca> getListaEnumMarca() {
+		List<EnumMarca> retorno = new ArrayList<EnumMarca>();
+		for (EnumMarca enumerador : EnumMarca.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
 }

@@ -15,7 +15,7 @@ import br.com.reislavajato.enumeradores.EnumUf;
 /**
  * Classe para recuperar informações do WS do viacep.com.br
  */
-public class ClienteWs {
+public class CepWs {
 	private static Endereco endereco = null;
 
 	/**

@@ -16,15 +16,17 @@ import javax.persistence.Entity;
 @Entity
 public class Servico extends GenericEntity {
 
-	@Column(length = 80, nullable = false)
 	private String descricao;
 
-	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_servico")
-	private BigDecimal vlrServico;
+	@Column(precision = 10, scale = 2, nullable = false)
+	private BigDecimal valorServico;
 
-	@Column(precision = 10, scale = 2, name = "perc_comissao")
-	private BigDecimal percComissao;
+	@Column(precision = 10, scale = 2)
+	private BigDecimal percentualComissao;
 
+	private String observacao;
+
+	//getters and setters
 	public String getDescricao() {
 		return descricao;
 	}
@@ -33,20 +35,28 @@ public class Servico extends GenericEntity {
 		this.descricao = descricao;
 	}
 
-	public BigDecimal getVlrServico() {
-		return vlrServico;
+	public BigDecimal getValorServico() {
+		return valorServico;
 	}
 
-	public void setVlrServico(BigDecimal vlrServico) {
-		this.vlrServico = vlrServico;
+	public void setValorServico(BigDecimal valorServico) {
+		this.valorServico = valorServico;
 	}
 
-	public BigDecimal getPercComissao() {
-		return percComissao;
+	public BigDecimal getPercentualComissao() {
+		return percentualComissao;
 	}
 
-	public void setPercComissao(BigDecimal percComissao) {
-		this.percComissao = percComissao;
+	public void setPercentualComissao(BigDecimal percentualComissao) {
+		this.percentualComissao = percentualComissao;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 }

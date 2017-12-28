@@ -76,16 +76,16 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 		}
 		if (achou < 0) {
 			ItemMovimento itemMovimento = new ItemMovimento();
-			itemMovimento.setVlrParcial(servico.getVlrServico());
-			itemMovimento.setVlrComissao(servico.getPercComissao());
+			itemMovimento.setVlrParcial(servico.getValorServico());
+			itemMovimento.setVlrComissao(servico.getPercentualComissao());
 			itemMovimento.setServico(servico);
 			itemMovimento.setQuantidade(new Short("1"));
 			itensMovimento.add(itemMovimento);
 		} else {
 			ItemMovimento itemMovimento = itensMovimento.get(achou);
 			itemMovimento.setQuantidade(new Short(itemMovimento.getQuantidade() + 1 + ""));
-			itemMovimento.setVlrParcial(servico.getVlrServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
-			itemMovimento.setVlrComissao(servico.getPercComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento.setVlrParcial(servico.getValorServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+			itemMovimento.setVlrComissao(servico.getPercentualComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
 		}
 
 		calcular();

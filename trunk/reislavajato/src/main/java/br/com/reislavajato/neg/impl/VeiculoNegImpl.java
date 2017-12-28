@@ -3,11 +3,17 @@
  */
 package br.com.reislavajato.neg.impl;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.reislavajato.dao.VeiculoDao;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.enumeradores.EnumMarca;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.VeiculoNeg;
 
 /**
@@ -20,5 +26,10 @@ public class VeiculoNegImpl extends NegocioGenerico<Veiculo> implements VeiculoN
 	@Autowired
 	public VeiculoNegImpl(VeiculoDao persistencia) {
 		super(persistencia);
+	}
+
+	@Transactional
+	public List<Veiculo> listarVeiculoPorMarca(EnumMarca marca) throws DadosInvalidosException {
+		return ((VeiculoDao) persistencia).listarVeiculoPorMarca(marca);
 	}
 }

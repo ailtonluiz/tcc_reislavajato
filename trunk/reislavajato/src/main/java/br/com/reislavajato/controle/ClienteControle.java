@@ -12,13 +12,15 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
-import br.com.reislavajato.entidade.Cargo;
-import br.com.reislavajato.entidade.Funcionario;
+import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.Municipio;
+import br.com.reislavajato.entidade.Servico;
+import br.com.reislavajato.entidade.Veiculo;
 import br.com.reislavajato.excessao.DadosInvalidosException;
-import br.com.reislavajato.neg.CargoNeg;
-import br.com.reislavajato.neg.FuncionarioNeg;
+import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.MunicipioNeg;
+import br.com.reislavajato.neg.ServicoNeg;
+import br.com.reislavajato.neg.VeiculoNeg;
 import br.com.reislavajato.util.CepWs;
 import br.com.reislavajato.util.Numero;
 
@@ -28,31 +30,36 @@ import br.com.reislavajato.util.Numero;
  */
 @SuppressWarnings({ "serial" })
 @Controller
-public class FuncionarioControle extends ReisLavajatoControle implements Serializable {
+public class ClienteControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
-	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
+	private ClienteNeg clienteNeg = context.getBean(ClienteNeg.class);
 	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
+	private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
+	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
 
-	private Funcionario funcionario = new Funcionario();
-	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+	private Cliente cliente = new Cliente();
+	private List<Cliente> clientes;
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
-			return municipioNeg.listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
+		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null || cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+			return municipioNeg.listarPorUf(cliente.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
-			return municipioNeg.listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
+			return municipioNeg.listarPorNome(cliente.getPessoa().getEndereco().getMunicipio().getNome());
 		}
 	}
 
-	public List<Cargo> getCargos() throws DadosInvalidosException {
-		return cargoNeg.listar();
+	public List<Veiculo> getModelosVeiculo() throws DadosInvalidosException {
+		return veiculoNeg.listarVeiculoPorMarca(cliente.getVeiculo().getMarca());
+	}
+
+	public List<Servico> getServicos() throws DadosInvalidosException {
+		return servicoNeg.listar();
 	}
 
 	public void buscarCep() throws DadosInvalidosException {
 		try {
-			funcionario.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
+			cliente.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(cliente.getPessoa().getEndereco().getCep())));
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
@@ -60,7 +67,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void listar() throws DadosInvalidosException {
 		try {
-			funcionarios = funcionarioNeg.listar();
+			clientes = clienteNeg.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível listar o(s) funcionário(s)!");
 			erro.printStackTrace();
@@ -69,14 +76,14 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	@Override
 	public String novo() {
-		funcionario = new Funcionario();
-		funcionarios = new ArrayList<Funcionario>();
+		cliente = new Cliente();
+		clientes = new ArrayList<Cliente>();
 		return "sucesso";
 	}
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			funcionarioNeg.incluir(funcionario);
+			clienteNeg.incluir(cliente);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -88,8 +95,8 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
-			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
-			funcionarioNeg.excluir(funcionario);
+			cliente = (Cliente) evento.getComponent().getAttributes().get("registroSelecionado");
+			clienteNeg.excluir(cliente);
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 		} catch (RuntimeException erro) {
@@ -100,7 +107,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
-			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
+			cliente = (Cliente) evento.getComponent().getAttributes().get("registroSelecionado");
 			listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
@@ -108,19 +115,25 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		}
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public String limparVeiculo() {
+		cliente.setVeiculo(new Veiculo());
+		return null;
 	}
 
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public List<Funcionario> getFuncionarios() {
-		return funcionarios;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public void setFuncionarios(List<Funcionario> funcionarios) {
-		this.funcionarios = funcionarios;
+	public List<Cliente> getClientes() {
+		return clientes;
 	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
 }
