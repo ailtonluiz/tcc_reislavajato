@@ -5,14 +5,17 @@ package br.com.reislavajato.dao.jpa;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import br.com.reislavajato.dao.MovimentoDao;
-import br.com.reislavajato.entidade.ItemMovimento;
 import br.com.reislavajato.entidade.Movimento;
-import br.com.reislavajato.util.HibernateUtil;
+import br.com.reislavajato.enumeradores.EnumStatusServico;
+import br.com.reislavajato.excessao.DadosInvalidosException;
 
 /**
  * @Criado por: ailtonluiz
@@ -20,36 +23,25 @@ import br.com.reislavajato.util.HibernateUtil;
  */
 @Repository
 public class MovimentoDaoJpa extends PersistenciaJpa<Movimento> implements MovimentoDao {
+	private static final long serialVersionUID = 1L;
 
 	public MovimentoDaoJpa() {
 		super(Movimento.class);
 	}
 
-	public void salvar(Movimento movimento, List<ItemMovimento> itensMovimento) {
+	@PersistenceContext(unitName = "reisLavajato")
+	@Qualifier(value = "managerEntityManagerFactory")
+	private EntityManager em;
 
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
-		Transaction transacao = null;
-
+	@Override
+	public List<Movimento> listarPorStatusServico(EnumStatusServico statusServico) throws DadosInvalidosException {
 		try {
-			transacao = sessao.beginTransaction();
-			sessao.save(movimento);
-
-			for (int posicao = 0; posicao < itensMovimento.size(); posicao++) {
-				ItemMovimento itemMovimento = itensMovimento.get(posicao);
-				itemMovimento.setMovimento(movimento);
-
-				sessao.save(itemMovimento);
-			}
-			transacao.commit();
-		} catch (RuntimeException erro) {
-			if (transacao != null) {
-				transacao.rollback();
-			}
-			throw erro;
-		} finally {
-			sessao.close();
+			Query query = em.createQuery("select m from Movimento m where m.statusServico = :statusServico");
+			query.setParameter("statusServico", statusServico);
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new DadosInvalidosException(e.getMessage());
 		}
-
 	}
 
 }

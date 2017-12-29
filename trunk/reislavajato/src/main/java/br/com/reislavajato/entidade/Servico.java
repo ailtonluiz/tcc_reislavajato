@@ -25,8 +25,8 @@ public class Servico extends GenericEntity {
 	private BigDecimal percentualComissao;
 
 	private String observacao;
-
-	//getters and setters
+	
+	// getters and setters
 	public String getDescricao() {
 		return descricao;
 	}

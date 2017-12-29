@@ -153,11 +153,24 @@
                         <h:outputLabel value="Placa:" />
                         <p:inputMask mask="aaa-9999" value="#{clienteControle.cliente.veiculo.placa}" />
 
+                        <h:outputLabel value="Km:" />
+                        <p:inputNumber value="#{clienteControle.cliente.veiculo.km}" />
+
                         <h:outputLabel value="Cor:" />
                         <p:inputText value="#{clienteControle.cliente.veiculo.cor}" />
 
+                        <h:outputLabel value="Data e Hora da entrada:" />
+                        <h:outputText value="#{clienteControle.cliente.veiculo.dataHoraEntrada}">
+                           <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputLabel value="Data e Hora da saída planejada:" />
+                        <h:outputText value="#{clienteControle.cliente.veiculo.dataHoraSaidaAgendada}">
+                           <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        
                         <h:outputText value="Lista de serviços:" />
-                        <p:selectManyCheckbox id="servicos" value="#{clienteControle.cliente.servicos}" layout="grid" columns="2">
+                        <p:selectManyCheckbox id="servicos" value="#{clienteControle.cliente.veiculo.servicos}" layout="grid" columns="2">
                            <f:selectItems value="#{clienteControle.servicos}" var="servico" itemLabel="#{servico.descricao} - R$#{servico.valorServico}" itemValue="#{servico}" />
                         </p:selectManyCheckbox>
 
