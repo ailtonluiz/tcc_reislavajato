@@ -33,10 +33,6 @@ public class Cliente extends GenericEntity {
 	@Transient // usado para popular a lista de veiculos
 	private Veiculo veiculo = new Veiculo();
 
-	@OneToMany
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private Set<Servico> servicos = new HashSet<Servico>();
-
 	@Column(precision = 10, scale = 2)
 	private BigDecimal descontoServico;
 
@@ -68,14 +64,6 @@ public class Cliente extends GenericEntity {
 
 	public void setVeiculos(Set<Veiculo> veiculos) {
 		this.veiculos = veiculos;
-	}
-
-	public Set<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(Set<Servico> servicos) {
-		this.servicos = servicos;
 	}
 
 	public BigDecimal getDescontoServico() {

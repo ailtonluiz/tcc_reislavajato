@@ -3,28 +3,21 @@ package br.com.reislavajato.controle;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
-import br.com.reislavajato.entidade.Funcionario;
-import br.com.reislavajato.entidade.ItemMovimento;
 import br.com.reislavajato.entidade.Movimento;
-import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.enumeradores.EnumStatusServico;
 import br.com.reislavajato.excessao.DadosInvalidosException;
-import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.MovimentoNeg;
-import br.com.reislavajato.neg.ServicoNeg;
-import br.com.reislavajato.neg.VeiculoNeg;
 
 /**
  * @Criado por: ailtonluiz
@@ -35,137 +28,65 @@ import br.com.reislavajato.neg.VeiculoNeg;
 public class MovimentacaoControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
-	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
-	private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
 	private MovimentoNeg movimentoNeg = context.getBean(MovimentoNeg.class);
 
-	private ItemMovimento itemMovimento;
-	private Funcionario funcionario;
-	private Movimento movimento;
-	private List<ItemMovimento> itensMovimento;
-	private List<Servico> servicos;
-	private List<Pessoa> pessoas;
-	private List<Funcionario> funcionarios;
-	private List<Veiculo> veiculos;
+	private Movimento movimento = new Movimento();
+	private List<Movimento> movimentos;
 
 	@PostConstruct
-	protected String novo() {
-		try {
-			movimento = new Movimento();
-			movimento.setVlrTotal(new BigDecimal("0.00"));
-			servicos = servicoNeg.listar();
-			itensMovimento = new ArrayList<>();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível carregar as informações");
-			erro.printStackTrace();
-		} catch (DadosInvalidosException e) {
-			e.printStackTrace();
-		}
+	public String novo() {
+		movimento = new Movimento();
+		movimentos = new ArrayList<Movimento>();
 		return "sucesso";
 	}
 
-	public void adicionar(ActionEvent evento) {
-		Servico servico = (Servico) evento.getComponent().getAttributes().get("registroSelecionado");
-
-		int achou = -1;
-		for (int posicao = 0; posicao < itensMovimento.size(); posicao++) {
-			if (itensMovimento.get(posicao).getServico().equals(servico)) {
-				achou = posicao;
-			}
-		}
-		if (achou < 0) {
-			ItemMovimento itemMovimento = new ItemMovimento();
-			itemMovimento.setVlrParcial(servico.getValorServico());
-			itemMovimento.setVlrComissao(servico.getPercentualComissao());
-			itemMovimento.setServico(servico);
-			itemMovimento.setQuantidade(new Short("1"));
-			itensMovimento.add(itemMovimento);
-		} else {
-			ItemMovimento itemMovimento = itensMovimento.get(achou);
-			itemMovimento.setQuantidade(new Short(itemMovimento.getQuantidade() + 1 + ""));
-			itemMovimento.setVlrParcial(servico.getValorServico().multiply(new BigDecimal(itemMovimento.getQuantidade())));
-			itemMovimento.setVlrComissao(servico.getPercentualComissao().multiply(new BigDecimal(itemMovimento.getQuantidade())));
+	public void adicionar(ActionEvent evento) throws DadosInvalidosException {
+		try {
+			Movimento movimento = (Movimento) evento.getComponent().getAttributes().get("registroSelecionado");
+		} catch (Exception e) {
+			addMensagemErroFatal(e);
 		}
 
-		calcular();
 	}
 
-	public void remover(ActionEvent evento) {
-		ItemMovimento itemMovimento = (ItemMovimento) evento.getComponent().getAttributes().get("itemSelecionado");
-		int achou = -1;
-		for (int posicao = 0; posicao < itensMovimento.size(); posicao++) {
-			if (itensMovimento.get(posicao).getServico().equals(itemMovimento.getServico())) {
-				achou = posicao;
+	private void calcularValorTotalServico(Movimento movimento) {
+		BigDecimal valorTotalServico = new BigDecimal(0.0);
+
+		for (Veiculo veiculo : movimento.getCliente().getVeiculos()) {
+			for (Servico servico : veiculo.getServicos()) {
+				valorTotalServico.add(servico.getValorServico());
 			}
 		}
-		if (achou > -1) {
-			itensMovimento.remove(achou);
-		}
-		calcular();
-	}
 
-	public void calcular() {
-		movimento.setVlrTotal(new BigDecimal("0.00"));
-
-		for (int posicao = 0; posicao < itensMovimento.size(); posicao++) {
-			ItemMovimento itemMovimento = itensMovimento.get(posicao);
-			movimento.setVlrTotal(movimento.getVlrTotal().add(itemMovimento.getVlrParcial()));
-		}
+		movimento.setValorTotal(valorTotalServico);
 	}
 
 	public void listar() throws DadosInvalidosException {
 		try {
-			funcionarios = funcionarioNeg.listar();
-			veiculos = veiculoNeg.listar();
-			// pessoas = pessoaNeg.listar();
+			movimentos = movimentoNeg.listarPorStatusServico(EnumStatusServico.EXECUCAO);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar" + erro);
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
-	public void finalizar() throws DadosInvalidosException {
+	private void finalizar() throws DadosInvalidosException {
 		try {
-			movimento.setHorario(new Date());
-			listar();
+			this.calcularValorTotalServico(movimento);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível finalizar a venda" + erro);
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			if (movimento.getVlrTotal().signum() == 0) {
-				Messages.addGlobalError("Valor total não pode ser 'R$: 0,00'");
-				return;
-			}
+			this.finalizar();
+
 			movimentoNeg.incluir(movimento);
-			// movimentoNeg.incluir(itensMovimento);
 			novo();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
-
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!" + erro);
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
-	}
-
-	public ItemMovimento getItemMovimento() {
-		return itemMovimento;
-	}
-
-	public void setItemMovimento(ItemMovimento itemMovimento) {
-		this.itemMovimento = itemMovimento;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
 	}
 
 	public Movimento getMovimento() {
@@ -176,43 +97,12 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 		this.movimento = movimento;
 	}
 
-	public List<ItemMovimento> getItensMovimento() {
-		return itensMovimento;
+	public List<Movimento> getMovimentos() {
+		return movimentos;
 	}
 
-	public void setItensMovimento(List<ItemMovimento> itensMovimento) {
-		this.itensMovimento = itensMovimento;
+	public void setMovimentos(List<Movimento> movimentos) {
+		this.movimentos = movimentos;
 	}
 
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
-	}
-
-	public List<Pessoa> getPessoas() {
-		return pessoas;
-	}
-
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
-	}
-
-	public List<Funcionario> getFuncionarios() {
-		return funcionarios;
-	}
-
-	public void setFuncionarios(List<Funcionario> funcionarios) {
-		this.funcionarios = funcionarios;
-	}
-
-	public List<Veiculo> getVeiculos() {
-		return veiculos;
-	}
-
-	public void setVeiculos(List<Veiculo> veiculos) {
-		this.veiculos = veiculos;
-	}
 }

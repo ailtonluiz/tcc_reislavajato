@@ -4,14 +4,20 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+
+import br.com.reislavajato.enumeradores.EnumFormaPagamento;
+import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 /**
  * @Criado por: ailtonluiz
@@ -21,164 +27,90 @@ import javax.persistence.TemporalType;
 @Entity
 public class Movimento extends GenericEntity {
 
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIME)
-	private Date horario;
+	@OneToOne // carro - servico
+	private Cliente cliente = new Cliente();
+
+	@OneToMany
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private Set<Funcionario> funcionarios = new HashSet<Funcionario>();
+
+	@Enumerated(EnumType.STRING)
+	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
+
+	@Enumerated(EnumType.STRING)
+	private EnumStatusServico statusServico = EnumStatusServico.PARADO;
 
 	@Column(nullable = false)
-	private Long numeroOrdem;
-
-	@Column
-	private String km;
+	private Long numeroOrdemServico;
 
 	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
-	private BigDecimal vlrTotal;
+	private BigDecimal valorTotal;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Pessoa pessoa;
-
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Veiculo veiculo;
-
-	@Column
-	private Boolean alarme;
-
-	@Column
-	private Boolean vidro;
-
-	@Column
-	private Boolean chave;
-
-	@Column
-	private Boolean macaco;
-
-	@Column
-	private Boolean triangulo;
-
-	@Column
-	private Boolean estepe;
-
-	@Column
-	private Boolean extintor;
-
-	@Column
-	private Boolean tapetes;
-
-	@Column(length = 255)
 	private String observacao;
 
-	public Date getHorario() {
-		return horario;
+	// CheckList
+	private Boolean possuiAlarme;
+
+	private Boolean possuiProtecaoVeicular;
+
+	private Boolean deixouChave;
+
+	private Boolean possuiMacaco;
+
+	private Boolean possuiTriangulo;
+
+	private Boolean possuiEstepe;
+
+	private Boolean possuiExtintor;
+
+	private Boolean possuiTapetes;
+
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setHorario(Date horario) {
-		this.horario = horario;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public Long getNumeroOrdem() {
-		return numeroOrdem;
+	public Set<Funcionario> getFuncionarios() {
+		return funcionarios;
 	}
 
-	public void setNumeroOrdem(Long numeroOrdem) {
-		this.numeroOrdem = numeroOrdem;
+	public void setFuncionarios(Set<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
-	public String getKm() {
-		return km;
+	public EnumFormaPagamento getFormaPagamento() {
+		return formaPagamento;
 	}
 
-	public void setKm(String km) {
-		this.km = km;
+	public void setFormaPagamento(EnumFormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
-	public BigDecimal getVlrTotal() {
-		return vlrTotal;
+	public EnumStatusServico getStatusServico() {
+		return statusServico;
 	}
 
-	public void setVlrTotal(BigDecimal vlrTotal) {
-		this.vlrTotal = vlrTotal;
+	public void setStatusServico(EnumStatusServico statusServico) {
+		this.statusServico = statusServico;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Long getNumeroOrdemServico() {
+		return numeroOrdemServico;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setNumeroOrdemServico(Long numeroOrdemServico) {
+		this.numeroOrdemServico = numeroOrdemServico;
 	}
 
-	public Veiculo getVeiculo() {
-		return veiculo;
+	public BigDecimal getValorTotal() {
+		return valorTotal;
 	}
 
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
-	}
-
-	public Boolean getAlarme() {
-		return alarme;
-	}
-
-	public void setAlarme(Boolean alarme) {
-		this.alarme = alarme;
-	}
-
-	public Boolean getVidro() {
-		return vidro;
-	}
-
-	public void setVidro(Boolean vidro) {
-		this.vidro = vidro;
-	}
-
-	public Boolean getChave() {
-		return chave;
-	}
-
-	public void setChave(Boolean chave) {
-		this.chave = chave;
-	}
-
-	public Boolean getMacaco() {
-		return macaco;
-	}
-
-	public void setMacaco(Boolean macaco) {
-		this.macaco = macaco;
-	}
-
-	public Boolean getTriangulo() {
-		return triangulo;
-	}
-
-	public void setTriangulo(Boolean triangulo) {
-		this.triangulo = triangulo;
-	}
-
-	public Boolean getEstepe() {
-		return estepe;
-	}
-
-	public void setEstepe(Boolean estepe) {
-		this.estepe = estepe;
-	}
-
-	public Boolean getExtintor() {
-		return extintor;
-	}
-
-	public void setExtintor(Boolean extintor) {
-		this.extintor = extintor;
-	}
-
-	public Boolean getTapetes() {
-		return tapetes;
-	}
-
-	public void setTapetes(Boolean tapetes) {
-		this.tapetes = tapetes;
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public String getObservacao() {
@@ -188,4 +120,69 @@ public class Movimento extends GenericEntity {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+
+	public Boolean getPossuiAlarme() {
+		return possuiAlarme;
+	}
+
+	public void setPossuiAlarme(Boolean possuiAlarme) {
+		this.possuiAlarme = possuiAlarme;
+	}
+
+	public Boolean getPossuiProtecaoVeicular() {
+		return possuiProtecaoVeicular;
+	}
+
+	public void setPossuiProtecaoVeicular(Boolean possuiProtecaoVeicular) {
+		this.possuiProtecaoVeicular = possuiProtecaoVeicular;
+	}
+
+	public Boolean getDeixouChave() {
+		return deixouChave;
+	}
+
+	public void setDeixouChave(Boolean deixouChave) {
+		this.deixouChave = deixouChave;
+	}
+
+	public Boolean getPossuiMacaco() {
+		return possuiMacaco;
+	}
+
+	public void setPossuiMacaco(Boolean possuiMacaco) {
+		this.possuiMacaco = possuiMacaco;
+	}
+
+	public Boolean getPossuiTriangulo() {
+		return possuiTriangulo;
+	}
+
+	public void setPossuiTriangulo(Boolean possuiTriangulo) {
+		this.possuiTriangulo = possuiTriangulo;
+	}
+
+	public Boolean getPossuiEstepe() {
+		return possuiEstepe;
+	}
+
+	public void setPossuiEstepe(Boolean possuiEstepe) {
+		this.possuiEstepe = possuiEstepe;
+	}
+
+	public Boolean getPossuiExtintor() {
+		return possuiExtintor;
+	}
+
+	public void setPossuiExtintor(Boolean possuiExtintor) {
+		this.possuiExtintor = possuiExtintor;
+	}
+
+	public Boolean getPossuiTapetes() {
+		return possuiTapetes;
+	}
+
+	public void setPossuiTapetes(Boolean possuiTapetes) {
+		this.possuiTapetes = possuiTapetes;
+	}
+
 }
