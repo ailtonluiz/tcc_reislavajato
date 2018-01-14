@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+			<p:panel header="Lançamento de serviços">
+
+				<p:panel id="painel">
+					<p:tabView dynamic="true">
+						<p:tab title="Dados principais">
+							<h:panelGrid columns="6">
+								<h:outputLabel value="Número OS" />
+								<p:inputText size="10" maxlength="10" value="1234"
+									disabled="true" />
+								<h:outputLabel value="Status" />
+								<p:selectOneMenu effect="fold" editable="true">
+									<f:selectItem itemLabel="Parado" itemValue="" />
+									<f:selectItem itemLabel="Em execução" itemValue="" />
+									<f:selectItem itemLabel="Finalizado" itemValue="" />
+								</p:selectOneMenu>
+
+								<h:outputLabel value="Cliente" />
+								<p:selectOneMenu effect="fold" editable="true">
+									<f:selectItem itemLabel="Ruben Delmondes" itemValue="" />
+									<f:selectItem itemLabel="Telmo Silva" itemValue="" />
+									<f:selectItem itemLabel="Ailton Luiz" itemValue="" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+
+							<!-- CHeck list -->
+							<h:panelGrid columns="6">
+								<h:outputLabel for="multiple" value="CheckList:" />
+								<p:selectCheckboxMenu id="multiple"
+									value="#{checkboxView.selecaoChecklist}" multiple="true"
+									filter="true" filterMatchMode="startsWith"
+									panelStyle="width:250px">
+									<f:selectItems value="#{checkboxView.checklist}" />
+								</p:selectCheckboxMenu>
+
+								<h:outputText value="Veículo:" />
+								<p:selectOneMenu id="veiculo" filter="true"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{movimentoControle.veiculo.modelo}">
+									<f:selectItem noSelectionOption="true" itemLabel="Selecione " />
+									<f:selectItems value="#{movimentoControle.veiculos}"
+										var="veiculo" itemValue="#{veiculo}"
+										itemLabel="#{veiculo.modelo}" />
+								</p:selectOneMenu>
+								<h:outputLabel value="Ordem de serviço" />
+								<p:inputText size="10" maxlength="10" value="" placeholder="Nº Ordem prefeitura"
+									disabled="false" />
+
+
+
+
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Serviços">
+							<h:panelGrid columns="2">
+								<h:outputText value="Serviço:" />
+
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Totais">
+							<h:panelGrid columns="2">
+								<h:outputText value="Total:" />
+
+							</h:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+				</p:panel>
+
+
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+				<!-- Fim do Botões opções -->
+			</p:panel>
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>

@@ -32,6 +32,9 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 
 	private Movimento movimento = new Movimento();
 	private List<Movimento> movimentos;
+	private List<Veiculo> veiculos;
+
+	private Veiculo veiculo;
 
 	@PostConstruct
 	public String novo() {
@@ -104,5 +107,23 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 	public void setMovimentos(List<Movimento> movimentos) {
 		this.movimentos = movimentos;
 	}
+
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+	
+	
 
 }
