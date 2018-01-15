@@ -17,7 +17,7 @@
 				<p:panel id="painel">
 					<p:tabView dynamic="true">
 						<p:tab title="Dados principais">
-							<h:panelGrid columns="6">
+							<h:panelGrid columns="7">
 								<h:outputLabel value="Número OS" />
 								<p:inputText size="10" maxlength="10" value="1234"
 									disabled="true" />
@@ -34,10 +34,10 @@
 									<f:selectItem itemLabel="Telmo Silva" itemValue="" />
 									<f:selectItem itemLabel="Ailton Luiz" itemValue="" />
 								</p:selectOneMenu>
-							</h:panelGrid>
+							
 
 							<!-- CHeck list -->
-							<h:panelGrid columns="6">
+							
 								<h:outputLabel for="multiple" value="CheckList:" />
 								<p:selectCheckboxMenu id="multiple"
 									value="#{checkboxView.selecaoChecklist}" multiple="true"
@@ -68,6 +68,56 @@
 						<p:tab title="Serviços">
 							<h:panelGrid columns="2">
 								<h:outputText value="Serviço:" />
+								
+									<!-- Tela de serviço -->
+		<h:form id="frmListagem">
+			<p:panel header="Listagem de serviços">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{servicoControle.servicos}"
+					paginatorPosition="top" var="servico" rows="5">
+					<f:facet name="footer">
+						
+					</f:facet>
+					<p:column headerText="Serviço" sortBy="#{servico.descricao}"
+						style="width:65%">
+						<h:outputText value="#{servico.descricao}" />
+					</p:column>
+
+					<p:column headerText="Valor (R$)" style="width:15%">
+						<h:outputText value="#{servico.valorServico}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Comissão (%)" style="width:15%">
+						<h:outputText value="#{servico.percentualComissao} %">
+							<f:convertNumber locale="pt_BR" />
+						</h:outputText>
+					</p:column>
+
+
+					<p:column headerText="Opções" style="width:8%">
+						<p:commandButton value="   Adicionar" icon="ui-icon-plusthick" 
+							actionListener="#{servicoControle.excluir}">
+							
+							<p:confirm header="Funcionários"
+								message="Vincule o funcionário ao serviço" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{servico}" />
+						</p:commandButton>
+					
+					</p:column>
+
+				</p:dataTable>
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
 
 							</h:panelGrid>
 						</p:tab>
