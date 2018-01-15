@@ -18,7 +18,7 @@ public class Usuario extends GenericEntity {
 	private String username;
 
 	@Column(nullable = false, length = 50)
-	private String senha;
+	private String password;
 
 	@Transient
 	private String senhaSemCriptografia;
@@ -41,12 +41,12 @@ public class Usuario extends GenericEntity {
 		this.username = username;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getSenhaSemCriptografia() {

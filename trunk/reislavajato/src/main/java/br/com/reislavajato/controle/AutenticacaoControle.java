@@ -39,7 +39,7 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 
 	public void autenticar() throws DadosInvalidosException {
 		try {
-			usuarioLogado = usuarioNeg.autenticar(usuario.getUsername(), usuario.getSenha());
+			usuarioLogado = usuarioNeg.autenticar(usuario.getUsername(), usuario.getPassword());
 			if (usuarioLogado == null) {
 				Messages.addGlobalError("Usuário e/ou senha inválido!");
 				return;
