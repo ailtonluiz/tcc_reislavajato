@@ -27,6 +27,7 @@ public class PessoaFisica extends GenericEntity {
 	@Column(length = 25, nullable = true)
 	private String rg;
 
+	@Column(length = 25, nullable = false)
 	private String nome;
 	private Date dataNascimento;
 	private String nomeMae;

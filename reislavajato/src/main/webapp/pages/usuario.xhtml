@@ -26,8 +26,8 @@
 					</f:facet>
 
 					<p:column headerText="Usuário"
-						filterBy="#{usuario.funcionario.nome}">
-						<h:outputText value="#{usuario.funcionario.nome}" />
+						filterBy="#{usuario.funcionario.pessoa.pessoaFisica.nome}">
+						<h:outputText value="#{usuario.funcionario.pessoa.pessoaFisica.nome}" />
 					</p:column>
 
 					<p:column headerText="Permissão" filterBy="#{usuario.tipoUsuario}"
@@ -76,7 +76,7 @@
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um funcionário" />
 						<f:selectItems value="#{usuarioControle.funcionarios}"
-							var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.nome}" />
+							var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.funcionario.pessoa.pessoaFisica.nome}" />
 					</p:selectOneMenu>
 					<p:outputLabel for="ativo" value="Ativo:" />
 					<p:selectBooleanCheckbox id="ativo"
@@ -106,7 +106,7 @@
 						placeholder="Informe uma senha"
 						promptLabel="Informe sua nova senha" weakLabel="Fraca"
 						inline="true" goodLabel="Boa" strongLabel="Ótima" match="senha2"
-						required="true" value="#{usuarioControle.usuario.senha}"
+						required="true" value="#{usuarioControle.usuario.password}"
 						requiredMessage="A senha não pode ser nula"
 						converterMessage="Por favor informe uma senha"
 						validatorMessage="As senhas não coincidem">
@@ -118,7 +118,7 @@
 						feedback="true" weakLabel="Fraca" inline="true" goodLabel="Boa"
 						strongLabel="Ótima" promptLabel="Confirme sua nova senha"
 						placeholder="Confirme sua senha"
-						value="#{usuarioControle.usuario.senha}"
+						value="#{usuarioControle.usuario.password}"
 						requiredMessage="Confirmação de senha não pode ser nula"
 						converterMessage="Por favor informe uma senha"
 						validatorMessage="As senhas não coincidem">

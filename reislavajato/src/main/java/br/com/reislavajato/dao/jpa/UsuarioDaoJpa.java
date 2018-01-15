@@ -34,12 +34,12 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 	@Qualifier(value = "managerEntityManagerFactory")
 	private EntityManager em;
 
-	public Usuario autenticar(String username, String senha) throws DadosInvalidosException {
+	public Usuario autenticar(String username, String password) throws DadosInvalidosException {
 		try {
 			Query query = em
-					.createQuery("select distinct u from Usuario u where u.username = :username and u.senha = :senha");
+					.createQuery("select distinct u from Usuario u where u.username = :username and u.password = :password");
 			query.setParameter("username", username);
-			query.setParameter("senha", senha);
+			query.setParameter("password", password);
 			return (Usuario) query.getSingleResult();
 		} catch (Exception e) {
 			throw new DadosInvalidosException(e);
@@ -78,8 +78,8 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			transacao = sessao.beginTransaction();
 			sessao.save(usuario);
 
-			SimpleHash hash = new SimpleHash("md5", usuario.getSenha());
-			usuario.setSenha(hash.toHex());
+			SimpleHash hash = new SimpleHash("md5", usuario.getPassword());
+			usuario.setPassword(hash.toHex());
 			transacao.commit();
 		} catch (RuntimeException erro) {
 			if (transacao != null) {

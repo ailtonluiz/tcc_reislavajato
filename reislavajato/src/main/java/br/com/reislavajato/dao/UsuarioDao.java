@@ -12,5 +12,5 @@ import br.com.reislavajato.excessao.DadosInvalidosException;
  */
 public interface UsuarioDao extends Persistencia<Usuario> {
 
-	public Usuario autenticar(String username, String senha) throws DadosInvalidosException;
+	public Usuario autenticar(String username, String password) throws DadosInvalidosException;
 }

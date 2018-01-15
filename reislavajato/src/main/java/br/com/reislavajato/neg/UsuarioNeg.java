@@ -12,6 +12,6 @@ import br.com.reislavajato.excessao.DadosInvalidosException;
  */
 public interface UsuarioNeg extends Negocio<Usuario> {
 
-	public Usuario autenticar(String username, String senha) throws DadosInvalidosException;
+	public Usuario autenticar(String username, String passowrd) throws DadosInvalidosException;
 
 }

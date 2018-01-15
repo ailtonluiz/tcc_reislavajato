@@ -26,7 +26,7 @@ public class UsuarioNegImpl extends NegocioGenerico<Usuario> implements UsuarioN
 	}
 
 	@Transactional
-	public Usuario autenticar(String username, String senha) throws DadosInvalidosException {
-		return ((UsuarioDao) persistencia).autenticar(username, senha);
+	public Usuario autenticar(String username, String password) throws DadosInvalidosException {
+		return ((UsuarioDao) persistencia).autenticar(username, password);
 	}
 }
