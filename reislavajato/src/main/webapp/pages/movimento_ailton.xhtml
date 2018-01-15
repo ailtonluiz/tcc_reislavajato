@@ -19,7 +19,7 @@
 						<p:tab title="Dados principais">
 							<h:panelGrid columns="7">
 								<h:outputLabel value="Número OS" />
-								<p:inputText size="10" maxlength="10" value="1234"
+								<p:inputText size="19" maxlength="10" value="1234"
 									disabled="true" />
 								<h:outputLabel value="Status" />
 								<p:selectOneMenu effect="fold" editable="true">
@@ -28,7 +28,7 @@
 									<f:selectItem itemLabel="Finalizado" itemValue="" />
 								</p:selectOneMenu>
 
-								<h:outputLabel value="Cliente" />
+								<h:outputLabel value="Sel.  Cliente"/>
 								<p:selectOneMenu effect="fold" editable="true">
 									<f:selectItem itemLabel="Ruben Delmondes" itemValue="" />
 									<f:selectItem itemLabel="Telmo Silva" itemValue="" />
@@ -47,16 +47,16 @@
 								</p:selectCheckboxMenu>
 
 								<h:outputText value="Veículo:" />
-								<p:selectOneMenu id="veiculo" filter="true"
+								<p:selectOneMenu id="veiculo" filter="true" effect="fold" editable="true"
 									converter="omnifaces.SelectItemsConverter"
-									value="#{movimentoControle.veiculo.modelo}">
+									value="#{veiculoControle.veiculo.modelo }">
 									<f:selectItem noSelectionOption="true" itemLabel="Selecione " />
 									<f:selectItems value="#{movimentoControle.veiculos}"
 										var="veiculo" itemValue="#{veiculo}"
 										itemLabel="#{veiculo.modelo}" />
 								</p:selectOneMenu>
-								<h:outputLabel value="Ordem de serviço" />
-								<p:inputText size="10" maxlength="10" value="" placeholder="Nº Ordem prefeitura"
+								<h:outputLabel value="Ordem Serv." />
+								<p:inputText size="24" maxlength="10" value="" placeholder=""
 									disabled="false" />
 
 
@@ -89,12 +89,7 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Comissão (%)" style="width:15%">
-						<h:outputText value="#{servico.percentualComissao} %">
-							<f:convertNumber locale="pt_BR" />
-						</h:outputText>
-					</p:column>
-
+			
 
 					<p:column headerText="Opções" style="width:8%">
 						<p:commandButton value="   Adicionar" icon="ui-icon-plusthick" 
