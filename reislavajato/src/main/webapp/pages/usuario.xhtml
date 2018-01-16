@@ -24,10 +24,16 @@
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-
-					<p:column headerText="Usuário"
+					
+					<p:column headerText="Funcionário"
 						filterBy="#{usuario.funcionario.pessoa.pessoaFisica.nome}">
 						<h:outputText value="#{usuario.funcionario.pessoa.pessoaFisica.nome}" />
+					</p:column>
+					
+
+					<p:column headerText="Usuário"
+						filterBy="#{usuario.username}">
+						<h:outputText value="#{usuario.username}" />
 					</p:column>
 
 					<p:column headerText="Permissão" filterBy="#{usuario.tipoUsuario}"
@@ -70,13 +76,13 @@
 				<h:panelGrid id="painel" columns="4">
 					<p:outputLabel for="func" value="Funcionário" />
 					<p:selectOneMenu id="func" filter="true"
-						value="#{usuarioControle.usuario.funcionario}"
+						value="#{usuarioControle.usuario.funcionario.pessoa.pessoaFisica.nome}"
 						converter="omnifaces.SelectItemsConverter" required="true"
 						requiredMessage="É obrigatório informar o Funcionário!">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um funcionário" />
 						<f:selectItems value="#{usuarioControle.funcionarios}"
-							var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.funcionario.pessoa.pessoaFisica.nome}" />
+							var="usuario" itemValue="#{usuario}" itemLabel="#{funcionario.usuario.username}" />
 					</p:selectOneMenu>
 					<p:outputLabel for="ativo" value="Ativo:" />
 					<p:selectBooleanCheckbox id="ativo"

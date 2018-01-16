@@ -3,6 +3,8 @@
  */
 package br.com.reislavajato.dao.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -36,8 +38,8 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 
 	public Usuario autenticar(String username, String password) throws DadosInvalidosException {
 		try {
-			Query query = em
-					.createQuery("select distinct u from Usuario u where u.username = :username and u.password = :password");
+			Query query = em.createQuery(
+					"select distinct u from Usuario u where u.username = :username and u.password = :password");
 			query.setParameter("username", username);
 			query.setParameter("password", password);
 			return (Usuario) query.getSingleResult();
@@ -88,6 +90,16 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			throw erro;
 		} finally {
 			sessao.close();
+		}
+	}
+
+	public List<Usuario> listar() throws DadosInvalidosException {
+		try {
+			Query query = em.createQuery("select u from Usuario u");
+			// query.getResultList();
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
 
