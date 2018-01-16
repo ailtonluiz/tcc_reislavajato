@@ -3,6 +3,8 @@
  */
 package br.com.reislavajato.neg.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +30,10 @@ public class UsuarioNegImpl extends NegocioGenerico<Usuario> implements UsuarioN
 	@Transactional
 	public Usuario autenticar(String username, String password) throws DadosInvalidosException {
 		return ((UsuarioDao) persistencia).autenticar(username, password);
+	}
+
+	@Transactional
+	public List<Usuario> listar() throws DadosInvalidosException {
+		return ((UsuarioDao) persistencia).listar();
 	}
 }
