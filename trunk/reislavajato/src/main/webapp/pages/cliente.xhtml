@@ -102,7 +102,7 @@
 
                         <h:outputLabel value="CEP:" />
                         <p:inputMask value="#{clienteControle.cliente.pessoa.endereco.cep}" mask="99999-999" maxlength="10" />
-                        <p:commandButton value="Buscar Endereço" action="#{clienteControle.buscarCep}" />
+                        <p:commandButton icon="ui-icon-search" value="Buscar Endereço" action="#{clienteControle.buscarCep}" />
                         <br />
 
                         <h:outputLabel value="Logradouro:" />
@@ -174,7 +174,7 @@
                            <f:selectItems value="#{clienteControle.servicos}" var="servico" itemLabel="#{servico.descricao} - R$#{servico.valorServico}" itemValue="#{servico}" />
                         </p:selectManyCheckbox>
 
-                        <p:commandButton value="Adicionar" update="veiculosTable" process="servico" action="#{clienteControle.limparVeiculo}">
+                        <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="veiculosTable" process="servico" action="#{clienteControle.limparVeiculo}">
                            <p:collector value="#{clienteControle.cliente.veiculo}" addTo="#{clienteControle.cliente.veiculos}" />
                         </p:commandButton>
                      </h:panelGrid>
@@ -215,7 +215,7 @@
                </p:tabView>
             </p:panel>
             <h:panelGrid columns="2">
-               <p:commandButton value="Salvar" actionListener="#{clienteControle.salvar}" icon="ui-icon-check" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{clienteControle.salvar}" icon="ui-icon-check" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
                <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
             </h:panelGrid>
          </h:form>
