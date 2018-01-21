@@ -17,7 +17,7 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.2.3</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
@@ -100,7 +100,7 @@
 			<version>4.5.1</version>
 		</dependency>
 
-		<!-- JSF -->
+		<!-- JSF Api -->
 
 		<dependency>
 			<groupId>com.sun.faces</groupId>
@@ -108,7 +108,7 @@
 			<version>2.2.14</version>
 		</dependency>
 
-		<!-- JSF -->
+		<!-- JSF impl -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
@@ -163,6 +163,38 @@
 			<artifactId>jasperreports</artifactId>
 			<version>6.1.1</version>
 		</dependency>
+
+		<!-- JasperReports Fonts -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>6.0.0</version>
+		</dependency>
+
+		<!-- Xerces Impl -->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+
+
+		<!-- Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.17</version>
+		</dependency>
+
+		<!-- Barbecue -->
+		<dependency>
+			<groupId>net.sourceforge.barbecue</groupId>
+			<artifactId>barbecue</artifactId>
+			<version>1.5-beta1</version>
+		</dependency>
+
+
 
 		<!-- iReports -->
 
