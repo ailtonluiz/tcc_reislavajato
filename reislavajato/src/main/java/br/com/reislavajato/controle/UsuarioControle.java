@@ -82,6 +82,8 @@ public class UsuarioControle extends ReisLavajatoControle implements Serializabl
 	}
 
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
+	
+		
 		try {
 			usuario = (Usuario) evento.getComponent().getAttributes().get("registroSelecionado");
 			funcionarios = funcionarioNeg.listar();
@@ -91,6 +93,8 @@ public class UsuarioControle extends ReisLavajatoControle implements Serializabl
 		}
 
 	}
+	
+	//getters and setters
 
 	public Usuario getUsuario() {
 		return usuario;

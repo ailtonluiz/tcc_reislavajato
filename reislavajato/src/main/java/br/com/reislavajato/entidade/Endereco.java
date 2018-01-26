@@ -10,7 +10,7 @@ public class Endereco extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+	//@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Municipio municipio = new Municipio();
 
 	private String cep;

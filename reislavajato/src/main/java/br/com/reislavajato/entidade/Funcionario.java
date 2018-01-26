@@ -1,7 +1,7 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class Funcionario extends GenericEntity {
 	private Pessoa pessoa = new Pessoa();
 
 	@ManyToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	//@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Cargo cargo;
 
 	private String carteiraTrabalho;
@@ -43,7 +43,7 @@ public class Funcionario extends GenericEntity {
 
 	private String cnh;
 
-	private Calendar dataEntradaExercicio;
+	private Date dataEntradaExercicio;
 
 	@Enumerated(EnumType.STRING)
 	private EnumCategoriaCNH categoriaCNH = EnumCategoriaCNH.A;
@@ -158,11 +158,18 @@ public class Funcionario extends GenericEntity {
 		this.perfil = perfil;
 	}
 
-	public Calendar getDataEntradaExercicio() {
+	/**
+	 * @return the dataEntradaExercicio
+	 */
+	public Date getDataEntradaExercicio() {
 		return dataEntradaExercicio;
 	}
 
-	public void setDataEntradaExercicio(Calendar dataEntradaExercicio) {
+	/**
+	 * @param dataEntradaExercicio
+	 *            the dataEntradaExercicio to set
+	 */
+	public void setDataEntradaExercicio(Date dataEntradaExercicio) {
 		this.dataEntradaExercicio = dataEntradaExercicio;
 	}
 

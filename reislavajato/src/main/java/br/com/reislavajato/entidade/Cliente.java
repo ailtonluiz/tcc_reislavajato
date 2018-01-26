@@ -35,6 +35,7 @@ public class Cliente extends GenericEntity {
 
 	@Column(precision = 10, scale = 2)
 	private BigDecimal descontoServico;
+	
 
 	// getters and setters
 	public void addVeiculo(Veiculo veiculo) {

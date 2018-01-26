@@ -15,8 +15,8 @@ public class Cargo extends GenericEntity {
 
 	private String nomeCargo;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<FuncaoCargo> funcoesCargo = new HashSet<FuncaoCargo>();
+	//@ManyToMany(fetch = FetchType.EAGER)
+	//private Set<FuncaoCargo> funcoesCargo = new HashSet<FuncaoCargo>();
 
 	@Column(precision = 10, scale = 2)
 	private BigDecimal salario;
@@ -29,13 +29,13 @@ public class Cargo extends GenericEntity {
 		this.nomeCargo = nomeCargo;
 	}
 
-	public Set<FuncaoCargo> getFuncoesCargo() {
-		return funcoesCargo;
-	}
-
-	public void setFuncoesCargo(Set<FuncaoCargo> funcoesCargo) {
-		this.funcoesCargo = funcoesCargo;
-	}
+//	public Set<FuncaoCargo> getFuncoesCargo() {
+//		return funcoesCargo;
+//	}
+//
+//	public void setFuncoesCargo(Set<FuncaoCargo> funcoesCargo) {
+//		this.funcoesCargo = funcoesCargo;
+//	}
 
 	public BigDecimal getSalario() {
 		return salario;
