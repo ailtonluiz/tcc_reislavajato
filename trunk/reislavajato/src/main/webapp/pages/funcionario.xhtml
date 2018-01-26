@@ -145,7 +145,7 @@
                         <p:calendar yearRange="-100:+0"  value="#{funcionarioControle.funcionario.dataEntradaExercicio}" onkeypress="fcSaltaTAB(this, 9);" maxlength="10" onkeyup="maskData(this)" converterMessage="Data inválida" pattern="dd/MM/yyyy"
                            navigator="true" locale="pt" />
 
-                        <h:outputText value="Tipo Sanguinio:" />
+                        <h:outputText value="Tipo Sanguíneo:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.tipoSanguineo}">
                            <f:selectItems value="#{ControleEnumerador.listaEnumTipoSanguineo}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneMenu>
@@ -167,12 +167,12 @@
                            <f:selectItems value="#{funcionarioControle.cargos}" var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nomeCargo}" />
                         </p:selectOneMenu>
 
-                        <h:outputText value="Função:" />
-                        <p:selectOneMenu id="funcao" filter="true" required="true" requiredMessage="É necessário informar um cargo para realizar o cadastro" converter="omnifaces.SelectItemsConverter"
-                           value="#{funcionarioControle.funcionario.cargo}">
-                           <f:selectItem noSelectionOption="true" itemLabel="Selecione um cargo" />
-                           <f:selectItems value="#{funcionarioControle.cargos}" var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nomeCargo}" />
-                        </p:selectOneMenu>
+<!--                         <h:outputText value="Função:" /> -->
+<!--                         <p:selectOneMenu id="funcao" filter="true" required="true" requiredMessage="É necessário informar um cargo para realizar o cadastro" converter="omnifaces.SelectItemsConverter" -->
+<!--                            value="#{funcionarioControle.funcionario.cargo}"> -->
+<!--                            <f:selectItem noSelectionOption="true" itemLabel="Selecione um cargo" /> -->
+<!--                            <f:selectItems value="#{funcionarioControle.cargos}" var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nomeCargo}" /> -->
+<!--                         </p:selectOneMenu> -->
 				
                         <h:outputText value="Perfil:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.perfil}">

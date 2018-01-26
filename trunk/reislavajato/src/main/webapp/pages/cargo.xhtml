@@ -25,6 +25,7 @@
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
+					
 					<p:column headerText="Cargo" sortBy="#{cargo.nomeCargo}"
 						style="width:65px">
 						<h:outputText value="#{cargo.nomeCargo}" />
@@ -38,13 +39,14 @@
 								message="Deseja excluir o registro?" icon="ui-icon-alert" />
 							<f:attribute name="registroSelecionado" value="#{cargo}" />
 						</p:commandButton>
+						
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{cargoControle.editar}"
 							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
 							<f:attribute name="registroSelecionado" value="#{cargo}" />
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
+						</p:commandButton>						
 					</p:column>
 
 				</p:dataTable>
