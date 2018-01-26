@@ -77,7 +77,7 @@
                         <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.rg}" />
 
                         <h:outputLabel for="dtExp" value="Data Expedição RG:" />
-                        <p:calendar id="dtExp" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataExpedicaoRG}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" />
+                        <p:calendar id="dtExp" yearRange="-100:+0" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataExpedicaoRG}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" />
 
                         <h:outputText value="Órgão RG:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.orgaoRG}">
@@ -90,7 +90,7 @@
                         </p:selectOneMenu>
 
                         <h:outputLabel for="dtNasc" value="Data Nascimento:" />
-                        <p:calendar id="dtNasc" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataNascimento}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" />
+                        <p:calendar id="dtNasc" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataNascimento}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" yearRange="-100:+0"/>
 
                         <h:outputText value="Sexo:" />
                         <p:selectOneRadio value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.sexo}">
@@ -142,7 +142,7 @@
                         </p:selectOneMenu>
 
                         <h:outputText value="Data Entrada de Exercício:" />
-                        <p:calendar value="#{funcionarioControle.funcionario.dataEntradaExercicio}" onkeypress="fcSaltaTAB(this, 9);" maxlength="10" onkeyup="maskData(this)" converterMessage="Data inválida" pattern="dd/MM/yyyy"
+                        <p:calendar yearRange="-100:+0"  value="#{funcionarioControle.funcionario.dataEntradaExercicio}" onkeypress="fcSaltaTAB(this, 9);" maxlength="10" onkeyup="maskData(this)" converterMessage="Data inválida" pattern="dd/MM/yyyy"
                            navigator="true" locale="pt" />
 
                         <h:outputText value="Tipo Sanguinio:" />

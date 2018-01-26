@@ -68,7 +68,7 @@
                            onkeyup="javascript:maskCPF(this)" style="width: 150pt !important;" converter="#{cpfConverter}" />
 
                         <h:outputLabel for="dtNasc" value="Data Nascimento:" />
-                        <p:calendar id="dtNasc" value="#{clienteControle.cliente.pessoa.pessoaFisica.dataNascimento}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" />
+                        <p:calendar id="dtNasc" yearRange="-100:+0" value="#{clienteControle.cliente.pessoa.pessoaFisica.dataNascimento}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" />
 
                         <h:outputText value="Sexo:" />
                         <p:selectOneRadio value="#{clienteControle.cliente.pessoa.pessoaFisica.sexo}">
@@ -215,7 +215,7 @@
                </p:tabView>
             </p:panel>
             <h:panelGrid columns="2">
-               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{clienteControle.salvar}" icon="ui-icon-check" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{clienteControle.salvar}" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
                <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
             </h:panelGrid>
          </h:form>
