@@ -42,6 +42,7 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 		return "sucess";
 	}
 
+	
 	public void listarPorUf() throws DadosInvalidosException {
 		try {
 			municipios = municipioNeg.listarPorUf(municipio.getUf());
@@ -107,6 +108,8 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 			addMensagemErroFatal(erro);
 		}
 	}
+	
+	//getters and setters
 
 	public Municipio getMunicipio() {
 		return municipio;

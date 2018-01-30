@@ -36,11 +36,11 @@ public class Pessoa extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro = new Date();
 
-	@OneToOne
+	//@OneToOne
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 
-	@OneToOne
+	//@OneToOne
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 

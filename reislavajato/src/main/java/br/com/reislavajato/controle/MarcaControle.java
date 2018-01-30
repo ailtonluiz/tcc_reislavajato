@@ -57,7 +57,7 @@ public class MarcaControle extends ReisLavajatoControle implements Serializable 
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			marcaNeg.incluir(marca);
+			marcaNeg.alterar(marca);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");

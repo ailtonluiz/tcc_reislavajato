@@ -76,7 +76,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			funcionarioNeg.incluir(funcionario);
+			funcionarioNeg.alterar(funcionario);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");

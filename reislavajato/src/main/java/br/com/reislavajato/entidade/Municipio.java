@@ -30,6 +30,9 @@ public class Municipio extends GenericEntity{
 
 	@Enumerated(EnumType.STRING)
 	private EnumUf uf = EnumUf.GO;
+	
+	
+	//getters and setters
 
 	public String getNome() {
 		return nome;

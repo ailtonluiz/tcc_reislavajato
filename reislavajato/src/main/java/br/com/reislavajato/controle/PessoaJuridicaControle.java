@@ -53,7 +53,7 @@ public class PessoaJuridicaControle extends ReisLavajatoControle implements Seri
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			pessoaJuridicaNeg.incluir(pessoaJuridica);
+			pessoaJuridicaNeg.alterar(pessoaJuridica);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -89,7 +89,9 @@ public class PessoaJuridicaControle extends ReisLavajatoControle implements Seri
 		// }
 		try {
 			pessoaJuridica = (PessoaJuridica) evento.getComponent().getAttributes().get("registroSelecionado");
+			pessoaJuridicaNeg.alterar(pessoaJuridica);
 			listar();
+			addMensagemInfo(msgAlteradoSucesso);
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Não foi possível realizar está operação!");
 			erro.printStackTrace();

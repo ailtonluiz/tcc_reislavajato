@@ -22,7 +22,7 @@ import br.com.reislavajato.neg.VeiculoNeg;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@Controller
+@Controller ("veiculoControle")
 @ViewScoped
 public class VeiculoControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -57,10 +57,14 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			veiculoNeg.incluir(veiculo);
+			
+			veiculoNeg.alterar(veiculo);
 			novo();
 			listar();
 			addMensagemInfo(msgIncluidoSucesso);
+		
+		
+		
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -80,13 +84,16 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			veiculo = (Veiculo) evento.getComponent().getAttributes().get("registroSelecionado");
-			veiculoNeg.alterar(veiculo);
+			veiculoNeg.alterar(veiculo);	
 			marcas = marcaNeg.listar();
 			addMensagemInfo(msgAlteradoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
 	}
+	
+	
+	//getters and setters
 
 	public Veiculo getVeiculo() {
 		return veiculo;

@@ -26,6 +26,8 @@ public class Servico extends GenericEntity {
 
 	private String observacao;
 	
+	
+	
 	// getters and setters
 	public String getDescricao() {
 		return descricao;

@@ -30,11 +30,15 @@
                   <p:commandButton icon="ui-icon-trash" actionListener="#{veiculoControle.excluir}" update=":mensagem :frmListagem:tabela">
                      <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
                      <f:attribute name="registroSelecionado" value="#{veiculo}" />
+                     
                   </p:commandButton>
-                  <p:commandButton icon="ui-icon-pencil" actionListener="#{veiculoControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
-                     <f:attribute name="registroSelecionado" value="#{veiculo}" />
-                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                  </p:commandButton>
+                  <p:commandButton icon="ui-icon-pencil"
+							actionListener="#{veiculoControle.editar}"
+							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="registroSelecionado" value="#{veiculo}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
                </p:column>
 
             </p:dataTable>
@@ -46,6 +50,7 @@
 
          </p:panel>
       </h:form>
+      
       <!-- Tela de Cadastros -->
       <p:dialog header="Cadastro de veículos" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
          <h:form id="frmCadastro">
@@ -72,6 +77,8 @@
             </h:panelGrid>
          </h:form>
       </p:dialog>
+      
+      
 
    </ui:define>
 </ui:composition>

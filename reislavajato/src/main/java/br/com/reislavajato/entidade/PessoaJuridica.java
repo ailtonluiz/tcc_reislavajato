@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 public class PessoaJuridica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
-	@Column(nullable = false, length = 80)
+	@Column(length = 80)
 	private String razaoSocial;
 
 	@Column(length = 100)
@@ -20,6 +20,9 @@ public class PessoaJuridica extends GenericEntity {
 	private String inscricaoEstadual;
 	private String inscricaoMunicipal;
 	private Date dataAberturaEmpresa;
+	
+	
+	//getters and setters
 
 	public String getRazaoSocial() {
 		return razaoSocial;

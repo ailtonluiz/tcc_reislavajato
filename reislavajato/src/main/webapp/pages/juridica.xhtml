@@ -16,7 +16,7 @@
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
 					paginator="true" value="#{pessoaJuridicaControle.pessoasJuridicas}"
 					paginatorPosition="top" var="pessoaJuridica" rows="5">
-					
+
 					<f:facet name="footer">
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{pessoaJuridicaControle.novo}"
@@ -35,7 +35,7 @@
 					</p:column>
 
 					<p:column headerText="Fantasia" style="width:30%"
-					filterBy="pessoaJuridica.nomeFantasia">
+						filterBy="pessoaJuridica.nomeFantasia">
 						<h:outputText value="#{pessoaJuridica.nomeFantasia}" />
 					</p:column>
 
@@ -47,10 +47,11 @@
 								message="Deseja excluir o registro?" icon="ui-icon-alert" />
 							<f:attribute name="registroSelecionado" value="#{pessoaJuridica}" />
 						</p:commandButton>
-						
+
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{pessoaJuridicaControle.editar}"
-							update=":frmCadastro:painel :frmListagem:tabela" oncomplete="PF('dialogo').show();">
+							update=":frmCadastro:painel :frmListagem:tabela"
+							oncomplete="PF('dialogo').show();">
 
 							<f:attribute name="registroSelecionado" value="#{pessoaJuridica}" />
 							<f:actionListener
@@ -116,15 +117,15 @@
 					<!-- 					<p:inputMask mask="99.999-999" value="#{cadastroControle.cadastro.cep}"/> -->
 
 				</h:panelGrid>
-				
-				<h:panelGrid columns="2" >
-					<p:commandButton value="Salvar" 
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
 						actionListener="#{pessoaJuridicaControle.salvar}"
 						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
-				</h:panelGrid>			
-			
+				</h:panelGrid>
+
 			</h:form>
 		</p:dialog>
 
