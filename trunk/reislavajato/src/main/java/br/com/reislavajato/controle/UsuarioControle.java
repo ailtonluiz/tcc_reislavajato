@@ -59,7 +59,7 @@ public class UsuarioControle extends ReisLavajatoControle implements Serializabl
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			usuarioNeg.incluir(usuario);
+			usuarioNeg.alterar(usuario);
 			listar();
 			novo();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");

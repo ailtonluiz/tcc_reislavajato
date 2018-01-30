@@ -46,6 +46,10 @@ public class Veiculo extends GenericEntity {
 
 	@Temporal(TemporalType.DATE)
 	private Date dataHoraSaidaReal;
+	
+	
+	
+	//getters and setters
 
 	public Set<Servico> getServicos() {
 		return servicos;

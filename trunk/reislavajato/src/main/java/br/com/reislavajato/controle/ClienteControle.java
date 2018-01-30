@@ -83,7 +83,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			clienteNeg.incluir(cliente);
+			clienteNeg.alterar(cliente);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");

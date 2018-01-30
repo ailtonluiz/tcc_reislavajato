@@ -46,7 +46,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			servicoNeg.incluir(servico);
+			servicoNeg.alterar(servico);
 			novo();
 			listar();
 			addMensagemInfo(msgIncluidoSucesso);

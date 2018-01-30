@@ -214,9 +214,10 @@
 									<f:selectItems value="#{clienteControle.modelosVeiculo}"
 										var="veiculo" itemValue="#{veiculo}"
 										itemLabel="#{veiculo.modelo}" />
+									
 								</p:selectOneMenu>
 
-								<h:outputLabel value="Placa:" />
+								<h:outputLabel id="placa" value="Placa:" />
 								<p:inputMask mask="aaa-9999"
 									value="#{clienteControle.cliente.veiculo.placa}" />
 

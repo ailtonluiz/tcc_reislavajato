@@ -49,7 +49,7 @@ public class FuncaoCargoControle extends ReisLavajatoControle implements Seriali
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			funcaoCargoNeg.incluir(funcaoCargo);
+			funcaoCargoNeg.alterar(funcaoCargo);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
