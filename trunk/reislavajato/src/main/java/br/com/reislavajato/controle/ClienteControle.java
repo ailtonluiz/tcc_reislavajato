@@ -1,13 +1,12 @@
-
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +15,8 @@ import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.enumeradores.EnumPerfil;
+import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.MunicipioNeg;
@@ -40,6 +41,10 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	private Cliente cliente = new Cliente();
 	private List<Cliente> clientes;
+
+	public ClienteControle() throws DadosInvalidosException {
+		this.listar();
+	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
 		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null || cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
@@ -69,27 +74,37 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 		try {
 			clientes = clienteNeg.listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar o(s) funcionário(s)!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
 	@Override
+	@PostConstruct
 	public String novo() {
 		cliente = new Cliente();
 		clientes = new ArrayList<Cliente>();
 		return "sucesso";
 	}
 
+	private void setarAntesPersistir(Cliente cliente) throws DadosInvalidosException {
+		cliente.getPessoa().setPerfil(EnumPerfil.CLIENTE);
+		if (cliente.getPessoa().getTipoPessoa().equals(EnumTipoPessoa.PF)) {
+			cliente.getPessoa().setPessoaJuridica(null);
+		} else {
+			cliente.getPessoa().setPessoaFisica(null);
+		}
+	}
+
 	public void salvar() throws DadosInvalidosException {
 		try {
+			this.setarAntesPersistir(cliente);
+
 			clienteNeg.alterar(cliente);
 			novo();
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -98,10 +113,9 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 			cliente = (Cliente) evento.getComponent().getAttributes().get("registroSelecionado");
 			clienteNeg.excluir(cliente);
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -110,8 +124,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 			cliente = (Cliente) evento.getComponent().getAttributes().get("registroSelecionado");
 			listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 

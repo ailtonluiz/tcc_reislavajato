@@ -2,8 +2,7 @@ package br.com.reislavajato.enumeradores;
 
 public enum EnumFatorRH implements Enumerador {
 
-	POSITIVO("+", "Positivo"), 
-	NEGATIVO("-", "Negativo");
+	POSITIVO("+", "Positivo"), NEGATIVO("-", "Negativo");
 
 	private final String abreviado;
 	private final String descricao;

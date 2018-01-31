@@ -42,7 +42,6 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 		return "sucess";
 	}
 
-	
 	public void listarPorUf() throws DadosInvalidosException {
 		try {
 			municipios = municipioNeg.listarPorUf(municipio.getUf());
@@ -51,7 +50,7 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 			addMensagemErroFatal(erro);
 		}
 	}
-	
+
 	public void listarPorNome() throws DadosInvalidosException {
 		try {
 			if (municipio.getNome().length() > 0 && !municipio.getNome().equals("")) {
@@ -108,8 +107,8 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 			addMensagemErroFatal(erro);
 		}
 	}
-	
-	//getters and setters
+
+	// getters and setters
 
 	public Municipio getMunicipio() {
 		return municipio;

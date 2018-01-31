@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScans(value = { @ComponentScan("br.com.reislavajato.dao.jpa"), @ComponentScan("br.com.reislavajato.dao"),
-		@ComponentScan("br.com.reislavajato.neg"), @ComponentScan("br.com.reislavajato.neg.impl")
+@ComponentScans(value = { @ComponentScan("br.com.reislavajato.dao.jpa"), @ComponentScan("br.com.reislavajato.dao"), @ComponentScan("br.com.reislavajato.neg"), @ComponentScan("br.com.reislavajato.neg.impl")
 
 })
 public class AppConfig {

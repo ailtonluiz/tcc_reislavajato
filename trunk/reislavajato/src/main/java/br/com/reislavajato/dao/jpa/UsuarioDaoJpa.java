@@ -38,8 +38,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 
 	public Usuario autenticar(String username, String password) throws DadosInvalidosException {
 		try {
-			Query query = em.createQuery(
-					"select distinct u from Usuario u where u.username = :username and u.password = :password");
+			Query query = em.createQuery("select distinct u from Usuario u where u.username = :username and u.password = :password");
 			query.setParameter("username", username);
 			query.setParameter("password", password);
 			return (Usuario) query.getSingleResult();

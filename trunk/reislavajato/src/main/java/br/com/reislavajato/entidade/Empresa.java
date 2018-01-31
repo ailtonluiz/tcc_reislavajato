@@ -55,7 +55,6 @@ public class Empresa extends GenericEntity {
 	@Column(length = 80)
 	private String contato;
 
-
 	@Column
 	private Boolean ativo = true;
 
@@ -178,7 +177,6 @@ public class Empresa extends GenericEntity {
 	public void setContato(String contato) {
 		this.contato = contato;
 	}
-
 
 	public Boolean getAtivo() {
 		return ativo;

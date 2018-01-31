@@ -10,8 +10,7 @@ public class EnumUtilities {
 			campoName.set(enumerador, val);
 			campoName.setAccessible(false);
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"Houve algum erro durante a cria��o do enum " + enumerador + " com valor = " + val);
+			throw new RuntimeException("Houve algum erro durante a cria��o do enum " + enumerador + " com valor = " + val);
 		}
 	}
 }

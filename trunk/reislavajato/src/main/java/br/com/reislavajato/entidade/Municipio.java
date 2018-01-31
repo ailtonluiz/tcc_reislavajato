@@ -8,7 +8,7 @@ import javax.persistence.Enumerated;
 import br.com.reislavajato.enumeradores.EnumUf;
 
 @Entity
-public class Municipio extends GenericEntity{
+public class Municipio extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Column(unique = true, nullable = false)
@@ -20,8 +20,15 @@ public class Municipio extends GenericEntity{
 	@Enumerated(EnumType.STRING)
 	private EnumUf uf = EnumUf.GO;
 
-	
-	//getters and setters
+	// getters and setters
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
 	public String getNome() {
 		return nome;
@@ -32,52 +39,11 @@ public class Municipio extends GenericEntity{
 	}
 
 	public EnumUf getUf() {
-		return this.uf;
+		return uf;
 	}
 
 	public void setUf(EnumUf uf) {
 		this.uf = uf;
-	}
-
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Municipio other = (Municipio) obj;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (uf != other.uf)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Municipio [nome=" + nome + ", uf=" + uf + "]";
 	}
 
 }

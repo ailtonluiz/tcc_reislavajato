@@ -81,8 +81,7 @@ public class Numero {
 		String AuxCNPJ = Numero.trim();
 		while (AuxCNPJ.length() < 14)
 			AuxCNPJ = "0" + AuxCNPJ;
-		AuxCNPJ = AuxCNPJ.substring(0, 2) + "." + AuxCNPJ.substring(2, 5) + "." + AuxCNPJ.substring(5, 8) + "/"
-				+ AuxCNPJ.substring(8, 12) + "-" + AuxCNPJ.substring(12, 14);
+		AuxCNPJ = AuxCNPJ.substring(0, 2) + "." + AuxCNPJ.substring(2, 5) + "." + AuxCNPJ.substring(5, 8) + "/" + AuxCNPJ.substring(8, 12) + "-" + AuxCNPJ.substring(12, 14);
 		return AuxCNPJ;
 	}
 
@@ -107,8 +106,7 @@ public class Numero {
 		String AuxCPF = Numero.trim();
 		while (AuxCPF.length() < 11)
 			AuxCPF = "0" + AuxCPF;
-		AuxCPF = AuxCPF.substring(0, 3) + "." + AuxCPF.substring(3, 6) + "." + AuxCPF.substring(6, 9) + "-"
-				+ AuxCPF.substring(9, 11);
+		AuxCPF = AuxCPF.substring(0, 3) + "." + AuxCPF.substring(3, 6) + "." + AuxCPF.substring(6, 9) + "-" + AuxCPF.substring(9, 11);
 		return AuxCPF;
 	}
 

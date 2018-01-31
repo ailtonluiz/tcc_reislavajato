@@ -81,11 +81,9 @@ public class RelFuncionario extends ReisLavajatoControle implements Serializable
 				throw new DadosInvalidosException("Não foram encontrados Pessoas!");
 			}
 
-			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper")
-					+ "/";
+			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper") + "/";
 			parametros.put("SUBREPORT_DIR", caminhoSubreport);
-			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens")
-					+ "/";
+			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens") + "/";
 			parametros.put("IMAGES_DIR", caminhoImagem);
 
 			ReisLavajatoUtil.gerarRelatorioFaces("jasper/relDiscentes.jasper", funcionarios, parametros);

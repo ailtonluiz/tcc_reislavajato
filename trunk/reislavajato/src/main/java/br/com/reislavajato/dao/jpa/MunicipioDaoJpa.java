@@ -35,7 +35,7 @@ public class MunicipioDaoJpa extends PersistenciaJpa<Municipio> implements Munic
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
-	
+
 	public List<Municipio> listarPorNome(String nome) throws DadosInvalidosException {
 		try {
 			Query query = em.createQuery("select m from Municipio m where m.nome like :nome");
@@ -45,6 +45,7 @@ public class MunicipioDaoJpa extends PersistenciaJpa<Municipio> implements Munic
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
+
 	public List<Municipio> listarPorNomeeUF(String nome, EnumUf uf) throws DadosInvalidosException {
 		try {
 			Query query = em.createQuery("select m from Municipio m where m.nome like :nome and m.uf = :uf");
@@ -55,6 +56,5 @@ public class MunicipioDaoJpa extends PersistenciaJpa<Municipio> implements Munic
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
-	
-	
+
 }

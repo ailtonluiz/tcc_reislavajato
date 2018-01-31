@@ -46,7 +46,6 @@
 
             </p:dataTable>
 
-
             <!-- Botão de opções -->
             <p:confirmDialog global="true">
                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -56,13 +55,28 @@
          </p:panel>
       </h:form>
 
-
       <!-- Tela de Cadastros -->
-      <p:dialog header="Cadastro de Pessoa Física" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
+      <p:dialog header="Cadastro de Cliente" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
          <h:form id="frmCadastro">
             <p:panel id="painel">
+               <h:panelGrid columns="2">
+                  <h:outputLabel value="Tipo Pessoa?" />
+                  <p:selectOneRadio value="#{clienteControle.cliente.pessoa.tipoPessoa}">
+                     <p:ajax update="painel" />
+                     <f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                  </p:selectOneRadio>
+
+                  <h:outputText value="E-mail:" />
+                  <p:inputText value="#{clienteControle.cliente.pessoa.email}" />
+
+                  <h:outputText value="Permitir envio?" />
+                  <p:selectOneRadio value="#{clienteControle.cliente.pessoa.permitirEnvioEmail}">
+                     <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                  </p:selectOneRadio>
+               </h:panelGrid>
+
                <p:tabView dynamic="true">
-                  <p:tab title="Dados Pessoais">
+                  <p:tab title="Pessoa Física" rendered="#{clienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
                      <h:panelGrid columns="2">
                         <h:outputText value="Nome:" />
                         <p:inputText value="#{clienteControle.cliente.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 160pt !important;" />
@@ -80,14 +94,22 @@
                            <f:selectItems value="#{ControleEnumerador.listaEnumSexo}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneRadio>
 
-                        <h:outputText value="E-mail:" />
-                        <p:inputText value="#{clienteControle.cliente.pessoa.email}" />
+                     </h:panelGrid>
+                  </p:tab>
 
-                        <h:outputText value="Permitir envio?" />
-                        <p:selectOneRadio value="#{clienteControle.cliente.pessoa.permitirEnvioEmail}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                        </p:selectOneRadio>
+                  <p:tab title="Pessoa Jurídica" rendered="#{clienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ' }">
+                     <h:panelGrid columns="2">
+                        <p:outputLabel for="cnpj" value="CNPJ:" />
+                        <p:inputMask id="cnpj" value="#{clienteControle.cliente.pessoa.pessoaJuridica.cnpj}" mask="99.999.999/9999-99" required="true" requiredMessage="É obrigatório informar o CNPJ" />
 
+                        <p:outputLabel for="insc" value="IE :" />
+                        <p:inputText id="insc" value="#{clienteControle.cliente.pessoa.pessoaJuridica.inscricaoEstadual}" size="30" />
+
+                        <p:outputLabel for="razao" value="Razão Social:" />
+                        <p:inputText id="razao" value="#{clienteControle.cliente.pessoa.pessoaJuridica.razaoSocial}" maxlength="100" size="100" required="true" requiredMessage="É obrigatório informar a Razão Social" />
+
+                        <p:outputLabel for="fantasia" value="Fantasia:" />
+                        <p:inputText id="fantasia" value="#{clienteControle.cliente.pessoa.pessoaJuridica.nomeFantasia}" maxlength="100" size="100" />
                      </h:panelGrid>
                   </p:tab>
 
@@ -184,7 +206,7 @@
 
                      <br />
 
-                     <p:dataTable id="veiculosTable" value="#{clienteControle.cliente.veiculosLista}" var="veiculo" emptyMessage="Nenhum registro na lista">
+                     <p:dataTable id="veiculosTable" value="#{clienteControle.cliente.veiculos}" var="veiculo" emptyMessage="Nenhum registro na lista">
 
                         <p:column>
                            <f:facet name="header">
@@ -218,7 +240,7 @@
                </p:tabView>
             </p:panel>
             <h:panelGrid columns="2">
-               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{clienteControle.salvar}" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{clienteControle.salvar}" update=":mensagem :frmListagem:tabela" />
                <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
             </h:panelGrid>
          </h:form>

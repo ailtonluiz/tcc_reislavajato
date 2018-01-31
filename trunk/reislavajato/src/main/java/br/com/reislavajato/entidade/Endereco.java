@@ -2,7 +2,6 @@ package br.com.reislavajato.entidade;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 
@@ -11,17 +10,16 @@ public class Endereco extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@OneToOne
-	//@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Municipio municipio = new Municipio();
 
-	
 	private String cep;
 	private String logradouro;
 	private String complemento;
 	private String bairro;
 	private String numero;
-	
-	//getters and setters
+
+	// getters and setters
 
 	public Municipio getMunicipio() {
 		return municipio;
