@@ -27,7 +27,7 @@ public class MovimentoNegImpl extends NegocioGenerico<Movimento> implements Movi
 	public MovimentoNegImpl(MovimentoDao persistencia) {
 		super(persistencia);
 	}
-	
+
 	@Transactional
 	public List<Movimento> listarPorStatusServico(EnumStatusServico statusServico) throws DadosInvalidosException {
 		return ((MovimentoDao) persistencia).listarPorStatusServico(statusServico);

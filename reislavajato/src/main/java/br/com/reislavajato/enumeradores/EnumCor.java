@@ -2,13 +2,7 @@ package br.com.reislavajato.enumeradores;
 
 public enum EnumCor implements Enumerador {
 
-	PRATA("01", "Prata"), 
-	PRETO("02", "Preto"),
-	CINZA("03", "Cinza"),
-	BRANCO("04", "Branco"),
-	VERMELHO("05", "Vermelho"),
-	AZUL("06", "Azul"),
-	VERDE("07", "Verde");
+	PRATA("01", "Prata"), PRETO("02", "Preto"), CINZA("03", "Cinza"), BRANCO("04", "Branco"), VERMELHO("05", "Vermelho"), AZUL("06", "Azul"), VERDE("07", "Verde");
 
 	private final String abreviado;
 	private final String descricao;

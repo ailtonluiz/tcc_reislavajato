@@ -29,7 +29,10 @@ public class PessoaFisica extends GenericEntity {
 
 	@Column(length = 25, nullable = false)
 	private String nome;
+
+	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
+
 	private String nomeMae;
 	private String nomePai;
 

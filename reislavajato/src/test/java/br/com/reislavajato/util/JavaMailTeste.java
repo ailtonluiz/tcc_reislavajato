@@ -14,8 +14,7 @@ public class JavaMailTeste {
 		JavaMail mail = new JavaMail();
 
 		try {
-			mail.javaMail("nathyalmeidagyn@gmail.com", "rubendelmondes@bol.com.br", "Lavajato Reis",
-					"Seu carro está pronto!");
+			mail.javaMail("nathyalmeidagyn@gmail.com", "rubendelmondes@bol.com.br", "Lavajato Reis", "Seu carro está pronto!");
 
 		} catch (Exception e) {
 			e.printStackTrace();

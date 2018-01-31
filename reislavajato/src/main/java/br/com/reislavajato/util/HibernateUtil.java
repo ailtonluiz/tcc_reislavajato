@@ -43,8 +43,7 @@ public class HibernateUtil {
 			configuration.configure();
 
 			@SuppressWarnings("unused")
-			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-					.applySettings(configuration.getProperties()).build();
+			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
 			SessionFactory sessionFactory = configuration.buildSessionFactory();
 

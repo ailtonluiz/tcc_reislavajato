@@ -1,17 +1,20 @@
 package br.com.reislavajato.entidade;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Cascade;
+import javax.persistence.Transient;
 
 import br.com.reislavajato.enumeradores.EnumCor;
 import br.com.reislavajato.enumeradores.EnumMarca;
@@ -24,9 +27,11 @@ import br.com.reislavajato.enumeradores.EnumMarca;
 @Entity
 public class Veiculo extends GenericEntity {
 
-	@OneToMany
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Servico> servicos = new HashSet<Servico>();
+
+	@Transient
+	private Servico servico = new Servico();
 
 	private String placa;
 
@@ -50,6 +55,27 @@ public class Veiculo extends GenericEntity {
 	private Date dataHoraSaidaReal = new Date();
 
 	// getters and setters
+	public void addServico(Servico servico) {
+		servicos.add(servico);
+	}
+
+	public void removeServico(Servico servico) {
+		servicos.remove(servico);
+	}
+
+	public List<Servico> getServicosLista() {
+		List<Servico> lista = new ArrayList<Servico>(servicos);
+		return lista;
+	}
+
+	public Servico getServico() {
+		return servico;
+	}
+
+	public void setServico(Servico servico) {
+		this.servico = servico;
+	}
+
 	public Set<Servico> getServicos() {
 		return servicos;
 	}

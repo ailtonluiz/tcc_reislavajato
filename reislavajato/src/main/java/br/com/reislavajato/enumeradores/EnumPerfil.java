@@ -2,9 +2,7 @@ package br.com.reislavajato.enumeradores;
 
 public enum EnumPerfil implements Enumerador {
 
-	ADMINISTRADOR("0", "Administrador"),
-	CAIXA("1", "Caixa"), 
-	LAVADOR("2", "Lavador"); 
+	ADMINISTRADOR("0", "Administrador"), CAIXA("1", "Caixa"), LAVADOR("2", "Lavador"), CLIENTE("3", "Cliente");
 
 	private final String abreviado;
 	private final String descricao;

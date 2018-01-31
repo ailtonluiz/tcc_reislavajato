@@ -21,13 +21,11 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 	public Class<E> classeEntidade;
 
 	public PersistenciaJpa() {
-		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
+		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	public PersistenciaJpa(Class<E> classeEntidade) {
-		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
+		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	@PersistenceContext(unitName = "reisLavajato")
@@ -50,8 +48,7 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 		} catch (EntityNotFoundException e) {
 			return null;
 		} catch (Exception e) {
-			throw new DadosInvalidosException(String.format("Problemas ao consultar o registro %s com id %s",
-					classeEntidade.getSimpleName(), obj));
+			throw new DadosInvalidosException(String.format("Problemas ao consultar o registro %s com id %s", classeEntidade.getSimpleName(), obj));
 		}
 	}
 
@@ -61,8 +58,7 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 			em.remove(entidade);
 			em.flush();
 		} catch (EntityExistsException e) {
-			throw new DadosInvalidosException(
-					"Não foi possível excluir o registro. Provavelmente está sendo utilizado");
+			throw new DadosInvalidosException("Não foi possível excluir o registro. Provavelmente está sendo utilizado");
 		} catch (Exception e) {
 			throw new DadosInvalidosException(e.getMessage());
 		}
@@ -74,8 +70,7 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 			em.remove(entidade);
 			em.flush();
 		} catch (EntityExistsException e) {
-			throw new DadosInvalidosException(
-					"Não foi possível excluir o registro. Provavelmente está sendo utilizado");
+			throw new DadosInvalidosException("Não foi possível excluir o registro. Provavelmente está sendo utilizado");
 		} catch (Exception e) {
 			throw new DadosInvalidosException(e.getMessage());
 		}

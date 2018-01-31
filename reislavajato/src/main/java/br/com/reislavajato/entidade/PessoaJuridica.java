@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class PessoaJuridica extends GenericEntity {
@@ -19,10 +21,11 @@ public class PessoaJuridica extends GenericEntity {
 
 	private String inscricaoEstadual;
 	private String inscricaoMunicipal;
+
+	@Temporal(TemporalType.DATE)
 	private Date dataAberturaEmpresa;
-	
-	
-	//getters and setters
+
+	// getters and setters
 
 	public String getRazaoSocial() {
 		return razaoSocial;

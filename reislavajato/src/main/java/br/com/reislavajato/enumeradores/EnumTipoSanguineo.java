@@ -2,10 +2,7 @@ package br.com.reislavajato.enumeradores;
 
 public enum EnumTipoSanguineo implements Enumerador {
 
-	A("A", "A"), 
-	B("B", "B"), 
-	AB("AB", "AB"), 
-	O("O", "O");
+	A("A", "A"), B("B", "B"), AB("AB", "AB"), O("O", "O");
 
 	private final String abreviado;
 	private final String descricao;

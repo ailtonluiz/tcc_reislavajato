@@ -123,7 +123,5 @@ public class MovimentacaoControle extends ReisLavajatoControle implements Serial
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
-	
-	
 
 }
