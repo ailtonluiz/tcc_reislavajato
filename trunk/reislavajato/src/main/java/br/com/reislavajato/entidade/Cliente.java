@@ -38,6 +38,7 @@ public class Cliente extends GenericEntity {
 	
 
 	// getters and setters
+	
 	public void addVeiculo(Veiculo veiculo) {
 		veiculos.add(veiculo);
 	}

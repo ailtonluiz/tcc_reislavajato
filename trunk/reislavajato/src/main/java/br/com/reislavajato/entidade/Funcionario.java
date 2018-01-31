@@ -1,9 +1,7 @@
 package br.com.reislavajato.entidade;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,7 +12,6 @@ import org.hibernate.annotations.Cascade;
 
 import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
-import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
 
 /**
@@ -30,7 +27,7 @@ public class Funcionario extends GenericEntity {
 	private Pessoa pessoa = new Pessoa();
 
 	@ManyToOne
-	//@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Cargo cargo;
 
 	private String carteiraTrabalho;
@@ -53,12 +50,6 @@ public class Funcionario extends GenericEntity {
 
 	@Enumerated(EnumType.STRING)
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
-
-	@Column(precision = 10, scale = 2)
-	private BigDecimal comissao;
-
-	@Enumerated(EnumType.STRING)
-	private EnumPerfil perfil = EnumPerfil.LAVADOR;
 
 	// getters and setters
 
@@ -118,6 +109,14 @@ public class Funcionario extends GenericEntity {
 		this.cnh = cnh;
 	}
 
+	public Date getDataEntradaExercicio() {
+		return dataEntradaExercicio;
+	}
+
+	public void setDataEntradaExercicio(Date dataEntradaExercicio) {
+		this.dataEntradaExercicio = dataEntradaExercicio;
+	}
+
 	public EnumCategoriaCNH getCategoriaCNH() {
 		return categoriaCNH;
 	}
@@ -140,37 +139,6 @@ public class Funcionario extends GenericEntity {
 
 	public void setFatorRH(EnumFatorRH fatorRH) {
 		this.fatorRH = fatorRH;
-	}
-
-	public BigDecimal getComissao() {
-		return comissao;
-	}
-
-	public void setComissao(BigDecimal comissao) {
-		this.comissao = comissao;
-	}
-
-	public EnumPerfil getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(EnumPerfil perfil) {
-		this.perfil = perfil;
-	}
-
-	/**
-	 * @return the dataEntradaExercicio
-	 */
-	public Date getDataEntradaExercicio() {
-		return dataEntradaExercicio;
-	}
-
-	/**
-	 * @param dataEntradaExercicio
-	 *            the dataEntradaExercicio to set
-	 */
-	public void setDataEntradaExercicio(Date dataEntradaExercicio) {
-		this.dataEntradaExercicio = dataEntradaExercicio;
 	}
 
 }

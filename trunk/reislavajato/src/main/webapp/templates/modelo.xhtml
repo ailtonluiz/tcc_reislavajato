@@ -16,7 +16,7 @@
 
 </h:head>
 <h:body>
-   <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+   <p:ajaxStatus styleClass="ajax-status" >
       <f:facet name="start">
          <h:graphicImage library="img" name="loading.gif" />
       </f:facet>
@@ -76,14 +76,6 @@
 				allDayText : 'Todo Dia'
 			};
 		</script>
-        <script>
-        	 function configurarMoeda() {
-            	$(".moeda").maskMoney({ decimal: ",", thousands: ".", allowZero: true });
-         	}	
-         	$(document).ready(function() {
-    	        configurarMoeda();
-	         });
-        </script>
 
          <p:menubar>
             <p:submenu label="Cadastros">
