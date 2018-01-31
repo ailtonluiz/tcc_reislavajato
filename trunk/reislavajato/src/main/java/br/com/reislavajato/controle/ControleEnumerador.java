@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
+import br.com.reislavajato.enumeradores.EnumCor;
 import br.com.reislavajato.enumeradores.EnumEscolaridade;
 import br.com.reislavajato.enumeradores.EnumEstadoCivil;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
@@ -114,6 +115,14 @@ public class ControleEnumerador implements Serializable {
 	public List<EnumMarca> getListaEnumMarca() {
 		List<EnumMarca> retorno = new ArrayList<EnumMarca>();
 		for (EnumMarca enumerador : EnumMarca.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumCor> getListaEnumCor() {
+		List<EnumCor> retorno = new ArrayList<EnumCor>();
+		for (EnumCor enumerador : EnumCor.values()) {
 			retorno.add(enumerador);
 		}
 		return retorno;

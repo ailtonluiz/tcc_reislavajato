@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 
+import br.com.reislavajato.enumeradores.EnumCor;
 import br.com.reislavajato.enumeradores.EnumMarca;
 
 /**
@@ -29,7 +30,8 @@ public class Veiculo extends GenericEntity {
 
 	private String placa;
 
-	private String cor;
+	@Enumerated(EnumType.STRING)
+	private EnumCor cor = EnumCor.BRANCO;
 
 	private Long km;
 
@@ -39,18 +41,15 @@ public class Veiculo extends GenericEntity {
 	private String modelo;
 
 	@Temporal(TemporalType.DATE)
-	private Date dataHoraEntrada;
+	private Date dataHoraEntrada = new Date();
 
 	@Temporal(TemporalType.DATE)
-	private Date dataHoraSaidaAgendada;
+	private Date dataHoraSaidaAgendada = new Date();
 
 	@Temporal(TemporalType.DATE)
-	private Date dataHoraSaidaReal;
-	
-	
-	
-	//getters and setters
+	private Date dataHoraSaidaReal = new Date();
 
+	// getters and setters
 	public Set<Servico> getServicos() {
 		return servicos;
 	}
@@ -67,11 +66,11 @@ public class Veiculo extends GenericEntity {
 		this.placa = placa;
 	}
 
-	public String getCor() {
+	public EnumCor getCor() {
 		return cor;
 	}
 
-	public void setCor(String cor) {
+	public void setCor(EnumCor cor) {
 		this.cor = cor;
 	}
 
