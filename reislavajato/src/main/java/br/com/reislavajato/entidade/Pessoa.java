@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 
+import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 
@@ -26,6 +27,9 @@ public class Pessoa extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumSimNao permitirEnvioEmail = EnumSimNao.SIM;
 
+	@Enumerated(EnumType.STRING)
+	private EnumPerfil perfil = EnumPerfil.LAVADOR;
+
 	@Column(length = 70)
 	private String email;
 
@@ -36,11 +40,11 @@ public class Pessoa extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro = new Date();
 
-	//@OneToOne
+	@OneToOne
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 
-	//@OneToOne
+	@OneToOne
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
@@ -69,6 +73,14 @@ public class Pessoa extends GenericEntity {
 
 	public void setPermitirEnvioEmail(EnumSimNao permitirEnvioEmail) {
 		this.permitirEnvioEmail = permitirEnvioEmail;
+	}
+
+	public EnumPerfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(EnumPerfil perfil) {
+		this.perfil = perfil;
 	}
 
 	public String getEmail() {

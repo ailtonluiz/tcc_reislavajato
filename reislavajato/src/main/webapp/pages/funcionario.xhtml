@@ -77,8 +77,8 @@
                         <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.rg}" />
 
                         <h:outputLabel for="dtExp" value="Data Expedição RG:" />
-                        <p:calendar id="dtExp" yearRange="-100:+0" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataExpedicaoRG}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true"
-                           locale="pt" />
+                        <p:calendar id="dtExp" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataExpedicaoRG}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt"
+                           yearRange="-100:+0" />
 
                         <h:outputText value="Órgão RG:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.orgaoRG}">
@@ -107,6 +107,11 @@
                         <h:outputText value="Escolaridade:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.escolaridade}">
                            <f:selectItems value="#{ControleEnumerador.listaEnumEscolaridade}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Perfil:" />
+                        <p:selectOneMenu value="#{funcionarioControle.funcionario.pessoa.perfil}">
+                           <f:selectItems value="#{ControleEnumerador.listaEnumPerfil}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneMenu>
 
                         <h:outputText value="E-mail:" />
@@ -142,10 +147,10 @@
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.categoriaCNH}">
                            <f:selectItems value="#{ControleEnumerador.listaEnumCategoriaCNH}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneMenu>
-
-                        <h:outputText value="Data Entrada de Exercício:" />
-                        <p:calendar yearRange="-100:+0" value="#{funcionarioControle.funcionario.dataEntradaExercicio}" onkeypress="fcSaltaTAB(this, 9);" maxlength="10" onkeyup="maskData(this)" converterMessage="Data inválida"
-                           pattern="dd/MM/yyyy" navigator="true" locale="pt" />
+                        
+                        <h:outputLabel for="dtEntEx" value="Data Entrada de Exercício:" />
+                        <p:calendar id="dtEntEx" value="#{funcionarioControle.funcionario.dataEntradaExercicio}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt"
+                           yearRange="-100:+0" />
 
                         <h:outputText value="Tipo Sanguíneo:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.tipoSanguineo}">
@@ -157,11 +162,6 @@
                            <f:selectItems value="#{ControleEnumerador.listaEnumFatorRH}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneMenu>
 
-                        <h:outputText value="Comissão:" />
-                        <p:inputNumber value="#{funcionarioControle.funcionario.comissao}" symbol="%" symbolPosition="s" required="true" emptyValue="empty">
-                           <!--  <p:ajax update="dadosEmpregaticio" /> -->
-                        </p:inputNumber>
-
                         <h:outputText value="Cargo:" />
                         <p:selectOneMenu id="cargo" filter="true" required="true" requiredMessage="É necessário informar um cargo para realizar o cadastro" converter="omnifaces.SelectItemsConverter"
                            value="#{funcionarioControle.funcionario.cargo}">
@@ -169,10 +169,6 @@
                            <f:selectItems value="#{funcionarioControle.cargos}" var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nomeCargo}" />
                         </p:selectOneMenu>
 
-                        <h:outputText value="Perfil:" />
-                        <p:selectOneMenu value="#{funcionarioControle.funcionario.perfil}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumPerfil}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                        </p:selectOneMenu>
                      </h:panelGrid>
                   </p:tab>
 

@@ -5,112 +5,86 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	template="/templates/modelo.xhtml">
+   template="/templates/modelo.xhtml">
 
-	<ui:define name="conteudo">
-		<!-- Tela de listagem -->
-		<h:form id="frmListagem">
-			<p:panel header="Listagem de serviços">
-				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
-					paginator="true" value="#{servicoControle.servicos}"
-					paginatorPosition="top" var="servico" rows="5">
-					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							icon="ui-icon-plus" actionListener="#{servicoControle.novo}"
-							update=":frmCadastro:painel">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
-					</f:facet>
-					<p:column headerText="Serviço" sortBy="#{servico.descricao}"
-						style="width:65%">
-						<h:outputText value="#{servico.descricao}" />
-					</p:column>
+   <ui:define name="conteudo">
+      <!-- Tela de listagem -->
+      <h:form id="frmListagem">
+         <p:panel header="Listagem de serviços">
+            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{servicoControle.servicos}" paginatorPosition="top" var="servico" rows="5">
+               <f:facet name="footer">
+                  <p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus" actionListener="#{servicoControle.novo}" update=":frmCadastro:painel">
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                  </p:commandButton>
+               </f:facet>
+               <p:column headerText="Serviço" sortBy="#{servico.descricao}" style="width:65%">
+                  <h:outputText value="#{servico.descricao}" />
+               </p:column>
 
-					<p:column headerText="Valor (R$)" style="width:15%">
-						<h:outputText value="#{servico.valorServico}">
-							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
-					</p:column>
+               <p:column headerText="Valor (R$)" style="width:15%">
+                  <h:outputText value="#{servico.valorServico}">
+                     <f:convertNumber locale="pt_BR" minFractionDigits="2" />
+                  </h:outputText>
+               </p:column>
 
-					<p:column headerText="Comissão (%)" style="width:15%">
-						<h:outputText value="#{servico.percentualComissao} %">
-							<f:convertNumber locale="pt_BR" />
-						</h:outputText>
-					</p:column>
+               <p:column headerText="Comissão (%)" style="width:15%">
+                  <h:outputText value="#{servico.percentualComissao} %">
+                     <f:convertNumber locale="pt_BR" />
+                  </h:outputText>
+               </p:column>
 
 
-					<p:column headerText="Opções" style="width:8%">
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{servicoControle.excluir}"
-							update=":mensagem :frmListagem:tabela">
-							<p:confirm header="Confirmação"
-								message="Deseja excluir o registro?" icon="ui-icon-alert" />
-							<f:attribute name="registroSelecionado" value="#{servico}" />
-						</p:commandButton>
-						<p:commandButton icon="ui-icon-pencil"
-							actionListener="#{servicoControle.editar}"
-							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
-							<f:attribute name="registroSelecionado" value="#{servico}" />
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
-					</p:column>
+               <p:column headerText="Opções" style="width:8%">
+                  <p:commandButton icon="ui-icon-trash" actionListener="#{servicoControle.excluir}" update=":mensagem :frmListagem:tabela">
+                     <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
+                     <f:attribute name="registroSelecionado" value="#{servico}" />
+                  </p:commandButton>
+                  <p:commandButton icon="ui-icon-pencil" actionListener="#{servicoControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+                     <f:attribute name="registroSelecionado" value="#{servico}" />
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                  </p:commandButton>
+               </p:column>
 
-				</p:dataTable>
-				<!-- Botão de opções -->
-				<p:confirmDialog global="true">
-					<p:commandButton value="Sim" type="button"
-						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-					<p:commandButton value="Não" type="button"
-						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-				</p:confirmDialog>
+            </p:dataTable>
+            <!-- Botão de opções -->
+            <p:confirmDialog global="true">
+               <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+               <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
 
-			</p:panel>
-		</h:form>
-		<!-- Tela de Cadastros -->
-		<p:dialog header="Cadastro de serviços" widgetVar="dialogo"
-			draggable="true" resizable="false" modal="true">
-			<h:form id="frmCadastro">
-				<h:panelGrid id="painel" columns="2">
-					<p:outputLabel for="desc" value="Descrição:" />
-					<p:inputText id="desc" size="80" maxlength="80"
-						value="#{servicoControle.servico.descricao}" required="true"
-						requiredMessage="É obrigatório informar o nome do serviço" />
+         </p:panel>
+      </h:form>
+      <!-- Tela de Cadastros -->
+      <p:dialog header="Cadastro de serviços" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
+         <h:form id="frmCadastro">
+            <h:panelGrid id="painel" columns="2">
+               <p:outputLabel for="desc" value="Descrição:" />
+               <p:inputText id="desc" size="80" maxlength="80" value="#{servicoControle.servico.descricao}" required="true" requiredMessage="É obrigatório informar o nome do serviço" />
 
-					<p:outputLabel for="vlr" value="Valor(R$):" />
-					<p:inputText id="vlr" size="10" maxlength="10"
-						value="#{servicoControle.servico.valorServico}" required="true"
-						requiredMessage="É obrigatório informar o valor R$"
-						converterMessage="No campo 'Valor(R$):' deve ser informado um valor númerico"
-						validatorMessage="Preço do serviço incorreto">
-						<f:validateDoubleRange minimum="0" maximum="100000" />
-						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-					</p:inputText>
+               <p:outputLabel value="Valor(R$):" />
+               <p:inputText maxlength="15" size="20" id="valorServico" required="true" value="#{servicoControle.servico.valorServico}" requiredMessage="É obrigatório informar o valor do serviço" validatorMessage="Preço do serviço incorreto"
+                  converterMessage="No campo 'Valor(R$):' deve ser informado um valor númerico">
+                  <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                  <p:ajax update="valorServico" process="valorServico" event="change" />
+                  <f:validator validatorId="MoedaValidator" />
+               </p:inputText>
 
-					<p:outputLabel for="com" value="Comissão(%):" />
-					<p:inputNumber id="com" size="10" maxlength="3"
-						value="#{servicoControle.servico.percentualComissao}"
-						converterMessage="No campo 'Valor(R$):' deve ser informado um valor númerico"
-						symbol="%" symbolPosition="s" required="true" emptyValue="empty"
-						validatorMessage="Percentual de comissão incorreto">
-						<f:validateDoubleRange minimum="0" maximum="100" />
-						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-					</p:inputNumber>
-					
-					<p:outputLabel for="obs" value="Observação:" />
-					<p:inputTextarea value="#{servicoControle.servico.observacao}"
-						id="obs" maxlength="200" />
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
-						actionListener="#{servicoControle.salvar}" icon="ui-icon-check"
-						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
-					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
-						oncomplete="PF('dialogo').hide();" />
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
+               <p:outputLabel for="com" value="Comissão(%):" />
+               <p:inputNumber id="com" size="10" maxlength="3" value="#{servicoControle.servico.percentualComissao}" converterMessage="No campo 'Valor(R$):' deve ser informado um valor númerico" symbol="%" symbolPosition="s" required="true"
+                  emptyValue="empty" validatorMessage="Percentual de comissão incorreto">
+                  <f:validateDoubleRange minimum="0" maximum="100" />
+                  <f:convertNumber locale="pt_BR" minFractionDigits="2" />
+               </p:inputNumber>
 
-	</ui:define>
+               <p:outputLabel for="obs" value="Observação:" />
+               <p:inputTextarea value="#{servicoControle.servico.observacao}" id="obs" maxlength="200" />
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+               <p:commandButton value="Salvar" actionListener="#{servicoControle.salvar}" icon="ui-icon-check" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+               <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
+            </h:panelGrid>
+         </h:form>
+      </p:dialog>
+
+   </ui:define>
 </ui:composition>

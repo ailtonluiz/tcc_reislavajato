@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -40,6 +39,10 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	private Funcionario funcionario = new Funcionario();
 	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
+	public FuncionarioControle() throws DadosInvalidosException {
+		this.listar();
+	}
+
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
 		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
 			return municipioNeg.listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
@@ -64,8 +67,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		try {
 			funcionarios = funcionarioNeg.listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar o(s) funcionário(s)!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -81,13 +83,13 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void salvar() throws DadosInvalidosException {
 		try {
+			funcionario.getPessoa().setPessoaJuridica(null);
 			funcionarioNeg.alterar(funcionario);
 			novo();
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -96,10 +98,9 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
 			funcionarioNeg.excluir(funcionario);
 			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -108,10 +109,11 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
 			listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
+
+	// getters and setters
 
 	public Funcionario getFuncionario() {
 		return funcionario;
