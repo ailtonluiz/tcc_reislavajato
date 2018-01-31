@@ -18,10 +18,8 @@ import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cargo;
-import br.com.reislavajato.entidade.FuncaoCargo;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.CargoNeg;
-import br.com.reislavajato.neg.FuncaoCargoNeg;
 import br.com.reislavajato.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -39,7 +37,6 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
-	private FuncaoCargoNeg funcaoCargoNeg = context.getBean(FuncaoCargoNeg.class);
 
 	private Cargo cargo = new Cargo();
 	private List<Cargo> cargos;
@@ -52,10 +49,6 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 			Messages.addGlobalError("Não foi possível listar o(s) cargo(s)!");
 			erro.printStackTrace();
 		}
-	}
-
-	public List<FuncaoCargo> getFuncoesCargo() throws DadosInvalidosException {
-		return funcaoCargoNeg.listar();
 	}
 
 	@Override

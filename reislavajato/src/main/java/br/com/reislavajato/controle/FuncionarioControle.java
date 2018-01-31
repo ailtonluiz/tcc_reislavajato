@@ -13,8 +13,10 @@ import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cargo;
+import br.com.reislavajato.entidade.Endereco;
 import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.Municipio;
+import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.CargoNeg;
 import br.com.reislavajato.neg.FuncionarioNeg;
@@ -70,6 +72,9 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	@Override
 	public String novo() {
 		funcionario = new Funcionario();
+		funcionario.setPessoa(new Pessoa());
+		funcionario.getPessoa().setEndereco(new Endereco());
+		funcionario.getPessoa().getEndereco().setMunicipio(new Municipio());
 		funcionarios = new ArrayList<Funcionario>();
 		return "sucesso";
 	}
