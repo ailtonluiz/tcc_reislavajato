@@ -70,8 +70,7 @@
                         <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nomePai}" maxlength="50" style="width: 160pt !important;" />
 
                         <h:outputText value="CPF:" />
-                        <p:inputMask mask="999.999.999-99" size="15" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.cpf}" onkeypress="fcSaltaTAB(this, 13);" maxlength="14" onBlur="javascript:validaCPF(this), formataCPF(this);"
-                           onkeyup="javascript:maskCPF(this)" style="width: 150pt !important;" converter="#{cpfConverter}" />
+                        <p:inputMask mask="999.999.999-99" size="15" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.cpf}" maxlength="14" style="width: 150pt !important;" converter="#{cpfConverter}" />
 
                         <h:outputText value="RG:" />
                         <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.rg}" />
@@ -147,10 +146,9 @@
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.categoriaCNH}">
                            <f:selectItems value="#{ControleEnumerador.listaEnumCategoriaCNH}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneMenu>
-                        
+
                         <h:outputLabel for="dtEntEx" value="Data Entrada de Exercício:" />
-                        <p:calendar id="dtEntEx" value="#{funcionarioControle.funcionario.dataEntradaExercicio}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt"
-                           yearRange="-100:+0" />
+                        <p:calendar id="dtEntEx" value="#{funcionarioControle.funcionario.dataEntradaExercicio}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" yearRange="-100:+0" />
 
                         <h:outputText value="Tipo Sanguíneo:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.tipoSanguineo}">

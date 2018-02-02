@@ -2,9 +2,7 @@ package br.com.reislavajato.entidade;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import br.com.reislavajato.enumeradores.EnumCor;
 import br.com.reislavajato.enumeradores.EnumMarca;
@@ -28,10 +25,7 @@ import br.com.reislavajato.enumeradores.EnumMarca;
 public class Veiculo extends GenericEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Servico> servicos = new HashSet<Servico>();
-
-	@Transient
-	private Servico servico = new Servico();
+	private List<Servico> servicos = new ArrayList<Servico>();
 
 	private String placa;
 
@@ -55,32 +49,12 @@ public class Veiculo extends GenericEntity {
 	private Date dataHoraSaidaReal = new Date();
 
 	// getters and setters
-	public void addServico(Servico servico) {
-		servicos.add(servico);
-	}
 
-	public void removeServico(Servico servico) {
-		servicos.remove(servico);
-	}
-
-	public List<Servico> getServicosLista() {
-		List<Servico> lista = new ArrayList<Servico>(servicos);
-		return lista;
-	}
-
-	public Servico getServico() {
-		return servico;
-	}
-
-	public void setServico(Servico servico) {
-		this.servico = servico;
-	}
-
-	public Set<Servico> getServicos() {
+	public List<Servico> getServicos() {
 		return servicos;
 	}
 
-	public void setServicos(Set<Servico> servicos) {
+	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
 
@@ -148,4 +122,20 @@ public class Veiculo extends GenericEntity {
 		this.dataHoraSaidaReal = dataHoraSaidaReal;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Veiculo otherVeiculo = (Veiculo) obj;
+		if (placa == null) {
+			if (otherVeiculo.placa != null)
+				return false;
+		} else if (!placa.equals(otherVeiculo.getPlaca()))
+			return false;
+		return true;
+	}
 }

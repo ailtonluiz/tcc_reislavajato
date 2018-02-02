@@ -2,9 +2,7 @@ package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +27,7 @@ public class Cliente extends GenericEntity {
 	private Pessoa pessoa = new Pessoa();
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Veiculo> veiculos = new HashSet<Veiculo>();
+	private List<Veiculo> veiculos = new ArrayList<Veiculo>();
 
 	@Transient
 	private Veiculo veiculo = new Veiculo();
@@ -38,19 +36,6 @@ public class Cliente extends GenericEntity {
 	private BigDecimal descontoServico;
 
 	// getters and setters
-	public void addVeiculo(Veiculo veiculo) {
-		veiculos.add(veiculo);
-	}
-
-	public void removeVeiculo(Veiculo veiculo) {
-		veiculos.remove(veiculo);
-	}
-
-	public List<Veiculo> getVeiculosLista() {
-		List<Veiculo> lista = new ArrayList<Veiculo>(veiculos);
-		return lista;
-	}
-
 	public Veiculo getVeiculo() {
 		return veiculo;
 	}
@@ -59,11 +44,11 @@ public class Cliente extends GenericEntity {
 		this.veiculo = veiculo;
 	}
 
-	public Set<Veiculo> getVeiculos() {
+	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
 
-	public void setVeiculos(Set<Veiculo> veiculos) {
+	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
 
