@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
    template="/templates/modelo.xhtml">
 
    <p:growl id="mensagem" />
@@ -82,8 +78,7 @@
                         <p:inputText value="#{clienteControle.cliente.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 160pt !important;" />
 
                         <h:outputText value="CPF:" />
-                        <p:inputMask mask="999.999.999-99" size="15" value="#{clienteControle.cliente.pessoa.pessoaFisica.cpf}" onkeypress="fcSaltaTAB(this, 13);" maxlength="14" onBlur="javascript:validaCPF(this), formataCPF(this);"
-                           onkeyup="javascript:maskCPF(this)" style="width: 150pt !important;" converter="#{cpfConverter}" />
+                        <p:inputMask mask="999.999.999-99" size="15" value="#{clienteControle.cliente.pessoa.pessoaFisica.cpf}" maxlength="14" style="width: 150pt !important;" converter="#{cpfConverter}" />
 
                         <h:outputLabel for="dtNasc" value="Data Nascimento:" />
                         <p:calendar id="dtNasc" yearRange="-100:+0" value="#{clienteControle.cliente.pessoa.pessoaFisica.dataNascimento}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true"
@@ -162,29 +157,29 @@
                      </h:panelGrid>
                   </p:tab>
 
-                  <p:tab title="Serviço(s)">
-                     <h:panelGrid columns="2" id="servico">
-                        <p:outputLabel for="marca" value="Marca" />
+                  <p:tab title="Serviço(s)" id="servico">
+                     <h:panelGrid columns="2" id="veiculo">
+                        <h:outputLabel for="marca" value="Marca" />
                         <p:selectOneMenu id="marca" filter="true" converter="omnifaces.SelectItemsConverter" value="#{clienteControle.cliente.veiculo.marca}">
-                           <p:ajax update="modelo" event="change" process="servico" />
+                           <p:ajax update="modelo" process="servico" />
                            <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Marca:" />
                            <f:selectItems value="#{ControleEnumerador.listaEnumMarca}" var="marca" itemValue="#{marca}" itemLabel="#{marca.descricao}" />
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Modelo:" />
+                        <h:outputLabel value="Modelo:" />
                         <p:selectOneMenu id="modelo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{clienteControle.cliente.veiculo.modelo}">
                            <f:selectItem noSelectionOption="true" itemLabel="Selecione um Modelo:" />
                            <f:selectItems value="#{clienteControle.modelosVeiculo}" var="veiculo" itemValue="#{veiculo}" itemLabel="#{veiculo.modelo}" />
                         </p:selectOneMenu>
 
-                        <h:outputLabel value="Placa:" />
-                        <p:inputMask mask="aaa-9999" value="#{clienteControle.cliente.veiculo.placa}" />
+                        <h:outputLabel value="Placa:" for="placa" />
+                        <p:inputMask id="placa" mask="aaa-9999" value="#{clienteControle.cliente.veiculo.placa}" />
 
-                        <h:outputLabel value="Km:" />
-                        <p:inputNumber value="#{clienteControle.cliente.veiculo.km}" decimalPlaces="0" />
+                        <h:outputLabel value="Km:" for="km" />
+                        <p:inputNumber id="km" value="#{clienteControle.cliente.veiculo.km}" decimalPlaces="0" />
 
-                        <h:outputLabel value="Cor:" />
-                        <p:selectOneRadio value="#{clienteControle.cliente.veiculo.cor}">
+                        <h:outputLabel value="Cor:" for="cor" />
+                        <p:selectOneRadio id="cor" value="#{clienteControle.cliente.veiculo.cor}">
                            <f:selectItems value="#{ControleEnumerador.listaEnumCor}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneRadio>
 
@@ -199,42 +194,44 @@
                            <f:selectItems value="#{clienteControle.servicos}" var="servico" itemLabel="#{servico.descricao} - R$#{servico.valorServico}" itemValue="#{servico}" />
                         </p:selectManyCheckbox>
 
-                        <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="veiculosTable" process="servico" action="#{clienteControle.limparVeiculo}">
-                           <p:collector value="#{clienteControle.cliente.veiculo}" addTo="#{clienteControle.cliente.veiculos}" />
+                        <p:commandButton value="Limpar Campos" type="reset" />
+
+                        <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="veiculos mensagem @parent" action="#{clienteControle.adicionarVeiculo}">
+                           <p:collector value="#{clienteControle.cliente.veiculo}" addTo="#{clienteControle.cliente.veiculos}" unique="true" />
                         </p:commandButton>
                      </h:panelGrid>
 
-                     <br />
+                     <p:outputPanel id="veiculos">
+                        <p:dataTable id="veiculosTable" value="#{clienteControle.cliente.veiculos}" var="veiculo" emptyMessage="Nenhum registro na lista">
 
-                     <p:dataTable id="veiculosTable" value="#{clienteControle.cliente.veiculos}" var="veiculo" emptyMessage="Nenhum registro na lista">
+                           <p:column>
+                              <f:facet name="header">
+                                 <h:outputText value="Marca" />
+                              </f:facet>
+                              <h:outputText value="#{veiculo.marca.descricao}" />
+                           </p:column>
 
-                        <p:column>
-                           <f:facet name="header">
-                              <h:outputText value="Marca" />
-                           </f:facet>
-                           <h:outputText value="#{veiculo.marca.descricao}" />
-                        </p:column>
+                           <p:column>
+                              <f:facet name="header">
+                                 <h:outputText value="Modelo" />
+                              </f:facet>
+                              <h:outputText value="#{veiculo.placa}" />
+                           </p:column>
 
-                        <p:column>
-                           <f:facet name="header">
-                              <h:outputText value="Modelo" />
-                           </f:facet>
-                           <h:outputText value="#{veiculo.modelo}" />
-                        </p:column>
+                           <p:column>
+                              <f:facet name="header">
+                                 <h:outputText value="Placa" />
+                              </f:facet>
+                              <h:outputText value="#{veiculo.placa}" />
+                           </p:column>
 
-                        <p:column>
-                           <f:facet name="header">
-                              <h:outputText value="Placa" />
-                           </f:facet>
-                           <h:outputText value="#{veiculo.placa}" />
-                        </p:column>
-
-                        <p:column style="font-size: 12px; text-align: center;">
-                           <p:commandLink value="Remover" update="veiculosTable" process="veiculosTable">
-                              <p:collector value="#{veiculo}" removeFrom="#{clienteControle.cliente.veiculos}" />
-                           </p:commandLink>
-                        </p:column>
-                     </p:dataTable>
+                           <p:column style="font-size: 12px; text-align: center;">
+                              <p:commandLink value="Remover" update="veiculosTable" process="veiculosTable">
+                                 <p:collector value="#{veiculo}" removeFrom="#{clienteControle.cliente.veiculos}" unique="true" />
+                              </p:commandLink>
+                           </p:column>
+                        </p:dataTable>
+                     </p:outputPanel>
                   </p:tab>
 
                </p:tabView>
@@ -245,6 +242,5 @@
             </h:panelGrid>
          </h:form>
       </p:dialog>
-
    </ui:define>
 </ui:composition>

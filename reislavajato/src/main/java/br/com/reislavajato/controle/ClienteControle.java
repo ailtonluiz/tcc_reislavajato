@@ -128,9 +128,8 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
-	public String limparVeiculo() {
+	public void adicionarVeiculo() {
 		cliente.setVeiculo(new Veiculo());
-		return null;
 	}
 
 	public Cliente getCliente() {

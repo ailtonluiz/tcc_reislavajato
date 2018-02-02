@@ -52,4 +52,5 @@ public class GenericEntity implements Serializable {
 			return false;
 		return true;
 	}
+
 }
