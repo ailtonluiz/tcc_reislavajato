@@ -3,8 +3,6 @@ package br.com.reislavajato.entidade;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import org.hibernate.validator.constraints.br.CNPJ;
-
 @SuppressWarnings("serial")
 @Entity
 public class Empresa extends GenericEntity {
@@ -15,7 +13,6 @@ public class Empresa extends GenericEntity {
 	@Column(nullable = false, length = 100, name = "fantasia")
 	private String fantasia;
 
-	@CNPJ
 	@Column(length = 18)
 	private String cnpj;
 

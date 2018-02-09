@@ -1,57 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
    template="/templates/modelo.xhtml">
 
    <p:growl id="mensagem" />
+
    <ui:define name="conteudo">
-      <h:form id="formulario">
-         <!-- Painel onde é mostrado os clientes -->
-         <p:panel header="Lista de clientes">
-            <p:dataTable id="tabelaCliente" emptyMessage="Nenhum registro encontrado" paginator="true" paginatorPosition="bottom" value="#{movimentacaoControle.movimentos}" var="movimento" rows="3">
+      <!-- Tela de listagem -->
+      <h:form id="frmListagem">
+         <p:panel header="Listagem de Movimento(s)">
+            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{movimentacaoControle.movimentos}" paginatorPosition="top" var="movimento" rows="5">
+               <f:facet name="footer">
+                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{movimentoControle.novo}" update=":frmCadastro:painel">
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                  </p:commandButton>
+               </f:facet>
 
-               <p:column headerText="Cliente" sortBy="#{movimento.cliente.pessoa.nome}" filterBy="#{movimento.cliente.pessoa.nome}" filterMatchMode="contains">
-                  <h:outputText value="#{movimento.cliente.pessoa.nome}" />
+               <p:column headerText="Nome" sortBy="#{movimento.ordemServico.cliente.pessoa.pessoaFisica.nome}" filterBy="#{movimento.cliente.pessoa.pessoaFisica.nome}" filterMatchMode="contains">
+                  <h:outputText value="#{movimento.cliente.pessoa.pessoaFisica.nome}" />
                </p:column>
 
-               <h3>Veículos</h3>
-               <h:form>
-                  <p:dataTable var="veiculo" value="#{movimento.cliente.veiculos}" sortBy="#{veiculo.marca.descricao}">
-                     <p:column headerText="Veículo" groupRow="true">
-                        <h:outputText value="#{veiculo.marca.descricao}" />
-                        <p:column headerText="Modelo">
-                           <h:outputText value="#{veiculo.modelo}" />
-                        </p:column>
-                     </p:column>
-                     <p:column headerText="Placa">
-                        <h:outputText value="#{veiculo.placa}" />
-                     </p:column>
-                  </p:dataTable>
-               </h:form>
-            </p:dataTable>
-            <!-- Fim do painel de servicços disponíveis -->
-         </p:panel>
-         <!-- Painel de inserção de serviços -->
-         <p:panel header="Lista de serviço">
-            <p:dataTable id="tabelaServico" emptyMessage="Nenhum registro encontrado" paginator="true" paginatorPosition="bottom" value="#{movimentacaoControle.movimento.cliente.veiculo.servicos}" var="servico" rows="3">
-
-               <p:column headerText="Descrição">
-                  <h:outputText value="#{servico.descricao}" />
+               <p:column headerText="CPF" filterBy="#{movimento.ordemServico.cliente.pessoa.pessoaFisica.cpf}" style="width:10%">
+                  <h:outputText value="#{movimento.ordemServico.cliente.pessoa.pessoaFisica.cpf}" />
                </p:column>
 
-               <p:column headerText="Valor do Serviço" style="width:8%">
-                  <h:outputText value="#{servico.valorServico}">
-                     <f:convertNumber locale="pt_BR" minFractionDigits="2" />
-                  </h:outputText>
+               <p:column headerText="Telefone" style="width:22%">
+                  <h:outputText value="#{movimento.ordemServico.cliente.pessoa.telefone.fixo} - #{movimento.ordemServico.cliente.pessoa.telefone.celular}" />
                </p:column>
 
                <p:column headerText="Opções" style="width:8%">
-                  <p:commandButton icon="ui-icon-minus" actionListener="#{movimentacaoControle.remover}" update=":formulario:tabelaCesta :formulario:painelFinalizacao">
-                     <f:attribute name="itemSelecionado" value="#{itemMovimento}" />
+                  <p:commandButton icon="ui-icon-trash" actionListener="#{movimentoControle.excluir}" update=":mensagem :frmListagem:tabela">
+                     <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
+                     <f:attribute name="registroSelecionado" value="#{movimento}" />
+                  </p:commandButton>
+
+                  <p:commandButton icon="ui-icon-pencil" actionListener="#{movimentoControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+                     <f:attribute name="registroSelecionado" value="#{movimento}" />
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                   </p:commandButton>
                </p:column>
 
             </p:dataTable>
+
+            <!-- Botão de opções -->
+            <p:confirmDialog global="true">
+               <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+               <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+
          </p:panel>
       </h:form>
+
+      <!-- Tela de Cadastros -->
+      <p:dialog header="Cadastro de Movimento" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
+         <h:form id="frmCadastro">
+            <p:panel id="painel">
+               <h:panelGrid columns="2">
+                  <h:outputText value="Ordem de Serviço:" />
+                  <p:selectOneMenu value="#{movimentoControle.movimento.ordemServico}">
+                     <f:selectItems value="#{movimentoControle.ordensServico}" var="ordemServico" itemLabel="#{ordemServico.numeroOrdemServico} --- #{ordemServico.cliente.pessoa.pessoaFisica.nome}" itemValue="#{ordemServico}" />
+                     <p:ajax update="painel" />
+                  </p:selectOneMenu>
+
+                  <p:outputLabel value="Cliente:" />
+                  <p:inputText value="#{movimentoControle.movimento.ordemServico.cliente.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 160pt !important;" disabled="true" />
+
+                  <h:outputLabel for="marca" value="Marca" />
+                  <p:inputText value="#{movimentoControle.movimento.ordemServico.veiculo.marca}" maxlength="50" style="width: 160pt !important;" disabled="true" />
+
+                  <h:outputLabel value="Modelo:" />
+                  <p:inputText value="#{movimentoControle.movimento.ordemServico.veiculo.modelo}" maxlength="50" style="width: 160pt !important;" disabled="true" />
+
+                  <h:outputLabel value="Placa:" for="placa" />
+                  <p:inputMask id="placa" mask="aaa-9999" value="#{movimentoControle.movimento.ordemServico.veiculo.placa}" disabled="true" />
+
+                  <h:outputLabel value="Km:" for="km" />
+                  <p:inputNumber id="km" value="#{movimentoControle.movimento.ordemServico.veiculo.km}" decimalPlaces="0" disabled="true" />
+
+                  <h:outputLabel value="Cor:" for="cor" />
+                  <p:selectOneRadio id="cor" value="#{movimentoControle.movimento.ordemServico.veiculo.cor}" disabled="true">
+                     <f:selectItems value="#{ControleEnumerador.listaEnumCor}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                  </p:selectOneRadio>
+
+                  <h:outputLabel value="Data e Hora da entrada:" />
+                  <p:calendar value="#{movimentoControle.movimento.ordemServico.dataHoraEntrada}" pattern="dd/MM/yyyy HH:mm" disabled="true" />
+
+                  <h:outputLabel value="Data e Hora da saída planejada:" />
+                  <p:calendar value="#{movimentoControle.movimento.ordemServico.dataHoraSaidaAgendada}" pattern="dd/MM/yyyy HH:mm" disabled="true" />
+
+                  <h:outputText value="Lista de serviços:" />
+                  <p:selectManyCheckbox id="servicos" value="#{movimentacaoControle.movimento.servicos}" layout="grid" columns="2" disabled="true">
+                     <f:selectItems value="#{movimentoControle.movimento.ordemServico.servicos}" var="servico" itemLabel="#{servico.descricao} - R$#{servico.valorServico}" itemValue="#{servico}" />
+                  </p:selectManyCheckbox>
+
+                  <h:outputText value="Lista de funcionários:" />
+                  <p:selectManyCheckbox id="funcionario" value="#{movimentoControle.movimento.funcionarios}" layout="grid" columns="2" disabled="true">
+                     <f:selectItems value="#{movimentoControle.funcionarios}" var="funcionario" itemLabel="#{funcionario.pessoa.pessoaFisica.nome} - #{funcionario.cargo.nomeCargo}" itemValue="#{funcionario}" />
+                  </p:selectManyCheckbox>
+
+               </h:panelGrid>
+            </p:panel>
+            <h:panelGrid columns="2">
+               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{movimentoControle.salvar}" update=":mensagem :frmListagem:tabela" />
+               <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
+            </h:panelGrid>
+         </h:form>
+      </p:dialog>
    </ui:define>
 </ui:composition>

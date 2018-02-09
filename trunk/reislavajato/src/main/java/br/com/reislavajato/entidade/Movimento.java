@@ -4,47 +4,42 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.reislavajato.enumeradores.EnumFormaPagamento;
-import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 12 de ago de 2017
  */
-@SuppressWarnings("serial")
 @Entity
 public class Movimento extends GenericEntity {
+	private static final long serialVersionUID = 9006423828322160519L;
 
-	@OneToOne // carro - servico
-	private Cliente cliente = new Cliente();
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private OrdemServico ordemServico = new OrdemServico();
 
-	@OneToMany
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private Set<Funcionario> funcionarios = new HashSet<Funcionario>();
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	@Enumerated(EnumType.STRING)
 	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
 
-	@Enumerated(EnumType.STRING)
-	private EnumStatusServico statusServico = EnumStatusServico.PARADO;
-
-	@Column(nullable = false)
-	private Long numeroOrdemServico;
-
 	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
 	private BigDecimal valorTotal;
+
+	@Column(precision = 10, scale = 2)
+	private BigDecimal descontoServico;
 
 	private String observacao;
 
@@ -65,19 +60,21 @@ public class Movimento extends GenericEntity {
 
 	private Boolean possuiTapetes;
 
-	public Cliente getCliente() {
-		return cliente;
+	// getters and setters
+
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
 	}
 
-	public Set<Funcionario> getFuncionarios() {
+	public List<Funcionario> getFuncionarios() {
 		return funcionarios;
 	}
 
-	public void setFuncionarios(Set<Funcionario> funcionarios) {
+	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
 
@@ -89,28 +86,20 @@ public class Movimento extends GenericEntity {
 		this.formaPagamento = formaPagamento;
 	}
 
-	public EnumStatusServico getStatusServico() {
-		return statusServico;
-	}
-
-	public void setStatusServico(EnumStatusServico statusServico) {
-		this.statusServico = statusServico;
-	}
-
-	public Long getNumeroOrdemServico() {
-		return numeroOrdemServico;
-	}
-
-	public void setNumeroOrdemServico(Long numeroOrdemServico) {
-		this.numeroOrdemServico = numeroOrdemServico;
-	}
-
 	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}
 
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public BigDecimal getDescontoServico() {
+		return descontoServico;
+	}
+
+	public void setDescontoServico(BigDecimal descontoServico) {
+		this.descontoServico = descontoServico;
 	}
 
 	public String getObservacao() {

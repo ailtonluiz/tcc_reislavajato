@@ -9,6 +9,25 @@
       <!-- Tela de listagem -->
       <h:form id="frmListagem">
          <p:panel header="Listagem de funcionários">
+
+            <h:panelGrid columns="2">
+               <h:outputText value="Nome:" />
+               <p:inputText value="#{funcionarioControle.nomeConsulta}" />
+
+               <h:outputText value="CPF:" />
+               <p:inputMask mask="999.999.999-99" size="15" value="#{funcionarioControle.cpfConsulta}" maxlength="14" converter="#{cpfConverter}" />
+
+               <h:outputText value="Nome Fantasia:" />
+               <p:inputText value="#{funcionarioControle.nomeFantasiaConsulta}" />
+
+               <h:outputText value="CNPJ:" />
+               <p:inputMask mask="99999999/9999-99" value="#{funcionarioControle.cnpjConsulta}" converter="#{cnpjConverter}" />
+            </h:panelGrid>
+            <br />
+            <p:commandButton icon="ui-icon-search" value="Listar" action="#{funcionarioControle.listarFuncionarios}" update="tabela" title="Listar Cliente(s)" />
+
+            <br />
+
             <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{funcionarioControle.funcionarios}" paginatorPosition="top" var="funcionario" rows="5">
                <f:facet name="footer">
                   <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{funcionarioControle.novo}" update=":frmCadastro:painel">

@@ -2,13 +2,12 @@ package br.com.reislavajato.entidade;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
 
 import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
@@ -22,12 +21,10 @@ import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
 @Entity
 public class Funcionario extends GenericEntity {
 
-	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa = new Pessoa();
 
-	@ManyToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Cargo cargo;
 
 	private String carteiraTrabalho;

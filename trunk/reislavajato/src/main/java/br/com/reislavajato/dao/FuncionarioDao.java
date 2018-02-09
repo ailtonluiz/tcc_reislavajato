@@ -9,7 +9,7 @@ public interface FuncionarioDao extends Persistencia<Funcionario> {
 
 	List<Funcionario> listarPorCpfOuNome(String cpf, String nome) throws DadosInvalidosException;
 
-	List<Funcionario> listarPorCnpjOuNome(String cnpj, String nomeFantasia) throws DadosInvalidosException;
+	List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException;
 
 	Funcionario consultarPorEmail(String email) throws DadosInvalidosException;
 }
