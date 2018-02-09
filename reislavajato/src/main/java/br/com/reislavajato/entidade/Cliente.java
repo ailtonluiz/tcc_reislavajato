@@ -2,6 +2,7 @@ package br.com.reislavajato.entidade;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 /**
@@ -12,7 +13,7 @@ import javax.persistence.OneToOne;
 public class Cliente extends GenericEntity {
 	private static final long serialVersionUID = 4833347857185877728L;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Pessoa pessoa = new Pessoa();
 
 	// getters and setters

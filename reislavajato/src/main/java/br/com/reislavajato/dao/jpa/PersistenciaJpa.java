@@ -78,14 +78,9 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 
 	public void incluir(E entidade) throws DadosInvalidosException {
 		try {
-
 			em.persist(entidade);
 			em.flush();
 			em.close();
-
-			// em.persist(entidade);
-			// this.flush();
-			// this.clear();
 		} catch (EntityExistsException e) {
 			throw new DadosInvalidosException("Não foi possível confirmar o registro. Provavelmente está duplicado");
 		} catch (Exception e) {
