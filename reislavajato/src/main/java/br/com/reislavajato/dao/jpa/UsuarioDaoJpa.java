@@ -9,16 +9,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import br.com.reislavajato.dao.UsuarioDao;
 import br.com.reislavajato.entidade.Usuario;
 import br.com.reislavajato.excessao.DadosInvalidosException;
-import br.com.reislavajato.util.HibernateUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -70,27 +66,27 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 	//
 	// }
 
-	@Override
-	public void incluir(Usuario usuario) {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
-		Transaction transacao = null;
-
-		try {
-			transacao = sessao.beginTransaction();
-			sessao.save(usuario);
-
-			SimpleHash hash = new SimpleHash("md5", usuario.getPassword());
-			usuario.setPassword(hash.toHex());
-			transacao.commit();
-		} catch (RuntimeException erro) {
-			if (transacao != null) {
-				transacao.rollback();
-			}
-			throw erro;
-		} finally {
-			sessao.close();
-		}
-	}
+	// @Override
+	// public void incluir(Usuario usuario) {
+	// Session sessao = HibernateUtil.getSessionFactory().openSession();
+	// Transaction transacao = null;
+	//
+	// try {
+	// transacao = sessao.beginTransaction();
+	// sessao.save(usuario);
+	//
+	// SimpleHash hash = new SimpleHash("md5", usuario.getPassword());
+	// usuario.setPassword(hash.toHex());
+	// transacao.commit();
+	// } catch (RuntimeException erro) {
+	// if (transacao != null) {
+	// transacao.rollback();
+	// }
+	// throw erro;
+	// } finally {
+	// sessao.close();
+	// }
+	// }
 
 	public List<Usuario> listar() throws DadosInvalidosException {
 		try {

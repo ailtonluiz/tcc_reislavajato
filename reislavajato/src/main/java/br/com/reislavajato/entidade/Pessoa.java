@@ -2,15 +2,15 @@ package br.com.reislavajato.entidade;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Cascade;
 
 import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumSimNao;
@@ -37,23 +37,19 @@ public class Pessoa extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro = new Date();
 
-	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 
-	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
 	@Enumerated(EnumType.STRING)
 	private EnumTipoPessoa tipoPessoa = EnumTipoPessoa.PF;
 
-	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Endereco endereco = new Endereco();
 
-	@OneToOne
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Telefone telefone = new Telefone();
 
 	public Boolean getCadastroAtivo() {

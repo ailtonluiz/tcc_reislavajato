@@ -12,8 +12,8 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import br.com.reislavajato.dao.MovimentoDao;
-import br.com.reislavajato.entidade.Movimento;
+import br.com.reislavajato.dao.OrdemServicoDao;
+import br.com.reislavajato.entidade.OrdemServico;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 
@@ -22,26 +22,24 @@ import br.com.reislavajato.excessao.DadosInvalidosException;
  * @Data: 13 de ago de 2017
  */
 @Repository
-public class MovimentoDaoJpa extends PersistenciaJpa<Movimento> implements MovimentoDao {
-	private static final long serialVersionUID = 1L;
+public class OrdemServicoDaoJpa extends PersistenciaJpa<OrdemServico> implements OrdemServicoDao {
+	private static final long serialVersionUID = -7692192300947550093L;
 
-	public MovimentoDaoJpa() {
-		super(Movimento.class);
+	public OrdemServicoDaoJpa() {
+		super(OrdemServico.class);
 	}
 
 	@PersistenceContext(unitName = "reisLavajato")
 	@Qualifier(value = "managerEntityManagerFactory")
 	private EntityManager em;
 
-	@Override
-	public List<Movimento> listarPorStatusServico(EnumStatusServico statusServico) throws DadosInvalidosException {
+	public List<OrdemServico> listarPorStatus(EnumStatusServico statusServico) throws DadosInvalidosException {
 		try {
-			Query query = em.createQuery("select m from Movimento m where m.ordemServico.statusServico = :statusServico");
+			Query query = em.createQuery("select o from OrdemServico o where o.statusServico = :statusServico");
 			query.setParameter("statusServico", statusServico);
 			return query.getResultList();
 		} catch (Exception e) {
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
-
 }

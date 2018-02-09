@@ -2,10 +2,9 @@ package br.com.reislavajato.neg.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.reislavajato.dao.FuncionarioDao;
 import br.com.reislavajato.entidade.Funcionario;
@@ -26,8 +25,8 @@ public class FuncionarioNegImpl extends NegocioGenerico<Funcionario> implements 
 	}
 
 	@Transactional
-	public List<Funcionario> listarPorCnpjOuNome(String cnpj, String nomeFantasia) throws DadosInvalidosException {
-		return ((FuncionarioDao) persistencia).listarPorCnpjOuNome(cnpj, nomeFantasia);
+	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
+		return ((FuncionarioDao) persistencia).listarPorCnpjOuNomeFantasia(cnpj, nomeFantasia);
 	}
 
 	@Transactional

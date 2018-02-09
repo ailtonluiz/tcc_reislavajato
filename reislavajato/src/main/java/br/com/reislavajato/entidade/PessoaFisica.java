@@ -9,8 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import br.com.reislavajato.enumeradores.EnumEscolaridade;
 import br.com.reislavajato.enumeradores.EnumEstadoCivil;
 import br.com.reislavajato.enumeradores.EnumOrgaoRG;
@@ -21,7 +19,6 @@ import br.com.reislavajato.enumeradores.EnumUf;
 public class PessoaFisica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
-	@CPF
 	private String cpf;
 
 	@Column(length = 25, nullable = true)

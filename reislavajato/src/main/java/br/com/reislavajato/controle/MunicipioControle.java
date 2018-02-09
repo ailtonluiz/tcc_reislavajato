@@ -12,6 +12,7 @@ import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Municipio;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.MunicipioNeg;
+import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -66,7 +67,7 @@ public class MunicipioControle extends ReisLavajatoControle implements Serializa
 
 	public void listarPorNomeeUF() throws DadosInvalidosException {
 		try {
-			if (municipio.getNome().length() > 0 && !municipio.getNome().equals("")) {
+			if (!ReisLavajatoUtil.ehVazio(municipio.getNome()) && !ReisLavajatoUtil.ehVazio(municipio.getNome())) {
 				municipios = municipioNeg.listarPorNomeeUF(municipio.getNome(), municipio.getUf());
 			} else {
 				listarPorUf();

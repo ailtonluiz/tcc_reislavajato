@@ -22,6 +22,7 @@ import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.MunicipioNeg;
 import br.com.reislavajato.util.CepWs;
 import br.com.reislavajato.util.Numero;
+import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -39,8 +40,10 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	private Funcionario funcionario = new Funcionario();
 	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
+	private String cpfConsulta, nomeConsulta, cnpjConsulta, nomeFantasiaConsulta;
+
 	public FuncionarioControle() throws DadosInvalidosException {
-		this.listar();
+		this.novo();
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
@@ -63,9 +66,13 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		}
 	}
 
-	public void listar() throws DadosInvalidosException {
+	public void listarFuncionarios() throws DadosInvalidosException {
 		try {
-			funcionarios = funcionarioNeg.listar();
+			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
+				funcionarios = funcionarioNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
+				funcionarios = funcionarioNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+			}
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -78,6 +85,12 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		funcionario.getPessoa().setEndereco(new Endereco());
 		funcionario.getPessoa().getEndereco().setMunicipio(new Municipio());
 		funcionarios = new ArrayList<Funcionario>();
+
+		cpfConsulta = "";
+		nomeConsulta = "";
+		cnpjConsulta = "";
+		nomeFantasiaConsulta = "";
+
 		return "sucesso";
 	}
 
@@ -86,7 +99,6 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			funcionario.getPessoa().setPessoaJuridica(null);
 			funcionarioNeg.alterar(funcionario);
 			novo();
-			listar();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -97,7 +109,6 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		try {
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
 			funcionarioNeg.excluir(funcionario);
-			listar();
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -107,7 +118,9 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
-			listar();
+			if (funcionario.getPessoa().getEndereco().getMunicipio() == null) {
+				funcionario.getPessoa().getEndereco().setMunicipio(new Municipio());
+			}
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -130,4 +143,37 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
+
+	public String getCpfConsulta() {
+		return cpfConsulta;
+	}
+
+	public void setCpfConsulta(String cpfConsulta) {
+		this.cpfConsulta = cpfConsulta;
+	}
+
+	public String getNomeConsulta() {
+		return nomeConsulta;
+	}
+
+	public void setNomeConsulta(String nomeConsulta) {
+		this.nomeConsulta = nomeConsulta;
+	}
+
+	public String getCnpjConsulta() {
+		return cnpjConsulta;
+	}
+
+	public void setCnpjConsulta(String cnpjConsulta) {
+		this.cnpjConsulta = cnpjConsulta;
+	}
+
+	public String getNomeFantasiaConsulta() {
+		return nomeFantasiaConsulta;
+	}
+
+	public void setNomeFantasiaConsulta(String nomeFantasiaConsulta) {
+		this.nomeFantasiaConsulta = nomeFantasiaConsulta;
+	}
+
 }

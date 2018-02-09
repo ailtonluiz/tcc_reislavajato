@@ -52,14 +52,14 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 		}
 	}
 
-	public List<Funcionario> listarPorCnpjOuNome(String cnpj, String nomeFantasia) throws DadosInvalidosException {
+	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
 		try {
 			String jpaql = "funcionario from Funcionario funcionario where ";
 
 			if (cnpj.length() > 0L) {
 				jpaql += "funcionario.pessoa.pessoaJuridica.cnpj = :cnpj ";
 			} else {
-				jpaql += "funcionario.pessoa.pessoaJuridica.nomeFantasia = :nomeFantasia ";
+				jpaql += "funcionario.pessoa.pessoaJuridica.nomeFantasia like :nomeFantasia ";
 			}
 
 			Query query = em.createQuery(jpaql);

@@ -7,14 +7,48 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 12 de ago de 2017
  */
-@SuppressWarnings("serial")
 @Entity
 public class Servico extends GenericEntity {
+	private static final long serialVersionUID = 7671468455131367941L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "servico_ID")
+	private Long codigo;
+
+	@ManyToOne
+	// @JoinColumn(name = "ordemServico_ID")
+	private OrdemServico ordemServico;
+
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name="ordemServico_codigo")
+	// @ManyToOne
+	// @JoinColumn(name = "ordemServico_codigo", nullable = false)
+	// private OrdemServico ordemServico = new OrdemServico();
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
+	}
+
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
+	}
 
 	private String descricao;
 
@@ -27,6 +61,7 @@ public class Servico extends GenericEntity {
 	private String observacao;
 
 	// getters and setters
+
 	public String getDescricao() {
 		return descricao;
 	}
