@@ -37,10 +37,10 @@ public class Pessoa extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro = new Date();
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
 	@Enumerated(EnumType.STRING)

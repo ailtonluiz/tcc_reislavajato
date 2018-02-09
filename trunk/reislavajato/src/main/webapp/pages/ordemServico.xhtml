@@ -76,7 +76,7 @@
                   </p:selectOneMenu>
 
                   <h:outputLabel value="Modelo:" />
-                  <p:selectOneMenu id="modelo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.modelo}">
+                  <p:selectOneMenu id="modelo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo}">
                      <f:selectItem noSelectionOption="true" itemLabel="Selecione um Modelo:" />
                      <f:selectItems value="#{ordemServicoControle.modelosVeiculo}" var="veiculo" itemValue="#{veiculo}" itemLabel="#{veiculo.modelo}" />
                   </p:selectOneMenu>

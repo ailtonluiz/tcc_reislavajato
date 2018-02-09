@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
@@ -10,30 +7,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 12 de ago de 2017
  */
 @Entity
+@Table(name = "servico")
 public class Servico extends GenericEntity {
 	private static final long serialVersionUID = 7671468455131367941L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "servico_ID")
 	private Long codigo;
 
 	@ManyToOne
-	// @JoinColumn(name = "ordemServico_ID")
+	@JoinColumn(name = "ordemServico_ID")
 	private OrdemServico ordemServico;
-
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name="ordemServico_codigo")
-	// @ManyToOne
-	// @JoinColumn(name = "ordemServico_codigo", nullable = false)
-	// private OrdemServico ordemServico = new OrdemServico();
-
+	
+	//getters and setters
+	
 	public Long getCodigo() {
 		return codigo;
 	}
