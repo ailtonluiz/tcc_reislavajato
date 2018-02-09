@@ -15,12 +15,15 @@ import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.OrdemServico;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.enumeradores.EnumStatusServico;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.OrdemServicoNeg;
 import br.com.reislavajato.neg.ServicoNeg;
 import br.com.reislavajato.neg.VeiculoNeg;
+import br.com.reislavajato.util.Numero;
+import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -40,8 +43,15 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	private OrdemServico ordemServico;
 	private List<OrdemServico> ordensServicos;
 
+	private String cpfConsulta;
+	private String nomeConsulta;
+	private String cnpjConsulta;
+	private String nomeFantasiaConsulta;
+	private Long numeroOSConsulta;
+	private EnumStatusServico statusServicoConsulta;
+
 	public OrdemServicoControle() throws DadosInvalidosException {
-		this.listar();
+		this.novo();
 	}
 
 	@Override
@@ -49,14 +59,27 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
+
+		cpfConsulta = "";
+		nomeConsulta = "";
+		cnpjConsulta = "";
+		nomeFantasiaConsulta = "";
+		numeroOSConsulta = 0L;
+		statusServicoConsulta = EnumStatusServico.EXECUCAO;
 		return "sucesso";
 	}
 
-	public void listar() throws DadosInvalidosException {
+	public void listarOrdensServico() throws DadosInvalidosException {
 		try {
-			ordensServicos = ordemServicoNeg.listar();
-		} catch (RuntimeException erro) {
-			addMensagemErroFatal(erro);
+			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
+				ordensServicos = ordemServicoNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
+				ordensServicos = ordemServicoNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+			} else {
+				ordensServicos = ordemServicoNeg.listarPorStatus(statusServicoConsulta);
+			}
+		} catch (Exception e) {
+			addMensagemErro(e.getMessage());
 		}
 	}
 
@@ -64,7 +87,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		try {
 			ordemServicoNeg.incluir(ordemServico);
 			novo();
-			listar();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -75,7 +97,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		try {
 			ordemServico = (OrdemServico) evento.getComponent().getAttributes().get("registroSelecionado");
 			ordemServicoNeg.excluir(ordemServico);
-			listar();
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -85,7 +106,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			ordemServico = (OrdemServico) evento.getComponent().getAttributes().get("registroSelecionado");
-			listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -123,6 +143,54 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void setOrdensServicos(List<OrdemServico> ordensServicos) {
 		this.ordensServicos = ordensServicos;
+	}
+
+	public String getCpfConsulta() {
+		return cpfConsulta;
+	}
+
+	public void setCpfConsulta(String cpfConsulta) {
+		this.cpfConsulta = cpfConsulta;
+	}
+
+	public String getNomeConsulta() {
+		return nomeConsulta;
+	}
+
+	public void setNomeConsulta(String nomeConsulta) {
+		this.nomeConsulta = nomeConsulta;
+	}
+
+	public String getCnpjConsulta() {
+		return cnpjConsulta;
+	}
+
+	public void setCnpjConsulta(String cnpjConsulta) {
+		this.cnpjConsulta = cnpjConsulta;
+	}
+
+	public String getNomeFantasiaConsulta() {
+		return nomeFantasiaConsulta;
+	}
+
+	public void setNomeFantasiaConsulta(String nomeFantasiaConsulta) {
+		this.nomeFantasiaConsulta = nomeFantasiaConsulta;
+	}
+
+	public Long getNumeroOSConsulta() {
+		return numeroOSConsulta;
+	}
+
+	public void setNumeroOSConsulta(Long numeroOSConsulta) {
+		this.numeroOSConsulta = numeroOSConsulta;
+	}
+
+	public EnumStatusServico getStatusServicoConsulta() {
+		return statusServicoConsulta;
+	}
+
+	public void setStatusServicoConsulta(EnumStatusServico statusServicoConsulta) {
+		this.statusServicoConsulta = statusServicoConsulta;
 	}
 
 }

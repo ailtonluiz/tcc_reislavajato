@@ -30,6 +30,15 @@ public class OrdemServicoNegImpl extends NegocioGenerico<OrdemServico> implement
 	@Transactional
 	public List<OrdemServico> listarPorStatus(EnumStatusServico statusServico) throws DadosInvalidosException {
 		return ((OrdemServicoDao) persistencia).listarPorStatus(statusServico);
+	}
 
+	@Transactional
+	public List<OrdemServico> listarPorCpfOuNome(String cpf, String nome) throws DadosInvalidosException {
+		return ((OrdemServicoDao) persistencia).listarPorCpfOuNome(cpf, nome);
+	}
+
+	@Transactional
+	public List<OrdemServico> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
+		return ((OrdemServicoDao) persistencia).listarPorCnpjOuNomeFantasia(cnpj, nomeFantasia);
 	}
 }
