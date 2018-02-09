@@ -8,7 +8,34 @@
    <ui:define name="conteudo">
       <!-- Tela de listagem -->
       <h:form id="frmListagem">
-         <p:panel header="Listagem de Ordem de Serviço(s)">
+         <p:panel header="Listagem de Ordem de Serviços">
+            <h:panelGrid columns="2">
+               <h:outputText value="Nome:" />
+               <p:inputText value="#{ordemServicoControle.nomeConsulta}" />
+
+               <h:outputText value="CPF:" />
+               <p:inputMask mask="999.999.999-99" size="15" value="#{ordemServicoControle.cpfConsulta}" maxlength="14" converter="#{cpfConverter}" />
+
+               <h:outputText value="Nome Fantasia:" />
+               <p:inputText value="#{ordemServicoControle.nomeFantasiaConsulta}" />
+
+               <h:outputText value="CNPJ:" />
+               <p:inputMask mask="99999999/9999-99" value="#{ordemServicoControle.cnpjConsulta}" converter="#{cnpjConverter}" />
+
+               <h:outputLabel value="Número OS" for="nmrOS" />
+               <p:inputNumber id="nmrOS" value="#{ordemServicoControle.numeroOSConsulta}" decimalPlaces="0" />
+
+               <h:outputLabel value="Status:" />
+               <p:selectOneRadio value="#{ordemServicoControle.statusServicoConsulta}">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumStatusServico}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+               </p:selectOneRadio>
+            </h:panelGrid>
+
+            <br />
+            <p:commandButton icon="ui-icon-search" value="Listar" action="#{ordemServicoControle.listarOrdensServico}" update="tabela" title="Listar Cliente(s)" />
+
+            <br />
+
             <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{ordemServicoControle.ordensServicos}" paginatorPosition="top" var="ordemServico" rows="5">
                <f:facet name="footer">
                   <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{ordemServicoControle.novo}" update=":frmCadastro:painel">

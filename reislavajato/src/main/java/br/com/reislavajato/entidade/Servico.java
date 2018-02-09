@@ -28,9 +28,9 @@ public class Servico extends GenericEntity {
 	@ManyToOne
 	@JoinColumn(name = "ordemServico_ID")
 	private OrdemServico ordemServico;
-	
-	//getters and setters
-	
+
+	// getters and setters
+
 	public Long getCodigo() {
 		return codigo;
 	}

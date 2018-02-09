@@ -30,7 +30,7 @@ public class OrdemServico extends GenericEntity {
 	@Column(name = "ordemServico_ID")
 	private Long codigo;
 
-	@OneToMany(mappedBy = "ordemServico", orphanRemoval = true) 
+	@OneToMany(mappedBy = "ordemServico", orphanRemoval = true)
 	private List<Servico> servicos = new ArrayList<>();
 
 	private Long numeroOrdemServico;

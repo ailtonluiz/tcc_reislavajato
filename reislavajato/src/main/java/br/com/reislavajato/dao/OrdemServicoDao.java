@@ -17,4 +17,8 @@ public interface OrdemServicoDao extends Persistencia<OrdemServico> {
 
 	public List<OrdemServico> listarPorStatus(EnumStatusServico statusServico) throws DadosInvalidosException;
 
+	public List<OrdemServico> listarPorCpfOuNome(String cpf, String nome) throws DadosInvalidosException;
+
+	public List<OrdemServico> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException;
+
 }
