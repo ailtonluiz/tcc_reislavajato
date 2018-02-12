@@ -12,7 +12,11 @@ import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cliente;
+import br.com.reislavajato.entidade.Endereco;
 import br.com.reislavajato.entidade.Municipio;
+import br.com.reislavajato.entidade.PessoaFisica;
+import br.com.reislavajato.entidade.PessoaJuridica;
+import br.com.reislavajato.entidade.Telefone;
 import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
@@ -37,6 +41,10 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	private Cliente cliente;
 	private List<Cliente> clientes;
+	private PessoaFisica pessoaFisica;
+	private PessoaJuridica pessoaJuridica;
+	private Endereco endereco;
+	private Telefone telefone;
 
 	private String cpfConsulta;
 	private String nomeConsulta;
@@ -52,6 +60,10 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 	public String novo() {
 		cliente = new Cliente();
 		clientes = new ArrayList<Cliente>();
+		pessoaFisica = new PessoaFisica();
+		pessoaJuridica = new PessoaJuridica();
+		endereco = new Endereco();
+		telefone = new Telefone();
 
 		cpfConsulta = "";
 		nomeConsulta = "";
@@ -65,7 +77,8 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
 				clientes = clienteNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
 			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				clientes = clienteNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+				clientes = clienteNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta),
+						nomeFantasiaConsulta);
 			}
 		} catch (Exception e) {
 			addMensagemErro(e.getMessage());
@@ -109,6 +122,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 			if (cliente.getPessoa().getEndereco().getMunicipio() == null) {
 				cliente.getPessoa().getEndereco().setMunicipio(new Municipio());
 			}
+		
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -116,14 +130,16 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	public void buscarCep() throws DadosInvalidosException {
 		try {
-			cliente.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(cliente.getPessoa().getEndereco().getCep())));
+			cliente.getPessoa().setEndereco(
+					CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(cliente.getPessoa().getEndereco().getCep())));
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null || cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null
+				|| cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
 			return municipioNeg.listarPorUf(cliente.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
 			return municipioNeg.listarPorNome(cliente.getPessoa().getEndereco().getMunicipio().getNome());
@@ -178,6 +194,66 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	public void setNomeFantasiaConsulta(String nomeFantasiaConsulta) {
 		this.nomeFantasiaConsulta = nomeFantasiaConsulta;
+	}
+
+	/**
+	 * @return the pessoaFisica
+	 */
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+	/**
+	 * @param pessoaFisica
+	 *            the pessoaFisica to set
+	 */
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
+
+	/**
+	 * @return the pessoaJuridica
+	 */
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+	/**
+	 * @param pessoaJuridica
+	 *            the pessoaJuridica to set
+	 */
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
+	}
+
+	/**
+	 * @return the endereco
+	 */
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	/**
+	 * @param endereco
+	 *            the endereco to set
+	 */
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	/**
+	 * @return the telefone
+	 */
+	public Telefone getTelefone() {
+		return telefone;
+	}
+
+	/**
+	 * @param telefone
+	 *            the telefone to set
+	 */
+	public void setTelefone(Telefone telefone) {
+		this.telefone = telefone;
 	}
 
 }

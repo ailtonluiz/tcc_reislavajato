@@ -47,7 +47,7 @@ public class UsuarioControle extends ReisLavajatoControle implements Serializabl
 	}
 
 	@Override
-	protected String novo() {
+	public String novo() {
 		try {
 			usuario = new Usuario();
 			funcionarios = funcionarioNeg.listar();
