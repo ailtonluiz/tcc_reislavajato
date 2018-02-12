@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 @Entity
 public class PessoaJuridica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
@@ -17,10 +19,13 @@ public class PessoaJuridica extends GenericEntity {
 	@Column(length = 100)
 	private String nomeFantasia;
 
+	@CNPJ
 	private String cnpj;
 
 	private String inscricaoEstadual;
 	private String inscricaoMunicipal;
+	
+	private String contatoEmpresa;
 
 	@Temporal(TemporalType.DATE)
 	private Date dataAberturaEmpresa;
@@ -65,6 +70,14 @@ public class PessoaJuridica extends GenericEntity {
 
 	public void setInscricaoMunicipal(String inscricaoMunicipal) {
 		this.inscricaoMunicipal = inscricaoMunicipal;
+	}
+	
+	public String getContatoEmpresa() {
+		return contatoEmpresa;
+	}
+
+	public void setContatoEmpresa(String contatoEmpresa) {
+		this.contatoEmpresa = contatoEmpresa;
 	}
 
 	public Date getDataAberturaEmpresa() {

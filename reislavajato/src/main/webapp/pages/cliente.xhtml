@@ -23,7 +23,8 @@
 						value="#{clienteControle.cpfConsulta}" maxlength="14"
 						converter="#{cpfConverter}" />
 
-					<h:outputText value="Nome Fantasia:" />
+					<h:outputText value="Nome Fantasia:"
+						title="Pesquise pelo nome fantasia" />
 					<p:inputText value="#{clienteControle.nomeFantasiaConsulta}" />
 
 					<h:outputText value="CNPJ:" />
@@ -131,7 +132,8 @@
 						</p:selectOneRadio>
 
 						<h:outputText value="E-mail:" />
-						<p:inputText value="#{clienteControle.cliente.pessoa.email}" />
+						<p:inputText value="#{clienteControle.cliente.pessoa.email}"
+							size="70" />
 
 						<h:outputText value="Permitir envio?" />
 						<p:selectOneRadio
@@ -205,6 +207,14 @@
 									value="#{clienteControle.cliente.pessoa.pessoaJuridica.nomeFantasia}"
 									maxlength="100" size="100" />
 
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+								<p:outputLabel for="contato" value="Contato:" />
+								<p:inputText id="contato"
+									value="#{clienteControle.cliente.pessoa.pessoaJuridica.contatoEmpresa}"
+									maxlength="70" size="66" />
+
+
 								<h:outputLabel for="dtAbert" value="Data Abertura:" />
 								<p:calendar id="dtAbert" yearRange="-100:+0"
 									value="#{clienteControle.cliente.pessoa.pessoaJuridica.dataAberturaEmpresa}"
@@ -219,39 +229,58 @@
 							rendered="#{clienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
 							<h:panelGrid columns="2">
 								<h:outputLabel value="Nome do Pai:" for="nomePai" />
-								<p:inputText id="nomePai" maxlength="50" size="50"
+								<p:inputText id="nomePai" maxlength="50" size="85"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.nomePai}" />
 
 								<h:outputLabel value="Nome da Mãe:" for="nomeMae" />
-								<p:inputText id="nomeMae" maxlength="50" size="50"
+								<p:inputText id="nomeMae" maxlength="50" size="85"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.nomeMae}" />
 							</h:panelGrid>
-							
+
 							<h:panelGrid columns="4">
 								<h:outputLabel value="RG:" />
-								<p:inputText size="20" maxlength="10"
+								<p:inputText size="23" maxlength="10"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.rg}" />
-									
+
+								<h:outputText value="Orgão Emissor:" />
+								<p:selectOneMenu
+									value="#{clienteControle.cliente.pessoa.pessoaFisica.orgaoRG}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
+
+
+								<h:outputText value="UF:" />
+								<p:selectOneMenu
+									value="#{clienteControle.cliente.pessoa.endereco.municipio.uf}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<p:ajax update="municipio" />
+								</p:selectOneMenu>
+
 								<h:outputLabel for="dtExp" value="Data Expedição:" />
 								<p:calendar id="dtExp" yearRange="-100:+0"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.dataExpedicaoRG}"
 									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
 									navigator="true" showButtonPanel="true" locale="pt" />
 
-								<h:outputText value="Orgão Expeditor" />
+								<h:outputText value="Estado Civil:" />
 								<p:selectOneMenu
-									value="#{clienteControle.cliente.pessoa.pessoaFisica.orgaoRG}">
-									<f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}"
-										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-<!-- 									<p:ajax update="municipio" /> -->
+									value="#{clienteControle.cliente.pessoa.pessoaFisica.estadoCivil}">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumEstadoCivil}" var="item"
+										itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
 								</p:selectOneMenu>
-								
-								<h:outputText value="UF Expedição" />
+
+								<h:outputText value="Escolaridade:" />
 								<p:selectOneMenu
-									value="#{clienteControle.cliente.pessoa.endereco.municipio.uf}">
-									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
-										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-									<p:ajax update="municipio" />
+									value="#{clienteControle.cliente.pessoa.pessoaFisica.escolaridade}">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumEscolaridade}" var="item"
+										itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
 								</p:selectOneMenu>
 
 							</h:panelGrid>

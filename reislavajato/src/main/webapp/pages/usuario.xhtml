@@ -82,7 +82,7 @@
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um funcionário" />
 						<f:selectItems value="#{usuarioControle.funcionarios}"
-							var="usuario" itemValue="#{usuario}" itemLabel="#{funcionario.usuario.username}" />
+							var="usuario" itemValue="#{usuario}" itemLabel="#{funcionario.pessoa.pessoaFisica.nome}" />
 					</p:selectOneMenu>
 					<p:outputLabel for="ativo" value="Ativo:" />
 					<p:selectBooleanCheckbox id="ativo"
