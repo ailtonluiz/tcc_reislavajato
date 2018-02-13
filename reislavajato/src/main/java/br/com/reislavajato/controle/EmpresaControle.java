@@ -73,9 +73,6 @@ public class EmpresaControle extends ReisLavajatoControle implements Serializabl
 		endereco = new Endereco();
 		telefone = new Telefone();
 
-		// cnpjConsulta = "";
-		// razaoConsulta = "";
-		// nomeFantasiaConsulta = "";
 		return "sucesso";
 	}
 
