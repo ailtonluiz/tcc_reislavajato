@@ -89,7 +89,7 @@
 
 
 					<p:submenu label="Funcionários / Usuários">
-						
+
 						<p:menuitem value="Cargos"
 							action="/pages/cargo.xhtml?faces-redirect=true" />
 						<p:menuitem value="Funcionários"
@@ -97,33 +97,21 @@
 						<p:menuitem value="Usuários"
 							action="/pages/usuario.xhtml?faces-redirect=true" />
 					</p:submenu>
-
-					<p:menuitem value="Fornecedores"
-						action="/pages/fornecedores.xhtml?faces-redirect=true" />
-
 					<p:menuitem value="Serviços"
 						action="/pages/servico.xhtml?faces-redirect=true" />
 
-					<p:submenu label="Veículos">
-						<p:menuitem value="Marcas"
-							action="/pages/marca.xhtml?faces-redirect=true" />
-						<p:menuitem value="Veículos"
-							action="/pages/veiculo.xhtml?faces-redirect=true" />
-					</p:submenu>
+					<p:menuitem value="Veículos"
+						action="/pages/veiculo.xhtml?faces-redirect=true" />
+
+
 				</p:submenu>
+
 
 				<p:submenu label="Movimentações">
 					<p:menuitem value="Lavagens"
 						action="/pages/movimento.xhtml?faces-redirect=true" />
-					<p:menuitem value="Em Desenvolvimento"
-						action="/pages/movimento_em_desenvolvimento.xhtml?faces-redirect=true" />
-				</p:submenu>
-
-				<p:submenu label="Financeiro">
-					<p:menuitem value="Contas a pagar"
-						action="/pages/financeiroContaPagar.xhtml?faces-redirect=true" />
-					<p:menuitem value="Contas a receber"
-						action="/pages/financeiroContaReceber.xhtml?faces-redirect=true" />
+					<p:menuitem value="Ordem de Serviço"
+						action="/pages/ordemServico.xhtml?faces-redirect=true" />
 				</p:submenu>
 
 				<p:submenu label="Relatórios">
@@ -137,7 +125,6 @@
 							<p:menuitem value="Funcionários" />
 							<p:menuitem value="Usuários" />
 						</p:submenu>
-						<p:menuitem value="Fornecedores" />
 						<p:menuitem value="Serviços" />
 						<p:submenu label="Veículos">
 							<p:menuitem value="Marcas"
@@ -149,10 +136,7 @@
 						<p:menuitem value="Lavagens" />
 						<p:menuitem value="Comissões" />
 					</p:submenu>
-					<p:submenu label="Financeiro">
-						<p:menuitem value="Contas a pagar" />
-						<p:menuitem value="Contas a receber" />
-					</p:submenu>
+				
 				</p:submenu>
 
 				<p:submenu label="Parâmetros">

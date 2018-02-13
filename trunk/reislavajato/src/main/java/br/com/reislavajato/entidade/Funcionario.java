@@ -3,6 +3,7 @@ package br.com.reislavajato.entidade;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,6 +39,9 @@ public class Funcionario extends GenericEntity {
 	private String cnh;
 
 	private Date dataEntradaExercicio;
+
+	@Column(length = 150)
+	private String observacao;
 
 	@Enumerated(EnumType.STRING)
 	private EnumCategoriaCNH categoriaCNH = EnumCategoriaCNH.A;
@@ -112,6 +116,14 @@ public class Funcionario extends GenericEntity {
 
 	public void setDataEntradaExercicio(Date dataEntradaExercicio) {
 		this.dataEntradaExercicio = dataEntradaExercicio;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	public EnumCategoriaCNH getCategoriaCNH() {
