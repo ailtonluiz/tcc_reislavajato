@@ -1,5 +1,6 @@
 package br.com.reislavajato.entidade;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -42,6 +43,9 @@ public class Funcionario extends GenericEntity {
 
 	@Column(length = 150)
 	private String observacao;
+
+	@Column(precision = 10, scale = 2)
+	private BigDecimal salario;
 
 	@Enumerated(EnumType.STRING)
 	private EnumCategoriaCNH categoriaCNH = EnumCategoriaCNH.A;
@@ -124,6 +128,14 @@ public class Funcionario extends GenericEntity {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public BigDecimal getSalario() {
+		return salario;
+	}
+
+	public void setSalario(BigDecimal salario) {
+		this.salario = salario;
 	}
 
 	public EnumCategoriaCNH getCategoriaCNH() {
