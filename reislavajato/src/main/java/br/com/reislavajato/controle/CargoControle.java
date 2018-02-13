@@ -60,7 +60,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			cargoNeg.incluir(cargo);
+			cargoNeg.alterar(cargo);
 			novo();
 			listar();
 			Messages.addGlobalInfo("Operação realizada com sucesso!");

@@ -1,137 +1,64 @@
 package br.com.reislavajato.entidade;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
 @Entity
 public class Empresa extends GenericEntity {
 
-	@Column(nullable = false, length = 100, name = "razao_social")
-	private String razaoSocial;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
-	@Column(nullable = false, length = 100, name = "fantasia")
-	private String fantasia;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Endereco endereco = new Endereco();
 
-	@Column(length = 18)
-	private String cnpj;
-
-	@Column(length = 25, nullable = true, name = "insc_estadual")
-	private String inscEstadual;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Telefone telefone = new Telefone();
 
 	@Column(length = 100)
-	private String endereco;
-
-	@Column(length = 5)
-	private String numero;
-
-	@Column(length = 40)
-	private String bairro;
-
-	@Column(length = 10)
-	private String cep;
-
-	@Column(length = 25)
-	private String complemento;
-
-	@Column(length = 13)
-	private String telefone;
-
-	@Column(length = 70)
 	private String email;
 
-	@Column(length = 70)
+	@Column(length = 80)
 	private String smtp;
 
-	@Column(length = 4, name = "porta_smtp")
-	private String portaSmtp;
+	@Column(length = 60)
+	private String senhaEmail;
 
-	@Column(length = 50, name = "senha_mail")
-	private String senhaMail;
+	@Column(length = 6)
+	private Integer portaSmtp;
 
-	@Column(length = 80)
-	private String contato;
+	@Column(length = 100)
+	private String txtMail;
 
-	@Column
-	private Boolean ativo = true;
+	private Boolean utilizaAutenticacao = true;
 
-	public String getRazaoSocial() {
-		return razaoSocial;
+	private Boolean requerSSL = true;
+
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
 	}
 
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
 	}
 
-	public String getFantasia() {
-		return fantasia;
-	}
-
-	public void setFantasia(String fantasia) {
-		this.fantasia = fantasia;
-	}
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	public String getInscEstadual() {
-		return inscEstadual;
-	}
-
-	public void setInscEstadual(String inscEstadual) {
-		this.inscEstadual = inscEstadual;
-	}
-
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getTelefone() {
+	public Telefone getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(String telefone) {
+	public void setTelefone(Telefone telefone) {
 		this.telefone = telefone;
 	}
 
@@ -151,36 +78,44 @@ public class Empresa extends GenericEntity {
 		this.smtp = smtp;
 	}
 
-	public String getPortaSmtp() {
+	public String getSenhaEmail() {
+		return senhaEmail;
+	}
+
+	public void setSenhaEmail(String senhaEmail) {
+		this.senhaEmail = senhaEmail;
+	}
+
+	public Integer getPortaSmtp() {
 		return portaSmtp;
 	}
 
-	public void setPortaSmtp(String portaSmtp) {
+	public void setPortaSmtp(Integer portaSmtp) {
 		this.portaSmtp = portaSmtp;
 	}
 
-	public String getSenhaMail() {
-		return senhaMail;
+	public String getTxtMail() {
+		return txtMail;
 	}
 
-	public void setSenhaMail(String senhaMail) {
-		this.senhaMail = senhaMail;
+	public void setTxtMail(String txtMail) {
+		this.txtMail = txtMail;
 	}
 
-	public String getContato() {
-		return contato;
+	public Boolean getUtilizaAutenticacao() {
+		return utilizaAutenticacao;
 	}
 
-	public void setContato(String contato) {
-		this.contato = contato;
+	public void setUtilizaAutenticacao(Boolean utilizaAutenticacao) {
+		this.utilizaAutenticacao = utilizaAutenticacao;
 	}
 
-	public Boolean getAtivo() {
-		return ativo;
+	public Boolean getRequerSSL() {
+		return requerSSL;
 	}
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
+	public void setRequerSSL(Boolean requerSSL) {
+		this.requerSSL = requerSSL;
 	}
 
 }

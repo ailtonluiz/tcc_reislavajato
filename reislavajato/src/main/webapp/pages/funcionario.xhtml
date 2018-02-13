@@ -262,6 +262,22 @@
 									navigator="true" showButtonPanel="true" locale="pt"
 									yearRange="-100:+0" />
 
+								<p:outputLabel value="Salário:" for="salario" />
+								<p:inputText maxlength="15" id="salario" style="width: 60pt !important;"
+									required="true" value="#{funcionarioControle.funcionario.salario}" 
+									requiredMessage="Informar o salário do funcionário">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									<p:ajax update="salario" process="salario" event="change" />
+									<f:validator validatorId="MoedaValidator" />
+								</p:inputText>
+								
+									<h:outputLabel for="dtNasc" value="Data Nasc:" />
+								<p:calendar id="dtNasc"
+									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataNascimento}"
+									size="14" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt"
+									yearRange="-100:+0" />
+
 							</h:panelGrid>
 
 							<h:panelGrid columns="2">
@@ -283,13 +299,7 @@
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel for="dtNasc" value="Data Nascimento:" />
-								<p:calendar id="dtNasc"
-									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataNascimento}"
-									size="14" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
-									navigator="true" showButtonPanel="true" locale="pt"
-									yearRange="-100:+0" />
-
+							
 							</h:panelGrid>
 						</p:tab>
 						<!-- Endereço -->
@@ -298,6 +308,7 @@
 								<h:outputText value="UF:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.endereco.municipio.uf}">
+									
 									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 									<p:ajax update="municipio" />
@@ -362,9 +373,9 @@
 								<h:outputLabel value="Contato:" />
 								<p:inputText for="obs"
 									value="#{funcionarioControle.funcionario.pessoa.telefone.contato}" />
-								</h:panelGrid>	
-								
-								<h:panelGrid columns="2">	
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
 								<h:outputLabel value="Observações:" />
 								<p:inputTextarea
 									value="#{funcionarioControle.funcionario.observacao}" id="obs"
