@@ -125,6 +125,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			addMensagemErroFatal(erro);
 		}
 	}
+	
 
 	// getters and setters
 

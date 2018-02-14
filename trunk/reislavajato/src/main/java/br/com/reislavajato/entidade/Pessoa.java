@@ -28,6 +28,9 @@ public class Pessoa extends GenericEntity {
 	private EnumSimNao permitirEnvioEmail = EnumSimNao.SIM;
 
 	@Enumerated(EnumType.STRING)
+	private EnumSimNao usuarioSistema = EnumSimNao.NAO;
+
+	@Enumerated(EnumType.STRING)
 	private EnumPerfil perfil = EnumPerfil.LAVADOR;
 
 	@Column(length = 70)
@@ -66,6 +69,14 @@ public class Pessoa extends GenericEntity {
 
 	public void setPermitirEnvioEmail(EnumSimNao permitirEnvioEmail) {
 		this.permitirEnvioEmail = permitirEnvioEmail;
+	}
+
+	public EnumSimNao getUsuarioSistema() {
+		return usuarioSistema;
+	}
+
+	public void setUsuarioSistema(EnumSimNao usuarioSistema) {
+		this.usuarioSistema = usuarioSistema;
 	}
 
 	public EnumPerfil getPerfil() {

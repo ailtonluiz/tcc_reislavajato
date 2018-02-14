@@ -56,6 +56,9 @@ public class Funcionario extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
 
+	@Column(length = 60)
+	private String senha;
+
 	// getters and setters
 
 	public Pessoa getPessoa() {
@@ -162,4 +165,11 @@ public class Funcionario extends GenericEntity {
 		this.fatorRH = fatorRH;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 }
