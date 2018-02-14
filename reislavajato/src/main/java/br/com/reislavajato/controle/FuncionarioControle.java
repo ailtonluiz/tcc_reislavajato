@@ -22,7 +22,6 @@ import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.MunicipioNeg;
 import br.com.reislavajato.util.CepWs;
 import br.com.reislavajato.util.Numero;
-import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -47,7 +46,8 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null
+				|| funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
 			return municipioNeg.listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
 			return municipioNeg.listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
@@ -60,7 +60,8 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void buscarCep() throws DadosInvalidosException {
 		try {
-			funcionario.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
+			funcionario.getPessoa().setEndereco(
+					CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
@@ -68,11 +69,9 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void listarFuncionarios() throws DadosInvalidosException {
 		try {
-			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
-				funcionarios = funcionarioNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
-			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				funcionarios = funcionarioNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
-			}
+
+			funcionarios = funcionarioNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -125,7 +124,6 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			addMensagemErroFatal(erro);
 		}
 	}
-	
 
 	// getters and setters
 

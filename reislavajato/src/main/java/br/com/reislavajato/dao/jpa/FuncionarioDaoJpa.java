@@ -52,7 +52,9 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 		}
 	}
 
-	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
+	@SuppressWarnings("unchecked")
+	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia)
+			throws DadosInvalidosException {
 		try {
 			String jpaql = "funcionario from Funcionario funcionario where ";
 
@@ -79,7 +81,8 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 
 	public Funcionario consultarPorEmail(String email) throws DadosInvalidosException {
 		try {
-			Query query = em.createQuery("select funcionario from Funcionario funcionario where funcionario.pessoa.email = :email");
+			Query query = em.createQuery(
+					"select funcionario from Funcionario funcionario where funcionario.pessoa.email = :email");
 			query.setParameter("email", email);
 			return (Funcionario) query.getSingleResult();
 		} catch (NoResultException e) {
@@ -88,4 +91,17 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
+
+	public Funcionario autenticar(String email, String senha) throws DadosInvalidosException {
+		try {
+			Query query = em.createQuery(
+					"select distinct f from Funcionario f where f.pessoa.email = :email and f.senha = :senha");
+			query.setParameter("email", email);
+			query.setParameter("senha", senha);
+			return (Funcionario) query.getSingleResult();
+		} catch (Exception e) {
+			throw new DadosInvalidosException(e);
+		}
+	}
+
 }

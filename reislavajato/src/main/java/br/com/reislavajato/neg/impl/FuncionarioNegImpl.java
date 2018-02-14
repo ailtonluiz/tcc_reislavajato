@@ -25,13 +25,23 @@ public class FuncionarioNegImpl extends NegocioGenerico<Funcionario> implements 
 	}
 
 	@Transactional
-	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
+	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia)
+			throws DadosInvalidosException {
 		return ((FuncionarioDao) persistencia).listarPorCnpjOuNomeFantasia(cnpj, nomeFantasia);
 	}
 
 	@Transactional
 	public Funcionario consultarPorEmail(String email) throws DadosInvalidosException {
 		return ((FuncionarioDao) persistencia).consultarPorEmail(email);
+	}
+
+	/* (non-Javadoc)
+	 * @see br.com.reislavajato.neg.FuncionarioNeg#autenticar(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Funcionario autenticar(String email, String senha) throws DadosInvalidosException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

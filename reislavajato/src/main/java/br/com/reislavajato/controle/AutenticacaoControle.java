@@ -13,9 +13,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
-import br.com.reislavajato.entidade.Usuario;
+import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.excessao.DadosInvalidosException;
-import br.com.reislavajato.neg.UsuarioNeg;
+import br.com.reislavajato.neg.FuncionarioNeg;
 
 /**
  * @Criado por: ailtonluiz
@@ -27,20 +27,20 @@ import br.com.reislavajato.neg.UsuarioNeg;
 public class AutenticacaoControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private UsuarioNeg usuarioNeg = context.getBean(UsuarioNeg.class);
+	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
 
-	private Usuario usuario;
-	private Usuario usuarioLogado;
+	private Funcionario funcionario;
+	private Funcionario funcionarioLogado;
 
 	@PostConstruct
 	public void iniciar() {
-		usuario = new Usuario();
+		funcionario = new Funcionario();
 	}
 
 	public void autenticar() throws DadosInvalidosException {
 		try {
-			usuarioLogado = usuarioNeg.autenticar(usuario.getUsername(), usuario.getPassword());
-			if (usuarioLogado == null) {
+			funcionarioLogado = funcionarioNeg.autenticar(funcionario.getPessoa().getEmail(), funcionario.getSenha());
+			if (funcionarioLogado == null) {
 				Messages.addGlobalError("Usuário e/ou senha inválido!");
 				return;
 			} else {
@@ -53,27 +53,27 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 		}
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Usuario getUsuarioLogado() {
-		return usuarioLogado;
-	}
-
-	public void setUsuarioLogado(Usuario usuarioLogado) {
-		this.usuarioLogado = usuarioLogado;
-	}
-
 	@Override
 	protected String novo() {
-		usuario = new Usuario();
-		usuarioLogado = new Usuario();
+		funcionario = new Funcionario();
+		funcionarioLogado = new Funcionario();
 		return "sucesso";
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public Funcionario getFuncionarioLogado() {
+		return funcionarioLogado;
+	}
+
+	public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+		this.funcionarioLogado = funcionarioLogado;
 	}
 
 }
