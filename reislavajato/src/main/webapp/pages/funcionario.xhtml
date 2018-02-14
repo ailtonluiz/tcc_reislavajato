@@ -23,13 +23,6 @@
 						value="#{funcionarioControle.cpfConsulta}" maxlength="14"
 						converter="#{cpfConverter}" />
 
-					<h:outputText value="Nome Fantasia:" />
-					<p:inputText value="#{funcionarioControle.nomeFantasiaConsulta}" />
-
-					<h:outputText value="CNPJ:" />
-					<p:inputMask mask="99999999/9999-99"
-						value="#{funcionarioControle.cnpjConsulta}"
-						converter="#{cnpjConverter}" />
 				</h:panelGrid>
 				<br />
 				<p:commandButton icon="ui-icon-search" value="Listar"
@@ -139,6 +132,16 @@
 								</p:selectOneRadio>
 
 
+								<h:outputText value="Usuário do Sistema?" />
+								<p:selectOneRadio
+									value="#{funcionarioControle.funcionario.pessoa.usuarioSistema}">
+									<p:ajax update=":frmCadastro:painel" />
+									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+
+								</p:selectOneRadio>
+
+
 								<h:outputText value="Sexo:" />
 								<p:selectOneRadio
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.sexo}">
@@ -236,13 +239,6 @@
 										itemLabel="#{cargo.nomeCargo}" />
 								</p:selectOneMenu>
 
-								<h:outputText value="Perfil:" />
-								<p:selectOneMenu
-									value="#{funcionarioControle.funcionario.pessoa.perfil}"
-									style="width: 53pt !important;">
-									<f:selectItems value="#{ControleEnumerador.listaEnumPerfil}"
-										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-								</p:selectOneMenu>
 
 								<h:outputText value="CPF:" />
 								<p:inputMask mask="999.999.999-99"
@@ -263,15 +259,17 @@
 									yearRange="-100:+0" />
 
 								<p:outputLabel value="Salário:" for="salario" />
-								<p:inputText maxlength="15" id="salario" style="width: 60pt !important;"
-									required="true" value="#{funcionarioControle.funcionario.salario}" 
+								<p:inputText maxlength="15" id="salario"
+									style="width: 60pt !important;" required="true"
+									value="#{funcionarioControle.funcionario.salario}"
 									requiredMessage="Informar o salário do funcionário">
 									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 									<p:ajax update="salario" process="salario" event="change" />
 									<f:validator validatorId="MoedaValidator" />
 								</p:inputText>
-								
-									<h:outputLabel for="dtNasc" value="Data Nasc:" />
+
+
+								<h:outputLabel for="dtNasc" value="Data Nasc:" />
 								<p:calendar id="dtNasc"
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataNascimento}"
 									size="14" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -299,7 +297,7 @@
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
 
-							
+
 							</h:panelGrid>
 						</p:tab>
 						<!-- Endereço -->
@@ -308,7 +306,7 @@
 								<h:outputText value="UF:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.endereco.municipio.uf}">
-									
+
 									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 									<p:ajax update="municipio" />
@@ -381,6 +379,57 @@
 									value="#{funcionarioControle.funcionario.observacao}" id="obs"
 									maxlength="150" style="width: 202pt !important;" />
 							</h:panelGrid>
+						</p:tab>
+
+
+
+
+						<!-- Configuração de usuário -->
+						<p:tab title="Configurações de usuário"
+							rendered="#{funcionarioControle.funcionario.pessoa.usuarioSistema.abreviado == 'S'}">
+							<h:panelGrid columns="2">
+
+
+								<h:outputText value="Perfil do usuário:" />
+								<p:selectOneMenu
+									value="#{funcionarioControle.funcionario.pessoa.perfil}"
+									style="width: 53pt !important;">
+									<f:selectItems value="#{ControleEnumerador.listaEnumPerfil}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+							<!-- Senha -->
+							<h:panelGrid id="txtSenha" columns="4">
+								<h:outputLabel for="senha" value="Senha:" />
+								<p:password id="senha" feedback="true" minLength="4"
+									placeholder="Informe uma senha"
+									promptLabel="Informe sua nova senha" weakLabel="Fraca"
+									inline="true" goodLabel="Boa" strongLabel="Ótima"
+									match="senha2" required="true"
+									value="#{funcionarioControle.funcionario.senha}"
+									requiredMessage="A senha não pode ser nula"
+									converterMessage="Por favor informe uma senha"
+									validatorMessage="As senhas não coincidem">
+									<f:validateRequired disabled="false" />
+								</p:password>
+
+								<h:outputLabel for="senha2" value="Confirmação:" />
+								<p:password id="senha2" minLength="4" required="true"
+									feedback="true" weakLabel="Fraca" inline="true" goodLabel="Boa"
+									strongLabel="Ótima" promptLabel="Confirme sua nova senha"
+									placeholder="Confirme sua senha"
+									value="#{funcionarioControle.funcionario.senha}"
+									requiredMessage="Confirmação de senha não pode ser nula"
+									converterMessage="Por favor informe uma senha"
+									validatorMessage="As senhas não coincidem">
+								</p:password>
+
+
+							</h:panelGrid>
+							<h:outputLabel
+								value="Para o usuário logar no sistema ele irá usar o e-mail cadastro na aba Dados Pessoais" />
+
+
 						</p:tab>
 					</p:tabView>
 				</p:panel>
