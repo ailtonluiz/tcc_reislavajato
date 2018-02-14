@@ -390,13 +390,16 @@
 							<h:panelGrid columns="2">
 
 
-								<h:outputText value="Perfil do usuário:" />
+								<h:outputText value="Perfil:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.perfil}"
 									style="width: 53pt !important;">
 									<f:selectItems value="#{ControleEnumerador.listaEnumPerfil}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
+								<h:outputText value="Login:" />
+								<p:inputText value="#{funcionarioControle.funcionario.login}"
+									placeholder="Informe um login" maxlength="60" size="60"></p:inputText>
 							</h:panelGrid>
 							<!-- Senha -->
 							<h:panelGrid id="txtSenha" columns="4">
@@ -426,8 +429,6 @@
 
 
 							</h:panelGrid>
-							<h:outputLabel
-								value="Para o usuário logar no sistema ele irá usar o e-mail cadastro na aba Dados Pessoais" />
 
 
 						</p:tab>

@@ -21,11 +21,11 @@
 			<p:panelGrid columns="2">
 				<p:outputLabel for="log" value="Login:" />
 				<p:inputText id="log" required="true"
-					requiredMessage="Por favor informe o Login"
-					value="#{autenticacaoControle.usuario.username}" />
+					requiredMessage="Por favor informe o E-mail"
+					value="#{autenticacaoControle.funcionario.pessoa.email}" />
 				<p:outputLabel for="senha" value="Senha:" />
 				<p:password id="senha"
-					value="#{autenticacaoControle.usuario.password}" />
+					value="#{autenticacaoControle.funcionario.senha}" />
 			</p:panelGrid>
 
 			<h:panelGrid columns="2">

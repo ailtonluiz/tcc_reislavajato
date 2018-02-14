@@ -33,7 +33,7 @@ public class Pessoa extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumPerfil perfil = EnumPerfil.LAVADOR;
 
-	@Column(length = 70)
+	@Column(length = 100)
 	private String email;
 
 	@Column(name = "data_cadastro")
