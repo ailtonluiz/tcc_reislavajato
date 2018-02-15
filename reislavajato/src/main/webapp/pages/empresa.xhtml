@@ -134,7 +134,7 @@
 									maxlength="70" size="52" />
 
 
-								<h:outputLabel for="dtAbert" value="Data Abertura:" />
+								<p:outputLabel for="dtAbert" value="Data Abertura:" />
 								<p:calendar id="dtAbert" yearRange="-100:+0"
 									value="#{empresaControle.empresa.pessoaJuridica.dataAberturaEmpresa}"
 									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -167,7 +167,7 @@
 							</h:panelGrid>
 							<h:panelGrid columns="3">
 
-								<h:outputLabel value="CEP:" />
+								<p:outputLabel value="CEP:" />
 								<p:inputMask value="#{empresaControle.empresa.endereco.cep}"
 									size="10" mask="99999-999" maxlength="10" />
 								<p:commandButton icon="ui-icon-circle-zoomout"
@@ -175,37 +175,37 @@
 
 							</h:panelGrid>
 							<h:panelGrid columns="4">
-								<h:outputLabel value="Logradouro:" />
+								<p:outputLabel value="Logradouro:" />
 								<p:inputText
 									value="#{empresaControle.empresa.endereco.logradouro}" />
 
-								<h:outputLabel value="Complemento:" />
+								<p:outputLabel value="Complemento:" />
 								<p:inputText
 									value="#{empresaControle.empresa.endereco.complemento}" />
 
-								<h:outputLabel value="Bairro:" />
+								<p:outputLabel value="Bairro:" />
 								<p:inputText value="#{empresaControle.empresa.endereco.bairro}" />
 
-								<h:outputLabel value="Número:" />
+								<p:outputLabel value="Número:" />
 								<p:inputText value="#{empresaControle.empresa.endereco.numero}" />
 							</h:panelGrid>
 						</p:tab>
 						<!-- Telefone -->
 						<p:tab title="Telefone" id="tel">
 							<h:panelGrid columns="4">
-								<h:outputLabel value="Celular:" for="txt_celular" />
+								<p:outputLabel value="Celular:" for="txt_celular" />
 								<p:inputMask mask="(99) 9 9999-9999" id="txt_celular"
 									value="#{empresaControle.empresa.telefone.celular}" />
 
-								<h:outputLabel value="Fixo:" />
+								<p:outputLabel value="Fixo:" />
 								<p:inputMask mask="(99) 9999-9999"
 									value="#{empresaControle.empresa.telefone.fixo}" />
 
-								<h:outputLabel value="Comercial:" />
+								<p:outputLabel value="Comercial:" />
 								<p:inputMask mask="(99) 9999-9999"
 									value="#{empresaControle.empresa.telefone.comercial}" />
 
-								<h:outputLabel value="Contato:" />
+								<p:outputLabel value="Contato:" />
 								<p:inputText value="#{empresaControle.empresa.telefone.contato}" />
 							</h:panelGrid>
 						</p:tab>
@@ -213,39 +213,39 @@
 						<!-- Configuração de E-mail -->
 						<p:tab title="E-mail">
 							<h:panelGrid columns="2">
-								<h:outputLabel value="E-mail:" for="mail" />
+								<p:outputLabel value="E-mail:" for="mail" />
 								<p:inputText id="mail" maxlength="100" size="85"
 									value="#{empresaControle.empresa.email}" />
 							</h:panelGrid>
 
 							<h:panelGrid columns="4">
-								<h:outputLabel value="Smtp:" for="smtp" />
+								<p:outputLabel value="Smtp:" for="smtp" />
 								<p:inputText id="smtp" maxlength="80" size="58"
 									value="#{empresaControle.empresa.smtp}" />
 
-								<h:outputLabel value="Porta Smtp:" for="portaSmtp" />
+								<p:outputLabel value="Porta Smtp:" for="portaSmtp" />
 								<p:inputText id="portaSmtp" maxlength="6" size="10"
 									value="#{empresaControle.empresa.portaSmtp}" />
 							</h:panelGrid>
 							<h:panelGrid columns="4">
 							</h:panelGrid>
 							<h:panelGrid columns="6">
-								<h:outputLabel value="Senha E-mail:" for="pwd" />
+								<p:outputLabel value="Senha E-mail:" for="pwd" />
 								<p:password id="pwd" maxlength="60" size="27"
 									value="#{empresaControle.empresa.senhaEmail}" />
 
-								<h:outputLabel value="Utiliza autenticação no servidor" />
+								<p:outputLabel value="Utiliza autenticação no servidor" />
 								<p:selectBooleanCheckbox
 									value="#{empresaControle.empresa.utilizaAutenticacao}" />
 
 
-								<h:outputLabel value="Requer SSL" />
+								<p:outputLabel value="Requer SSL" />
 								<p:selectBooleanCheckbox
 									value="#{empresaControle.empresa.requerSSL}" />
 
 							</h:panelGrid>
 							<h:panelGrid columns="4">
-								<h:outputLabel value="Template de e-mail:" />
+								<p:outputLabel value="Template de e-mail:" />
 								<p:inputTextarea value="#{empresaControle.empresa.txtMail}"
 									maxlength="150" style="width: 290pt !important;" />
 							</h:panelGrid>

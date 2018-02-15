@@ -18,17 +18,17 @@
 					<p:tabView dynamic="true">
 						<p:tab title="Dados principais">
 							<h:panelGrid columns="7">
-								<h:outputLabel value="Número OS" />
+								<p:outputLabel value="Número OS" />
 								<p:inputText size="19" maxlength="10" value="1234"
 									disabled="true" />
-								<h:outputLabel value="Status" />
+								<p:outputLabel value="Status" />
 								<p:selectOneMenu effect="fold" editable="true">
 									<f:selectItem itemLabel="Parado" itemValue="" />
 									<f:selectItem itemLabel="Em execução" itemValue="" />
 									<f:selectItem itemLabel="Finalizado" itemValue="" />
 								</p:selectOneMenu>
 
-								<h:outputLabel value="Sel.  Cliente"/>
+								<p:outputLabel value="Sel.  Cliente"/>
 								<p:selectOneMenu effect="fold" editable="true">
 									<f:selectItem itemLabel="Ruben Delmondes" itemValue="" />
 									<f:selectItem itemLabel="Telmo Silva" itemValue="" />
@@ -38,7 +38,7 @@
 
 							<!-- CHeck list -->
 							
-								<h:outputLabel for="multiple" value="CheckList:" />
+								<p:outputLabel for="multiple" value="CheckList:" />
 								<p:selectCheckboxMenu id="multiple"
 									value="#{checkboxView.selecaoChecklist}" multiple="true"
 									filter="true" filterMatchMode="startsWith"
@@ -55,7 +55,7 @@
 										var="veiculo" itemValue="#{veiculo}"
 										itemLabel="#{veiculo.modelo}" />
 								</p:selectOneMenu>
-								<h:outputLabel value="Ordem Serv." />
+								<p:outputLabel value="Ordem Serv." />
 								<p:inputText size="24" maxlength="10" value="" placeholder=""
 									disabled="false" />
 

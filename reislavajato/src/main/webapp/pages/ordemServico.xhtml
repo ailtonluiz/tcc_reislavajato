@@ -22,10 +22,10 @@
                <p:outputLabel value="CNPJ:" />
                <p:inputMask mask="99999999/9999-99" value="#{ordemServicoControle.cnpjConsulta}" converter="#{cnpjConverter}" />
 
-               <h:outputLabel value="Número OS" for="nmrOS" />
+               <p:outputLabel value="Número OS" for="nmrOS" />
                <p:inputNumber id="nmrOS" value="#{ordemServicoControle.numeroOSConsulta}" decimalPlaces="0" />
 
-               <h:outputLabel value="Status:" />
+               <p:outputLabel value="Status:" />
                <p:selectOneRadio value="#{ordemServicoControle.statusServicoConsulta}">
                   <f:selectItems value="#{ControleEnumerador.listaEnumStatusServico}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                </p:selectOneRadio>
@@ -83,7 +83,7 @@
          <h:form id="frmCadastro">
             <p:panel id="painel">
                <h:panelGrid columns="2">
-                  <h:outputLabel value="Tipo Pessoa?" />
+                  <p:outputLabel value="Tipo Pessoa?" />
                   <p:selectOneRadio value="#{ordemServicoControle.ordemServico.cliente.pessoa.tipoPessoa}">
                      <p:ajax update="cliente" />
                      <f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -101,34 +101,34 @@
                      <f:selectItems value="#{ControleEnumerador.listaEnumTipoVeiculo}" var="tipoVeiculo" itemValue="#{tipoVeiculo}" itemLabel="#{tipoVeiculo.descricao}" />
                   </p:selectOneMenu>
 
-                  <h:outputLabel for="marca" value="Marca:" />
+                  <p:outputLabel for="marca" value="Marca:" />
                   <p:selectOneMenu id="marca" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.marca}">
                      <p:ajax update="modelo" process="painel" />
                      <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Marca:" />
                      <f:selectItems value="#{ControleEnumerador.listaEnumMarca}" var="marca" itemValue="#{marca}" itemLabel="#{marca.descricao}" />
                   </p:selectOneMenu>
 
-                  <h:outputLabel value="Modelo:" />
+                  <p:outputLabel value="Modelo:" />
                   <p:selectOneMenu id="modelo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo}">
                      <f:selectItem noSelectionOption="true" itemLabel="Selecione um Modelo:" />
                      <f:selectItems value="#{ordemServicoControle.modelosVeiculo}" var="veiculo" itemValue="#{veiculo}" itemLabel="#{veiculo.modelo}" />
                   </p:selectOneMenu>
 
-                  <h:outputLabel value="Placa:" for="placa" />
+                  <p:outputLabel value="Placa:" for="placa" />
                   <p:inputMask id="placa" mask="aaa-9999" value="#{ordemServicoControle.ordemServico.veiculo.placa}" />
 
-                  <h:outputLabel value="Km:" for="km" />
+                  <p:outputLabel value="Km:" for="km" />
                   <p:inputNumber id="km" value="#{ordemServicoControle.ordemServico.veiculo.km}" decimalPlaces="0" />
 
-                  <h:outputLabel value="Cor:" for="cor" />
+                  <p:outputLabel value="Cor:" for="cor" />
                   <p:selectOneRadio id="cor" value="#{ordemServicoControle.ordemServico.veiculo.cor}">
                      <f:selectItems value="#{ControleEnumerador.listaEnumCor}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                   </p:selectOneRadio>
 
-                  <h:outputLabel value="Data e Hora da entrada:" />
+                  <p:outputLabel value="Data e Hora da entrada:" />
                   <p:calendar value="#{ordemServicoControle.ordemServico.dataHoraEntrada}" pattern="dd/MM/yyyy HH:mm" disabled="true" />
 
-                  <h:outputLabel value="Data e Hora da saída planejada:" />
+                  <p:outputLabel value="Data e Hora da saída planejada:" />
                   <p:calendar value="#{ordemServicoControle.ordemServico.dataHoraSaidaAgendada}" pattern="dd/MM/yyyy HH:mm" />
 
                   <p:outputLabel value="Lista de serviços:" />
