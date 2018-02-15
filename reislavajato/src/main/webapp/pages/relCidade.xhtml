@@ -27,12 +27,12 @@
 					</f:facet>
 					<p:column headerText="Municipio" filterBy="#{Municipio.nome}"
 						filterMatchMode="contains">
-						<h:outputText value="#{Municipio.nome}" />
+						<p:outputLabel value="#{Municipio.nome}" />
 					</p:column>
 
 					<p:column headerText="UF" filterBy="#{Municipio.municipio.uf.descricao}"
 						style="width:8%">
-						<h:outputText value="#{Municipio.municipio.uf.abreviado}" />
+						<p:outputLabel value="#{Municipio.municipio.uf.abreviado}" />
 					</p:column>
 
 				</p:dataTable>

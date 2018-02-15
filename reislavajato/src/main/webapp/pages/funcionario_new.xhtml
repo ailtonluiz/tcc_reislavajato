@@ -26,16 +26,16 @@
 					</f:facet>
 					<p:column headerText="Nome" filterBy="#{funcionario.nome}"
 						filterMatchMode="contains">
-						<h:outputText value="#{funcionario.nome}" />
+						<p:outputLabel value="#{funcionario.nome}" />
 					</p:column>
 
 					<!-- 					<p:column headerText="Telefone" style="width:22%"> -->
-					<!-- 						<h:outputText -->
+					<!-- 						<p:outputLabel -->
 					<!-- 							value="#{funcionario.telefone} / #{funcionario.celular}" /> -->
 					<!-- 					</p:column> -->
 
 					<!-- 					<p:column headerText="Endereço" style="width:38%"> -->
-					<!-- 						<h:outputText -->
+					<!-- 						<p:outputLabel -->
 					<!-- 							value="#{funcionario.endereco}, #{funcionario.bairro}, #{funcionario.Municipio.nome} - #{funcionario.Municipio.estado.sigla}" /> -->
 					<!-- 					</p:column> -->
 
@@ -187,7 +187,7 @@
 					<!-- 					</p:selectOneMenu> -->
 
 
-					<h:outputText value="Estado" />
+					<p:outputLabel value="Estado" />
 					<p:selectOneMenu
 						value="#{funcionarioControle.endereco.municipio.uf}">
 						<f:selectItems value="#{ControleEnumerador.listaEnumUf}"

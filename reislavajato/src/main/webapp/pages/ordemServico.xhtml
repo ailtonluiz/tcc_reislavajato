@@ -10,16 +10,16 @@
       <h:form id="frmListagem">
          <p:panel header="Listagem de Ordem de Serviços">
             <h:panelGrid columns="2">
-               <h:outputText value="Nome:" />
+               <p:outputLabel value="Nome:" />
                <p:inputText value="#{ordemServicoControle.nomeConsulta}" />
 
-               <h:outputText value="CPF:" />
+               <p:outputLabel value="CPF:" />
                <p:inputMask mask="999.999.999-99" size="15" value="#{ordemServicoControle.cpfConsulta}" maxlength="14" converter="#{cpfConverter}" />
 
-               <h:outputText value="Nome Fantasia:" />
+               <p:outputLabel value="Nome Fantasia:" />
                <p:inputText value="#{ordemServicoControle.nomeFantasiaConsulta}" />
 
-               <h:outputText value="CNPJ:" />
+               <p:outputLabel value="CNPJ:" />
                <p:inputMask mask="99999999/9999-99" value="#{ordemServicoControle.cnpjConsulta}" converter="#{cnpjConverter}" />
 
                <h:outputLabel value="Número OS" for="nmrOS" />
@@ -44,15 +44,15 @@
                </f:facet>
 
                <p:column headerText="Nome" sortBy="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" filterBy="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" filterMatchMode="contains">
-                  <h:outputText value="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" />
+                  <p:outputLabel value="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" />
                </p:column>
 
                <p:column headerText="CPF" filterBy="#{ordemServico.cliente.pessoa.pessoaFisica.cpf}" style="width:10%">
-                  <h:outputText value="#{ordemServico.cliente.pessoa.pessoaFisica.cpf}" />
+                  <p:outputLabel value="#{ordemServico.cliente.pessoa.pessoaFisica.cpf}" />
                </p:column>
 
                <p:column headerText="Telefone" style="width:22%">
-                  <h:outputText value="#{ordemServico.cliente.pessoa.telefone.fixo} - #{ordemServico.cliente.pessoa.telefone.celular}" />
+                  <p:outputLabel value="#{ordemServico.cliente.pessoa.telefone.fixo} - #{ordemServico.cliente.pessoa.telefone.celular}" />
                </p:column>
 
                <p:column headerText="Opções" style="width:8%">
@@ -95,7 +95,13 @@
                      <f:selectItems value="#{ordemServicoControle.clientes}" var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.pessoa.pessoaFisica.nome}" />
                   </p:selectOneMenu>
 
-                  <h:outputLabel for="marca" value="Marca" />
+                  <p:outputLabel for="tipoVeiculo" value="Tipo do Veículo:" />
+                  <p:selectOneMenu id="tipoVeiculo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.tipoVeiculo}">
+                     <f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo de veículo" />
+                     <f:selectItems value="#{ControleEnumerador.listaEnumTipoVeiculo}" var="tipoVeiculo" itemValue="#{tipoVeiculo}" itemLabel="#{tipoVeiculo.descricao}" />
+                  </p:selectOneMenu>
+
+                  <h:outputLabel for="marca" value="Marca:" />
                   <p:selectOneMenu id="marca" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.marca}">
                      <p:ajax update="modelo" process="painel" />
                      <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Marca:" />
@@ -125,9 +131,14 @@
                   <h:outputLabel value="Data e Hora da saída planejada:" />
                   <p:calendar value="#{ordemServicoControle.ordemServico.dataHoraSaidaAgendada}" pattern="dd/MM/yyyy HH:mm" />
 
-                  <h:outputText value="Lista de serviços:" />
+                  <p:outputLabel value="Lista de serviços:" />
                   <p:selectManyCheckbox id="servicos" value="#{ordemServicoControle.ordemServico.servicos}" layout="grid" columns="2">
                      <f:selectItems value="#{ordemServicoControle.servicos}" var="servico" itemLabel="#{servico.descricao} - R$#{servico.valorServico}" itemValue="#{servico}" />
+                  </p:selectManyCheckbox>
+
+                  <h:outputText value="Lista de funcionários:" />
+                  <p:selectManyCheckbox id="funcionario" value="#{movimentoControle.movimento.funcionarios}" layout="grid" columns="2" disabled="true">
+                     <f:selectItems value="#{movimentoControle.funcionarios}" var="funcionario" itemLabel="#{funcionario.pessoa.pessoaFisica.nome} - #{funcionario.cargo.nomeCargo}" itemValue="#{funcionario}" />
                   </p:selectManyCheckbox>
 
                </h:panelGrid>

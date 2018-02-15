@@ -36,25 +36,25 @@
 
 					<p:column headerText="CNPJ"
 						filterBy="#{empresa.pessoaJuridica.cnpj}" style="width:10%">
-						<h:outputText value="#{empresa.pessoaJuridica.cnpj}" />
+						<p:outputLabel value="#{empresa.pessoaJuridica.cnpj}" />
 					</p:column>
 
 					<p:column headerText="Razão Social"
 						sortBy="#{empresa.pessoaJuridica.razaoSocial}"
 						filterBy="#{empresa.pessoaJuridica.razaoSocial}"
 						filterMatchMode="contains">
-						<h:outputText value="#{empresa.pessoaJuridica.razaoSocial}" />
+						<p:outputLabel value="#{empresa.pessoaJuridica.razaoSocial}" />
 					</p:column>
 
 					<p:column headerText="Nome Fantasia"
 						sortBy="#{empresa.pessoaJuridica.nomeFantasia}"
 						filterBy="#{empresa.pessoaJuridica.nomeFantasia}"
 						filterMatchMode="contains">
-						<h:outputText value="#{empresa.pessoaJuridica.nomeFantasia}" />
+						<p:outputLabel value="#{empresa.pessoaJuridica.nomeFantasia}" />
 					</p:column>
 
 					<p:column headerText="Telefone" style="width:22%">
-						<h:outputText
+						<p:outputLabel
 							value="#{empresa.telefone.fixo} - #{empresa.telefone.celular}" />
 					</p:column>
 
@@ -145,7 +145,7 @@
 						<!-- Endereço -->
 						<p:tab title="Endereço">
 							<h:panelGrid columns="4">
-								<h:outputText value="UF:" />
+								<p:outputLabel value="UF:" />
 								<p:selectOneMenu
 									value="#{empresaControle.empresa.endereco.municipio.uf}">
 									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"

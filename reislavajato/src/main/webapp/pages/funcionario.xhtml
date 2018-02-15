@@ -15,10 +15,10 @@
 			<p:panel header="Listagem de funcionários">
 
 				<h:panelGrid columns="2">
-					<h:outputText value="Nome:" />
+					<p:outputLabel value="Nome:" />
 					<p:inputText value="#{funcionarioControle.nomeConsulta}" />
 
-					<h:outputText value="CPF:" />
+					<p:outputLabel value="CPF:" />
 					<p:inputMask mask="999.999.999-99" size="15"
 						value="#{funcionarioControle.cpfConsulta}" maxlength="14"
 						converter="#{cpfConverter}" />
@@ -48,17 +48,17 @@
 						sortBy="#{funcionario.pessoa.pessoaFisica.nome}"
 						filterBy="#{funcionario.pessoa.pessoaFisica.nome}"
 						filterMatchMode="contains">
-						<h:outputText value="#{funcionario.pessoa.pessoaFisica.nome}" />
+						<p:outputLabel value="#{funcionario.pessoa.pessoaFisica.nome}" />
 					</p:column>
 
 					<p:column headerText="CPF"
 						filterBy="#{funcionario.pessoa.pessoaFisica.cpf}"
 						style="width:10%">
-						<h:outputText value="#{funcionario.pessoa.pessoaFisica.cpf}" />
+						<p:outputLabel value="#{funcionario.pessoa.pessoaFisica.cpf}" />
 					</p:column>
 
 					<p:column headerText="Telefone" style="width:22%">
-						<h:outputText
+						<p:outputLabel
 							value="#{funcionario.pessoa.telefone.fixo} - #{funcionario.pessoa.telefone.celular}" />
 					</p:column>
 
@@ -104,27 +104,27 @@
 						<!-- Dados Pessoais -->
 						<p:tab title="Dados Pessoais">
 							<h:panelGrid columns="2">
-								<h:outputText value="Nome:" />
+								<p:outputLabel value="Nome:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nome}"
 									maxlength="50" style="width: 200pt !important;" />
 
-								<h:outputText value="Nome da Mãe:" />
+								<p:outputLabel value="Nome da Mãe:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nomeMae}"
 									maxlength="50" style="width: 200pt !important;" />
 
-								<h:outputText value="Nome do Pai:" />
+								<p:outputLabel value="Nome do Pai:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nomePai}"
 									maxlength="50" style="width: 200pt !important;" />
 
-								<h:outputText value="E-mail:" />
+								<p:outputLabel value="E-mail:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.email}"
 									maxlength="70" style="width: 200pt !important;" />
 
-								<h:outputText value="Permitir envio?" />
+								<p:outputLabel value="Permitir envio?" />
 								<p:selectOneRadio
 									value="#{funcionarioControle.funcionario.pessoa.permitirEnvioEmail}">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
@@ -132,7 +132,7 @@
 								</p:selectOneRadio>
 
 
-								<h:outputText value="Usuário do Sistema?" />
+								<p:outputLabel value="Usuário do Sistema?" />
 								<p:selectOneRadio
 									value="#{funcionarioControle.funcionario.pessoa.usuarioSistema}">
 									<p:ajax update=":frmCadastro:painel" />
@@ -142,7 +142,7 @@
 								</p:selectOneRadio>
 
 
-								<h:outputText value="Sexo:" />
+								<p:outputLabel value="Sexo:" />
 								<p:selectOneRadio
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.sexo}">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSexo}"
@@ -150,7 +150,7 @@
 								</p:selectOneRadio>
 							</h:panelGrid>
 							<h:panelGrid columns="4">
-								<h:outputText value="Estado Civil:" />
+								<p:outputLabel value="Estado Civil:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.estadoCivil}">
 									<f:selectItems
@@ -158,7 +158,7 @@
 										itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
 
-								<h:outputText value="Escolaridade:" />
+								<p:outputLabel value="Escolaridade:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.escolaridade}"
 									style="width: 65pt !important;">
@@ -172,29 +172,29 @@
 						<p:tab title="Dados empregatícios ">
 							<h:panelGrid columns="4" id="dadosEmpregaticio">
 
-								<h:outputText value="Cart. Trabalho:" />
+								<p:outputLabel value="Cart. Trabalho:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.carteiraTrabalho}"
 									maxlength="14" style="width: 60pt !important;" />
 
-								<h:outputText value="Tit. Eleitor:" />
+								<p:outputLabel value="Tit. Eleitor:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.tituloEleitor}"
 									style="width: 65pt !important;" />
 
-								<h:outputText value="Zona:" />
+								<p:outputLabel value="Zona:" />
 								<p:inputText value="#{funcionarioControle.funcionario.zona}"
 									maxlength="5" style="width: 60pt !important;" />
 
-								<h:outputText value="Seção:" />
+								<p:outputLabel value="Seção:" />
 								<p:inputText value="#{funcionarioControle.funcionario.secao}"
 									style="width: 65pt !important;" />
 
-								<h:outputText value="CNH:" />
+								<p:outputLabel value="CNH:" />
 								<p:inputText value="#{funcionarioControle.funcionario.cnh}"
 									maxlength="14" style="width: 60pt !important;" />
 
-								<h:outputText value="Cat. CNH:" />
+								<p:outputLabel value="Cat. CNH:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.categoriaCNH}"
 									style="width: 57pt !important;">
@@ -210,7 +210,7 @@
 									navigator="true" showButtonPanel="true" locale="pt"
 									yearRange="-100:+0" />
 
-								<h:outputText value="Tipo Sang.:" />
+								<p:outputLabel value="Tipo Sang.:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.tipoSanguineo}"
 									style="width: 57pt !important;">
@@ -219,14 +219,14 @@
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
 
-								<h:outputText value="Fator RH:" />
+								<p:outputLabel value="Fator RH:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.fatorRH}">
 									<f:selectItems value="#{ControleEnumerador.listaEnumFatorRH}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
 
-								<h:outputText value="Cargo:" />
+								<p:outputLabel value="Cargo:" />
 								<p:selectOneMenu id="cargo" filter="true" required="true"
 									title="Selecione um cargo"
 									requiredMessage="É necessário informar um cargo para realizar o cadastro"
@@ -240,13 +240,13 @@
 								</p:selectOneMenu>
 
 
-								<h:outputText value="CPF:" />
+								<p:outputLabel value="CPF:" />
 								<p:inputMask mask="999.999.999-99"
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.cpf}"
 									maxlength="14" style="width: 65pt !important;"
 									converter="#{cpfConverter}" />
 
-								<h:outputText value="RG:" />
+								<p:outputLabel value="RG:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.rg}"
 									style="width: 60pt !important;" />
@@ -280,7 +280,7 @@
 
 							<h:panelGrid columns="2">
 
-								<h:outputText value="Órgão RG:" />
+								<p:outputLabel value="Órgão RG:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.orgaoRG}"
 									style="width: 193pt !important;">
@@ -289,7 +289,7 @@
 								</p:selectOneMenu>
 							</h:panelGrid>
 							<h:panelGrid columns="4">
-								<h:outputText value="UF - RG:" />
+								<p:outputLabel value="UF - RG:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.ufExpedicaoRg}"
 									style="width: 60pt !important;">
@@ -303,7 +303,7 @@
 						<!-- Endereço -->
 						<p:tab title="Endereço">
 							<h:panelGrid columns="4">
-								<h:outputText value="UF:" />
+								<p:outputLabel value="UF:" />
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.endereco.municipio.uf}">
 
@@ -390,7 +390,8 @@
 							<h:panelGrid columns="2">
 
 
-								<h:outputText value="Perfil:" />
+																<p:outputLabel value="Perfil do usuário:" />
+
 								<p:selectOneMenu
 									value="#{funcionarioControle.funcionario.pessoa.perfil}"
 									style="width: 53pt !important;">

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Servico extends GenericEntity {
 	private static final long serialVersionUID = 7671468455131367941L;
 
-	// @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "servico_ID")
 	private Long codigo;
@@ -28,6 +28,14 @@ public class Servico extends GenericEntity {
 	@ManyToOne
 	@JoinColumn(name = "ordemServico_ID")
 	private OrdemServico ordemServico;
+
+	@Column(precision = 10, scale = 2, nullable = false)
+	private BigDecimal valorServico;
+
+	@Column(precision = 10, scale = 2)
+	private BigDecimal percentualComissao;
+
+	private String observacao;
 
 	// getters and setters
 
@@ -45,26 +53,6 @@ public class Servico extends GenericEntity {
 
 	public void setOrdemServico(OrdemServico ordemServico) {
 		this.ordemServico = ordemServico;
-	}
-
-	private String descricao;
-
-	@Column(precision = 10, scale = 2, nullable = false)
-	private BigDecimal valorServico;
-
-	@Column(precision = 10, scale = 2)
-	private BigDecimal percentualComissao;
-
-	private String observacao;
-
-	// getters and setters
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	public BigDecimal getValorServico() {

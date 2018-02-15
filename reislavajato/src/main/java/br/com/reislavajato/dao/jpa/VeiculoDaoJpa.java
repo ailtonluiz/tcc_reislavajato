@@ -42,22 +42,4 @@ public class VeiculoDaoJpa extends PersistenciaJpa<Veiculo> implements VeiculoDa
 			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
-
-	// public List<Veiculo> listarOrdenado() {
-	// Session sessao = HibernateUtil.getSessionFactory().openSession();
-	// try {
-	// @SuppressWarnings("deprecation")
-	// Criteria consulta = sessao.createCriteria(Veiculo.class);
-	// consulta.createAlias("marca", "m");
-	// consulta.addOrder(Order.asc("m.nome"));
-	// @SuppressWarnings("unchecked")
-	// List<Veiculo> resultado = consulta.list();
-	// return resultado;
-	//
-	// } catch (RuntimeException erro) {
-	// throw erro;
-	// } finally {
-	// sessao.close();
-	// }
-	// }
 }

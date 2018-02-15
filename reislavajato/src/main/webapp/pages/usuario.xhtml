@@ -27,18 +27,18 @@
 					
 					<p:column headerText="Funcionário"
 						filterBy="#{usuario.funcionario.pessoa.pessoaFisica.nome}">
-						<h:outputText value="#{usuario.funcionario.pessoa.pessoaFisica.nome}" />
+						<p:outputLabel value="#{usuario.funcionario.pessoa.pessoaFisica.nome}" />
 					</p:column>
 					
 
 					<p:column headerText="Usuário"
 						filterBy="#{usuario.username}">
-						<h:outputText value="#{usuario.username}" />
+						<p:outputLabel value="#{usuario.username}" />
 					</p:column>
 
 					<p:column headerText="Permissão" filterBy="#{usuario.tipoUsuario}"
 						style="width:8%">
-						<h:outputText value="#{usuario.tipoUsuario}" />
+						<p:outputLabel value="#{usuario.tipoUsuario}" />
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">

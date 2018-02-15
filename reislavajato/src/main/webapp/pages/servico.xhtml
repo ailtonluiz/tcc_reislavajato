@@ -24,19 +24,19 @@
 					</f:facet>
 					<p:column headerText="Serviço" sortBy="#{servico.descricao}"
 						style="width:65%">
-						<h:outputText value="#{servico.descricao}" />
+						<p:outputLabel value="#{servico.descricao}" />
 					</p:column>
 
 					<p:column headerText="Valor (R$)" style="width:15%">
-						<h:outputText value="#{servico.valorServico}">
+						<p:outputLabel value="#{servico.valorServico}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Comissão (%)" style="width:15%">
-						<h:outputText value="#{servico.percentualComissao} %">
+						<p:outputLabel value="#{servico.percentualComissao} %">
 							<f:convertNumber locale="pt_BR" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 					<!-- Edição / exclusão -->

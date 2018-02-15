@@ -26,12 +26,12 @@
 					</f:facet>
 					<p:column headerText="Sigla" sortBy="#{estado.sigla}"
 						style="width:65px">
-						<h:outputText value="#{estado.sigla}" />
+						<p:outputLabel value="#{estado.sigla}" />
 					</p:column>
 
 					<p:column headerText="Nome" filterBy="#{estado.nome}"
 						filterMatchMode="contains">
-						<h:outputText value="#{estado.nome}" />
+						<p:outputLabel value="#{estado.nome}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>

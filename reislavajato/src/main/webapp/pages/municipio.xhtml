@@ -11,10 +11,10 @@
 
          <p:panel header="Listagem de Município">
             <h:panelGrid columns="2">
-               <h:outputText value="Nome:" />
+               <p:outputLabel value="Nome:" />
                <p:inputText value="#{municipioControle.municipio.nome}" />
 
-               <h:outputText value="UF" />
+               <p:outputLabel value="UF" />
                <p:selectOneMenu value="#{municipioControle.municipio.uf}">
                   <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                </p:selectOneMenu>
@@ -31,18 +31,18 @@
                   </p:commandButton>
                </f:facet>
                <p:column headerText="Código" filterBy="#{municipio.codigo}" style="width:9%" filterMatchMode="contains">
-                  <h:outputText value="#{municipio.codigo}" />
+                  <p:outputLabel value="#{municipio.codigo}" />
                </p:column>
 
                <p:column headerText="Municipio" filterBy="#{municipio.nome}" filterMatchMode="contains">
-                  <h:outputText value="#{municipio.nome}" />
+                  <p:outputLabel value="#{municipio.nome}" />
                </p:column>
 
                <p:column headerText="UF" filterBy="#{municipio.uf}" filterMatchMode="contains">
                   <f:facet name="header">
-                     <h:outputText value="UF:" />
+                     <p:outputLabel value="UF:" />
                   </f:facet>
-                  <h:outputText value="#{municipio.uf.descricao}" />
+                  <p:outputLabel value="#{municipio.uf.descricao}" />
                </p:column>
 
                <p:column headerText="Opções" style="width:8%">
@@ -69,7 +69,7 @@
          <h:form id="frmCadastro">
             <h:panelGrid id="painel" columns="2">
 
-               <h:outputText value="UF" />
+               <p:outputLabel value="UF" />
                <p:selectOneMenu value="#{municipioControle.municipio.uf}" required="true" requiredMessage="É obrigatório informar o estado!">
                   <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                </p:selectOneMenu>

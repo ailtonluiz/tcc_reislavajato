@@ -19,6 +19,7 @@ import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
+import br.com.reislavajato.enumeradores.EnumTipoVeiculo;
 import br.com.reislavajato.enumeradores.EnumUf;
 
 @Controller("ControleEnumerador")
@@ -132,6 +133,14 @@ public class ControleEnumerador implements Serializable {
 	public List<EnumStatusServico> getListaEnumStatusServico() {
 		List<EnumStatusServico> retorno = new ArrayList<EnumStatusServico>();
 		for (EnumStatusServico enumerador : EnumStatusServico.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumTipoVeiculo> getListaEnumTipoVeiculo() {
+		List<EnumTipoVeiculo> retorno = new ArrayList<EnumTipoVeiculo>();
+		for (EnumTipoVeiculo enumerador : EnumTipoVeiculo.values()) {
 			retorno.add(enumerador);
 		}
 		return retorno;

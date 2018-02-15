@@ -8,8 +8,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
@@ -19,9 +24,19 @@ import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
  * @author ailtonluiz
  *
  */
-@SuppressWarnings("serial")
 @Entity
+@Table(name = "funcionario")
 public class Funcionario extends GenericEntity {
+	private static final long serialVersionUID = 8987612768176156271L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "funcionario_ID")
+	private Long codigo;
+
+	@ManyToOne
+	@JoinColumn(name = "ordemServico_ID")
+	private OrdemServico ordemServico;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa = new Pessoa();
@@ -56,13 +71,23 @@ public class Funcionario extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
 
-	@Column(length = 60)
-	private String login;
-
-	@Column(length = 60)
-	private String senha;
-
 	// getters and setters
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
+	}
+
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
+	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -168,19 +193,4 @@ public class Funcionario extends GenericEntity {
 		this.fatorRH = fatorRH;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 }

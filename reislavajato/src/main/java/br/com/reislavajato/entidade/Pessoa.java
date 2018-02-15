@@ -20,10 +20,6 @@ import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 public class Pessoa extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
-	private String observacao;
-
-	private Boolean cadastroAtivo = true;
-
 	@Enumerated(EnumType.STRING)
 	private EnumSimNao permitirEnvioEmail = EnumSimNao.SIM;
 
@@ -32,13 +28,6 @@ public class Pessoa extends GenericEntity {
 
 	@Enumerated(EnumType.STRING)
 	private EnumPerfil perfil = EnumPerfil.LAVADOR;
-
-	@Column(length = 100)
-	private String email;
-
-	@Column(name = "data_cadastro")
-	@Temporal(TemporalType.DATE)
-	private Date dataCadastro = new Date();
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
@@ -55,13 +44,30 @@ public class Pessoa extends GenericEntity {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Telefone telefone = new Telefone();
 
-	public Boolean getCadastroAtivo() {
-		return cadastroAtivo;
-	}
+	@Column(length = 70)
+	private String email;
 
-	public void setCadastroAtivo(Boolean cadastroAtivo) {
-		this.cadastroAtivo = cadastroAtivo;
-	}
+	@Column(length = 60)
+	private String senha;
+
+	@Column(length = 60)
+	private String login;
+
+	@Column(name = "data_cadastro")
+	@Temporal(TemporalType.DATE)
+	private Date dataCadastro = new Date();
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataSenha;
+
+	@Temporal(TemporalType.DATE)
+	private Date dataUltimoAcesso;
+
+	private String observacao;
+
+	private Boolean cadastroAtivo = true;
+	
+	// getters and setters
 
 	public EnumSimNao getPermitirEnvioEmail() {
 		return permitirEnvioEmail;
@@ -85,22 +91,6 @@ public class Pessoa extends GenericEntity {
 
 	public void setPerfil(EnumPerfil perfil) {
 		this.perfil = perfil;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Date getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
 	}
 
 	public PessoaFisica getPessoaFisica() {
@@ -143,6 +133,54 @@ public class Pessoa extends GenericEntity {
 		this.telefone = telefone;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Date getDataSenha() {
+		return dataSenha;
+	}
+
+	public void setDataSenha(Date dataSenha) {
+		this.dataSenha = dataSenha;
+	}
+
+	public Date getDataUltimoAcesso() {
+		return dataUltimoAcesso;
+	}
+
+	public void setDataUltimoAcesso(Date dataUltimoAcesso) {
+		this.dataUltimoAcesso = dataUltimoAcesso;
+	}
+
 	public String getObservacao() {
 		return observacao;
 	}
@@ -151,4 +189,11 @@ public class Pessoa extends GenericEntity {
 		this.observacao = observacao;
 	}
 
+	public Boolean getCadastroAtivo() {
+		return cadastroAtivo;
+	}
+
+	public void setCadastroAtivo(Boolean cadastroAtivo) {
+		this.cadastroAtivo = cadastroAtivo;
+	}
 }
