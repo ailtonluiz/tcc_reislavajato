@@ -27,9 +27,10 @@ import br.com.reislavajato.util.Numero;
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
-@SuppressWarnings({ "serial" })
-@Controller
+@Controller("funcionarioControle")
 public class FuncionarioControle extends ReisLavajatoControle implements Serializable {
+	private static final long serialVersionUID = -1615057246414126565L;
+
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
@@ -46,8 +47,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null
-				|| funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
 			return municipioNeg.listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
 			return municipioNeg.listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
@@ -60,8 +60,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void buscarCep() throws DadosInvalidosException {
 		try {
-			funcionario.getPessoa().setEndereco(
-					CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
+			funcionario.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
@@ -69,9 +68,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void listarFuncionarios() throws DadosInvalidosException {
 		try {
-
 			funcionarios = funcionarioNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
-
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
