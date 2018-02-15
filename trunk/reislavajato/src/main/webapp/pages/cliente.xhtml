@@ -123,7 +123,7 @@
 			<h:form id="frmCadastro">
 				<p:panel id="painel">
 					<h:panelGrid columns="2">
-						<h:outputLabel value="Tipo Pessoa?" />
+						<p:outputLabel value="Tipo Pessoa?" />
 						<p:selectOneRadio
 							value="#{clienteControle.cliente.pessoa.tipoPessoa}">
 							<p:ajax update="painel" />
@@ -158,7 +158,7 @@
 									maxlength="14" style="width: 150pt !important;"
 									converter="#{cpfConverter}" />
 
-								<h:outputLabel for="dtNasc" value="Data Nascimento:" />
+								<p:outputLabel for="dtNasc" value="Data Nascimento:" />
 								<p:calendar id="dtNasc" yearRange="-100:+0"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.dataNascimento}"
 									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -215,7 +215,7 @@
 									maxlength="70" size="66" />
 
 
-								<h:outputLabel for="dtAbert" value="Data Abertura:" />
+								<p:outputLabel for="dtAbert" value="Data Abertura:" />
 								<p:calendar id="dtAbert" yearRange="-100:+0"
 									value="#{clienteControle.cliente.pessoa.pessoaJuridica.dataAberturaEmpresa}"
 									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -228,17 +228,17 @@
 						<p:tab title="Dados Pessoais"
 							rendered="#{clienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
 							<h:panelGrid columns="2">
-								<h:outputLabel value="Nome do Pai:" for="nomePai" />
+								<p:outputLabel value="Nome do Pai:" for="nomePai" />
 								<p:inputText id="nomePai" maxlength="50" size="85"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.nomePai}" />
 
-								<h:outputLabel value="Nome da Mãe:" for="nomeMae" />
+								<p:outputLabel value="Nome da Mãe:" for="nomeMae" />
 								<p:inputText id="nomeMae" maxlength="50" size="85"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.nomeMae}" />
 							</h:panelGrid>
 
 							<h:panelGrid columns="4">
-								<h:outputLabel value="RG:" />
+								<p:outputLabel value="RG:" />
 								<p:inputText size="23" maxlength="10"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.rg}" />
 
@@ -259,7 +259,7 @@
 									<p:ajax update="municipio" />
 								</p:selectOneMenu>
 
-								<h:outputLabel for="dtExp" value="Data Expedição:" />
+								<p:outputLabel for="dtExp" value="Data Expedição:" />
 								<p:calendar id="dtExp" yearRange="-100:+0"
 									value="#{clienteControle.cliente.pessoa.pessoaFisica.dataExpedicaoRG}"
 									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -307,7 +307,7 @@
 										itemLabel="#{municipio.nome}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel value="CEP:" />
+								<p:outputLabel value="CEP:" />
 								<p:inputMask
 									value="#{clienteControle.cliente.pessoa.endereco.cep}"
 									mask="99999-999" maxlength="10" />
@@ -315,19 +315,19 @@
 									actionListener="#{ClienteControle.buscarCep}" />
 								<br />
 
-								<h:outputLabel value="Logradouro:" />
+								<p:outputLabel value="Logradouro:" />
 								<p:inputText
 									value="#{clienteControle.cliente.pessoa.endereco.logradouro}" />
 
-								<h:outputLabel value="Complemento:" />
+								<p:outputLabel value="Complemento:" />
 								<p:inputText
 									value="#{clienteControle.cliente.pessoa.endereco.complemento}" />
 
-								<h:outputLabel value="Bairro:" />
+								<p:outputLabel value="Bairro:" />
 								<p:inputText
 									value="#{clienteControle.cliente.pessoa.endereco.bairro}" />
 
-								<h:outputLabel value="Número:" />
+								<p:outputLabel value="Número:" />
 								<p:inputText
 									value="#{clienteControle.cliente.pessoa.endereco.numero}" />
 							</h:panelGrid>
@@ -335,19 +335,19 @@
 
 						<p:tab title="Telefone" id="tel">
 							<h:panelGrid columns="2">
-								<h:outputLabel value="Celular:" for="txt_celular" />
+								<p:outputLabel value="Celular:" for="txt_celular" />
 								<p:inputMask mask="(99) 9 9999-9999" id="txt_celular"
 									value="#{clienteControle.cliente.pessoa.telefone.celular}" />
 
-								<h:outputLabel value="Fixo:" />
+								<p:outputLabel value="Fixo:" />
 								<p:inputMask mask="(99) 9999-9999"
 									value="#{clienteControle.cliente.pessoa.telefone.fixo}" />
 
-								<h:outputLabel value="Comercial:" />
+								<p:outputLabel value="Comercial:" />
 								<p:inputMask mask="(99) 9999-9999"
 									value="#{clienteControle.cliente.pessoa.telefone.comercial}" />
 
-								<h:outputLabel value="Contato:" />
+								<p:outputLabel value="Contato:" />
 								<p:inputText
 									value="#{clienteControle.cliente.pessoa.telefone.contato}" />
 							</h:panelGrid>

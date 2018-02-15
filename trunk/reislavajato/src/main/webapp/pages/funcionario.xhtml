@@ -203,7 +203,7 @@
 										itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel for="dtEntEx" value="Data Admissão:" />
+								<p:outputLabel for="dtEntEx" value="Data Admissão:" />
 								<p:calendar id="dtEntEx" size="13"
 									value="#{funcionarioControle.funcionario.dataEntradaExercicio}"
 									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -251,7 +251,7 @@
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.rg}"
 									style="width: 60pt !important;" />
 
-								<h:outputLabel for="dtExp" value="Data Exp.:" />
+								<p:outputLabel for="dtExp" value="Data Exp.:" />
 								<p:calendar id="dtExp"
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataExpedicaoRG}"
 									size="14" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -269,7 +269,7 @@
 								</p:inputText>
 
 
-								<h:outputLabel for="dtNasc" value="Data Nasc:" />
+								<p:outputLabel for="dtNasc" value="Data Nasc:" />
 								<p:calendar id="dtNasc"
 									value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.dataNascimento}"
 									size="14" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
@@ -326,7 +326,7 @@
 							</h:panelGrid>
 							<h:panelGrid columns="3">
 
-								<h:outputLabel value="CEP:" />
+								<p:outputLabel value="CEP:" />
 								<p:inputMask
 									value="#{funcionarioControle.funcionario.pessoa.endereco.cep}"
 									size="10" mask="99999-999" maxlength="10" />
@@ -336,19 +336,19 @@
 								<!-- 								<br /> -->
 							</h:panelGrid>
 							<h:panelGrid columns="4">
-								<h:outputLabel value="Logradouro:" />
+								<p:outputLabel value="Logradouro:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.endereco.logradouro}" />
 
-								<h:outputLabel value="Complemento:" />
+								<p:outputLabel value="Complemento:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.endereco.complemento}" />
 
-								<h:outputLabel value="Bairro:" />
+								<p:outputLabel value="Bairro:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.endereco.bairro}" />
 
-								<h:outputLabel value="Número:" />
+								<p:outputLabel value="Número:" />
 								<p:inputText
 									value="#{funcionarioControle.funcionario.pessoa.endereco.numero}" />
 							</h:panelGrid>
@@ -356,25 +356,25 @@
 						<!-- Telefone -->
 						<p:tab title="Telefone" id="tel">
 							<h:panelGrid columns="4">
-								<h:outputLabel value="Celular:" for="txt_celular" />
+								<p:outputLabel value="Celular:" for="txt_celular" />
 								<p:inputMask mask="(99) 9 9999-9999" id="txt_celular"
 									value="#{funcionarioControle.funcionario.pessoa.telefone.celular}" />
 
-								<h:outputLabel value="Fixo:" />
+								<p:outputLabel value="Fixo:" />
 								<p:inputMask mask="(99) 9999-9999"
 									value="#{funcionarioControle.funcionario.pessoa.telefone.fixo}" />
 
-								<h:outputLabel value="Comercial:" />
+								<p:outputLabel value="Comercial:" />
 								<p:inputMask mask="(99) 9999-9999"
 									value="#{funcionarioControle.funcionario.pessoa.telefone.comercial}" />
 
-								<h:outputLabel value="Contato:" />
+								<p:outputLabel value="Contato:" />
 								<p:inputText for="obs"
 									value="#{funcionarioControle.funcionario.pessoa.telefone.contato}" />
 							</h:panelGrid>
 
 							<h:panelGrid columns="2">
-								<h:outputLabel value="Observações:" />
+								<p:outputLabel value="Observações:" />
 								<p:inputTextarea
 									value="#{funcionarioControle.funcionario.observacao}" id="obs"
 									maxlength="150" style="width: 202pt !important;" />
@@ -404,7 +404,7 @@
 							</h:panelGrid>
 							<!-- Senha -->
 							<h:panelGrid id="txtSenha" columns="4">
-								<h:outputLabel for="senha" value="Senha:" />
+								<p:outputLabel for="senha" value="Senha:" />
 								<p:password id="senha" feedback="true" minLength="4"
 									placeholder="Informe uma senha"
 									promptLabel="Informe sua nova senha" weakLabel="Fraca"
@@ -417,7 +417,7 @@
 									<f:validateRequired disabled="false" />
 								</p:password>
 
-								<h:outputLabel for="senha2" value="Confirmação:" />
+								<p:outputLabel for="senha2" value="Confirmação:" />
 								<p:password id="senha2" minLength="4" required="true"
 									feedback="true" weakLabel="Fraca" inline="true" goodLabel="Boa"
 									strongLabel="Ótima" promptLabel="Confirme sua nova senha"

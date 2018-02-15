@@ -96,7 +96,7 @@
 
 				<h:panelGrid id="painelU" columns="2">
 
-					<h:outputLabel for="tipo" value="Tipo de usuário" />
+					<p:outputLabel for="tipo" value="Tipo de usuário" />
 					<p:selectOneRadio id="tipo" required="true"
 						requiredMessage="Informe o tipo de usuário"
 						value="#{usuarioControle.usuario.tipoUsuario}">
@@ -107,7 +107,7 @@
 				</h:panelGrid>
 
 				<h:panelGrid id="txtSenha" columns="4">
-					<h:outputLabel for="senha" value="Senha:" />
+					<p:outputLabel for="senha" value="Senha:" />
 					<p:password id="senha" feedback="true" minLength="4"
 						placeholder="Informe uma senha"
 						promptLabel="Informe sua nova senha" weakLabel="Fraca"
@@ -119,7 +119,7 @@
 						<f:validateRequired disabled="false" />
 					</p:password>
 
-					<h:outputLabel for="senha2" value="Confirmação:" />
+					<p:outputLabel for="senha2" value="Confirmação:" />
 					<p:password id="senha2" minLength="4" required="true"
 						feedback="true" weakLabel="Fraca" inline="true" goodLabel="Boa"
 						strongLabel="Ótima" promptLabel="Confirme sua nova senha"

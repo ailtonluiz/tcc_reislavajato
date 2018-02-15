@@ -101,22 +101,22 @@
 					<p:inputText id="rua" value="#{cadastroControle.cadastro.rua}"
 						size="77" maxlength="65" required="true"
 						requiredMessage="Informe o nome da rua" />
-					<h:outputLabel for="num" value="Nº:" />
+					<p:outputLabel for="num" value="Nº:" />
 					<p:inputText id="num" value="#{cadastroControle.cadastro.numero}"
 						size="5" maxlength="5" required="true"
 						requiredMessage="Se não tiver número informe S/N" />
 				</h:panelGrid>
 
 				<h:panelGrid id="painel6" columns="6">
-					<h:outputLabel for="comp" value="Compl.:" />
+					<p:outputLabel for="comp" value="Compl.:" />
 					<p:inputText id="comp"
 						value="#{cadastroControle.cadastro.complemento}" size="25"
 						maxlength="25" />
-					<h:outputLabel for="bairro" value="Bairro:" />
+					<p:outputLabel for="bairro" value="Bairro:" />
 					<p:inputText id="bairro"
 						value="#{cadastroControle.cadastro.bairro}" size="29"
 						maxlength="40" />
-					<h:outputLabel for="cep" value="CEP:" />
+					<p:outputLabel for="cep" value="CEP:" />
 					<p:inputMask id="cep" mask="99.999-999"
 						value="#{cadastroControle.cadastro.cep}" size="10" maxlength="10" />
 				</h:panelGrid>
