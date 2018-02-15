@@ -18,20 +18,20 @@
 
 					<p:column headerText="Descrição" sortBy="#{servico.descricao}"
 						filterBy="#{servico.descricao}" filterMatchMode="contains">
-						<h:outputText value="#{servico.descricao}" />
+						<p:outputLabel value="#{servico.descricao}" />
 					</p:column>
 
 
 					<p:column headerText="Vlr. Serviço" style="width:8%">
-						<h:outputText value="#{servico.vlrServico}">
+						<p:outputLabel value="#{servico.vlrServico}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Comissão" style="width:8%">
-						<h:outputText value="#{servico.percComissao}">
+						<p:outputLabel value="#{servico.percComissao}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">
@@ -59,11 +59,11 @@
 							value="#{funcionarioControle.funcionarios}" var="func" rows="5">
 							<p:column headerText="Nome" sortBy="#{func.nome}"
 								filterBy="#{func.nome}" filterMatchMode="contains">
-								<h:outputText value="#{func.nome}" />
+								<p:outputLabel value="#{func.nome}" />
 							</p:column>
 
 							<p:column headerText="Cargo">
-								<h:outputText value="#{func.cargo.nomeCargo}" />
+								<p:outputLabel value="#{func.cargo.nomeCargo}" />
 							</p:column>
 							<p:column headerText="Opções" style="width:8%">
 								<p:commandButton icon="ui-icon-plus"
@@ -90,29 +90,29 @@
 					rows="3">
 
 					<p:column headerText="Descrição">
-						<h:outputText value="#{itemMovimento.servico.descricao}" />
+						<p:outputLabel value="#{itemMovimento.servico.descricao}" />
 					</p:column>
 
 					<p:column headerText="Vlr. Serviço" style="width:8%">
-						<h:outputText value="#{itemMovimento.servico.vlrServico}">
+						<p:outputLabel value="#{itemMovimento.servico.vlrServico}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Qtd." style="width:8%">
-						<h:outputText value="#{itemMovimento.quantidade}" />
+						<p:outputLabel value="#{itemMovimento.quantidade}" />
 					</p:column>
 
 					<p:column headerText="Vlr. Parcial" style="width:8%">
-						<h:outputText value="#{itemMovimento.vlrParcial}">
+						<p:outputLabel value="#{itemMovimento.vlrParcial}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Comissão" style="width:8%">
-						<h:outputText value="#{itemMovimento.servico.percComissao}">
+						<p:outputLabel value="#{itemMovimento.servico.percComissao}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 
@@ -132,9 +132,9 @@
 			<p:panel header="Total">
 				<p:panelGrid id="painelFinalizacao" columns="2">
 					<p:outputLabel value="Total: R$" />
-					<h:outputText value="#{movimentacaoControle.movimento.vlrTotal}">
+					<p:outputLabel value="#{movimentacaoControle.movimento.vlrTotal}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-					</h:outputText>
+					</p:outputLabel>
 				</p:panelGrid>
 				<p:panelGrid columns="2">
 					<p:commandButton value="Finalizar"
@@ -154,16 +154,16 @@
 			<h:form id="frmFinalizar">
 				<h:panelGrid id="pnlFinalizar" columns="2">
 					<p:outputLabel value="Horário:" />
-					<h:outputText value="#{movimentacaoControle.movimento.horario}">
+					<p:outputLabel value="#{movimentacaoControle.movimento.horario}">
 						<f:convertDateTime pattern="HH:mm  dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
-					</h:outputText>
+					</p:outputLabel>
 					<p:outputLabel value="Total: R$" />
-					<h:outputText value="#{movimentacaoControle.movimento.vlrTotal}">
+					<p:outputLabel value="#{movimentacaoControle.movimento.vlrTotal}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-					</h:outputText>
+					</p:outputLabel>
 					<h:outputFormat value="Serviço" />
-					<h:outputText value="#{movimentacaoControle.itemMovimento.servico}" />
+					<p:outputLabel value="#{movimentacaoControle.itemMovimento.servico}" />
 
 					<p:outputLabel for="lavador" value="Lavador: " />
 					<p:selectOneMenu id="lavador"

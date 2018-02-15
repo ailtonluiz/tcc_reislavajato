@@ -46,7 +46,7 @@
 									<f:selectItems value="#{checkboxView.checklist}" />
 								</p:selectCheckboxMenu>
 
-								<h:outputText value="Veículo:" />
+								<p:outputLabel value="Veículo:" />
 								<p:selectOneMenu id="veiculo" filter="true" effect="fold" editable="true"
 									converter="omnifaces.SelectItemsConverter"
 									value="#{veiculoControle.veiculo.modelo }">
@@ -67,7 +67,7 @@
 
 						<p:tab title="Serviços">
 							<h:panelGrid columns="2">
-								<h:outputText value="Serviço:" />
+								<p:outputLabel value="Serviço:" />
 								
 									<!-- Tela de serviço -->
 		<h:form id="frmListagem">
@@ -80,13 +80,13 @@
 					</f:facet>
 					<p:column headerText="Serviço" sortBy="#{servico.descricao}"
 						style="width:65%">
-						<h:outputText value="#{servico.descricao}" />
+						<p:outputLabel value="#{servico.descricao}" />
 					</p:column>
 
 					<p:column headerText="Valor (R$)" style="width:15%">
-						<h:outputText value="#{servico.valorServico}">
+						<p:outputLabel value="#{servico.valorServico}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-						</h:outputText>
+						</p:outputLabel>
 					</p:column>
 
 			
@@ -119,7 +119,7 @@
 
 						<p:tab title="Totais">
 							<h:panelGrid columns="2">
-								<h:outputText value="Total:" />
+								<p:outputLabel value="Total:" />
 
 							</h:panelGrid>
 						</p:tab>

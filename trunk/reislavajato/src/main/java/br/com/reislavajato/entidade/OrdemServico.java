@@ -1,5 +1,6 @@
 package br.com.reislavajato.entidade;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.reislavajato.enumeradores.EnumFormaPagamento;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 @Entity
@@ -25,7 +27,7 @@ import br.com.reislavajato.enumeradores.EnumStatusServico;
 public class OrdemServico extends GenericEntity {
 	private static final long serialVersionUID = -1028738456860340307L;
 
-	//@Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ordemServico_ID")
 	private Long codigo;
@@ -53,6 +55,21 @@ public class OrdemServico extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataHoraSaidaReal = new Date();
 
+	// @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "ordemServico", orphanRemoval = true)
+	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+
+	@Enumerated(EnumType.STRING)
+	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
+
+	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
+	private BigDecimal valorTotal;
+
+	@Column(precision = 10, scale = 2)
+	private BigDecimal descontoServico;
+
+	private String observacao;
+
 	// getters and setters
 
 	public Long getCodigo() {
@@ -61,6 +78,14 @@ public class OrdemServico extends GenericEntity {
 
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
+	}
+
+	public List<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
 	}
 
 	public Long getNumeroOrdemServico() {
@@ -85,14 +110,6 @@ public class OrdemServico extends GenericEntity {
 
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
-	}
-
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
 	}
 
 	public EnumStatusServico getStatusServico() {
@@ -125,6 +142,46 @@ public class OrdemServico extends GenericEntity {
 
 	public void setDataHoraSaidaReal(Date dataHoraSaidaReal) {
 		this.dataHoraSaidaReal = dataHoraSaidaReal;
+	}
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public EnumFormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(EnumFormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
+	public BigDecimal getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public BigDecimal getDescontoServico() {
+		return descontoServico;
+	}
+
+	public void setDescontoServico(BigDecimal descontoServico) {
+		this.descontoServico = descontoServico;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 }

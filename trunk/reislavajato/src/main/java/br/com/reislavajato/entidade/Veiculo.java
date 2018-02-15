@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 
 import br.com.reislavajato.enumeradores.EnumCor;
 import br.com.reislavajato.enumeradores.EnumMarca;
+import br.com.reislavajato.enumeradores.EnumTipoVeiculo;
 
 /**
  * @Criado por: ailtonluiz
@@ -14,6 +15,9 @@ import br.com.reislavajato.enumeradores.EnumMarca;
 @Entity
 public class Veiculo extends GenericEntity {
 	private static final long serialVersionUID = 4996325251017697447L;
+
+	@Enumerated(EnumType.STRING)
+	private EnumTipoVeiculo tipoVeiculo = EnumTipoVeiculo.AUTOMOVEL;
 
 	@Enumerated(EnumType.STRING)
 	private EnumMarca marca = EnumMarca.FIAT;
@@ -29,28 +33,12 @@ public class Veiculo extends GenericEntity {
 
 	// getters and setters
 
-	public String getPlaca() {
-		return placa;
+	public EnumTipoVeiculo getTipoVeiculo() {
+		return tipoVeiculo;
 	}
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
-
-	public EnumCor getCor() {
-		return cor;
-	}
-
-	public void setCor(EnumCor cor) {
-		this.cor = cor;
-	}
-
-	public Long getKm() {
-		return km;
-	}
-
-	public void setKm(Long km) {
-		this.km = km;
+	public void setTipoVeiculo(EnumTipoVeiculo tipoVeiculo) {
+		this.tipoVeiculo = tipoVeiculo;
 	}
 
 	public EnumMarca getMarca() {
@@ -68,4 +56,29 @@ public class Veiculo extends GenericEntity {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
+	public Long getKm() {
+		return km;
+	}
+
+	public void setKm(Long km) {
+		this.km = km;
+	}
+
+	public EnumCor getCor() {
+		return cor;
+	}
+
+	public void setCor(EnumCor cor) {
+		this.cor = cor;
+	}
+
 }

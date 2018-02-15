@@ -13,13 +13,13 @@
                      <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                   </p:commandButton>
                </f:facet>
-               
-                <p:column headerText="Marca" sortBy="#{veiculo.marca}" filterBy="#{veiculo.marca}" filterMatchMode="contains">
-                  <h:outputText value="#{veiculo.marca.descricao}" />
+
+               <p:column headerText="Marca" sortBy="#{veiculo.marca}" filterBy="#{veiculo.marca}" filterMatchMode="contains">
+                  <p:outputLabel value="#{veiculo.marca.descricao}" />
                </p:column>
-                  
+
                <p:column headerText="Modelo" sortBy="#{veiculo.modelo}" filterBy="#{veiculo.modelo}" filterMatchMode="contains">
-                  <h:outputText value="#{veiculo.modelo}" />
+                  <p:outputLabel value="#{veiculo.modelo}" />
                </p:column>
 
                <p:column headerText="Opções" style="width:8%">
@@ -46,7 +46,13 @@
       <p:dialog header="Cadastro de veículos" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
          <h:form id="frmCadastro">
             <h:panelGrid id="painel" columns="2">
-               <p:outputLabel for="marca" value="Marca" />
+               <p:outputLabel for="tipoVeiculo" value="Tipo do Veículo:" />
+               <p:selectOneMenu id="tipoVeiculo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{veiculoControle.veiculo.tipoVeiculo}">
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo de veículo" />
+                  <f:selectItems value="#{ControleEnumerador.listaEnumTipoVeiculo}" var="tipoVeiculo" itemValue="#{tipoVeiculo}" itemLabel="#{tipoVeiculo.descricao}" />
+               </p:selectOneMenu>
+
+               <p:outputLabel for="marca" value="Marca:" />
                <p:selectOneMenu id="marca" filter="true" converter="omnifaces.SelectItemsConverter" value="#{veiculoControle.veiculo.marca}">
                   <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Marca" />
                   <f:selectItems value="#{ControleEnumerador.listaEnumMarca}" var="marca" itemValue="#{marca}" itemLabel="#{marca.descricao}" />

@@ -33,7 +33,7 @@ public class ItemMovimento extends GenericEntity {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Movimento movimento;
+	private OrdemServico ordemServico;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -71,12 +71,12 @@ public class ItemMovimento extends GenericEntity {
 		this.servico = servico;
 	}
 
-	public Movimento getMovimento() {
-		return movimento;
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
 	}
 
-	public void setMovimento(Movimento movimento) {
-		this.movimento = movimento;
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
 	}
 
 	public Funcionario getFuncionario() {

@@ -51,38 +51,38 @@
 						</p:panelGrid>
 
 						<p:panelGrid columns="18" id="pnlDadosPrincipais2">
-							<h:outputText for="al" value="Alarme: " />
+							<p:outputLabel for="al" value="Alarme: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.alarme}" />
 
-							<h:outputText for="vd" value="Vidro: " />
+							<p:outputLabel for="vd" value="Vidro: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.vidro}" />
 
-							<h:outputText for="ch" value="Chave: " />
+							<p:outputLabel for="ch" value="Chave: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.chave}" />
 
-							<h:outputText for="mc" value="Macaco: " />
+							<p:outputLabel for="mc" value="Macaco: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.macaco}" />
 
-							<h:outputText for="tr" value="Triângulo: " />
+							<p:outputLabel for="tr" value="Triângulo: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.triangulo}" />
 
-							<h:outputText for="sp" value="Estepe: " />
+							<p:outputLabel for="sp" value="Estepe: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.estepe}" />
 
-							<h:outputText for="ex" value="Extintor: " />
+							<p:outputLabel for="ex" value="Extintor: " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.extintor}" />
 
-							<h:outputText for="tp" value="Tapetes " />
+							<p:outputLabel for="tp" value="Tapetes " />
 							<p:selectBooleanCheckbox
 								value="#{movimentacaoControle.movimento.tapetes}" />
-							<h:outputText value="Obs:" />
+							<p:outputLabel value="Obs:" />
 							<p:inputText value="#{movimentacaoControle.movimento.observacao}"
 								size="45" />
 
@@ -97,19 +97,19 @@
 
 								<p:column headerText="Descrição" filterBy="#{servico.descricao}"
 									filterMatchMode="contains">
-									<h:outputText value="#{servico.descricao}" />
+									<p:outputLabel value="#{servico.descricao}" />
 								</p:column>
 
 								<p:column headerText="Vlr. Serviço" style="width:8%">
-									<h:outputText value="#{servico.vlrServico}">
+									<p:outputLabel value="#{servico.vlrServico}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 								<p:column headerText="Comissão" style="width:8%">
-									<h:outputText value="#{servico.percComissao}">
+									<p:outputLabel value="#{servico.percComissao}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 								<p:column headerText="Opções" style="width:8%">
@@ -167,19 +167,19 @@
 
 								<p:column headerText="Descrição" sortBy="#{servico.descricao}"
 									filterBy="#{servico.descricao}" filterMatchMode="contains">
-									<h:outputText value="#{servico.descricao}" />
+									<p:outputLabel value="#{servico.descricao}" />
 								</p:column>
 
 								<p:column headerText="Vlr. Serviço" style="width:8%">
-									<h:outputText value="#{servico.vlrServico}">
+									<p:outputLabel value="#{servico.vlrServico}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 								<p:column headerText="Comissão" style="width:8%">
-									<h:outputText value="#{servico.percComissao}">
+									<p:outputLabel value="#{servico.percComissao}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 								<p:column headerText="Opções" style="width:8%">
@@ -202,31 +202,31 @@
 								rows="3">
 
 								<p:column headerText="Descrição">
-									<h:outputText
+									<p:outputLabel
 										value="#{itemMovimento.servico.descricao}" />
 								</p:column>
 
 								<p:column headerText="Vlr. Serviço" style="width:8%">
-									<h:outputText value="#{itemMovimento.servico.vlrServico}">
+									<p:outputLabel value="#{itemMovimento.servico.vlrServico}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 								<p:column headerText="Qtd." style="width:8%">
-									<h:outputText value="#{itemMovimento.quantidade}" />
+									<p:outputLabel value="#{itemMovimento.quantidade}" />
 								</p:column>
 
 								<p:column headerText="Vlr. Parcial" style="width:8%">
-									<h:outputText value="#{itemMovimento.vlrParcial}">
+									<p:outputLabel value="#{itemMovimento.vlrParcial}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 								<p:column headerText="Comissão" style="width:8%">
-									<h:outputText
+									<p:outputLabel
 										value="#{itemMovimento.servico.percComissao}">
 										<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-									</h:outputText>
+									</p:outputLabel>
 								</p:column>
 
 
