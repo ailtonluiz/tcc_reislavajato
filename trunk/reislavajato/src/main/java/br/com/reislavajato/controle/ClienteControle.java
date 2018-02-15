@@ -30,7 +30,7 @@ import br.com.reislavajato.util.ReisLavajatoUtil;
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
-@Controller
+@Controller("ClienteControle")
 public class ClienteControle extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = -7622599240385845530L;
 
@@ -77,8 +77,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
 				clientes = clienteNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
 			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				clientes = clienteNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta),
-						nomeFantasiaConsulta);
+				clientes = clienteNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
 			}
 		} catch (Exception e) {
 			addMensagemErro(e.getMessage());
@@ -97,7 +96,6 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 	public void salvar() throws DadosInvalidosException {
 		try {
 			this.setarAntesPersistir(cliente);
-
 			clienteNeg.alterar(cliente);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
@@ -122,7 +120,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 			if (cliente.getPessoa().getEndereco().getMunicipio() == null) {
 				cliente.getPessoa().getEndereco().setMunicipio(new Municipio());
 			}
-		
+
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -130,16 +128,14 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	public void buscarCep() throws DadosInvalidosException {
 		try {
-			cliente.getPessoa().setEndereco(
-					CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(cliente.getPessoa().getEndereco().getCep())));
+			cliente.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(cliente.getPessoa().getEndereco().getCep())));
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null
-				|| cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null || cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
 			return municipioNeg.listarPorUf(cliente.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
 			return municipioNeg.listarPorNome(cliente.getPessoa().getEndereco().getMunicipio().getNome());

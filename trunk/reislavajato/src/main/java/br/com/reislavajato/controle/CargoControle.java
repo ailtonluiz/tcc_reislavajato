@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Faces;
@@ -30,10 +29,10 @@ import net.sf.jasperreports.view.JasperViewer;
  * @Criado por: ailtonluiz
  * @Data: 13 de ago de 2017
  */
-@SuppressWarnings({ "serial" })
 @Controller
-@ViewScoped
 public class CargoControle extends ReisLavajatoControle implements Serializable {
+	private static final long serialVersionUID = 2611869376413469275L;
+
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
