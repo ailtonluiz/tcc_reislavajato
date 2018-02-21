@@ -27,7 +27,7 @@ import br.com.reislavajato.enumeradores.EnumStatusServico;
 public class OrdemServico extends GenericEntity {
 	private static final long serialVersionUID = -1028738456860340307L;
 
-	@Id
+	//@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ordemServico_ID")
 	private Long codigo;

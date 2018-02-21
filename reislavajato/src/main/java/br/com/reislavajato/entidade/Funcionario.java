@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -29,7 +28,7 @@ import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
 public class Funcionario extends GenericEntity {
 	private static final long serialVersionUID = 8987612768176156271L;
 
-	@Id
+	//@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "funcionario_ID")
 	private Long codigo;

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Servico extends GenericEntity {
 	private static final long serialVersionUID = 7671468455131367941L;
 
-	@Id
+	//@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "servico_ID")
 	private Long codigo;
