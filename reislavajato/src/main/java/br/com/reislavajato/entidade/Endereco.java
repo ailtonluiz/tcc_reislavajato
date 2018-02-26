@@ -1,15 +1,13 @@
 package br.com.reislavajato.entidade;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Endereco extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne
 	private Municipio municipio = new Municipio();
 
 	private String cep;

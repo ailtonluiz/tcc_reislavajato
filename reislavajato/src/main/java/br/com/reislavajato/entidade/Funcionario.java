@@ -2,6 +2,8 @@ package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,14 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.reislavajato.enumeradores.EnumCategoriaCNH;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
+import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
 
 /**
@@ -25,22 +30,20 @@ import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
  */
 @Entity
 @Table(name = "funcionario")
-public class Funcionario extends GenericEntity {
-	private static final long serialVersionUID = 8987612768176156271L;
+public class Funcionario { // extends GenericEntity {
 
-	//@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "funcionario_ID")
-	private Long codigo;
+	@Id
+	@Column(name = "funcionario_id")
+	@GeneratedValue
+	private Long funcionarioId;
 
-	@ManyToOne
-	@JoinColumn(name = "ordemServico_ID")
-	private OrdemServico ordemServico;
+	@ManyToMany(mappedBy = "funcionarios")
+	private Set<Servico> servicos = new HashSet<Servico>();
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa = new Pessoa();
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Cargo cargo;
 
 	private String carteiraTrabalho;
@@ -53,7 +56,13 @@ public class Funcionario extends GenericEntity {
 
 	private String cnh;
 
+	@Temporal(TemporalType.DATE)
 	private Date dataEntradaExercicio;
+
+	@Temporal(TemporalType.DATE)
+	private Date dataSaida;
+
+	private EnumSimNao ativo = EnumSimNao.SIM;
 
 	@Column(length = 150)
 	private String observacao;
@@ -70,22 +79,20 @@ public class Funcionario extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
 
-	// getters and setters
-
-	public Long getCodigo() {
-		return codigo;
+	public Long getFuncionarioId() {
+		return funcionarioId;
 	}
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
+	public void setFuncionarioId(Long funcionarioId) {
+		this.funcionarioId = funcionarioId;
 	}
 
-	public OrdemServico getOrdemServico() {
-		return ordemServico;
+	public Set<Servico> getServicos() {
+		return servicos;
 	}
 
-	public void setOrdemServico(OrdemServico ordemServico) {
-		this.ordemServico = ordemServico;
+	public void setServicos(Set<Servico> servicos) {
+		this.servicos = servicos;
 	}
 
 	public Pessoa getPessoa() {
@@ -152,6 +159,22 @@ public class Funcionario extends GenericEntity {
 		this.dataEntradaExercicio = dataEntradaExercicio;
 	}
 
+	public Date getDataSaida() {
+		return dataSaida;
+	}
+
+	public void setDataSaida(Date dataSaida) {
+		this.dataSaida = dataSaida;
+	}
+
+	public EnumSimNao getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(EnumSimNao ativo) {
+		this.ativo = ativo;
+	}
+
 	public String getObservacao() {
 		return observacao;
 	}
@@ -192,4 +215,33 @@ public class Funcionario extends GenericEntity {
 		this.fatorRH = fatorRH;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%scodigo=%d]", getClass().getSimpleName(), getFuncionarioId());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((funcionarioId == null) ? 0 : funcionarioId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		if (funcionarioId == null) {
+			if (other.funcionarioId != null)
+				return false;
+		} else if (!funcionarioId.equals(other.funcionarioId))
+			return false;
+		return true;
+	}
 }

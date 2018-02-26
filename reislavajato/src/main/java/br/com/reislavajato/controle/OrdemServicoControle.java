@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -35,11 +39,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private OrdemServicoNeg ordemServicoNeg = context.getBean(OrdemServicoNeg.class);
-	private ClienteNeg clienteNeg = context.getBean(ClienteNeg.class);
-	private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
-	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
-
 	private OrdemServico ordemServico;
 	private List<OrdemServico> ordensServicos;
 
@@ -59,7 +58,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
-
 		cpfConsulta = "";
 		nomeConsulta = "";
 		cnpjConsulta = "";
@@ -72,11 +70,11 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void listarOrdensServico() throws DadosInvalidosException {
 		try {
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
-				ordensServicos = ordemServicoNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
 			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				ordensServicos = ordemServicoNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
 			} else {
-				ordensServicos = ordemServicoNeg.listarPorStatus(statusServicoConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorStatus(statusServicoConsulta);
 			}
 		} catch (Exception e) {
 			addMensagemErro(e.getMessage());
@@ -85,7 +83,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			ordemServicoNeg.incluir(ordemServico);
+			// context.getBean(OrdemServicoNeg.class).incluir(ordemServico);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -96,7 +94,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			ordemServico = (OrdemServico) evento.getComponent().getAttributes().get("registroSelecionado");
-			ordemServicoNeg.excluir(ordemServico);
+			context.getBean(OrdemServicoNeg.class).excluir(ordemServico);
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -110,19 +108,19 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 			addMensagemErroFatal(erro);
 		}
 	}
-	
+
 	// private void calcularValorTotalServico(Movimento movimento) {
-		// BigDecimal valorTotalServico = new BigDecimal(0.0);
-		//
-		// for (Veiculo veiculo : movimento.getCliente().getVeiculos()) {
-		// for (Servico servico : veiculo.getServicos()) {
-		// valorTotalServico.add(servico.getValorServico());
-		// }
-		// }
-		//
-		// movimento.setValorTotal(valorTotalServico);
-		// }
-	
+	// BigDecimal valorTotalServico = new BigDecimal(0.0);
+	//
+	// for (Veiculo veiculo : movimento.getCliente().getVeiculos()) {
+	// for (Servico servico : veiculo.getServicos()) {
+	// valorTotalServico.add(servico.getValorServico());
+	// }
+	// }
+	//
+	// movimento.setValorTotal(valorTotalServico);
+	// }
+
 	// private void finalizar() throws DadosInvalidosException {
 	// try {
 	// this.calcularValorTotalServico(movimento);
@@ -130,21 +128,41 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	// addMensagemErroFatal(erro);
 	// }
 	// }
-	
+
 	public List<Cliente> getClientes() throws DadosInvalidosException {
 		if (ordemServico.getCliente().getPessoa().getTipoPessoa().equals(EnumTipoPessoa.PF)) {
-			return clienteNeg.listarPorTipoPessoa(EnumTipoPessoa.PF);
+			return context.getBean(ClienteNeg.class).listarPorTipoPessoa(EnumTipoPessoa.PF);
 		} else {
-			return clienteNeg.listarPorTipoPessoa(EnumTipoPessoa.PJ);
+			return context.getBean(ClienteNeg.class).listarPorTipoPessoa(EnumTipoPessoa.PJ);
 		}
 	}
 
 	public List<Veiculo> getModelosVeiculo() throws DadosInvalidosException {
-		return veiculoNeg.listarVeiculoPorMarca(ordemServico.getVeiculo().getMarca());
+		return context.getBean(VeiculoNeg.class).listarVeiculoPorMarca(ordemServico.getVeiculo().getMarca());
 	}
 
 	public List<Servico> getServicos() throws DadosInvalidosException {
-		return servicoNeg.listar();
+		return context.getBean(ServicoNeg.class).listar();
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Servico Edited", ((Servico) event.getObject()).getServicoId().toString());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled", ((Servico) event.getObject()).getServicoId().toString());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 	}
 
 	// getters and setters

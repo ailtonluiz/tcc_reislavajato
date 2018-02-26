@@ -24,7 +24,7 @@ public class PessoaJuridica extends GenericEntity {
 
 	private String inscricaoEstadual;
 	private String inscricaoMunicipal;
-	
+
 	private String contatoEmpresa;
 
 	@Temporal(TemporalType.DATE)
@@ -71,7 +71,7 @@ public class PessoaJuridica extends GenericEntity {
 	public void setInscricaoMunicipal(String inscricaoMunicipal) {
 		this.inscricaoMunicipal = inscricaoMunicipal;
 	}
-	
+
 	public String getContatoEmpresa() {
 		return contatoEmpresa;
 	}

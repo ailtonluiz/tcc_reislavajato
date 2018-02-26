@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
    template="/templates/modelo.xhtml">
 
    <p:growl id="mensagem" />
@@ -33,7 +29,7 @@
                </f:facet>
 
                <p:column headerText="Nome" sortBy="#{funcionario.pessoa.pessoaFisica.nome}" filterBy="#{funcionario.pessoa.pessoaFisica.nome}" filterMatchMode="contains">
-                  <p:outputLabel value="#{funcionario.pessoa.pessoaFisica.nome}"  />
+                  <p:outputLabel value="#{funcionario.pessoa.pessoaFisica.nome}" />
                </p:column>
 
                <p:column headerText="CPF" filterBy="#{funcionario.pessoa.pessoaFisica.cpf}" style="width:10%">
@@ -71,8 +67,24 @@
                   <!-- Dados Pessoais -->
                   <p:tab title="Dados Pessoais">
                      <h:panelGrid columns="2">
-                        <p:outputLabel value="Nome:" for="nm" />
-                        <p:inputText id="nm" value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 200pt !important;" required="true" requiredMessage="É obrigatório informar o nome do funcionário" />
+                        <p:outputLabel value="Funcionário ativo?" />
+                        <p:selectOneRadio value="#{funcionarioControle.funcionario.ativo}">
+                           <p:ajax update="dataSaida" />
+                           <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectOneRadio>
+
+                        <p:outputLabel for="dataSaida" value="Data Demissão:" />
+                        <p:calendar id="dataSaida" size="13" value="#{funcionarioControle.funcionario.dataSaida}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true" locale="pt" yearRange="-100:+0"
+                           disabled="#{funcionarioControle.funcionario.ativo.abreviado == 'S'}" />
+
+                        <p:outputLabel value="Usuário do Sistema?" />
+                        <p:selectOneRadio value="#{funcionarioControle.funcionario.pessoa.usuarioSistema}">
+                           <p:ajax update=":frmCadastro:painel" />
+                           <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectOneRadio>
+
+                        <p:outputLabel value="Nome:" />
+                        <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 200pt !important;" />
 
                         <p:outputLabel value="Nome da Mãe:" />
                         <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nomeMae}" maxlength="50" style="width: 200pt !important;" />
@@ -81,16 +93,12 @@
                         <p:inputText value="#{funcionarioControle.funcionario.pessoa.pessoaFisica.nomePai}" maxlength="50" style="width: 200pt !important;" />
 
                         <p:outputLabel value="E-mail:" />
-                        <p:inputText value="#{funcionarioControle.funcionario.pessoa.email}" maxlength="70" style="width: 200pt !important;" />
+                        <p:inputText id="email" value="#{funcionarioControle.funcionario.pessoa.email}" required="true" validatorMessage="e-mail invalido!" immediate="true">
+                           <f:validateRegex pattern="[a-zA-Z0-9\-\_.]+@[a-zA-Z0-9\-\_.]+" />
+                        </p:inputText>
 
                         <p:outputLabel value="Permitir envio?" />
                         <p:selectOneRadio value="#{funcionarioControle.funcionario.pessoa.permitirEnvioEmail}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                        </p:selectOneRadio>
-
-                        <p:outputLabel value="Usuário do Sistema?" />
-                        <p:selectOneRadio value="#{funcionarioControle.funcionario.pessoa.usuarioSistema}">
-                           <p:ajax update=":frmCadastro:painel" />
                            <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectOneRadio>
 
@@ -191,7 +199,7 @@
                   </p:tab>
                   <!-- Endereço -->
                   <p:tab title="Endereço">
-                     <h:panelGrid columns="4" id="uf">
+                     <h:panelGrid columns="2" id="uf">
                         <p:outputLabel value="UF:" />
                         <p:selectOneMenu value="#{funcionarioControle.funcionario.pessoa.endereco.municipio.uf}">
                            <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -205,7 +213,7 @@
                         </p:selectOneMenu>
                      </h:panelGrid>
                      <h:panelGrid columns="3" id="cep">
-                      <p:outputLabel value="CEP:" />
+                        <p:outputLabel value="CEP:" />
                         <p:inputMask value="#{funcionarioControle.funcionario.pessoa.endereco.cep}" mask="99999-999" maxlength="10" />
                         <p:commandButton icon="ui-icon-search" value="Busar endereço" actionListener="#{funcionarioControle.buscarCep}" update="uf cep compl" />
                      </h:panelGrid>
