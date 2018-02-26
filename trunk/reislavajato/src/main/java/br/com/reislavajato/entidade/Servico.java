@@ -1,13 +1,16 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,17 +20,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "servico")
-public class Servico extends GenericEntity {
-	private static final long serialVersionUID = 7671468455131367941L;
+public class Servico { // extends GenericEntity {
 
-	//@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "servico_ID")
-	private Long codigo;
+	@Id
+	@Column(name = "servico_id")
+	@GeneratedValue
+	private Long servicoId;
 
 	@ManyToOne
-	@JoinColumn(name = "ordemServico_ID")
+	@JoinColumn(name = "ordemServico_id")
 	private OrdemServico ordemServico;
+
+	@ManyToMany // (cascade = { CascadeType.ALL })
+	@JoinTable(name = "servico_funcionario", joinColumns = { @JoinColumn(name = "servico_id") }, inverseJoinColumns = { @JoinColumn(name = "funcionario_id") })
+	private Set<Funcionario> funcionarios = new HashSet<Funcionario>();
 
 	@Column(precision = 10, scale = 2, nullable = false)
 	private BigDecimal valorServico;
@@ -40,20 +46,20 @@ public class Servico extends GenericEntity {
 
 	// getters and setters
 
-	public Long getCodigo() {
-		return codigo;
+	public Long getServicoId() {
+		return servicoId;
 	}
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
+	public void setServicoId(Long servicoId) {
+		this.servicoId = servicoId;
 	}
 
-	public OrdemServico getOrdemServico() {
-		return ordemServico;
+	public Set<Funcionario> getFuncionarios() {
+		return funcionarios;
 	}
 
-	public void setOrdemServico(OrdemServico ordemServico) {
-		this.ordemServico = ordemServico;
+	public void setFuncionarios(Set<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	public BigDecimal getValorServico() {
@@ -80,18 +86,42 @@ public class Servico extends GenericEntity {
 		this.observacao = observacao;
 	}
 
-	/**
-	 * @return the descricao
-	 */
 	public String getDescricao() {
 		return descricao;
 	}
 
-	/**
-	 * @param descricao the descricao to set
-	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%scodigo=%d]", getClass().getSimpleName(), getServicoId());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((servicoId == null) ? 0 : servicoId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Servico other = (Servico) obj;
+		if (servicoId == null) {
+			if (other.servicoId != null)
+				return false;
+		} else if (!servicoId.equals(other.servicoId))
+			return false;
+		return true;
 	}
 
 }

@@ -1,6 +1,7 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,8 +12,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
+import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.ServicoNeg;
 
 /**
@@ -25,28 +28,31 @@ import br.com.reislavajato.neg.ServicoNeg;
 public class ServicoControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private ServicoNeg servicoNeg = context.getBean(ServicoNeg.class);
-	private Servico servico = new Servico();
+	private Servico servico;
 	private List<Servico> servicos;
 
+	public ServicoControle() throws DadosInvalidosException {
+		this.novo();
+	}
+
 	@PostConstruct
+	public String novo() {
+		servico = new Servico();
+		servicos = new ArrayList<Servico>();
+		return "sucesso";
+	}
+
 	public void listar() throws DadosInvalidosException {
 		try {
-			servicos = servicoNeg.listar();
+			servicos = context.getBean(ServicoNeg.class).listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
 	}
 
-	@Override
-	public String novo() {
-		servico = new Servico();
-		return "sucesso";
-	}
-
 	public void salvar() throws DadosInvalidosException {
 		try {
-			servicoNeg.incluir(servico);
+			context.getBean(ServicoNeg.class).incluir(servico);
 			novo();
 			listar();
 			addMensagemInfo(msgIncluidoSucesso);
@@ -58,7 +64,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			servico = (Servico) evento.getComponent().getAttributes().get("registroSelecionado");
-			servicoNeg.excluir(servico);
+			context.getBean(ServicoNeg.class).excluir(servico);
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -72,6 +78,12 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 			addMensagemErroFatal(erro);
 		}
 	}
+
+	public List<Funcionario> getFuncionarios() throws DadosInvalidosException {
+		return context.getBean(FuncionarioNeg.class).listar();
+	}
+	
+	//getters and setters
 
 	public Servico getServico() {
 		return servico;

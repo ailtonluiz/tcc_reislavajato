@@ -65,25 +65,24 @@
          <version>4.3.7.RELEASE</version>
       </dependency>
 
-      <!-- Hiberante Core -->
-      <dependency>
-         <groupId>org.hibernate</groupId>
-         <artifactId>hibernate-core</artifactId>
-         <version>5.2.10.Final</version>
-      </dependency>
-      
-      <!-- Hibernate Validator -->
       <dependency>
          <groupId>org.hibernate.validator</groupId>
          <artifactId>hibernate-validator</artifactId>
          <version>6.0.7.Final</version>
       </dependency>
 
+      <!-- Hiberante Core -->
+      <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-core</artifactId>
+         <version>5.2.13.Final</version>
+      </dependency>
+
       <!-- Conector MySQL -->
       <dependency>
          <groupId>mysql</groupId>
          <artifactId>mysql-connector-java</artifactId>
-         <version>5.1.36</version>
+         <version>6.0.5</version>
       </dependency>
 
       <!-- JUnit -->
@@ -101,7 +100,6 @@
       </dependency>
 
       <!-- JSF Api -->
-
       <dependency>
          <groupId>com.sun.faces</groupId>
          <artifactId>jsf-api</artifactId>
@@ -206,6 +204,13 @@
          <groupId>javax.activation</groupId>
          <artifactId>activation</artifactId>
          <version>1.1.1</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+      <dependency>
+         <groupId>org.javassist</groupId>
+         <artifactId>javassist</artifactId>
+         <version>3.22.0-GA</version>
       </dependency>
 
       <!-- Apache Shiro Core -->

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,23 +25,32 @@ import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 @Entity
 @Table(name = "ordemServico")
-public class OrdemServico extends GenericEntity {
-	private static final long serialVersionUID = -1028738456860340307L;
+public class OrdemServico { // extends GenericEntity {
 
-	//@Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ordemServico_ID")
-	private Long codigo;
-
-	@OneToMany(mappedBy = "ordemServico", orphanRemoval = true)
-	private List<Servico> servicos = new ArrayList<>();
+	@Column(name = "ordemServico_id")
+	private Long ordemServicoId;
 
 	private Long numeroOrdemServico;
 
-	@OneToOne(orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordemServico", cascade = CascadeType.ALL)
+	private List<Servico> servicos = new ArrayList<Servico>();
+
+	// @OneToMany(mappedBy = "ordemServico")
+	// private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+
+	// @Transient
+	// private MediadorOrdemServico mediadorOrdemServico = new
+	// MediadorOrdemServico();
+	//
+	// @Transient
+	// private Servico servico = new Servico();
+
+	@OneToOne(fetch = FetchType.EAGER)
 	private Cliente cliente = new Cliente();
 
-	@OneToOne(orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	private Veiculo veiculo = new Veiculo();
 
 	@Enumerated(EnumType.STRING)
@@ -55,10 +65,6 @@ public class OrdemServico extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataHoraSaidaReal = new Date();
 
-	// @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@OneToMany(mappedBy = "ordemServico", orphanRemoval = true)
-	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-
 	@Enumerated(EnumType.STRING)
 	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
 
@@ -70,22 +76,12 @@ public class OrdemServico extends GenericEntity {
 
 	private String observacao;
 
-	// getters and setters
-
-	public Long getCodigo() {
-		return codigo;
+	public Long getOrdemServicoId() {
+		return ordemServicoId;
 	}
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
+	public void setOrdemServicoId(Long ordemServicoId) {
+		this.ordemServicoId = ordemServicoId;
 	}
 
 	public Long getNumeroOrdemServico() {
@@ -94,6 +90,14 @@ public class OrdemServico extends GenericEntity {
 
 	public void setNumeroOrdemServico(Long numeroOrdemServico) {
 		this.numeroOrdemServico = numeroOrdemServico;
+	}
+
+	public List<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
 	}
 
 	public Cliente getCliente() {
@@ -144,14 +148,6 @@ public class OrdemServico extends GenericEntity {
 		this.dataHoraSaidaReal = dataHoraSaidaReal;
 	}
 
-	public List<Funcionario> getFuncionarios() {
-		return funcionarios;
-	}
-
-	public void setFuncionarios(List<Funcionario> funcionarios) {
-		this.funcionarios = funcionarios;
-	}
-
 	public EnumFormaPagamento getFormaPagamento() {
 		return formaPagamento;
 	}
@@ -183,5 +179,7 @@ public class OrdemServico extends GenericEntity {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+
+	// getters and setters
 
 }
