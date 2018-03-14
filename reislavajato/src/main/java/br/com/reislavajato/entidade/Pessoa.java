@@ -67,7 +67,7 @@ public class Pessoa extends GenericEntity {
 
 	private Boolean cadastroAtivo = true;
 	
-	// getters and setters
+	// getters and setters 
 
 	public EnumSimNao getPermitirEnvioEmail() {
 		return permitirEnvioEmail;

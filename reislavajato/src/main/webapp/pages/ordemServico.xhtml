@@ -8,7 +8,7 @@
    <ui:define name="conteudo">
       <!-- Tela de listagem -->
       <h:form id="frmCadastro">
-         <p:panel header="Create a new book" style="margin-bottom:20px" id="painel">
+         <p:panel header="Lista de serviços" style="margin-bottom:20px" id="painel">
             <p:dataTable value="#{ordemServicoControle.servicos}" selection="#{ordemServicoControle.ordemServico.servicos}" rowKey="#{servico.codigo}" var="servico" id="servicoTable" editable="true" editMode="cell">
 
                <p:ajax event="rowEdit" listener="#{ordemServicoControle.onRowEdit}" update="servicoTable" />

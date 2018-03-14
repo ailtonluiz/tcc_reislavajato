@@ -21,6 +21,7 @@ import br.com.reislavajato.enumeradores.EnumUf;
 public class PessoaFisica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 	
+	
 	@CPF
 	private String cpf;
 

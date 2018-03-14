@@ -2,7 +2,7 @@ package br.com.reislavajato.entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+//
 @SuppressWarnings("serial")
 @Entity
 public class Cargo extends GenericEntity {
