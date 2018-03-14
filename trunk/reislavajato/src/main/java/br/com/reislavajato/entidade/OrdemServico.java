@@ -25,9 +25,9 @@ import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 @Entity
 @Table(name = "ordemServico")
-public class OrdemServico { // extends GenericEntity {
+public class OrdemServico  extends GenericEntity {
 
-	@Id
+	//@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ordemServico_id")
 	private Long ordemServicoId;
