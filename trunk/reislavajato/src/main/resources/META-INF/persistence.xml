@@ -9,6 +9,7 @@
 		<!-- provedor/implementação do JPA -->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+
 		<properties>
 			<!-- dados da conexão -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/lavajato" />
