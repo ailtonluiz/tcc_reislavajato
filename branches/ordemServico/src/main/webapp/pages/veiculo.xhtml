@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   template="/templates/modelo.xhtml">
+
+   <ui:define name="conteudo">
+      <!-- Tela de listagem -->
+      <h:form id="frmListagem">
+         <p:panel header="Listagem de veiculos">
+            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{veiculoControle.veiculos}" paginatorPosition="top" var="veiculo" rows="5">
+               <f:facet name="footer">
+                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{veiculoControle.novo}" update=":frmCadastro:painel">
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                  </p:commandButton>
+               </f:facet>
+
+               <p:column headerText="Marca" sortBy="#{veiculo.marca}" filterBy="#{veiculo.marca}" filterMatchMode="contains">
+                  <p:outputLabel value="#{veiculo.marca.descricao}" />
+               </p:column>
+
+               <p:column headerText="Modelo" sortBy="#{veiculo.modelo}" filterBy="#{veiculo.modelo}" filterMatchMode="contains">
+                  <p:outputLabel value="#{veiculo.modelo}" />
+               </p:column>
+
+               <p:column headerText="Opções" style="width:8%">
+                  <p:commandButton icon="ui-icon-trash" actionListener="#{veiculoControle.excluir}" update=":mensagem :frmListagem:tabela">
+                     <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
+                     <f:attribute name="registroSelecionado" value="#{veiculo}" />
+                  </p:commandButton>
+                  <p:commandButton icon="ui-icon-pencil" actionListener="#{veiculoControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+                     <f:attribute name="registroSelecionado" value="#{veiculo}" />
+                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                  </p:commandButton>
+               </p:column>
+
+            </p:dataTable>
+            <!-- Botão de opções -->
+            <p:confirmDialog global="true">
+               <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+               <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+
+         </p:panel>
+      </h:form>
+      <!-- Tela de Cadastros -->
+      <p:dialog header="Cadastro de veículos" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
+         <h:form id="frmCadastro">
+            <h:panelGrid id="painel" columns="2">
+               <p:outputLabel for="tipoVeiculo" value="Tipo do Veículo:" />
+               <p:selectOneMenu id="tipoVeiculo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{veiculoControle.veiculo.tipoVeiculo}">
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo de veículo" />
+                  <f:selectItems value="#{ControleEnumerador.listaEnumTipoVeiculo}" var="tipoVeiculo" itemValue="#{tipoVeiculo}" itemLabel="#{tipoVeiculo.descricao}" />
+               </p:selectOneMenu>
+
+               <p:outputLabel for="marca" value="Marca:" />
+               <p:selectOneMenu id="marca" filter="true" converter="omnifaces.SelectItemsConverter" value="#{veiculoControle.veiculo.marca}">
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Marca" />
+                  <f:selectItems value="#{ControleEnumerador.listaEnumMarca}" var="marca" itemValue="#{marca}" itemLabel="#{marca.descricao}" />
+               </p:selectOneMenu>
+
+               <p:outputLabel for="modelo" value="Modelo:" />
+               <p:inputText id="modelo" size="20" maxlength="20" value="#{veiculoControle.veiculo.modelo}" required="true" requiredMessage="É obrigatório informar o modelo do veículo" />
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+               <p:commandButton value="Salvar" actionListener="#{veiculoControle.salvar}" icon="ui-icon-check" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+               <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
+            </h:panelGrid>
+         </h:form>
+      </p:dialog>
+
+   </ui:define>
+</ui:composition>
