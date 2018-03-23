@@ -2,17 +2,16 @@ package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,18 +28,15 @@ import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
  *
  */
 @Entity
-@Table(name = "funcionario")
-public class Funcionario { // extends GenericEntity {
+@Table(name = "Funcionario")
+public class Funcionario {
 
 	@Id
 	@Column(name = "funcionario_id")
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long funcionarioId;
 
-	@ManyToMany(mappedBy = "funcionarios")
-	private Set<Servico> servicos = new HashSet<Servico>();
-
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
 	private Pessoa pessoa = new Pessoa();
 
 	@ManyToOne
@@ -79,20 +75,13 @@ public class Funcionario { // extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
 
+	// getters and setters
 	public Long getFuncionarioId() {
 		return funcionarioId;
 	}
 
 	public void setFuncionarioId(Long funcionarioId) {
 		this.funcionarioId = funcionarioId;
-	}
-
-	public Set<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(Set<Servico> servicos) {
-		this.servicos = servicos;
 	}
 
 	public Pessoa getPessoa() {
