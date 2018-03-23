@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -33,48 +34,20 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
-	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
-	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
+	private Funcionario funcionario;
+	private List<Funcionario> funcionarios;
 
-	private Funcionario funcionario = new Funcionario();
-	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-
-	private String cpfConsulta, nomeConsulta, cnpjConsulta, nomeFantasiaConsulta;
+	private String cpfConsulta;
+	private String nomeConsulta;
+	private String cnpjConsulta;
+	private String nomeFantasiaConsulta;
 
 	public FuncionarioControle() throws DadosInvalidosException {
 		this.novo();
 	}
 
-	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
-			return municipioNeg.listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
-		} else {
-			return municipioNeg.listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
-		}
-	}
-
-	public List<Cargo> getCargos() throws DadosInvalidosException {
-		return cargoNeg.listar();
-	}
-
-	public void buscarCep() throws DadosInvalidosException {
-		try {
-			funcionario.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
-		} catch (Exception e) {
-			addMensagemErroFatal(e);
-		}
-	}
-
-	public void listarFuncionarios() throws DadosInvalidosException {
-		try {
-			funcionarios = funcionarioNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
-		} catch (RuntimeException erro) {
-			addMensagemErroFatal(erro);
-		}
-	}
-
 	@Override
+	@PostConstruct
 	public String novo() {
 		funcionario = new Funcionario();
 		funcionario.setPessoa(new Pessoa());
@@ -90,10 +63,18 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		return "sucesso";
 	}
 
+	public void listarFuncionarios() throws DadosInvalidosException {
+		try {
+			funcionarios = context.getBean(FuncionarioNeg.class).listarPorCpfOuNome(cpfConsulta, nomeConsulta);
+		} catch (RuntimeException erro) {
+			addMensagemErroFatal(erro);
+		}
+	}
+
 	public void salvar() throws DadosInvalidosException {
 		try {
 			funcionario.getPessoa().setPessoaJuridica(null);
-			funcionarioNeg.alterar(funcionario);
+			context.getBean(FuncionarioNeg.class).incluir(funcionario);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -104,7 +85,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("registroSelecionado");
-			funcionarioNeg.excluir(funcionario);
+			context.getBean(FuncionarioNeg.class).excluir(funcionario);
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -117,8 +98,29 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 			if (funcionario.getPessoa().getEndereco().getMunicipio() == null) {
 				funcionario.getPessoa().getEndereco().setMunicipio(new Municipio());
 			}
+			context.getBean(FuncionarioNeg.class).alterar(funcionario);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
+		}
+	}
+
+	public List<Municipio> getMunicipios() throws DadosInvalidosException {
+		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+			return context.getBean(MunicipioNeg.class).listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
+		} else {
+			return context.getBean(MunicipioNeg.class).listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
+		}
+	}
+
+	public List<Cargo> getCargos() throws DadosInvalidosException {
+		return context.getBean(CargoNeg.class).listar();
+	}
+
+	public void buscarCep() throws DadosInvalidosException {
+		try {
+			funcionario.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
+		} catch (Exception e) {
+			addMensagemErroFatal(e);
 		}
 	}
 

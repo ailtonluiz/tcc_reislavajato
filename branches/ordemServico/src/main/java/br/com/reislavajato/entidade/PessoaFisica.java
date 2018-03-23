@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,9 +21,13 @@ import br.com.reislavajato.enumeradores.EnumSexo;
 import br.com.reislavajato.enumeradores.EnumUf;
 
 @Entity
-public class PessoaFisica extends GenericEntity {
-	private static final long serialVersionUID = 1L;
+public class PessoaFisica { // extends GenericEntity {
+	// private static final long serialVersionUID = 1L;
 	
+	@Id
+	@Column(name = "pessoaFisica_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long pessoaFisicaId;
 	
 	@CPF
 	private String cpf;
@@ -151,4 +158,47 @@ public class PessoaFisica extends GenericEntity {
 		this.escolaridade = escolaridade;
 	}
 
+	/**
+	 * @return the pessoaFisicaId
+	 */
+	public Long getPessoaFisicaId() {
+		return pessoaFisicaId;
+	}
+
+	/**
+	 * @param pessoaFisicaId the pessoaFisicaId to set
+	 */
+	public void setPessoaFisicaId(Long pessoaFisicaId) {
+		this.pessoaFisicaId = pessoaFisicaId;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%scodigo=%d]", getClass().getSimpleName(), getPessoaFisicaId());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pessoaFisicaId == null) ? 0 : pessoaFisicaId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PessoaFisica other = (PessoaFisica) obj;
+		if (pessoaFisicaId == null) {
+			if (other.pessoaFisicaId != null)
+				return false;
+		} else if (!pessoaFisicaId.equals(other.pessoaFisicaId))
+			return false;
+		return true;
+	}
 }
