@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<h:form id="frmListagem">
+			<p:panel header="Listagem de Municipios">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{MunicipioControle.Municipios}"
+					paginatorPosition="top" var="Municipio" rows="5">
+					<f:facet name="footer">
+						<p:commandButton icon="ui-icon-print" value="Gerar Relatório"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{MunicipioControle.imprimir}"
+							update=":frmListagem:tabela">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Municipio" filterBy="#{Municipio.nome}"
+						filterMatchMode="contains">
+						<p:outputLabel value="#{Municipio.nome}" />
+					</p:column>
+
+					<p:column headerText="UF" filterBy="#{Municipio.municipio.uf.descricao}"
+						style="width:8%">
+						<p:outputLabel value="#{Municipio.municipio.uf.abreviado}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
