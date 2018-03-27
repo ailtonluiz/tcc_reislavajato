@@ -155,14 +155,14 @@
                 </p:selectOneRadio>
 
                 <p:outputLabel value="Lista de funcionários:" />
-                <p:selectOneRadio value="#{ordemServicoControle.funcionarioSelecionado}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
+                <p:selectOneRadio value="#{ordemServicoControle.servicoSelecionado.funcionario}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
                   <f:selectItems value="#{ordemServicoControle.funcionarios}" var="funcionario" itemLabel="#{funcionario.pessoa.pessoaFisica.nome}" itemValue="#{funcionario}" />
                 </p:selectOneRadio>
 
                 <p:commandButton value="Limpar Campos" type="reset" />
 
                 <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="servicos mensagem @parent" action="#{ordemServicoControle.adicionarServico}">
-                  <p:collector value="#{ordemServicoControle.ordemServico.servico}" addTo="#{ordemServicoControle.servicosSelecionados}" unique="true" />
+                  <p:collector value="#{ordemServicoControle.servicoSelecionado}" addTo="#{ordemServicoControle.servicosSelecionados}" unique="true" />
                 </p:commandButton>
 
 

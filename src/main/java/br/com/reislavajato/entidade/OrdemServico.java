@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,7 +19,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import br.com.reislavajato.enumeradores.EnumFormaPagamento;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
@@ -41,16 +42,16 @@ public class OrdemServico implements Serializable {
 	private Cliente cliente = new Cliente();
 
 	@OneToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.ALL)
 	private Veiculo veiculo = new Veiculo();
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.ALL)
 	private CheckList checkList = new CheckList();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordemServico", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordemServico")
+	@Cascade(CascadeType.ALL)
 	private Set<Servico> servicos = new HashSet<Servico>();
-
-	@Transient
-	private Servico servico;
 
 	@Enumerated(EnumType.STRING)
 	private EnumStatusServico statusServico = EnumStatusServico.PARADO;
@@ -123,14 +124,6 @@ public class OrdemServico implements Serializable {
 
 	public void setServicos(Set<Servico> servicos) {
 		this.servicos = servicos;
-	}
-
-	public Servico getServico() {
-		return servico;
-	}
-
-	public void setServico(Servico servico) {
-		this.servico = servico;
 	}
 
 	public EnumStatusServico getStatusServico() {
