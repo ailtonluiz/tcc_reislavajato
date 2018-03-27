@@ -43,7 +43,7 @@ public class OrdemServico implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	private Veiculo veiculo = new Veiculo();
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private CheckList checkList = new CheckList();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordemServico", cascade = CascadeType.ALL)
@@ -67,7 +67,7 @@ public class OrdemServico implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.CARTAO_CREDITO;
 
-	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
+	@Column(precision = 10, scale = 2)
 	private BigDecimal valorTotal;
 
 	@Column(precision = 10, scale = 2)
