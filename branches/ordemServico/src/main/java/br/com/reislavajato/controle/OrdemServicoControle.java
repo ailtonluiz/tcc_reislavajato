@@ -157,7 +157,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	private void setarServicos(OrdemServico ordemServico) {
 		ordemServico.getServicos().addAll(servicosSelecionados);
-		ordemServico.setServico(null);
+		
 	}
 
 	public List<Cliente> getClientes() throws DadosInvalidosException {
