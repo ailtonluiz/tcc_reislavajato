@@ -32,7 +32,7 @@ public class Servico implements Serializable {
 	@JoinColumn(name = "ordemServico_id")
 	private OrdemServico ordemServico;
 
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, optional = true)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private Funcionario funcionario;
 
 	@Column(precision = 10, scale = 2, nullable = false)

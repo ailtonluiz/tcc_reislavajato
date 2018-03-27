@@ -2,10 +2,9 @@ package br.com.reislavajato.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -33,7 +32,6 @@ import br.com.reislavajato.util.ReisLavajatoUtil;
  * @Data: 14 de ago de 2017
  */
 @Controller("ordemServicoControle")
-@ViewScoped
 public class OrdemServicoControle extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = 5234442544726838115L;
 
@@ -51,20 +49,20 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	private Funcionario funcionarioSelecionado;
 	private Servico servicoSelecionado;
-	private List<Servico> servicosSelecionados;
+	private LinkedList<Servico> servicosSelecionados;
 
 	public OrdemServicoControle() throws DadosInvalidosException {
 		this.novo();
 	}
 
-	@PostConstruct
-	public String novo() {
+	@Override
+	protected String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
 
 		funcionarioSelecionado = new Funcionario();
 		servicoSelecionado = new Servico();
-		servicosSelecionados = new ArrayList<>();
+		servicosSelecionados = new LinkedList<Servico>();
 
 		cpfConsulta = "";
 		nomeConsulta = "";
@@ -72,7 +70,8 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		nomeFantasiaConsulta = "";
 		numeroOSConsulta = 0L;
 		statusServicoConsulta = EnumStatusServico.EXECUCAO;
-		return "sucesso";
+
+		return "sucess";
 	}
 
 	public void listarOrdensServico() throws DadosInvalidosException {
@@ -91,6 +90,8 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void salvar() throws DadosInvalidosException {
 		try {
+			this.setarServicos(ordemServico);
+
 			context.getBean(OrdemServicoNeg.class).incluir(ordemServico);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
@@ -138,19 +139,25 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	// }
 
 	public String adicionarServico() {
-		// this.ordemServico.setServico(new Servico());
+		if (servicosSelecionados.getFirst() == null) {
+			servicosSelecionados.removeFirst();
+		}
 
 		if (servicosSelecionados.contains(servicoSelecionado)) {
-			addMensagemAviso("Dublicated" + "This book has already been added");
+			addMensagemAviso("Serviço já selecionado!");
 		} else {
 			servicoSelecionado.setFuncionario(funcionarioSelecionado);
-			// ordemServico.getServicos().add(servicoSelecionado);
 			servicosSelecionados.add(servicoSelecionado);
 			servicoSelecionado = new Servico();
 			funcionarioSelecionado = new Funcionario();
 		}
 
 		return "";
+	}
+
+	private void setarServicos(OrdemServico ordemServico) {
+		ordemServico.getServicos().addAll(servicosSelecionados);
+		ordemServico.setServico(null);
 	}
 
 	public List<Cliente> getClientes() throws DadosInvalidosException {
@@ -271,12 +278,16 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		this.servicoSelecionado = servicoSelecionado;
 	}
 
-	public List<Servico> getServicosSelecionados() {
+	public LinkedList<Servico> getServicOosSelecionados() {
 		return servicosSelecionados;
 	}
 
-	public void setServicosSelecionados(List<Servico> servicosSelecionados) {
+	public void setServicosSelecionados(LinkedList<Servico> servicosSelecionados) {
 		this.servicosSelecionados = servicosSelecionados;
+	}
+
+	public LinkedList<Servico> getServicosSelecionados() {
+		return servicosSelecionados;
 	}
 
 }
