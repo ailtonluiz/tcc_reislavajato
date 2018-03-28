@@ -5,17 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cliente;
+import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.OrdemServico;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
@@ -23,6 +20,7 @@ import br.com.reislavajato.enumeradores.EnumStatusServico;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
+import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.OrdemServicoNeg;
 import br.com.reislavajato.neg.ServicoNeg;
 import br.com.reislavajato.neg.VeiculoNeg;
@@ -49,22 +47,26 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	private Long numeroOSConsulta;
 	private EnumStatusServico statusServicoConsulta;
 
-	public OrdemServicoControle() throws DadosInvalidosException {
-		this.novo();
-	}
+	private Servico servicoSelecionado;
+	private List<Servico> servicosSelecionados;
 
 	@Override
 	@PostConstruct
 	public String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
+
+		servicoSelecionado = new Servico();
+		servicosSelecionados = new ArrayList<Servico>();
+
 		cpfConsulta = "";
 		nomeConsulta = "";
 		cnpjConsulta = "";
 		nomeFantasiaConsulta = "";
 		numeroOSConsulta = 0L;
 		statusServicoConsulta = EnumStatusServico.EXECUCAO;
-		return "sucesso";
+
+		return "sucess";
 	}
 
 	public void listarOrdensServico() throws DadosInvalidosException {
@@ -83,7 +85,9 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			// context.getBean(OrdemServicoNeg.class).incluir(ordemServico);
+			this.setarServicos(ordemServico);
+
+			context.getBean(OrdemServicoNeg.class).incluir(ordemServico);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -129,40 +133,49 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	// }
 	// }
 
+	public String adicionarServico() {
+//		servicoSelecionado = new Servico();
+		return "";
+	}
+
+	private void setarServicos(OrdemServico ordemServico) {
+		ordemServico.getServicos().addAll(servicosSelecionados);
+	}
+
 	public List<Cliente> getClientes() throws DadosInvalidosException {
-		if (ordemServico.getCliente().getPessoa().getTipoPessoa().equals(EnumTipoPessoa.PF)) {
+		try {
 			return context.getBean(ClienteNeg.class).listarPorTipoPessoa(EnumTipoPessoa.PF);
-		} else {
-			return context.getBean(ClienteNeg.class).listarPorTipoPessoa(EnumTipoPessoa.PJ);
+		} catch (DadosInvalidosException e) {
+			addMensagemErro(msgErro + ", não foi possível listar os Clientes!");
 		}
+		return null;
 	}
 
 	public List<Veiculo> getModelosVeiculo() throws DadosInvalidosException {
-		return context.getBean(VeiculoNeg.class).listarVeiculoPorMarca(ordemServico.getVeiculo().getMarca());
+		try {
+			return context.getBean(VeiculoNeg.class).listarVeiculoPorMarca(ordemServico.getVeiculo().getMarca());
+		} catch (DadosInvalidosException e) {
+			addMensagemErro(msgErro + ", não foi possível listar os modelos de Veículos!");
+		}
+		return null;
 	}
 
 	public List<Servico> getServicos() throws DadosInvalidosException {
-		return context.getBean(ServicoNeg.class).listar();
-	}
-
-	public void onRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Servico Edited", ((Servico) event.getObject()).getServicoId().toString());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Edit Cancelled", ((Servico) event.getObject()).getServicoId().toString());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onCellEdit(CellEditEvent event) {
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
-
-		if (newValue != null && !newValue.equals(oldValue)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+		try {
+			return context.getBean(ServicoNeg.class).listar();
+		} catch (DadosInvalidosException e) {
+			addMensagemErro(msgErro + ", não foi possível listar os Serviços!");
 		}
+		return null;
+	}
+
+	public List<Funcionario> getFuncionarios() throws DadosInvalidosException {
+		try {
+			return context.getBean(FuncionarioNeg.class).listar();
+		} catch (DadosInvalidosException e) {
+			addMensagemErro(msgErro + ", não foi possível listar os Funcionários!");
+		}
+		return null;
 	}
 
 	// getters and setters
@@ -229,6 +242,22 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void setStatusServicoConsulta(EnumStatusServico statusServicoConsulta) {
 		this.statusServicoConsulta = statusServicoConsulta;
+	}
+
+	public Servico getServicoSelecionado() {
+		return servicoSelecionado;
+	}
+
+	public void setServicoSelecionado(Servico servicoSelecionado) {
+		this.servicoSelecionado = servicoSelecionado;
+	}
+
+	public List<Servico> getServicosSelecionados() {
+		return servicosSelecionados;
+	}
+
+	public void setServicosSelecionados(List<Servico> servicosSelecionados) {
+		this.servicosSelecionados = servicosSelecionados;
 	}
 
 }

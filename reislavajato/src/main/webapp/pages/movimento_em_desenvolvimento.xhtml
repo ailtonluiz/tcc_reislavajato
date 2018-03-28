@@ -17,7 +17,7 @@
 				<p:panel id="painel">
 					<p:tabView dynamic="true">
 						<p:tab title="Dados principais">
-							<h:panelGrid columns="4">
+							<h:panelGrid columns="7">
 								<p:outputLabel value="Número OS" />
 								<p:inputText size="19" maxlength="10" value="1234"
 									disabled="true" />
@@ -28,19 +28,27 @@
 									<f:selectItem itemLabel="Finalizado" itemValue="" />
 								</p:selectOneMenu>
 
-								<p:outputLabel value="Sel.  Cliente" />
+								<p:outputLabel value="Sel.  Cliente"/>
 								<p:selectOneMenu effect="fold" editable="true">
 									<f:selectItem itemLabel="Ruben Delmondes" itemValue="" />
 									<f:selectItem itemLabel="Telmo Silva" itemValue="" />
 									<f:selectItem itemLabel="Ailton Luiz" itemValue="" />
 								</p:selectOneMenu>
+							
 
-
-
+							<!-- CHeck list -->
+							
+								<p:outputLabel for="multiple" value="CheckList:" />
+								<p:selectCheckboxMenu id="multiple"
+									value="#{checkboxView.selecaoChecklist}" multiple="true"
+									filter="true" filterMatchMode="startsWith"
+									panelStyle="width:250px">
+									<f:selectItems value="#{checkboxView.checklist}" />
+								</p:selectCheckboxMenu>
 
 								<p:outputLabel value="Veículo:" />
-								<p:selectOneMenu id="veiculo" filter="true" effect="fold"
-									editable="true" converter="omnifaces.SelectItemsConverter"
+								<p:selectOneMenu id="veiculo" filter="true" effect="fold" editable="true"
+									converter="omnifaces.SelectItemsConverter"
 									value="#{veiculoControle.veiculo.modelo }">
 									<f:selectItem noSelectionOption="true" itemLabel="Selecione " />
 									<f:selectItems value="#{movimentoControle.veiculos}"
@@ -50,77 +58,61 @@
 								<p:outputLabel value="Ordem Serv." />
 								<p:inputText size="24" maxlength="10" value="" placeholder=""
 									disabled="false" />
-								<p:outputLabel value="KM." title="Informe a km do veículo" />
-								<p:inputText size="24" maxlength="10" value=""
-									placeholder="Ex: 13500" disabled="false" />
 
-								<!-- CHeck list -->
 
-								
+
+
 							</h:panelGrid>
-							
-							<p:outputLabel value="CheckList:">
-
-									<p:selectManyCheckbox
-										value="#{movimentoControle.movimento }" layout="custom">
-										<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-										<f:selectItem itemLabel="PS4" itemValue="PS4" />
-										<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
-									</p:selectManyCheckbox>
-								</p:outputLabel>
 						</p:tab>
 
 						<p:tab title="Serviços">
 							<h:panelGrid columns="2">
 								<p:outputLabel value="Serviço:" />
+								
+									<!-- Tela de serviço -->
+		<h:form id="frmListagem">
+			<p:panel header="Listagem de serviços">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{servicoControle.servicos}"
+					paginatorPosition="top" var="servico" rows="5">
+					<f:facet name="footer">
+						
+					</f:facet>
+					<p:column headerText="Serviço" sortBy="#{servico.descricao}"
+						style="width:65%">
+						<p:outputLabel value="#{servico.descricao}" />
+					</p:column>
 
-								<!-- Tela de serviço -->
-								<h:form id="frmListagem">
-									<p:panel header="Listagem de serviços">
-										<p:dataTable id="tabela"
-											emptyMessage="Nenhum registro encontrado" paginator="true"
-											value="#{servicoControle.servicos}" paginatorPosition="top"
-											var="servico" rows="5">
-											<f:facet name="footer">
+					<p:column headerText="Valor (R$)" style="width:15%">
+						<p:outputLabel value="#{servico.valorServico}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</p:outputLabel>
+					</p:column>
 
-											</f:facet>
-											<p:column headerText="Serviço" sortBy="#{servico.descricao}"
-												style="width:65%">
-												<p:outputLabel value="#{servico.descricao}" />
-											</p:column>
+			
 
-											<p:column headerText="Valor (R$)" style="width:15%">
-												<p:outputLabel value="#{servico.valorServico}">
-													<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-												</p:outputLabel>
-											</p:column>
+					<p:column headerText="Opções" style="width:8%">
+						<p:commandButton value="   Adicionar" icon="ui-icon-plusthick" 
+							actionListener="#{servicoControle.excluir}">
+							
+							<p:confirm header="Funcionários"
+								message="Vincule o funcionário ao serviço" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{servico}" />
+						</p:commandButton>
+					
+					</p:column>
 
+				</p:dataTable>
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
 
-
-											<p:column headerText="Opções" style="width:8%">
-												<p:commandButton value="   Adicionar"
-													icon="ui-icon-plusthick"
-													actionListener="#{servicoControle.excluir}">
-
-													<p:confirm header="Funcionários"
-														message="Vincule o funcionário ao serviço"
-														icon="ui-icon-alert" />
-													<f:attribute name="registroSelecionado" value="#{servico}" />
-												</p:commandButton>
-
-											</p:column>
-
-										</p:dataTable>
-										<!-- Botão de opções -->
-										<p:confirmDialog global="true">
-											<p:commandButton value="Sim" type="button"
-												styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-											<p:commandButton value="Não" type="button"
-												styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-										</p:confirmDialog>
-
-									</p:panel>
-								</h:form>
+			</p:panel>
+		</h:form>
 
 							</h:panelGrid>
 						</p:tab>

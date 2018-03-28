@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,8 +20,12 @@ import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 
 @Entity
-public class Pessoa extends GenericEntity {
-	private static final long serialVersionUID = 1L;
+public class Pessoa { // extends GenericEntity {
+
+	@Id
+	@Column(name = "pessoa_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long pessoaId;
 
 	@Enumerated(EnumType.STRING)
 	private EnumSimNao permitirEnvioEmail = EnumSimNao.SIM;
@@ -38,7 +45,7 @@ public class Pessoa extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumTipoPessoa tipoPessoa = EnumTipoPessoa.PF;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private Endereco endereco = new Endereco();
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -56,7 +63,7 @@ public class Pessoa extends GenericEntity {
 	@Column(name = "data_cadastro")
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro = new Date();
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date dataSenha;
 
@@ -66,8 +73,8 @@ public class Pessoa extends GenericEntity {
 	private String observacao;
 
 	private Boolean cadastroAtivo = true;
-	
-	// getters and setters 
+
+	// getters and setters
 
 	public EnumSimNao getPermitirEnvioEmail() {
 		return permitirEnvioEmail;
@@ -195,5 +202,43 @@ public class Pessoa extends GenericEntity {
 
 	public void setCadastroAtivo(Boolean cadastroAtivo) {
 		this.cadastroAtivo = cadastroAtivo;
+	}
+
+	public Long getPessoaId() {
+		return pessoaId;
+	}
+
+	public void setPessoaId(Long pessoaId) {
+		this.pessoaId = pessoaId;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%scodigo=%d]", getClass().getSimpleName(), getPessoaId());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pessoaId == null) ? 0 : pessoaId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		if (pessoaId == null) {
+			if (other.pessoaId != null)
+				return false;
+		} else if (!pessoaId.equals(other.pessoaId))
+			return false;
+		return true;
 	}
 }

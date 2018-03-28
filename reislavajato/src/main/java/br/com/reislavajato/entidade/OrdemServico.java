@@ -14,9 +14,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,34 +25,28 @@ import br.com.reislavajato.enumeradores.EnumFormaPagamento;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 @Entity
-@Table(name = "ordemServico")
-public class OrdemServico  extends GenericEntity {
+public class OrdemServico {
 
-	//@Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ordemServico_id")
 	private Long ordemServicoId;
 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long numeroOrdemServico;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordemServico", cascade = CascadeType.ALL)
-	private List<Servico> servicos = new ArrayList<Servico>();
-
-	// @OneToMany(mappedBy = "ordemServico")
-	// private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-
-	// @Transient
-	// private MediadorOrdemServico mediadorOrdemServico = new
-	// MediadorOrdemServico();
-	//
-	// @Transient
-	// private Servico servico = new Servico();
 
 	@OneToOne(fetch = FetchType.EAGER)
 	private Cliente cliente = new Cliente();
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Veiculo veiculo = new Veiculo();
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private CheckList checkList = new CheckList();
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "OrdemServico_Servico", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
+	private List<Servico> servicos = new ArrayList<Servico>();
 
 	@Enumerated(EnumType.STRING)
 	private EnumStatusServico statusServico = EnumStatusServico.PARADO;
@@ -66,15 +61,17 @@ public class OrdemServico  extends GenericEntity {
 	private Date dataHoraSaidaReal = new Date();
 
 	@Enumerated(EnumType.STRING)
-	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
+	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.CARTAO_CREDITO;
 
-	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_total")
+	@Column(precision = 10, scale = 2)
 	private BigDecimal valorTotal;
 
 	@Column(precision = 10, scale = 2)
 	private BigDecimal descontoServico;
 
 	private String observacao;
+
+	// getters and setters
 
 	public Long getOrdemServicoId() {
 		return ordemServicoId;
@@ -92,14 +89,6 @@ public class OrdemServico  extends GenericEntity {
 		this.numeroOrdemServico = numeroOrdemServico;
 	}
 
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -114,6 +103,22 @@ public class OrdemServico  extends GenericEntity {
 
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
+	}
+
+	public CheckList getCheckList() {
+		return checkList;
+	}
+
+	public void setCheckList(CheckList checkList) {
+		this.checkList = checkList;
+	}
+
+	public List<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
 	}
 
 	public EnumStatusServico getStatusServico() {
@@ -180,6 +185,34 @@ public class OrdemServico  extends GenericEntity {
 		this.observacao = observacao;
 	}
 
-	// getters and setters
+	@Override
+	public String toString() {
+		return String.format("%scodigo=%d]", getClass().getSimpleName(), getOrdemServicoId());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ordemServicoId == null) ? 0 : ordemServicoId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrdemServico other = (OrdemServico) obj;
+		if (ordemServicoId == null) {
+			if (other.ordemServicoId != null)
+				return false;
+		} else if (!ordemServicoId.equals(other.ordemServicoId))
+			return false;
+		return true;
+	}
 
 }

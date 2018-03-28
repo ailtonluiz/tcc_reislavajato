@@ -35,49 +35,53 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private CargoNeg cargoNeg = context.getBean(CargoNeg.class);
-
-	private Cargo cargo = new Cargo();
+	private Cargo cargo;
 	private List<Cargo> cargos;
 
-	@PostConstruct
-	public void listar() throws DadosInvalidosException {
-		try {
-			cargos = cargoNeg.listar();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível listar o(s) cargo(s)!");
-			erro.printStackTrace();
-		}
+	public CargoControle() {
+		this.novo();
 	}
 
 	@Override
+	@PostConstruct
 	public String novo() {
 		cargos = new ArrayList<Cargo>();
 		cargo = new Cargo();
+
+		try {
+			this.listar();
+		} catch (DadosInvalidosException e) {
+			addMensagemErroFatal(e);
+		}
 		return "sucesso";
+	}
+
+	public void listar() throws DadosInvalidosException {
+		try {
+			cargos = context.getBean(CargoNeg.class).listar();
+		} catch (RuntimeException erro) {
+			addMensagemErroFatal(erro);
+		}
 	}
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			cargoNeg.alterar(cargo);
+			context.getBean(CargoNeg.class).incluir(cargo);
 			novo();
-			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			cargo = (Cargo) evento.getComponent().getAttributes().get("registroSelecionado");
-			cargoNeg.excluir(cargo);
-			listar();
-			Messages.addGlobalInfo("Operação realizada com sucesso!");
+			context.getBean(CargoNeg.class).excluir(cargo);
+			novo();
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 
@@ -85,8 +89,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 		try {
 			cargo = (Cargo) evento.getComponent().getAttributes().get("registroSelecionado");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Não foi possível realizar está operação!");
-			erro.printStackTrace();
+			addMensagemErroFatal(erro);
 		}
 	}
 

@@ -36,9 +36,6 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private ClienteNeg clienteNeg = context.getBean(ClienteNeg.class);
-	private MunicipioNeg municipioNeg = context.getBean(MunicipioNeg.class);
-
 	private Cliente cliente;
 	private List<Cliente> clientes;
 	private PessoaFisica pessoaFisica;
@@ -75,9 +72,9 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 	public void listarClientes() throws DadosInvalidosException {
 		try {
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
-				clientes = clienteNeg.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+				clientes = context.getBean(ClienteNeg.class).listarPorCpfOuNome(cpfConsulta, nomeConsulta);
 			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				clientes = clienteNeg.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+				clientes = context.getBean(ClienteNeg.class).listarPorCnpjOuNomeFantasia(cnpjConsulta, nomeFantasiaConsulta);
 			}
 		} catch (Exception e) {
 			addMensagemErro(e.getMessage());
@@ -96,7 +93,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 	public void salvar() throws DadosInvalidosException {
 		try {
 			this.setarAntesPersistir(cliente);
-			clienteNeg.alterar(cliente);
+			context.getBean(ClienteNeg.class).alterar(cliente);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -107,7 +104,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			cliente = (Cliente) evento.getComponent().getAttributes().get("registroSelecionado");
-			clienteNeg.excluir(cliente);
+			context.getBean(ClienteNeg.class).excluir(cliente);
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
@@ -136,9 +133,9 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
 		if (cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == null || cliente.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
-			return municipioNeg.listarPorUf(cliente.getPessoa().getEndereco().getMunicipio().getUf());
+			return context.getBean(MunicipioNeg.class).listarPorUf(cliente.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
-			return municipioNeg.listarPorNome(cliente.getPessoa().getEndereco().getMunicipio().getNome());
+			return context.getBean(MunicipioNeg.class).listarPorNome(cliente.getPessoa().getEndereco().getMunicipio().getNome());
 		}
 	}
 

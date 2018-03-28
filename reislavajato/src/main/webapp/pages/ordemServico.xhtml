@@ -1,103 +1,231 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-   template="/templates/modelo.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/modelo.xhtml">
 
-   <p:growl id="mensagem" />
+  <p:growl id="mensagem" />
 
-   <ui:define name="conteudo">
-      <!-- Tela de listagem -->
+  <ui:define name="conteudo">
+    <!-- Tela de listagem -->
+    <h:form id="frmListagem">
+      <p:panel header="Listagem de Ordens de Serviços">
+        <h:panelGrid columns="2">
+          <p:outputLabel value="Nome:" />
+          <p:inputText value="#{ordemServicoControle.nomeConsulta}" />
+
+          <p:outputLabel value="CPF:" />
+          <p:inputMask mask="999.999.999-99" size="15" value="#{ordemServicoControle.cpfConsulta}" maxlength="14" converter="#{cpfConverter}" />
+
+          <p:outputLabel value="Nome Fantasia:" title="Pesquise pelo nome fantasia" />
+          <p:inputText value="#{ordemServicoControle.nomeFantasiaConsulta}" />
+
+          <p:outputLabel value="CNPJ:" />
+          <p:inputMask mask="99.999.999/9999-99" value="#{ordemServicoControle.cnpjConsulta}" converter="#{cnpjConverter}" />
+
+          <h:outputLabel for="statusServico" value="Status do Serviço:" />
+          <p:selectOneMenu id="statusServico" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.statusServicoConsulta}">
+            <f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo do Veículo:" />
+            <f:selectItems value="#{ControleEnumerador.listaEnumStatusServico}" var="status" itemValue="#{status}" itemLabel="#{status.descricao}" />
+          </p:selectOneMenu>
+        </h:panelGrid>
+        <br />
+        <p:commandButton icon="ui-icon-search" value="Listar" action="#{ordemServicoControle.listarOrdensServico}" update="tabela" title="Listar Cliente(s)" />
+
+        <br />
+
+        <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{ordemServicoControle.ordensServicos}" paginatorPosition="top"
+          var="ordemServico" rows="5">
+          <f:facet name="footer">
+            <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{ordemServicoControle.novo}" update=":frmCadastro:painel">
+              <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+            </p:commandButton>
+          </f:facet>
+
+          <p:column headerText="Nome" sortBy="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" filterBy="#{ordemServico.K.pessoa.pessoaFisica.nome}" filterMatchMode="contains">
+            <h:outputText value="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" />
+          </p:column>
+
+          <p:column headerText="Telefone" style="width:22%">
+            <h:outputText value="#{ordemServico.cliente.pessoa.telefone.fixo} - #{ordemServico.cliente.pessoa.telefone.celular}" />
+          </p:column>
+
+          <p:column headerText="Opções" style="width:8%">
+            <p:commandButton icon="ui-icon-trash" actionListener="#{ordemServicoControle.excluir}" update=":mensagem :frmListagem:tabela">
+              <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
+              <f:attribute name="registroSelecionado" value="#{ordemServico}" />
+            </p:commandButton>
+
+            <p:commandButton icon="ui-icon-pencil" actionListener="#{ordemServicoControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+              <f:attribute name="registroSelecionado" value="#{ordemServico.cliente}" />
+              <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+            </p:commandButton>
+          </p:column>
+
+        </p:dataTable>
+
+        <!-- Botão de opções -->
+        <p:confirmDialog global="true">
+          <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+          <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+
+      </p:panel>
+    </h:form>
+
+    <!-- Tela de Cadastros -->
+    <p:dialog header="Cadastro de Ordem de Serviço" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
       <h:form id="frmCadastro">
-         <p:panel header="Lista de serviços" style="margin-bottom:20px" id="painel">
-            <p:dataTable value="#{ordemServicoControle.servicos}" selection="#{ordemServicoControle.ordemServico.servicos}" rowKey="#{servico.codigo}" var="servico" id="servicoTable" editable="true" editMode="cell">
+        <p:panel id="painel">
+          <p:tabView dynamic="true">
+            <p:tab title="Dados do Cliente">
+              <h:panelGrid columns="2" id="dadosCliente">
+                <h:outputLabel for="cliente" value="Cliente" />
+                <p:selectOneMenu id="cliente" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.cliente}">
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione um Cliente:" />
+                  <f:selectItems value="#{ordemServicoControle.clientes}" var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.pessoa.pessoaFisica.nome}" />
+                </p:selectOneMenu>
 
-               <p:ajax event="rowEdit" listener="#{ordemServicoControle.onRowEdit}" update="servicoTable" />
-               <p:ajax event="rowEditCancel" listener="#{ordemServicoControle.onRowCancel}" update="servicoTable" />
+                <h:outputLabel for="tipoVeiculo" value="Tipo do Veículo:" />
+                <p:selectOneMenu id="tipoVeiculo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.tipoVeiculo}">
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo do Veículo:" />
+                  <f:selectItems value="#{ControleEnumerador.listaEnumTipoVeiculo}" var="tipoVeiculo" itemValue="#{tipoVeiculo}" itemLabel="#{tipoVeiculo.descricao}" />
+                </p:selectOneMenu>
 
-               <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                <h:outputLabel for="marca" value="Marca" />
+                <p:selectOneMenu id="marca" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.marca}">
+                  <p:ajax update="modelo" process="dadosCliente" />
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Marca:" />
+                  <f:selectItems value="#{ControleEnumerador.listaEnumMarca}" var="marca" itemValue="#{marca}" itemLabel="#{marca.descricao}" />
+                </p:selectOneMenu>
 
-               <p:column headerText="Código">
-                  <p:cellEditor>
-                     <f:facet name="output">
-                        <h:outputText value="#{servico.codigo}" />
-                     </f:facet>
-                     <f:facet name="input">
-                        <p:inputText id="modelInput" value="#{servico.codigo}" style="width:100%" />
-                     </f:facet>
-                  </p:cellEditor>
-               </p:column>
+                <h:outputLabel value="Modelo:" />
+                <p:selectOneMenu id="modelo" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.ordemServico.veiculo.modelo}">
+                  <f:selectItem noSelectionOption="true" itemLabel="Selecione um Modelo:" />
+                  <f:selectItems value="#{ordemServicoControle.modelosVeiculo}" var="veiculo" itemValue="#{veiculo}" itemLabel="#{veiculo.modelo}" />
+                </p:selectOneMenu>
 
-               <p:column headerText="Serviço">
-                  <p:cellEditor>
-                     <f:facet name="output">
-                        <h:outputText value="#{servico.descricao}" />
-                     </f:facet>
-                     <f:facet name="input">
-                        <p:inputText value="#{servico.valorServico}" style="width:100%" label="Year" />
-                     </f:facet>
-                  </p:cellEditor>
-               </p:column>
+                <h:outputLabel value="Placa:" for="placa" />
+                <p:inputMask id="placa" mask="aaa-9999" value="#{ordemServicoControle.ordemServico.veiculo.placa}" />
 
-               <p:column headerText="Funcionário">
-                  <p:cellEditor>
-                     <f:facet name="output">
-                        <h:outputText value="#{funcionario.pessoa.pessoaFisica.cpf}" />
-                     </f:facet>
-                     <f:facet name="input">
-                        <h:selectOneMenu value="#{servico.funcionario}" style="width:100%">
-                           <f:selectItems value="#{ordemServicoControle.funcionarios}" var="man" itemLabel="#{funcionario.pessoa.pessoaFisica.cpf}" itemValue="#{man}" />
-                        </h:selectOneMenu>
-                     </f:facet>
-                  </p:cellEditor>
-               </p:column>
+                <h:outputLabel value="Km:" for="km" />
+                <p:inputNumber id="km" value="#{ordemServicoControle.ordemServico.veiculo.km}" decimalPlaces="0" />
 
+                <h:outputLabel value="Cor:" for="cor" />
+                <p:selectOneRadio id="cor" value="#{ordemServicoControle.ordemServico.veiculo.cor}">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumCor}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
+              </h:panelGrid>
+            </p:tab>
+            <p:tab title="Check List">
+              <h:panelGrid columns="2" id="checkList">
+                <h:outputLabel value="Alarme?" for="alarme" />
+                <p:selectOneRadio id="alarme" value="#{ordemServicoControle.ordemServico.checkList.alarme}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
 
-               <!--                <p:column headerText="Funcionário"> -->
-               <!--                   <p:cellEditor> -->
-               <!--                      <f:facet name="output"> -->
-               <!--                         <h:outputText value="Nome:" /> -->
-               <!--                      </f:facet> -->
-               <!--                      <f:facet name="input"> -->
-               <!--                         <p:selectOneMenu id="funcionario" filter="true" converter="omnifaces.SelectItemsConverter" value="#{servico.funcionario}"> -->
-               <!--                            <f:selectItem noSelectionOption="true" itemLabel="Selecione um Município" /> -->
-               <!--                            <f:selectItems value="#{ordemServicoControle.funcionarios}" var="funcionario" itemValue="#{funcionario}" itemLabel="#{funcionario.pessoa.pessoaFisica.cpf}" /> -->
-               <!--                         </p:selectOneMenu> -->
-               <!--                                                                      <p:selectManyCheckbox id="funcionario" value="#{servico.funcionarios}" layout="grid" columns="3" required="true"> -->
-               <!--                                                                         <f:selectItems value="#{ordemServicoControle.funcionarios}" var="funcionario" itemLabel="#{funcionario.pessoa.pessoaFisica.cpf} - #{funcionario.pessoa.pessoaFisica.nome}" itemValue="#{funcionario}" /> -->
-               <!--                                                                      </p:selectManyCheckbox> -->
-               <!--                      </f:facet> -->
-               <!--                   </p:cellEditor> -->
-               <!--                </p:column> -->
+                <h:outputLabel value="Ferramentas?" for="ferramenta" />
+                <p:selectOneRadio id="ferramenta" value="#{ordemServicoControle.ordemServico.checkList.ferramentas}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
 
-               <p:column style="width:32px">
-                  <p:rowEditor />
-               </p:column>
+                <h:outputLabel value="Estepe?" for="estepe" />
+                <p:selectOneRadio id="estepe" value="#{ordemServicoControle.ordemServico.checkList.estepe}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
 
+                <h:outputLabel value="Triangulo?" for="triangulo" />
+                <p:selectOneRadio id="triangulo" value="#{ordemServicoControle.ordemServico.checkList.triangulo}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
 
-               <!--                <p:columnGroup type="header"> -->
-               <!--                   <p:row> -->
-               <!--                      <p:column rowspan="2" headerText="Servico" /> -->
-               <!--                      <p:column colspan="2" headerText="Funcionario" /> -->
-               <!--                   </p:row> -->
-               <!--                </p:columnGroup> -->
+                <h:outputLabel value="Extintor?" for="extintor" />
+                <p:selectOneRadio id="extintor" value="#{ordemServicoControle.ordemServico.checkList.extintor}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
 
-               <!--                <p:subTable var="funcionario" value="#{ordemServicoControle.funcionarios}"> -->
-               <!--                   <p:column> -->
-               <!--                      <h:outputText value="#{servico.descricao} - R$#{servico.valorServico}" /> -->
-               <!--                   </p:column> -->
-               <!--                   <p:column> -->
-               <!--                      <h:outputText value="#{funcionario.pessoa.pessoaFisica.nome}" /> -->
-               <!--                   </p:column> -->
-               <!--                   <p:column> -->
-               <!--                      <h:outputText value="#{funcionario.pessoa.pessoaFisica.cpf}" /> -->
-               <!--                   </p:column> -->
-               <!--                </p:subTable> -->
-            </p:dataTable>
-            <h:panelGrid columns="2">
-               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{ordemServicoControle.salvar}" update="servicoTable" />
-               <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
-            </h:panelGrid>
-         </p:panel>
+                <h:outputLabel value="Som?" for="som" />
+                <p:selectOneRadio id="som" value="#{ordemServicoControle.ordemServico.checkList.som}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
+
+                <h:outputLabel value="Tapetes?" for="tapetes" />
+                <p:selectOneRadio id="tapetes" value="#{ordemServicoControle.ordemServico.checkList.tapetes}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
+
+                <h:outputLabel value="Arranhões?" for="arranhoes" />
+                <p:selectOneRadio id="arranhoes" value="#{ordemServicoControle.ordemServico.checkList.arranhoes}" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+                </p:selectOneRadio>
+
+                <p:outputLabel value="Observações:" />
+                <p:inputTextarea value="#{ordemServicoControle.ordemServico.checkList.observacao}" id="obs" maxlength="150" style="width: 202pt !important;" />
+              </h:panelGrid>
+            </p:tab>
+             <p:tab title="Serviço(s)">
+              <h:panelGrid columns="2" cellpadding="5" id="servicos">
+                <h:outputLabel value="Data e Hora da entrada:" />
+                <p:calendar value="#{ordemServicoControle.ordemServico.dataHoraEntrada}" pattern="dd/MM/yyyy HH:mm" disabled="true" />
+
+                <h:outputLabel value="Data e Hora da saída planejada:" />
+                <p:calendar value="#{ordemServicoControle.ordemServico.dataHoraSaidaAgendada}" pattern="dd/MM/yyyy HH:mm" />
+
+                <p:outputLabel value="Lista de serviços:" />
+                <p:selectOneRadio value="#{ordemServicoControle.servicoSelecionado}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ordemServicoControle.servicos}" var="servico" itemLabel="#{servico.descricao}" itemValue="#{servico}" />
+                </p:selectOneRadio>
+
+                <p:outputLabel value="Lista de funcionários:" />
+                <p:selectOneRadio value="#{ordemServicoControle.servicoSelecionado.funcionario}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
+                  <f:selectItems value="#{ordemServicoControle.funcionarios}" var="funcionario" itemLabel="#{funcionario.pessoa.pessoaFisica.nome}" itemValue="#{funcionario}" />
+                </p:selectOneRadio>
+
+                <p:commandButton value="Limpar Campos" type="reset" />
+
+                <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="servicosTablePanel servicosTable mensagem @parent" action="#{ordemServicoControle.adicionarServico}">
+                  <p:collector value="#{ordemServicoControle.servicoSelecionado}" addTo="#{ordemServicoControle.servicosSelecionados}" unique="true" />
+                </p:commandButton>
+              </h:panelGrid>
+              
+              <p:outputPanel id="servicosTablePanel">
+                <p:dataTable id="servicosTable" value="#{ordemServicoControle.servicosSelecionados}" var="servico" emptyMessage="Nenhum registro na lista">
+
+                  <p:column>
+                    <f:facet name="header">
+                      <h:outputText value="Descrição" />
+                    </f:facet>
+                    <h:outputText value="#{servico.descricao}" />
+                  </p:column>
+
+                  <p:column>
+                    <f:facet name="header">
+                      <h:outputText value="Valor" />
+                    </f:facet>
+                    <h:outputText value="#{servico.valorServico}" />
+                  </p:column>
+
+                  <p:column>
+                    <f:facet name="header">
+                      <h:outputText value="Funcionário" />
+                    </f:facet>
+                    <h:outputText value="#{servico.funcionario.pessoa.pessoaFisica.nome}" />
+                  </p:column>
+
+                  <p:column style="font-size: 12px; text-align: center;">
+                    <p:commandLink value="Remover" update="servicosTable" process="servicosTable">
+                      <p:collector value="#{servico}" removeFrom="#{ordemServicoControle.servicosSelecionados}" unique="true" />
+                    </p:commandLink>
+                  </p:column>
+                </p:dataTable>
+              </p:outputPanel>
+            </p:tab>
+          </p:tabView>
+        </p:panel>
+        <h:panelGrid columns="2">
+          <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{ordemServicoControle.salvar}" update=":mensagem :frmListagem:tabela" />
+          <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
+        </h:panelGrid>
       </h:form>
-   </ui:define>
+    </p:dialog>
+  </ui:define>
 </ui:composition>
