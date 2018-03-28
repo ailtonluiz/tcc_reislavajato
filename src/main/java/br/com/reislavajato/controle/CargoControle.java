@@ -68,7 +68,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 		try {
 			context.getBean(CargoNeg.class).incluir(cargo);
 			novo();
-			addMensagemInfo(msgExcluidoSucesso);
+			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

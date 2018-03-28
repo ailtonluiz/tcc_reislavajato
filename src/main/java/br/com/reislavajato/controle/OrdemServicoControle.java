@@ -2,9 +2,9 @@ package br.com.reislavajato.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -47,22 +47,17 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	private Long numeroOSConsulta;
 	private EnumStatusServico statusServicoConsulta;
 
-	private Funcionario funcionarioSelecionado;
 	private Servico servicoSelecionado;
-	private LinkedList<Servico> servicosSelecionados;
-
-	public OrdemServicoControle() throws DadosInvalidosException {
-		this.novo();
-	}
+	private List<Servico> servicosSelecionados;
 
 	@Override
-	protected String novo() {
+	@PostConstruct
+	public String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
 
-		funcionarioSelecionado = new Funcionario();
 		servicoSelecionado = new Servico();
-		servicosSelecionados = new LinkedList<Servico>();
+		servicosSelecionados = new ArrayList<Servico>();
 
 		cpfConsulta = "";
 		nomeConsulta = "";
@@ -139,25 +134,12 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	// }
 
 	public String adicionarServico() {
-		if (servicosSelecionados.getFirst() == null) {
-			servicosSelecionados.removeFirst();
-		}
-
-		if (servicosSelecionados.contains(servicoSelecionado)) {
-			addMensagemAviso("Serviço já selecionado!");
-		} else {
-			servicoSelecionado.setFuncionario(funcionarioSelecionado);
-			servicosSelecionados.add(servicoSelecionado);
-			servicoSelecionado = new Servico();
-			funcionarioSelecionado = new Funcionario();
-		}
-
+//		servicoSelecionado = new Servico();
 		return "";
 	}
 
 	private void setarServicos(OrdemServico ordemServico) {
 		ordemServico.getServicos().addAll(servicosSelecionados);
-		
 	}
 
 	public List<Cliente> getClientes() throws DadosInvalidosException {
@@ -262,14 +244,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		this.statusServicoConsulta = statusServicoConsulta;
 	}
 
-	public Funcionario getFuncionarioSelecionado() {
-		return funcionarioSelecionado;
-	}
-
-	public void setFuncionarioSelecionado(Funcionario funcionarioSelecionado) {
-		this.funcionarioSelecionado = funcionarioSelecionado;
-	}
-
 	public Servico getServicoSelecionado() {
 		return servicoSelecionado;
 	}
@@ -278,16 +252,12 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		this.servicoSelecionado = servicoSelecionado;
 	}
 
-	public LinkedList<Servico> getServicOosSelecionados() {
+	public List<Servico> getServicosSelecionados() {
 		return servicosSelecionados;
 	}
 
-	public void setServicosSelecionados(LinkedList<Servico> servicosSelecionados) {
+	public void setServicosSelecionados(List<Servico> servicosSelecionados) {
 		this.servicosSelecionados = servicosSelecionados;
-	}
-
-	public LinkedList<Servico> getServicosSelecionados() {
-		return servicosSelecionados;
 	}
 
 }
