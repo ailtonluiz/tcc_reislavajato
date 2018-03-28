@@ -66,12 +66,6 @@
           <p:outputLabel for="obs" value="Observação:" />
           <p:inputTextarea value="#{servicoControle.servico.observacao}" id="obs" maxlength="200" style="width: 202pt !important;" />
 
-          <p:outputLabel for="funcionario" value="Funcionário(s) que fará(ão) o serviço:" />
-          <p:selectCheckboxMenu id="funcionario" value="#{servicoControle.servico.funcionarios}" label="Funcionário(s)" multiple="true" filter="true" filterMatchMode="startsWith"
-            panelStyle="width:250px" converter="#{stringerConverter}">
-            <f:selectItems value="#{servicoControle.funcionarios}" var="funcionario" itemValue="#{funcionario}" itemLabel="#{funcionario.pessoa.pessoaFisica.nome}"/>
-          </p:selectCheckboxMenu>
-
         </h:panelGrid>
         <h:panelGrid columns="2">
           <p:commandButton value="Salvar" actionListener="#{servicoControle.salvar}" icon="ui-icon-check" update=":mensagem :frmCadastro:painel :frmListagem:tabela" />

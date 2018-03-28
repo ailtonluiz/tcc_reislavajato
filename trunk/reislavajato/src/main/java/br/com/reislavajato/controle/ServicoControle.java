@@ -39,6 +39,11 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	public String novo() {
 		servico = new Servico();
 		servicos = new ArrayList<Servico>();
+		try {
+			this.listar();
+		} catch (DadosInvalidosException e) {
+			addMensagemErroFatal(e);
+		}
 		return "sucesso";
 	}
 
@@ -52,6 +57,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 
 	public void salvar() throws DadosInvalidosException {
 		try {
+			servico.setFuncionario(null);
 			context.getBean(ServicoNeg.class).incluir(servico);
 			novo();
 			listar();
@@ -82,8 +88,8 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	public List<Funcionario> getFuncionarios() throws DadosInvalidosException {
 		return context.getBean(FuncionarioNeg.class).listar();
 	}
-	
-	//getters and setters
+
+	// getters and setters
 
 	public Servico getServico() {
 		return servico;
