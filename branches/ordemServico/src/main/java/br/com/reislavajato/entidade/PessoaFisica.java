@@ -21,8 +21,7 @@ import br.com.reislavajato.enumeradores.EnumSexo;
 import br.com.reislavajato.enumeradores.EnumUf;
 
 @Entity
-public class PessoaFisica { // extends GenericEntity {
-	// private static final long serialVersionUID = 1L;
+public class PessoaFisica { 
 	
 	@Id
 	@Column(name = "pessoaFisica_id")
@@ -36,7 +35,7 @@ public class PessoaFisica { // extends GenericEntity {
 	private String rg;
 
 	@Column(length = 100, nullable = false)
-	private String nome;
+	private String nome = "";
 
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;

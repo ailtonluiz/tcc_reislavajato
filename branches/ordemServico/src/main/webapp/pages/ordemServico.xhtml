@@ -9,6 +9,30 @@
     <!-- Tela de listagem -->
     <h:form id="frmListagem">
       <p:panel header="Listagem de Ordens de Serviços">
+        <h:panelGrid columns="2">
+          <p:outputLabel value="Nome:" />
+          <p:inputText value="#{ordemServicoControle.nomeConsulta}" />
+
+          <p:outputLabel value="CPF:" />
+          <p:inputMask mask="999.999.999-99" size="15" value="#{ordemServicoControle.cpfConsulta}" maxlength="14" converter="#{cpfConverter}" />
+
+          <p:outputLabel value="Nome Fantasia:" title="Pesquise pelo nome fantasia" />
+          <p:inputText value="#{ordemServicoControle.nomeFantasiaConsulta}" />
+
+          <p:outputLabel value="CNPJ:" />
+          <p:inputMask mask="99.999.999/9999-99" value="#{ordemServicoControle.cnpjConsulta}" converter="#{cnpjConverter}" />
+
+          <h:outputLabel for="statusServico" value="Status do Serviço:" />
+          <p:selectOneMenu id="statusServico" converter="omnifaces.SelectItemsConverter" value="#{ordemServicoControle.statusServicoConsulta}">
+            <f:selectItem noSelectionOption="true" itemLabel="Selecione o tipo do Veículo:" />
+            <f:selectItems value="#{ControleEnumerador.listaEnumStatusServico}" var="status" itemValue="#{status}" itemLabel="#{status.descricao}" />
+          </p:selectOneMenu>
+        </h:panelGrid>
+        <br />
+        <p:commandButton icon="ui-icon-search" value="Listar" action="#{ordemServicoControle.listarOrdensServico}" update="tabela" title="Listar Cliente(s)" />
+
+        <br />
+
         <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{ordemServicoControle.ordensServicos}" paginatorPosition="top"
           var="ordemServico" rows="5">
           <f:facet name="footer">
@@ -28,7 +52,7 @@
           <p:column headerText="Opções" style="width:8%">
             <p:commandButton icon="ui-icon-trash" actionListener="#{ordemServicoControle.excluir}" update=":mensagem :frmListagem:tabela">
               <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
-              <f:attribute name="registroSelecionado" value="#{ordemServico.cliente}" />
+              <f:attribute name="registroSelecionado" value="#{ordemServico}" />
             </p:commandButton>
 
             <p:commandButton icon="ui-icon-pencil" actionListener="#{ordemServicoControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
@@ -79,10 +103,7 @@
                   <f:selectItem noSelectionOption="true" itemLabel="Selecione um Modelo:" />
                   <f:selectItems value="#{ordemServicoControle.modelosVeiculo}" var="veiculo" itemValue="#{veiculo}" itemLabel="#{veiculo.modelo}" />
                 </p:selectOneMenu>
-                
-                <h:outputLabel value="ID:" />
-                <p:inputText value="#{ordemServicoControle.ordemServico.veiculo.codigo}"/>
-                
+
                 <h:outputLabel value="Placa:" for="placa" />
                 <p:inputMask id="placa" mask="aaa-9999" value="#{ordemServicoControle.ordemServico.veiculo.placa}" />
 
@@ -141,7 +162,7 @@
                 <p:inputTextarea value="#{ordemServicoControle.ordemServico.checkList.observacao}" id="obs" maxlength="150" style="width: 202pt !important;" />
               </h:panelGrid>
             </p:tab>
-            <p:tab title="Serviço(s)">
+             <p:tab title="Serviço(s)">
               <h:panelGrid columns="2" cellpadding="5" id="servicos">
                 <h:outputLabel value="Data e Hora da entrada:" />
                 <p:calendar value="#{ordemServicoControle.ordemServico.dataHoraEntrada}" pattern="dd/MM/yyyy HH:mm" disabled="true" />
@@ -161,11 +182,12 @@
 
                 <p:commandButton value="Limpar Campos" type="reset" />
 
-                <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="servicos mensagem @parent" action="#{ordemServicoControle.adicionarServico}">
+                <p:commandButton icon="ui-icon-plusthick" value="Adicionar" update="servicosTablePanel servicosTable mensagem @parent" action="#{ordemServicoControle.adicionarServico}">
                   <p:collector value="#{ordemServicoControle.servicoSelecionado}" addTo="#{ordemServicoControle.servicosSelecionados}" unique="true" />
                 </p:commandButton>
-
-
+              </h:panelGrid>
+              
+              <p:outputPanel id="servicosTablePanel">
                 <p:dataTable id="servicosTable" value="#{ordemServicoControle.servicosSelecionados}" var="servico" emptyMessage="Nenhum registro na lista">
 
                   <p:column>
@@ -191,11 +213,11 @@
 
                   <p:column style="font-size: 12px; text-align: center;">
                     <p:commandLink value="Remover" update="servicosTable" process="servicosTable">
-                      <p:collector value="#{servico}" removeFrom="#{ordemServicoControle.ordemServico.servicos}" unique="true" />
+                      <p:collector value="#{servico}" removeFrom="#{ordemServicoControle.servicosSelecionados}" unique="true" />
                     </p:commandLink>
                   </p:column>
                 </p:dataTable>
-              </h:panelGrid>
+              </p:outputPanel>
             </p:tab>
           </p:tabView>
         </p:panel>

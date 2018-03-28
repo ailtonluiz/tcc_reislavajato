@@ -1,11 +1,11 @@
 package br.com.reislavajato.entidade;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,44 +14,39 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import br.com.reislavajato.enumeradores.EnumFormaPagamento;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 @Entity
-@Table(name = "OrdemServico")
-public class OrdemServico implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class OrdemServico {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ordemServico_id")
 	private Long ordemServicoId;
 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long numeroOrdemServico;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	private Cliente cliente = new Cliente();
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@Cascade(CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Veiculo veiculo = new Veiculo();
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@Cascade(CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private CheckList checkList = new CheckList();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordemServico")
-	@Cascade(CascadeType.ALL)
-	private Set<Servico> servicos = new HashSet<Servico>();
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "OrdemServico_Servico", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
+	private List<Servico> servicos = new ArrayList<Servico>();
 
 	@Enumerated(EnumType.STRING)
 	private EnumStatusServico statusServico = EnumStatusServico.PARADO;
@@ -118,11 +113,11 @@ public class OrdemServico implements Serializable {
 		this.checkList = checkList;
 	}
 
-	public Set<Servico> getServicos() {
+	public List<Servico> getServicos() {
 		return servicos;
 	}
 
-	public void setServicos(Set<Servico> servicos) {
+	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
 

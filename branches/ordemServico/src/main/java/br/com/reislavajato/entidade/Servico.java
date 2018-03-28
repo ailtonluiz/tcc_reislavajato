@@ -1,6 +1,5 @@
 package br.com.reislavajato.entidade;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
@@ -9,40 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * @Criado por: ailtonluiz
  * @Data: 12 de ago de 2017
  */
 @Entity
-@Table(name = "Servico")
-public class Servico implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Servico {
+	
 	@Id
 	@Column(name = "servico_id")
 	@GeneratedValue
-	private Long servicoId;// = 0L;
-
-	@ManyToOne
-	@JoinColumn(name = "ordemServico_id")
-	private OrdemServico ordemServico;
+	private Long servicoId;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private Funcionario funcionario;
 
 	@Column(precision = 10, scale = 2, nullable = false)
-	private BigDecimal valorServico;// = new BigDecimal(0.0);
+	private BigDecimal valorServico;
 
 	@Column(precision = 10, scale = 2)
-	private BigDecimal percentualComissao;// = new BigDecimal(0.0);
+	private BigDecimal percentualComissao;
 
-	private String observacao;// = "";
-	private String descricao;// = "";
+	private String observacao;
+	private String descricao;
 
 	// getters and setters
 
@@ -52,14 +42,6 @@ public class Servico implements Serializable {
 
 	public void setServicoId(Long servicoId) {
 		this.servicoId = servicoId;
-	}
-
-	public OrdemServico getOrdemServico() {
-		return ordemServico;
-	}
-
-	public void setOrdemServico(OrdemServico ordemServico) {
-		this.ordemServico = ordemServico;
 	}
 
 	public Funcionario getFuncionario() {
