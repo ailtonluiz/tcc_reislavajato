@@ -1,8 +1,9 @@
+
 package br.com.reislavajato.controle.relatorio;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -21,16 +24,16 @@ import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.util.ReisLavajatoUtil;
 import net.sf.jasperreports.engine.JRException;
 
-@Controller("RelPessoaControle")
+@Controller("RelFuncionario")
 public class RelFuncionario extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = 2830538108928145303L;
 
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
-
-	private Funcionario funcionario = new Funcionario();
+	private Funcionario funcionario;
 	private List<Funcionario> funcionarios;
+	private String cpfConsulta;
+	private String nomeConsulta;
 
 	public RelFuncionario() {
 		this.novo();
@@ -39,54 +42,38 @@ public class RelFuncionario extends ReisLavajatoControle implements Serializable
 	@Override
 	protected String novo() {
 		funcionario = new Funcionario();
-		funcionarios = new ArrayList<Funcionario>();
+		cpfConsulta = "";
+		nomeConsulta = "";
 		return "sucesso";
 	}
 
-	protected void atualizarListaEntidades() throws Exception {
+	private void atualizarListaEntidades() throws Exception {
 		try {
-			funcionarios = funcionarioNeg.listar();
+			funcionarios = context.getBean(FuncionarioNeg.class).listar();
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
 	}
 
-	public String atualizarLista() {
-		try {
-			atualizarListaEntidades();
-		} catch (Exception e) {
-			addMensagemErro(e.getMessage());
-		}
-		return null;
-	}
-
-	/*
-	 * try { String caminho = Faces.getRealPath("/reports/pessoa.jasper");
-	 * Map<String, Object> parametros = new HashMap<>(); Connection conexao =
-	 * HibernateUtil.getConexao(); JasperPrint relatorio =
-	 * JasperFillManager.fillReport(caminho, parametros, conexao); //
-	 * JasperPrintManager.printReport(relatorio, true);
-	 * JasperViewer.viewReport(relatorio);
-	 * 
-	 * } catch (JRException erro) { erro.printStackTrace();
-	 * Messages.addGlobalError("Não foi possível gerar o relatório!"); }
-	 */
-	public String realizarImpressao() {
-		this.atualizarLista();
+	public String realizarImpressao() throws Exception {
+		this.atualizarListaEntidades();
 
 		Map parametros = new HashMap();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if (funcionarios.size() == 0) {
-				throw new DadosInvalidosException("Não foram encontrados Pessoas!");
+				throw new DadosInvalidosException("Não foram encontrados Funcionarios!");
 			}
 
 			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper") + "/";
 			parametros.put("SUBREPORT_DIR", caminhoSubreport);
+
 			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens") + "/";
 			parametros.put("IMAGES_DIR", caminhoImagem);
 
-			ReisLavajatoUtil.gerarRelatorioFaces("jasper/relDiscentes.jasper", funcionarios, parametros);
+			String caminhoRelatorio = "reports/funcionario.jasper";
+
+			ReisLavajatoUtil.gerarRelatorioFaces("reports/funcionario.jasper", funcionarios, parametros);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JRException e) {
@@ -96,6 +83,48 @@ public class RelFuncionario extends ReisLavajatoControle implements Serializable
 		}
 		return null;
 	}
+
+	//exemplo de uso de Download via Primefaces
+	private StreamedContent file;
+
+	public void getArquivo() {
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/home/telmo/arquivo.pdf");
+		file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_arquivo.pdf");
+	}
+
+	public StreamedContent getFile() {
+		return file;
+	}
+
+	// public void imprimir() {
+	// try {
+	// DataTable tabela = (DataTable)
+	// Faces.getViewRoot().findComponent("frmListagem:tabela");
+	// @SuppressWarnings("unused")
+	// Map<String, Object> filtros = tabela.getFilters();
+	//
+	// // String estadoNome = (String) filtros.get("estado.nome");
+	//
+	// String caminho = Faces.getRealPath("/reports/municipio.jasper");
+	//
+	// Map<String, Object> parametros = new HashMap<>();
+	// // if (estadoNome == null) {
+	// // parametros.put("municipio", "%%");
+	// // } else {
+	// // parametros.put("municipio", "%" + estadoNome + "%");
+	// // }
+	//
+	// Connection conexao = HibernateUtil.getConexao();
+	//
+	// JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros,
+	// conexao);
+	// JasperViewer.viewReport(relatorio);
+	//
+	// } catch (JRException erro) {
+	// addMensagemAviso("Não foi possível gerar o relatório!");
+	// addMensagemErroFatal(erro);
+	// }
+	// }
 
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -111,6 +140,22 @@ public class RelFuncionario extends ReisLavajatoControle implements Serializable
 
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
+	}
+
+	public String getCpfConsulta() {
+		return cpfConsulta;
+	}
+
+	public void setCpfConsulta(String cpfConsulta) {
+		this.cpfConsulta = cpfConsulta;
+	}
+
+	public String getNomeConsulta() {
+		return nomeConsulta;
+	}
+
+	public void setNomeConsulta(String nomeConsulta) {
+		this.nomeConsulta = nomeConsulta;
 	}
 
 }
