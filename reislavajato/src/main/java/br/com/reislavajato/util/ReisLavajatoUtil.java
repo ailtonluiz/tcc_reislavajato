@@ -85,6 +85,7 @@ public class ReisLavajatoUtil {
 		@SuppressWarnings("unchecked")
 		JasperPrint impressao = JasperFillManager.fillReport(streamRelatorio, parametros, dataSource);
 		JasperExportManager.exportReportToPdfStream(impressao, out);
+		JasperExportManager.exportReportToPdfFile(impressao, "/home/telmo/arquivo.pdf");
 		out.close();
 		context.responseComplete();
 	}
