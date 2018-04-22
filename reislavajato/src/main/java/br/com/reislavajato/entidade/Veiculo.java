@@ -29,7 +29,7 @@ public class Veiculo extends GenericEntity {
 	private Long km;
 
 	@Enumerated(EnumType.STRING)
-	private EnumCor cor = EnumCor.BRANCO;
+	private EnumCor cor = EnumCor.VERMELHO;
 
 	// getters and setters
 
