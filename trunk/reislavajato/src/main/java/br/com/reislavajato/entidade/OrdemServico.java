@@ -61,7 +61,7 @@ public class OrdemServico {
 	private Date dataHoraSaidaReal = new Date();
 
 	@Enumerated(EnumType.STRING)
-	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.CARTAO_CREDITO;
+	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
 
 	@Column(precision = 10, scale = 2)
 	private BigDecimal valorTotal;

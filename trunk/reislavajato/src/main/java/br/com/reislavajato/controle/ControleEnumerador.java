@@ -11,6 +11,7 @@ import br.com.reislavajato.enumeradores.EnumCor;
 import br.com.reislavajato.enumeradores.EnumEscolaridade;
 import br.com.reislavajato.enumeradores.EnumEstadoCivil;
 import br.com.reislavajato.enumeradores.EnumFatorRH;
+import br.com.reislavajato.enumeradores.EnumFormaPagamento;
 import br.com.reislavajato.enumeradores.EnumMarca;
 import br.com.reislavajato.enumeradores.EnumOrgaoRG;
 import br.com.reislavajato.enumeradores.EnumPerfil;
@@ -146,4 +147,11 @@ public class ControleEnumerador implements Serializable {
 		return retorno;
 	}
 
+	public List<EnumFormaPagamento> getListaEnumFormaPagamento() {
+		List<EnumFormaPagamento> retorno = new ArrayList<EnumFormaPagamento>();
+		for (EnumFormaPagamento enumerador : EnumFormaPagamento.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
 }
