@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+
+			<p:panel header="Listagem de Clientes">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{ClienteControle.nomeConsulta}" />
+
+					<p:outputLabel value="CPF:" />
+					<p:inputMask mask="999.999.999-99" size="15"
+						value="#{ClienteControle.cpfConsulta}" maxlength="14"
+						converter="#{cpfConverter}" />
+
+					<p:outputLabel value="Nome Fantasia:"
+						title="Pesquise pelo nome fantasia" />
+					<p:inputText value="#{ClienteControle.nomeFantasiaConsulta}" />
+
+					<p:outputLabel value="CNPJ:" />
+					<p:inputMask mask="99.999.999/9999-99"
+						value="#{ClienteControle.cnpjConsulta}"
+						converter="#{cnpjConverter}" />
+				</h:panelGrid>
+				<br />
+				<p:commandButton icon="ui-icon-search" value="Listar"
+					action="#{ClienteControle.listarClientes}" update="tabela"
+					title="Listar Cliente(s)" />
+
+				<br />
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{ClienteControle.clientes}"
+					paginatorPosition="top" var="cliente" rows="5">
+					<f:facet name="footer">
+
+					</f:facet>
+
+					<p:column headerText="Nome Fantasia"
+						sortBy="#{cliente.pessoa.pessoaJuridica.nomeFantasia}"
+						filterBy="#{cliente.pessoa.pessoaJuridica.nomeFantasia}"
+						filterMatchMode="contains"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ'}">
+						<p:outputLabel
+							value="#{cliente.pessoa.pessoaJuridica.nomeFantasia}" />
+					</p:column>
+
+					<p:column headerText="CNPJ"
+						filterBy="#{cliente.pessoa.pessoaJuridica.cnpj}" style="width:10%"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ'}">
+						<p:outputLabel value="#{cliente.pessoa.pessoaJuridica.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Nome"
+						sortBy="#{cliente.pessoa.pessoaFisica.nome}"
+						filterBy="#{cliente.pessoa.pessoaFisica.nome}"
+						filterMatchMode="contains"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
+						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF"
+						filterBy="#{cliente.pessoa.pessoaFisica.cpf}" style="width:10%"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
+						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.cpf}" />
+					</p:column>
+
+					<p:column headerText="Telefone" style="width:22%">
+						<p:outputLabel
+							value="#{cliente.pessoa.telefone.fixo} - #{cliente.pessoa.telefone.celular}" />
+					</p:column>
+				</p:dataTable>
+				<!-- Botões relatórios -->
+				<p:commandButton value="Download do Arquivo" ajax="false"
+					onclick="PrimeFaces.monitorDownload(start, stop);"
+					icon="ui-icon-arrowthick-1-s">
+					<p:fileDownload value="#{RelFuncionario.getFile}" />
+				</p:commandButton>
+
+				<p:commandButton icon="ui-icon-print" value="Realizar a Impressão"
+					action="#{RelFuncionario.realizarImpressao}"
+					title="Realizar a impressão" />
+			</p:panel>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
