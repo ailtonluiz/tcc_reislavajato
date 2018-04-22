@@ -65,10 +65,12 @@ public class RelFuncionario extends ReisLavajatoControle implements Serializable
 				throw new DadosInvalidosException("Não foram encontrados Funcionarios!");
 			}
 
-			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper") + "/";
+			String caminhoSubreport = ((ServletContext) context.getExternalContext().getContext()).getRealPath("jasper")
+					+ "/";
 			parametros.put("SUBREPORT_DIR", caminhoSubreport);
 
-			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens") + "/";
+			String caminhoImagem = ((ServletContext) context.getExternalContext().getContext()).getRealPath("imagens")
+					+ "/";
 			parametros.put("IMAGES_DIR", caminhoImagem);
 
 			String caminhoRelatorio = "reports/funcionario.jasper";
@@ -84,47 +86,18 @@ public class RelFuncionario extends ReisLavajatoControle implements Serializable
 		return null;
 	}
 
-	//exemplo de uso de Download via Primefaces
+	// exemplo de uso de Download via Primefaces
 	private StreamedContent file;
 
 	public void getArquivo() {
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/home/telmo/arquivo.pdf");
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
+				.getResourceAsStream("/home/telmo/arquivo.pdf");
 		file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_arquivo.pdf");
 	}
 
 	public StreamedContent getFile() {
 		return file;
 	}
-
-	// public void imprimir() {
-	// try {
-	// DataTable tabela = (DataTable)
-	// Faces.getViewRoot().findComponent("frmListagem:tabela");
-	// @SuppressWarnings("unused")
-	// Map<String, Object> filtros = tabela.getFilters();
-	//
-	// // String estadoNome = (String) filtros.get("estado.nome");
-	//
-	// String caminho = Faces.getRealPath("/reports/municipio.jasper");
-	//
-	// Map<String, Object> parametros = new HashMap<>();
-	// // if (estadoNome == null) {
-	// // parametros.put("municipio", "%%");
-	// // } else {
-	// // parametros.put("municipio", "%" + estadoNome + "%");
-	// // }
-	//
-	// Connection conexao = HibernateUtil.getConexao();
-	//
-	// JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros,
-	// conexao);
-	// JasperViewer.viewReport(relatorio);
-	//
-	// } catch (JRException erro) {
-	// addMensagemAviso("Não foi possível gerar o relatório!");
-	// addMensagemErroFatal(erro);
-	// }
-	// }
 
 	public Funcionario getFuncionario() {
 		return funcionario;

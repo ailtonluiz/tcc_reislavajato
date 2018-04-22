@@ -94,7 +94,7 @@
 							action="/pages/cargo.xhtml?faces-redirect=true" />
 						<p:menuitem value="Funcionários"
 							action="/pages/funcionario.xhtml?faces-redirect=true" />
-						
+
 					</p:submenu>
 					<p:menuitem value="Serviços"
 						action="/pages/servico.xhtml?faces-redirect=true" />
@@ -107,35 +107,35 @@
 
 
 				<p:submenu label="Movimentações">
-					<p:menuitem value="Lavagens"
-						action="/pages/movimento.xhtml?faces-redirect=true" />
 					<p:menuitem value="Ordem de Serviço"
 						action="/pages/ordemServico.xhtml?faces-redirect=true" />
+					<p:menuitem value="Financeiro"
+						action="/pages/movimento.xhtml?faces-redirect=true"
+						disabled="true" />
+
 				</p:submenu>
 
 				<p:submenu label="Relatórios">
 					<p:submenu label="Cadastros">
-						<p:submenu label="Endereços">
-							<p:menuitem value="Municípios"
-								action="/pages/relMunicipio.xhtml?faces-redirect=true" />
-						</p:submenu>
-						<p:menuitem value="Clientes" />
-						<p:submenu label="Funcionários/Usuários">
-							<p:menuitem value="Funcionários" />
-							<p:menuitem value="Usuários" />
-						</p:submenu>
+					
+						<p:menuitem value="Clientes"
+							action="/pages/relCliente.xhtml?faces-redirect=true" />
+
+						<p:menuitem value="Funcionários"
+							action="/pages/relFuncionario.xhtml?faces-redirect=true" />
+
+
 						<p:menuitem value="Serviços" />
-						<p:submenu label="Veículos">
-							<p:menuitem value="Marcas"
-								action="/pages/relMarca.xhtml?faces-redirect=true" />
-							<p:menuitem value="Veículos" />
-						</p:submenu>
 					</p:submenu>
 					<p:submenu label="Movimentações">
-						<p:menuitem value="Lavagens" />
-						<p:menuitem value="Comissões" />
+						<p:menuitem value="Lavagens"
+							action="/pages/ordemServico.xhtml?faces-redirect=true" />
+						
+						<p:menuitem value="Comissões"
+							action="/pages/relComissao.xhtml?faces-redirect=true" />
+						<p:menuitem value="Financeiro" disabled="true" />
 					</p:submenu>
-				
+
 				</p:submenu>
 
 				<p:submenu label="Parâmetros">

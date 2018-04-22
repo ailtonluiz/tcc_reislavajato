@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+
+			<p:panel header="Listagem de Município">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{municipioControle.municipio.nome}" />
+
+					<p:outputLabel value="UF" />
+					<p:selectOneMenu value="#{municipioControle.municipio.uf}">
+						<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+							var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<br />
+				<p:commandButton icon="ui-icon-search" value="Listar"
+					action="#{municipioControle.listarPorNomeeUF}" update="tabela"
+					title="Listar Município" />
+
+				<br />
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{municipioControle.municipios}"
+					paginatorPosition="top" var="municipio" rows="5">
+					<f:facet name="footer">
+
+					</f:facet>
+					<p:column headerText="Código" filterBy="#{municipio.codigo}"
+						style="width:9%" filterMatchMode="contains">
+						<p:outputLabel value="#{municipio.codigo}" />
+					</p:column>
+
+					<p:column headerText="Municipio" filterBy="#{municipio.nome}"
+						filterMatchMode="contains">
+						<p:outputLabel value="#{municipio.nome}" />
+					</p:column>
+
+					<p:column headerText="UF" filterBy="#{municipio.uf}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<p:outputLabel value="UF:" />
+						</f:facet>
+						<p:outputLabel value="#{municipio.uf.descricao}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<!-- Botões relatórios -->
+				<p:commandButton value="Download do Arquivo" ajax="false"
+					onclick="PrimeFaces.monitorDownload(start, stop);"
+					icon="ui-icon-arrowthick-1-s">
+					<p:fileDownload value="#{RelFuncionario.getFile}" />
+				</p:commandButton>
+
+				<p:commandButton icon="ui-icon-print" value="Realizar a Impressão"
+					action="#{RelFuncionario.realizarImpressao}"
+					title="Realizar a impressão" />
+
+
+			</p:panel>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
