@@ -118,7 +118,8 @@
 								<h:outputLabel for="cliente" value="Cliente" />
 								<p:selectOneMenu id="cliente" filter="true"
 									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.cliente}" style="width: 117pt !important;">
+									value="#{ordemServicoControle.ordemServico.cliente}"
+									style="width: 117pt !important;">
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione um Cliente:" />
 									<f:selectItems value="#{ordemServicoControle.clientes}"
@@ -129,7 +130,8 @@
 								<h:outputLabel for="tipoVeiculo" value="Tipo Veículo:" />
 								<p:selectOneMenu id="tipoVeiculo" filter="true"
 									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.veiculo.tipoVeiculo}" style="width: 117pt !important;">
+									value="#{ordemServicoControle.ordemServico.veiculo.tipoVeiculo}"
+									style="width: 117pt !important;">
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione o tipo do Veículo:" />
 									<f:selectItems
@@ -141,7 +143,8 @@
 								<h:outputLabel for="marca" value="Marca" />
 								<p:selectOneMenu id="marca" filter="true"
 									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.veiculo.marca}" style="width: 117pt !important;">
+									value="#{ordemServicoControle.ordemServico.veiculo.marca}"
+									style="width: 117pt !important;">
 									<p:ajax update="modelo" process="dadosCliente" />
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione uma Marca:" />
@@ -150,10 +153,11 @@
 										itemLabel="#{marca.descricao}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel value="Modelo:"  />
+								<h:outputLabel value="Modelo:" />
 								<p:selectOneMenu id="modelo" filter="true"
 									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.veiculo.modelo}" style="width: 117pt !important;">
+									value="#{ordemServicoControle.ordemServico.veiculo.modelo}"
+									style="width: 117pt !important;">
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione um Modelo" />
 									<f:selectItems value="#{ordemServicoControle.modelosVeiculo}"
@@ -163,15 +167,16 @@
 
 								<h:outputLabel value="Placa:" for="placa" />
 								<p:inputMask id="placa" mask="aaa-9999"
-									value="#{ordemServicoControle.ordemServico.veiculo.placa}" style="width: 123pt !important;" />
+									value="#{ordemServicoControle.ordemServico.veiculo.placa}"
+									style="width: 123pt !important;" />
 
 								<h:outputLabel value="Km:" for="km" />
 								<p:inputNumber id="km"
-									value="#{ordemServicoControle.ordemServico.veiculo.km}" decimalPlaces="0" size="36"
-									 />
+									value="#{ordemServicoControle.ordemServico.veiculo.km}"
+									decimalPlaces="0" size="36" />
 							</h:panelGrid>
-							
-								<h:panelGrid columns="4">
+
+							<h:panelGrid columns="4">
 								<h:outputLabel value="Cor:" for="cor" />
 								<p:selectOneRadio id="cor"
 									value="#{ordemServicoControle.ordemServico.veiculo.cor}">
@@ -179,7 +184,7 @@
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 								</p:selectOneRadio>
 							</h:panelGrid>
-						
+
 						</p:tab>
 						<p:tab title="Check List">
 							<h:panelGrid columns="2" id="checkList">
@@ -334,6 +339,17 @@
 									</p:column>
 								</p:dataTable>
 							</p:outputPanel>
+						</p:tab>
+						<!-- Dados de pagamento -->
+						<p:tab title="Dados de Pagamento">
+							<h:panelGrid columns="2" cellpadding="5" id="dadosPagto">
+							   <p:outputLabel value="Forma de Pagto:" />
+                        <p:selectOneMenu value="#{ordemServicoControle.ordemServico.formaPagamento}" style="width: 65pt !important;">
+                           <f:selectItems value="#{ControleEnumerador.listaEnumFormaPagamento}" />
+                        </p:selectOneMenu>	
+							</h:panelGrid>
+
+
 						</p:tab>
 					</p:tabView>
 				</p:panel>
