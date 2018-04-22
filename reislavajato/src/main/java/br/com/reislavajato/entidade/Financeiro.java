@@ -42,9 +42,9 @@ public class Financeiro extends GenericEntity {
 	@JoinColumn(nullable = true)
 	private Pessoa pessoa;
 
-	@OneToOne
-	@JoinColumn(nullable = false)
-	private Usuario usuario;
+//	@OneToOne
+//	@JoinColumn(nullable = false)
+//	private Usuario usuario;
 
 	public Date getDtLacto() {
 		return dtLacto;
@@ -94,13 +94,13 @@ public class Financeiro extends GenericEntity {
 		this.tipoDocto = tipoDocto;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+//	public Usuario getUsuario() {
+//		return usuario;
+//	}
+//
+//	public void setUsuario(Usuario usuario) {
+//		this.usuario = usuario;
+//	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
