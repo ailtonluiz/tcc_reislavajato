@@ -45,7 +45,7 @@ public class OrdemServico {
 	private CheckList checkList = new CheckList();
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "OrdemServico_Servico", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
+	@JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
 	private List<Servico> servicos = new ArrayList<Servico>();
 
 	@Enumerated(EnumType.STRING)
