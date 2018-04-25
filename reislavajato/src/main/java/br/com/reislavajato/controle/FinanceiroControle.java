@@ -51,7 +51,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 	public String novo() {
 		financeiro = new Financeiro();
 		financeiros = new ArrayList<Financeiro>();
-
+		clientes = new ArrayList<Cliente>();
 		try {
 			this.listar();
 		} catch (DadosInvalidosException e) {
