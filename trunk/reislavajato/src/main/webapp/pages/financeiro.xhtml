@@ -27,8 +27,7 @@
 					<p:calendar id="dataFim" size="13"
 						value="#{financeiroControle.financeiro.dtVecto}"
 						pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
-						navigator="true" showButtonPanel="true" locale="pt"
-						yearRange="-100:+0" />
+						navigator="true" showButtonPanel="true" locale="pt" />
 
 
 					<h:outputLabel for="situacaoFinanceiro" value="Situação:" />
@@ -86,27 +85,46 @@
 							value="#{financeiro.cliente.pessoa.pessoaFisica.nome} #{financeiro.cliente.pessoa.pessoaJuridica.razaoSocial}" />
 					</p:column>
 
-					<p:column headerText="Valor (R$)" style="width:15%">
+					<p:column headerText="Documento" style="width:15%"
+						sortBy="#{financeiro.documento}"
+						filterBy="#{financeiro.documento}" filterMatchMode="contains">
+						<h:outputText value="#{financeiro.documento} " />
+					</p:column>
+
+					<p:column headerText="Situação" style="width:15%"
+						sortBy="#{financeiro.statusFinanceiro}"
+						filterBy="#{financeiro.statusFinanceiro}"
+						filterMatchMode="contains">
+						<h:outputText value="#{financeiro.statusFinanceiro} " />
+					</p:column>
+
+					<p:column headerText="Valor (R$)" style="width:10%">
 						<p:outputLabel value="#{financeiro.vlrDocto}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</p:outputLabel>
 					</p:column>
 
-					<p:column headerText="Dt. Lacto"
+					<p:column headerText="Dt. Lacto" style="width:8%"
 						sortBy="#{financeiroControle.financeiro.dtlacto}"
 						filterMatchMode="contains">
-						<h:outputText value="#{financeiroControle.financeiro.dtLacto}" />
+						<h:outputText value="#{financeiro.dtLacto}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
-					<p:column headerText="Dt. Vecto"
+					<p:column headerText="Dt. Vecto" style="width:8%"
 						sortBy="#{financeiroControle.financeiro.dtVecto}"
 						filterMatchMode="contains">
-						<h:outputText value="#{financeiroControle.financeiro.dtVecto}" />
+						<h:outputText value="#{financeiro.dtVecto}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
+
+
 
 
 
 					<p:column headerText="Opções" style="width:8%">
-						<p:commandButton icon="ui-icon-trash"
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							actionListener="#{financeiroControle.excluir}"
 							update=":mensagem :frmListagem:tabela">
 							<p:confirm header="Confirmação"
@@ -114,7 +132,7 @@
 							<f:attribute name="registroSelecionado" value="#{financeiro}" />
 						</p:commandButton>
 						<!-- Alterar o metodo para baixar -->
-						<p:commandButton icon="ui-icon-pencil"
+						<p:commandButton icon="ui-icon-circle-triangle-s" title="Baixar"
 							actionListener="#{financeiroControle.editar}"
 							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
 							<f:attribute name="registroSelecionado" value="#{financeiro}" />
@@ -135,20 +153,76 @@
 			</p:panel>
 		</h:form>
 		<!-- Tela de Cadastros -->
-		<p:dialog header="Cadastro de cargos" widgetVar="dialogo"
+		<p:dialog header="Lançamento Financeiro" widgetVar="dialogo"
 			draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
 				<h:panelGrid id="painel" columns="2">
-					<p:outputLabel for="cargo" value="Cargo:" />
-					<p:inputText id="cargo" size="20" maxlength="20"
-						value="#{cargoControle.cargo.nomeCargo}" required="true"
-						requiredMessage="É obrigatório informar o nome do cargo" />
+					<h:outputLabel for="cliente" value="Cliente: " />
+					<p:selectOneMenu id="cliente" filter="true"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{financeiroControle.financeiro.cliente}"
+						style="width: 117pt !important;">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um Cliente" />
+						<f:selectItems value="#{financeiroControle.clientes}"
+							var="cliente" itemValue="#{cliente}"
+							itemLabel="#{financeiro.cliente.pessoa.pessoaFisica.nome}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Documento: " for="docto" />
+					<p:inputText id="docto"
+						value="#{financeiroControle.financeiro.documento}"
+						style="width: 123pt !important;" />
+
+					<h:outputLabel for="tipoDocto" value="Financeiro: " />
+					<p:selectOneRadio id="tipoDocto"
+						value="#{financeiroControle.financeiro.tipoFinanceiro}">
+						<f:selectItems
+							value="#{ControleEnumerador.listaEnumTipoFinanceiro}" var="item"
+							itemLabel="#{item.descricao}" itemValue="#{item}" />
+					</p:selectOneRadio>
+
+					<h:outputLabel for="status" value="Status: " />
+					<p:selectOneRadio id="status"
+						value="#{financeiroControle.financeiro.statusFinanceiro}">
+						<f:selectItems
+							value="#{ControleEnumerador.listaEnumStatusFinanceiro}"
+							var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+					</p:selectOneRadio>
+
+					<h:outputLabel value="Vlr Documento: " for="valor" />
+					<p:inputNumber id="valor"
+						value="#{financeiroControle.financeiro.vlrDocto}"
+						style="width: 123pt !important;" />
 
 
 				</h:panelGrid>
+
+				<h:panelGrid id="painel3" columns="4">
+					<p:outputLabel for="dataInicio" value="Data Lacto:" />
+					<p:calendar id="dataInicio" size="13"
+						value="#{financeiroControle.financeiro.dtLacto}"
+						pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+						navigator="true" showButtonPanel="true" locale="pt"
+						yearRange="-100:+0" />
+
+					<p:outputLabel for="dataVecto" value="Data Vecto:" />
+					<p:calendar id="dataVecto" size="13"
+						value="#{financeiroControle.financeiro.dtVecto}"
+						pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+						navigator="true" showButtonPanel="true" locale="pt"
+						yearRange="-100:+0" />
+
+				</h:panelGrid>
+				<h:panelGrid  columns="2">
+					<p:outputLabel for="obs" value="Observação:" />
+					<p:inputTextarea
+						value="#{financeiroControle.financeiro.observacao}" id="obs"
+						maxlength="200" style="width: 202pt !important;" />
+				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar" icon="ui-icon-check"
-						actionListener="#{cargoControle.salvar}"
+						actionListener="#{financeiroControle.salvar}"
 						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
 					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 						oncomplete="PF('dialogo').hide();" />
