@@ -36,7 +36,7 @@
 						converter="omnifaces.SelectItemsConverter"
 						value="#{ordemServicoControle.statusServicoConsulta}">
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione o tipo do Veículo:" />
+							itemLabel="Selecione o status" />
 						<f:selectItems
 							value="#{ControleEnumerador.listaEnumStatusServico}" var="status"
 							itemValue="#{status}" itemLabel="#{status.descricao}" />
@@ -121,7 +121,7 @@
 									value="#{ordemServicoControle.ordemServico.cliente}"
 									style="width: 117pt !important;">
 									<f:selectItem noSelectionOption="true"
-										itemLabel="Selecione um Cliente:" />
+										itemLabel="Selecione um Cliente" />
 									<f:selectItems value="#{ordemServicoControle.clientes}"
 										var="cliente" itemValue="#{cliente}"
 										itemLabel="#{cliente.pessoa.pessoaFisica.nome}" />

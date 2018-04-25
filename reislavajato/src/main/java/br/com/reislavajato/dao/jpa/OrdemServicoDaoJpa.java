@@ -68,7 +68,8 @@ public class OrdemServicoDaoJpa extends PersistenciaJpa<OrdemServico> implements
 		}
 	}
 
-	public List<OrdemServico> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
+	public List<OrdemServico> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia)
+			throws DadosInvalidosException {
 		try {
 			String jpaql = "select o from OrdemServico o where ";
 
@@ -86,6 +87,7 @@ public class OrdemServicoDaoJpa extends PersistenciaJpa<OrdemServico> implements
 				query.setParameter("nomeFantasia", "%" + nomeFantasia.toUpperCase() + "%");
 			}
 
+			@SuppressWarnings("unchecked")
 			List<OrdemServico> clientes = query.getResultList();
 			return clientes;
 		} catch (Exception e) {
