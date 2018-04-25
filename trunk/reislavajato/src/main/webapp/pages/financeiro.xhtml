@@ -65,7 +65,7 @@
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
 					paginator="true" value="#{financeiroControle.financeiros}"
-					paginatorPosition="top" var="financeiro" rows="5">
+					paginatorPosition="top" var="financeiro" rows="4">
 					<f:facet name="footer">
 						<p:commandButton value="Lançar financeiro"
 							oncomplete="PF('dialogo').show();" icon="ui-icon-plus"
@@ -161,18 +161,18 @@
 					<p:selectOneMenu id="cliente" filter="true"
 						converter="omnifaces.SelectItemsConverter"
 						value="#{financeiroControle.financeiro.cliente}"
-						style="width: 117pt !important;">
+						style="width: 182pt !important;">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um Cliente" />
 						<f:selectItems value="#{financeiroControle.clientes}"
 							var="cliente" itemValue="#{cliente}"
-							itemLabel="#{financeiro.cliente.pessoa.pessoaFisica.nome}" />
+							itemLabel="#{cliente.pessoa.pessoaFisica.nome}" />
 					</p:selectOneMenu>
 
 					<h:outputLabel value="Documento: " for="docto" />
 					<p:inputText id="docto"
 						value="#{financeiroControle.financeiro.documento}"
-						style="width: 123pt !important;" />
+						style="width: 192pt !important;" />
 
 					<h:outputLabel for="tipoDocto" value="Financeiro: " />
 					<p:selectOneRadio id="tipoDocto"
@@ -189,36 +189,30 @@
 							value="#{ControleEnumerador.listaEnumStatusFinanceiro}"
 							var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
 					</p:selectOneRadio>
-
-					<h:outputLabel value="Vlr Documento: " for="valor" />
-					<p:inputNumber id="valor"
-						value="#{financeiroControle.financeiro.vlrDocto}"
-						style="width: 123pt !important;" />
-
-
 				</h:panelGrid>
-
-				<h:panelGrid id="painel3" columns="4">
-					<p:outputLabel for="dataInicio" value="Data Lacto:" />
-					<p:calendar id="dataInicio" size="13"
-						value="#{financeiroControle.financeiro.dtLacto}"
-						pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
-						navigator="true" showButtonPanel="true" locale="pt"
-						yearRange="-100:+0" />
-
+				
+				<h:panelGrid columns="4">
+				
 					<p:outputLabel for="dataVecto" value="Data Vecto:" />
-					<p:calendar id="dataVecto" size="13"
+					<p:calendar id="dataVecto" size="10"
 						value="#{financeiroControle.financeiro.dtVecto}"
 						pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
 						navigator="true" showButtonPanel="true" locale="pt"
 						yearRange="-100:+0" />
 
+					<h:outputLabel value="Valor: " for="valor" />
+					<p:inputNumber id="valor"
+						value="#{financeiroControle.financeiro.vlrDocto}" size="16" />
+
+
+
+
 				</h:panelGrid>
-				<h:panelGrid  columns="2">
+				<h:panelGrid columns="2">
 					<p:outputLabel for="obs" value="Observação:" />
 					<p:inputTextarea
 						value="#{financeiroControle.financeiro.observacao}" id="obs"
-						maxlength="200" style="width: 202pt !important;" />
+						maxlength="200" style="width: 195pt !important;" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar" icon="ui-icon-check"

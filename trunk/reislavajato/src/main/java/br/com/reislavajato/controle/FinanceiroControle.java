@@ -19,6 +19,7 @@ import br.com.reislavajato.entidade.Financeiro;
 import br.com.reislavajato.enumeradores.EnumStatusFinanceiro;
 import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 import br.com.reislavajato.excessao.DadosInvalidosException;
+import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.FinanceiroNeg;
 
 /**
@@ -64,6 +65,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 	public void listar() throws DadosInvalidosException {
 		try {
 			financeiros = context.getBean(FinanceiroNeg.class).listar();
+			clientes = context.getBean(ClienteNeg.class).listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -71,7 +73,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			context.getBean(FinanceiroNeg.class).incluir(financeiro);
+			context.getBean(FinanceiroNeg.class).alterar(financeiro);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {

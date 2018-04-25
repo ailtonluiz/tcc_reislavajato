@@ -24,15 +24,17 @@ import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 @Entity
 public class Financeiro extends GenericEntity {
 
+	@Column(name = "tipo_documento")
 	@Enumerated(EnumType.STRING)
 	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CONTA_PAGAR;
 
+	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private EnumStatusFinanceiro statusFinanceiro = EnumStatusFinanceiro.ABERTO;
 
-	@Column(nullable = false, name = "dt_lacto")
+	@Column(nullable = false, name = "dt_baixa")
 	@Temporal(TemporalType.DATE)
-	private Date dtLacto;
+	private Date dtBaixa;
 
 	@Column(nullable = false, name = "dt_vecto")
 	@Temporal(TemporalType.DATE)
@@ -66,12 +68,12 @@ public class Financeiro extends GenericEntity {
 		this.statusFinanceiro = statusFinanceiro;
 	}
 
-	public Date getDtLacto() {
-		return dtLacto;
+	public Date getDtBaixa() {
+		return dtBaixa;
 	}
 
-	public void setDtLacto(Date dtLacto) {
-		this.dtLacto = dtLacto;
+	public void setDtBaixa(Date dtBaixa) {
+		this.dtBaixa = dtBaixa;
 	}
 
 	public Date getDtVecto() {

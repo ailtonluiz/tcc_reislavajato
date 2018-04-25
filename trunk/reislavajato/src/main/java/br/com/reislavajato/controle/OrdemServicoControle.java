@@ -113,28 +113,10 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		}
 	}
 
-	// private void calcularValorTotalServico(Movimento movimento) {
-	// BigDecimal valorTotalServico = new BigDecimal(0.0);
-	//
-	// for (Veiculo veiculo : movimento.getCliente().getVeiculos()) {
-	// for (Servico servico : veiculo.getServicos()) {
-	// valorTotalServico.add(servico.getValorServico());
-	// }
-	// }
-	//
-	// movimento.setValorTotal(valorTotalServico);
-	// }
 
-	// private void finalizar() throws DadosInvalidosException {
-	// try {
-	// this.calcularValorTotalServico(movimento);
-	// } catch (RuntimeException erro) {
-	// addMensagemErroFatal(erro);
-	// }
-	// }
 
 	public String adicionarServico() {
-//		servicoSelecionado = new Servico();
+
 		return "";
 	}
 
