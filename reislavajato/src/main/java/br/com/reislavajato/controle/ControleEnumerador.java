@@ -17,7 +17,9 @@ import br.com.reislavajato.enumeradores.EnumOrgaoRG;
 import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumSexo;
 import br.com.reislavajato.enumeradores.EnumSimNao;
+import br.com.reislavajato.enumeradores.EnumStatusFinanceiro;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
+import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
 import br.com.reislavajato.enumeradores.EnumTipoVeiculo;
@@ -150,6 +152,22 @@ public class ControleEnumerador implements Serializable {
 	public List<EnumFormaPagamento> getListaEnumFormaPagamento() {
 		List<EnumFormaPagamento> retorno = new ArrayList<EnumFormaPagamento>();
 		for (EnumFormaPagamento enumerador : EnumFormaPagamento.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumStatusFinanceiro> getListaEnumStatusFinanceiro() {
+		List<EnumStatusFinanceiro> retorno = new ArrayList<EnumStatusFinanceiro>();
+		for (EnumStatusFinanceiro enumerador : EnumStatusFinanceiro.values()) {
+			retorno.add(enumerador);
+		}
+		return retorno;
+	}
+
+	public List<EnumTipoFinanceiro> getListaEnumTipoFinanceiro() {
+		List<EnumTipoFinanceiro> retorno = new ArrayList<EnumTipoFinanceiro>();
+		for (EnumTipoFinanceiro enumerador : EnumTipoFinanceiro.values()) {
 			retorno.add(enumerador);
 		}
 		return retorno;

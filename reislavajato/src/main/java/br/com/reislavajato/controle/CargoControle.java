@@ -57,6 +57,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 	}
 
 	public void listar() throws DadosInvalidosException {
+		
 		try {
 			cargos = context.getBean(CargoNeg.class).listar();
 		} catch (RuntimeException erro) {
@@ -79,7 +80,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 			cargo = (Cargo) evento.getComponent().getAttributes().get("registroSelecionado");
 			context.getBean(CargoNeg.class).excluir(cargo);
 			novo();
-			addMensagemInfo(msgIncluidoSucesso);
+			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

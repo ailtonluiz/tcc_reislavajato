@@ -5,10 +5,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.reislavajato.enumeradores.EnumStatusFinanceiro;
+import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 
 /**
  * @Criado por: ailtonluiz
@@ -17,6 +23,12 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Entity
 public class Financeiro extends GenericEntity {
+
+	@Enumerated(EnumType.STRING)
+	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CONTA_PAGAR;
+
+	@Enumerated(EnumType.STRING)
+	private EnumStatusFinanceiro statusFinanceiro = EnumStatusFinanceiro.ABERTO;
 
 	@Column(nullable = false, name = "dt_lacto")
 	@Temporal(TemporalType.DATE)
@@ -32,19 +44,27 @@ public class Financeiro extends GenericEntity {
 	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_docto")
 	private BigDecimal vlrDocto;
 
-	@Column(nullable = false)
-	private Character status;
+	@Column(length = 80)
+	private String observacao;
 
-	@Column(nullable = false, length = 2, name = "tipo_docto")
-	private String tipoDocto;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Cliente cliente = new Cliente();
 
-	@OneToOne
-	@JoinColumn(nullable = true)
-	private Pessoa pessoa;
+	public EnumTipoFinanceiro getTipoFinanceiro() {
+		return tipoFinanceiro;
+	}
 
-//	@OneToOne
-//	@JoinColumn(nullable = false)
-//	private Usuario usuario;
+	public void setTipoFinanceiro(EnumTipoFinanceiro tipoFinanceiro) {
+		this.tipoFinanceiro = tipoFinanceiro;
+	}
+
+	public EnumStatusFinanceiro getStatusFinanceiro() {
+		return statusFinanceiro;
+	}
+
+	public void setStatusFinanceiro(EnumStatusFinanceiro statusFinanceiro) {
+		this.statusFinanceiro = statusFinanceiro;
+	}
 
 	public Date getDtLacto() {
 		return dtLacto;
@@ -78,36 +98,20 @@ public class Financeiro extends GenericEntity {
 		this.vlrDocto = vlrDocto;
 	}
 
-	public Character getStatus() {
-		return status;
+	public String getObservacao() {
+		return observacao;
 	}
 
-	public void setStatus(Character status) {
-		this.status = status;
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
-	public String getTipoDocto() {
-		return tipoDocto;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setTipoDocto(String tipoDocto) {
-		this.tipoDocto = tipoDocto;
-	}
-
-//	public Usuario getUsuario() {
-//		return usuario;
-//	}
-//
-//	public void setUsuario(Usuario usuario) {
-//		this.usuario = usuario;
-//	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 }
