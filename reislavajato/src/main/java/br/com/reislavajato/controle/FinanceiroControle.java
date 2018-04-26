@@ -26,10 +26,7 @@ import br.com.reislavajato.neg.FinanceiroNeg;
  * @Criado por: ailtonluiz
  * @Data: 25 de abr de 2018
  */
-/**
- * @Criado por: ailto
- * @Data: 25 de abr de 2018
- */
+
 @Controller("financeiroControle")
 public class FinanceiroControle extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = -1615057246414126565L;
@@ -53,6 +50,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 		financeiro = new Financeiro();
 		financeiros = new ArrayList<Financeiro>();
 		clientes = new ArrayList<Cliente>();
+
 		try {
 			this.listar();
 		} catch (DadosInvalidosException e) {
@@ -75,7 +73,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 		try {
 			context.getBean(FinanceiroNeg.class).alterar(financeiro);
 			novo();
-			addMensagemInfo(msgIncluidoSucesso);
+			addMensagemInfo(msgSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

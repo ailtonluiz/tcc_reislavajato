@@ -32,7 +32,7 @@ public class Financeiro extends GenericEntity {
 	@Enumerated(EnumType.STRING)
 	private EnumStatusFinanceiro statusFinanceiro = EnumStatusFinanceiro.ABERTO;
 
-	@Column(nullable = false, name = "dt_baixa")
+	@Column(nullable = true, name = "dt_baixa")
 	@Temporal(TemporalType.DATE)
 	private Date dtBaixa;
 
