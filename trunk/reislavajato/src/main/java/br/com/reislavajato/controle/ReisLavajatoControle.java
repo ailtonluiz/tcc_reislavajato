@@ -8,6 +8,7 @@ public abstract class ReisLavajatoControle {
 	protected final String msgAlteradoSucesso = "Alteração realizada com sucesso!";
 	protected final String msgExcluidoSucesso = "Exclusão realizada com Sucesso!";
 	protected final String msgErro = "Ocorreu um erro";
+	protected final String msgSucesso = "Operação realizada com sucesso!";
 
 	protected abstract String novo();
 
@@ -25,6 +26,7 @@ public abstract class ReisLavajatoControle {
 
 	protected void addMensagemErroFatal(Throwable e) {
 		e.printStackTrace();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro inesperado no sistema! Contacte o analista.", ""));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro inesperado no sistema! Contacte o analista.", ""));
 	}
 }

@@ -42,7 +42,7 @@
 							itemLabel="#{status.descricao}" />
 					</p:selectOneMenu>
 
-					<h:outputLabel for="tipoFinanceiro" value="Tipo Financeiro" />
+					<h:outputLabel for="tipoFinanceiro" value="Tipo Docto." />
 					<p:selectOneMenu id="tipoFinanceiro"
 						converter="omnifaces.SelectItemsConverter"
 						value="#{financeiroControle.tipoFinanceiro}">
@@ -104,13 +104,13 @@
 						</p:outputLabel>
 					</p:column>
 
-					<p:column headerText="Dt. Lacto" style="width:8%"
-						sortBy="#{financeiroControle.financeiro.dtlacto}"
-						filterMatchMode="contains">
-						<h:outputText value="#{financeiro.dtLacto}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
+					<!-- 					<p:column headerText="Dt. Lacto" style="width:8%" -->
+					<!-- 						sortBy="#{financeiroControle.financeiro.dtlacto}" -->
+					<!-- 						filterMatchMode="contains"> -->
+					<!-- 						<h:outputText value="#{financeiro.dtLacto}"> -->
+					<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 					</p:column> -->
 					<p:column headerText="Dt. Vecto" style="width:8%"
 						sortBy="#{financeiroControle.financeiro.dtVecto}"
 						filterMatchMode="contains">
