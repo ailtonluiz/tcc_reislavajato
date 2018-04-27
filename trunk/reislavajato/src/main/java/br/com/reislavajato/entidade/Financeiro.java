@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +33,7 @@ public class Financeiro extends GenericEntity {
 
 	@Column(nullable = true, name = "dt_baixa")
 	@Temporal(TemporalType.DATE)
-	private Date dtBaixa;
+	private Date dtBaixa = new Date();
 
 	@Column(nullable = false, name = "dt_vecto")
 	@Temporal(TemporalType.DATE)
