@@ -26,7 +26,7 @@ public abstract class ReisLavajatoControle {
 
 	protected void addMensagemErroFatal(Throwable e) {
 		e.printStackTrace();
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro inesperado no sistema! Contacte o analista.", ""));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro inesperado no sistema! Contacte o analista.", ""));
 	}
+
 }

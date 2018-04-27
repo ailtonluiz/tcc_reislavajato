@@ -17,6 +17,7 @@ import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.Financeiro;
 import br.com.reislavajato.enumeradores.EnumStatusFinanceiro;
+import br.com.reislavajato.enumeradores.EnumTela;
 import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
@@ -93,11 +94,13 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 	public void editar(ActionEvent evento) {
 		try {
 			financeiro = (Financeiro) evento.getComponent().getAttributes().get("registroSelecionado");
+			financeiro.setTela(EnumTela.ALTERAR);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
 	}
-
+	
+	//getters and setters
 	public Financeiro getFinanceiro() {
 		return financeiro;
 	}

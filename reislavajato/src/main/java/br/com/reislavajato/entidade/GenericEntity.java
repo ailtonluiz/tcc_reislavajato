@@ -2,10 +2,14 @@ package br.com.reislavajato.entidade;
 
 import java.io.Serializable;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import br.com.reislavajato.enumeradores.EnumTela;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
@@ -14,7 +18,10 @@ public class GenericEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-
+	
+	@Enumerated(EnumType.STRING)
+	private  EnumTela tela = EnumTela.INCLUIR;
+	
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -51,6 +58,14 @@ public class GenericEntity implements Serializable {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public EnumTela getTela() {
+		return tela;
+	}
+
+	public void setTela(EnumTela tela) {
+		this.tela = tela;
 	}
 
 }
