@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.Financeiro;
+import br.com.reislavajato.entidade.Fornecedor;
 import br.com.reislavajato.enumeradores.EnumStatusFinanceiro;
 import br.com.reislavajato.enumeradores.EnumTela;
 import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
@@ -38,6 +39,8 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 	private List<Financeiro> financeiros;
 	private Cliente cliente;
 	private List<Cliente> clientes;
+	private Fornecedor fornecedor;
+	private List<Fornecedor> fornecedores;
 	private EnumStatusFinanceiro statusFinanceiro;
 	private EnumTipoFinanceiro tipoFinanceiro;
 
@@ -99,8 +102,8 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 			addMensagemErroFatal(erro);
 		}
 	}
-	
-	//getters and setters
+
+	// getters and setters
 	public Financeiro getFinanceiro() {
 		return financeiro;
 	}
@@ -147,6 +150,22 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public List<Fornecedor> getFornecedores() {
+		return fornecedores;
+	}
+
+	public void setFornecedores(List<Fornecedor> fornecedores) {
+		this.fornecedores = fornecedores;
 	}
 
 }

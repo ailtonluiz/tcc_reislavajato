@@ -9,8 +9,8 @@ package br.com.reislavajato.enumeradores;
  */
 public enum EnumTipoFinanceiro implements Enumerador {
 
-	CONTA_PAGAR("1", "Conta a pagar"),
-	CONTA_RECEBER("2", "Conta a receber");
+	CONTA_PAGAR("CP", "Conta a pagar"),
+	CONTA_RECEBER("CR", "Conta a receber");
 
 	private final String abreviado;
 	private final String descricao;

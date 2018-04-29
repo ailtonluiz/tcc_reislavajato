@@ -45,6 +45,7 @@ public class ControleEnumerador implements Serializable {
 		return retorno;
 	}
 
+
 	public List<EnumSexo> getListaEnumSexo() {
 		List<EnumSexo> retorno = new ArrayList<EnumSexo>();
 		for (EnumSexo enumerador : EnumSexo.values()) {

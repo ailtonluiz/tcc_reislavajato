@@ -25,7 +25,7 @@ public class Financeiro extends GenericEntity {
 
 	@Column(name = "tipo_documento")
 	@Enumerated(EnumType.STRING)
-	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CONTA_PAGAR;
+	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CONTA_RECEBER;
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
@@ -50,6 +50,9 @@ public class Financeiro extends GenericEntity {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	private Cliente cliente = new Cliente();
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private Fornecedor fornecedor = new Fornecedor();
 
 	public EnumTipoFinanceiro getTipoFinanceiro() {
 		return tipoFinanceiro;
@@ -113,6 +116,14 @@ public class Financeiro extends GenericEntity {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 }
