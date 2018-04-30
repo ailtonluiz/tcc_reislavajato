@@ -5,256 +5,363 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-   template="/templates/modelo.xhtml">
+	template="/templates/modelo.xhtml">
 
-   <p:growl id="mensagem" />
+	<p:growl id="mensagem" />
 
-   <ui:define name="conteudo">
-      <!-- Tela de listagem -->
-      <h:form id="frmListagem">
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
 
-         <p:panel header="Listagem de Clientes">
-            <h:panelGrid columns="2">
-               <p:outputLabel value="Nome:" />
-               <p:inputText value="#{ClienteControle.nomeConsulta}" />
+			<p:panel header="Listagem de Clientes">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{ClienteControle.nomeConsulta}" />
 
-               <p:outputLabel value="CPF:" />
-               <p:inputMask mask="999.999.999-99" size="15" value="#{ClienteControle.cpfConsulta}" maxlength="14" converter="#{cpfConverter}" />
+					<p:outputLabel value="CPF:" />
+					<p:inputMask mask="999.999.999-99" size="15"
+						value="#{ClienteControle.cpfConsulta}" maxlength="14"
+						converter="#{cpfConverter}" />
 
-               <p:outputLabel value="Nome Fantasia:" title="Pesquise pelo nome fantasia" />
-               <p:inputText value="#{ClienteControle.nomeFantasiaConsulta}" />
+					<p:outputLabel value="Nome Fantasia:"
+						title="Pesquise pelo nome fantasia" />
+					<p:inputText value="#{ClienteControle.nomeFantasiaConsulta}" />
 
-               <p:outputLabel value="CNPJ:" />
-               <p:inputMask mask="99.999.999/9999-99" value="#{ClienteControle.cnpjConsulta}" converter="#{cnpjConverter}" />
-            </h:panelGrid>
-            <br />
-            <p:commandButton icon="ui-icon-search" value="Listar" action="#{ClienteControle.listarClientes}" update="tabela" title="Listar Cliente(s)" />
+					<p:outputLabel value="CNPJ:" />
+					<p:inputMask mask="99.999.999/9999-99"
+						value="#{ClienteControle.cnpjConsulta}"
+						converter="#{cnpjConverter}" />
+				</h:panelGrid>
+				<br />
+				<p:commandButton icon="ui-icon-search" value="Listar"
+					action="#{ClienteControle.listarClientes}" update="tabela"
+					title="Listar Cliente(s)" />
 
-            <br />
+				<br />
 
-            <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{ClienteControle.clientes}" paginatorPosition="top" var="cliente" rows="5">
-               <f:facet name="footer">
-                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{ClienteControle.novo}" update=":frmCadastro:painel">
-                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                  </p:commandButton>
-               </f:facet>
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{ClienteControle.clientes}"
+					paginatorPosition="top" var="cliente" rows="5">
+					<f:facet name="footer">
+						<p:commandButton value="Novo" icon="ui-icon-plus"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{ClienteControle.novo}"
+							update=":frmCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
 
-               <p:column headerText="Nome Fantasia" sortBy="#{cliente.pessoa.pessoaJuridica.nomeFantasia}" filterBy="#{cliente.pessoa.pessoaJuridica.nomeFantasia}" filterMatchMode="contains"
-                  rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ'}">
-                  <p:outputLabel value="#{cliente.pessoa.pessoaJuridica.nomeFantasia}" />
-               </p:column>
+					<p:column headerText="Nome Fantasia"
+						sortBy="#{cliente.pessoa.pessoaJuridica.nomeFantasia}"
+						filterBy="#{cliente.pessoa.pessoaJuridica.nomeFantasia}"
+						filterMatchMode="contains"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ'}">
+						<p:outputLabel
+							value="#{cliente.pessoa.pessoaJuridica.nomeFantasia}" />
+					</p:column>
 
-               <p:column headerText="CNPJ" filterBy="#{cliente.pessoa.pessoaJuridica.cnpj}" style="width:10%" rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ'}">
-                  <p:outputLabel value="#{cliente.pessoa.pessoaJuridica.cnpj}" />
-               </p:column>
+					<p:column headerText="CNPJ"
+						filterBy="#{cliente.pessoa.pessoaJuridica.cnpj}" style="width:10%"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ'}">
+						<p:outputLabel value="#{cliente.pessoa.pessoaJuridica.cnpj}" />
+					</p:column>
 
-               <p:column headerText="Nome" sortBy="#{cliente.pessoa.pessoaFisica.nome}" filterBy="#{cliente.pessoa.pessoaFisica.nome}" filterMatchMode="contains" rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
-                  <p:outputLabel value="#{cliente.pessoa.pessoaFisica.nome}" />
-               </p:column>
+					<p:column headerText="Nome"
+						sortBy="#{cliente.pessoa.pessoaFisica.nome}"
+						filterBy="#{cliente.pessoa.pessoaFisica.nome}"
+						filterMatchMode="contains"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
+						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.nome}" />
+					</p:column>
 
-               <p:column headerText="CPF" filterBy="#{cliente.pessoa.pessoaFisica.cpf}" style="width:10%" rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
-                  <p:outputLabel value="#{cliente.pessoa.pessoaFisica.cpf}" />
-               </p:column>
+					<p:column headerText="CPF"
+						filterBy="#{cliente.pessoa.pessoaFisica.cpf}" style="width:10%"
+						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
+						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.cpf}" />
+					</p:column>
 
-               <p:column headerText="Telefone" style="width:22%">
-                  <p:outputLabel value="#{cliente.pessoa.telefone.fixo} - #{cliente.pessoa.telefone.celular}" />
-               </p:column>
+					<p:column headerText="Telefone" style="width:22%">
+						<p:outputLabel
+							value="#{cliente.pessoa.telefone.fixo} - #{cliente.pessoa.telefone.celular}" />
+					</p:column>
 
-               <p:column headerText="Opções" style="width:8%">
-                  <p:commandButton icon="ui-icon-trash" actionListener="#{ClienteControle.excluir}" update=":mensagem :frmListagem:tabela">
-                     <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
-                     <f:attribute name="registroSelecionado" value="#{cliente}" />
-                  </p:commandButton>
+					<p:column headerText="Opções" style="width:8%">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{ClienteControle.excluir}"
+							update=":mensagem :frmListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o registro?" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{cliente}" />
+						</p:commandButton>
 
-                  <p:commandButton icon="ui-icon-pencil" actionListener="#{ClienteControle.editar}" update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
-                     <f:attribute name="registroSelecionado" value="#{cliente}" />
-                     <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                  </p:commandButton>
-               </p:column>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{ClienteControle.editar}"
+							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="registroSelecionado" value="#{cliente}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
 
-            </p:dataTable>
+				</p:dataTable>
 
-            <!-- Botão de opções -->
-            <p:confirmDialog global="true">
-               <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-               <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
 
-         </p:panel>
-      </h:form>
+			</p:panel>
+		</h:form>
 
-      <!-- Tela de Cadastros -->
-      <p:dialog header="Cadastro de Cliente" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
-         <h:form id="frmCadastro">
-            <p:panel id="painel">
-               <h:panelGrid columns="2">
-                  <p:outputLabel value="Tipo Pessoa?" />
-                  <p:selectOneRadio value="#{ClienteControle.cliente.pessoa.tipoPessoa}">
-                     <p:ajax update="painel" />
-                     <f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                  </p:selectOneRadio>
+		<!-- Tela de Cadastros -->
+		<p:dialog header="Cadastro de Cliente" widgetVar="dialogo"
+			draggable="true" resizable="false" modal="true">
+			<h:form id="frmCadastro">
+				<p:panel id="painel">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Tipo Pessoa?" />
+						<p:selectOneRadio
+							value="#{ClienteControle.cliente.pessoa.tipoPessoa}">
+							<p:ajax update="painel" />
+							<f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}"
+								var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+						</p:selectOneRadio>
 
-                  <p:outputLabel value="E-mail:" />
-                  <p:inputText value="#{ClienteControle.cliente.pessoa.email}" size="70" />
+						<p:outputLabel value="E-mail:" />
+						<p:inputText value="#{ClienteControle.cliente.pessoa.email}"
+							size="70" />
 
-                  <p:outputLabel value="Permitir envio?" />
-                  <p:selectOneRadio value="#{ClienteControle.cliente.pessoa.permitirEnvioEmail}">
-                     <f:selectItems value="#{ControleEnumerador.listaEnumSimNao}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                  </p:selectOneRadio>
-               </h:panelGrid>
+						<p:outputLabel value="Permitir envio?" />
+						<p:selectOneRadio
+							value="#{ClienteControle.cliente.pessoa.permitirEnvioEmail}">
+							<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
+								var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+						</p:selectOneRadio>
+					</h:panelGrid>
 
-               <p:tabView dynamic="true">
-                  <p:tab title="Pessoa Física" rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
-                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Nome:" />
-                        <p:inputText value="#{ClienteControle.cliente.pessoa.pessoaFisica.nome}" maxlength="50" style="width: 160pt !important;" />
+					<p:tabView dynamic="true">
+						<p:tab title="Pessoa Física"
+							rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Nome:" />
+								<p:inputText
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.nome}"
+									maxlength="50" style="width: 160pt !important;" />
 
-                        <p:outputLabel value="CPF:" />
-                        <p:inputMask mask="999.999.999-99" size="15" value="#{ClienteControle.cliente.pessoa.pessoaFisica.cpf}" maxlength="14" style="width: 150pt !important;" converter="#{cpfConverter}" />
+								<p:outputLabel value="CPF:" />
+								<p:inputMask mask="999.999.999-99" size="15"
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.cpf}"
+									maxlength="14" style="width: 150pt !important;"
+									converter="#{cpfConverter}" />
 
-                        <p:outputLabel for="dtNasc" value="Data Nascimento:" />
-                        <p:calendar id="dtNasc" yearRange="-100:+0" value="#{ClienteControle.cliente.pessoa.pessoaFisica.dataNascimento}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true"
-                           locale="pt" />
+								<p:outputLabel for="dtNasc" value="Data Nascimento:" />
+								<p:calendar id="dtNasc" yearRange="-100:+0"
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.dataNascimento}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
 
-                        <p:outputLabel value="Sexo:" />
-                        <p:selectOneRadio value="#{ClienteControle.cliente.pessoa.pessoaFisica.sexo}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumSexo}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                        </p:selectOneRadio>
-                     </h:panelGrid>
-                  </p:tab>
+								<p:outputLabel value="Sexo:" />
+								<p:selectOneRadio
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.sexo}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumSexo}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+						</p:tab>
 
-                  <p:tab title="Pessoa Jurídica" rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ' }">
-                     <h:panelGrid columns="6">
-                        <p:outputLabel for="cnpj" value="CNPJ:" />
-                        <p:inputMask id="cnpj" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.cnpj}" mask="99.999.999/9999-99" required="true" size="32" requiredMessage="É obrigatório informar o CNPJ" />
+						<p:tab title="Pessoa Jurídica"
+							rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PJ' }">
+							<h:panelGrid columns="6">
+								<p:outputLabel for="cnpj" value="CNPJ:" />
+								<p:inputMask id="cnpj"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.cnpj}"
+									mask="99.999.999/9999-99" required="true" size="32"
+									requiredMessage="É obrigatório informar o CNPJ" />
 
-                        <p:outputLabel for="insc" value="Insc. Estadual:" />
-                        <p:inputText id="insc" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.inscricaoEstadual}" size="20" />
+								<p:outputLabel for="insc" value="Insc. Estadual:" />
+								<p:inputText id="insc"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.inscricaoEstadual}"
+									size="20" />
 
-                        <p:outputLabel for="inscMun" value="Insc. Mun.:" />
-                        <p:inputText id="inscMun" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.inscricaoMunicipal}" size="18" />
-                     </h:panelGrid>
-                     <h:panelGrid columns="2">
-                        <p:outputLabel for="razao" value="Razão Social:" />
-                        <p:inputText id="razao" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.razaoSocial}" maxlength="100" size="100" required="true" requiredMessage="É obrigatório informar a Razão Social" />
+								<p:outputLabel for="inscMun" value="Insc. Mun.:" />
+								<p:inputText id="inscMun"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.inscricaoMunicipal}"
+									size="18" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="razao" value="Razão Social:" />
+								<p:inputText id="razao"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.razaoSocial}"
+									maxlength="100" size="100" required="true"
+									requiredMessage="É obrigatório informar a Razão Social" />
 
-                        <p:outputLabel for="fantasia" value="Fantasia:" />
-                        <p:inputText id="fantasia" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.nomeFantasia}" maxlength="100" size="100" />
+								<p:outputLabel for="fantasia" value="Fantasia:" />
+								<p:inputText id="fantasia"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.nomeFantasia}"
+									maxlength="100" size="100" />
 
-                     </h:panelGrid>
-                     <h:panelGrid columns="4">
-                        <p:outputLabel for="contato" value="Contato:" />
-                        <p:inputText id="contato" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.contatoEmpresa}" maxlength="70" size="66" />
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+								<p:outputLabel for="contato" value="Contato:" />
+								<p:inputText id="contato"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.contatoEmpresa}"
+									maxlength="70" size="66" />
 
-                        <p:outputLabel for="dtAbert" value="Data Abertura:" />
-                        <p:calendar id="dtAbert" yearRange="-100:+0" value="#{ClienteControle.cliente.pessoa.pessoaJuridica.dataAberturaEmpresa}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true"
-                           locale="pt" />
+								<p:outputLabel for="dtAbert" value="Data Abertura:" />
+								<p:calendar id="dtAbert" yearRange="-100:+0"
+									value="#{ClienteControle.cliente.pessoa.pessoaJuridica.dataAberturaEmpresa}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
 
-                     </h:panelGrid>
+							</h:panelGrid>
 
-                  </p:tab>
-                  <p:tab title="Dados Pessoais" rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
-                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Nome do Pai:" for="nomePai" />
-                        <p:inputText id="nomePai" maxlength="50" size="85" value="#{ClienteControle.cliente.pessoa.pessoaFisica.nomePai}" />
+						</p:tab>
+						<p:tab title="Dados Pessoais"
+							rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Nome do Pai:" for="nomePai" />
+								<p:inputText id="nomePai" maxlength="50" size="85"
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.nomePai}" />
 
-                        <p:outputLabel value="Nome da Mãe:" for="nomeMae" />
-                        <p:inputText id="nomeMae" maxlength="50" size="85" value="#{ClienteControle.cliente.pessoa.pessoaFisica.nomeMae}" />
-                     </h:panelGrid>
+								<p:outputLabel value="Nome da Mãe:" for="nomeMae" />
+								<p:inputText id="nomeMae" maxlength="50" size="85"
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.nomeMae}" />
+							</h:panelGrid>
 
-                     <h:panelGrid columns="4">
-                        <p:outputLabel value="RG:" />
-                        <p:inputNumber maxlength="20" value="#{ClienteControle.cliente.pessoa.pessoaFisica.rg}" decimalPlaces="0" />
+							<h:panelGrid columns="4">
+								<p:outputLabel value="RG:" />
+								<p:inputNumber maxlength="20"
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.rg}"
+									decimalPlaces="0" />
 
-                        <p:outputLabel value="Orgão Emissor:" />
-                        <p:selectOneMenu value="#{ClienteControle.cliente.pessoa.pessoaFisica.orgaoRG}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           <!-- 									<p:ajax update="municipio" /> -->
-                        </p:selectOneMenu>
+								<p:outputLabel value="Orgão Emissor:" />
+								<p:selectOneMenu
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.orgaoRG}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
 
-                        <p:outputLabel value="UF:" />
-                        <p:selectOneMenu value="#{ClienteControle.cliente.pessoa.endereco.municipio.uf}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           <p:ajax update="municipio" />
-                        </p:selectOneMenu>
+								<p:outputLabel value="UF:" />
+								<p:selectOneMenu
+									value="#{ClienteControle.cliente.pessoa.endereco.municipio.uf}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<p:ajax update="municipio" />
+								</p:selectOneMenu>
 
-                        <p:outputLabel for="dtExp" value="Data Expedição:" />
-                        <p:calendar id="dtExp" yearRange="-100:+0" value="#{ClienteControle.cliente.pessoa.pessoaFisica.dataExpedicaoRG}" pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" navigator="true" showButtonPanel="true"
-                           locale="pt" />
+								<p:outputLabel for="dtExp" value="Data Expedição:" />
+								<p:calendar id="dtExp" yearRange="-100:+0"
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.dataExpedicaoRG}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
 
-                        <p:outputLabel value="Estado Civil:" />
-                        <p:selectOneMenu value="#{ClienteControle.cliente.pessoa.pessoaFisica.estadoCivil}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumEstadoCivil}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           <!-- 									<p:ajax update="municipio" /> -->
-                        </p:selectOneMenu>
+								<p:outputLabel value="Estado Civil:" />
+								<p:selectOneMenu
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.estadoCivil}">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumEstadoCivil}" var="item"
+										itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
 
-                        <p:outputLabel value="Escolaridade:" />
-                        <p:selectOneMenu value="#{ClienteControle.cliente.pessoa.pessoaFisica.escolaridade}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumEscolaridade}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           <!-- 									<p:ajax update="municipio" /> -->
-                        </p:selectOneMenu>
+								<p:outputLabel value="Escolaridade:" />
+								<p:selectOneMenu
+									value="#{ClienteControle.cliente.pessoa.pessoaFisica.escolaridade}">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumEscolaridade}" var="item"
+										itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
 
-                     </h:panelGrid>
-                  </p:tab>
+							</h:panelGrid>
+						</p:tab>
 
-                  <p:tab title="Endereço">
-                     <h:panelGrid columns="2" id="end">
-                        <p:outputLabel value="UF:" />
-                        <p:selectOneMenu value="#{ClienteControle.cliente.pessoa.endereco.municipio.uf}">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumUf}" var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-                           <p:ajax update="municipio" />
-                        </p:selectOneMenu>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2" id="end">
+								<p:outputLabel value="UF:" />
+								<p:selectOneMenu
+									value="#{ClienteControle.cliente.pessoa.endereco.municipio.uf}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<p:ajax update="municipio" />
+								</p:selectOneMenu>
 
-                        <p:outputLabel value="Município:" />
-                        <p:selectOneMenu id="municipio" filter="true" converter="omnifaces.SelectItemsConverter" value="#{ClienteControle.cliente.pessoa.endereco.municipio}">
-                           <f:selectItem noSelectionOption="true" itemLabel="Selecione um Município" />
-                           <f:selectItems value="#{ClienteControle.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nome}" />
-                        </p:selectOneMenu>
+								<p:outputLabel value="Município:" />
+								<p:selectOneMenu id="municipio" filter="true"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{ClienteControle.cliente.pessoa.endereco.municipio}">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione um Município" />
+									<f:selectItems value="#{ClienteControle.municipios}"
+										var="municipio" itemValue="#{municipio}"
+										itemLabel="#{municipio.nome}" />
+								</p:selectOneMenu>
 
-                        <p:outputLabel value="CEP:" />
-                        <p:inputMask value="#{ClienteControle.cliente.pessoa.endereco.cep}" mask="99999-999" maxlength="10" />
-                        <p:commandButton icon="ui-icon-search" value="Busar endereço" actionListener="#{ClienteControle.buscarCep}" update="end" />
+								<p:outputLabel value="CEP:" />
+								<p:inputMask
+									value="#{ClienteControle.cliente.pessoa.endereco.cep}"
+									mask="99999-999" maxlength="10" />
+								<p:commandButton icon="ui-icon-search" value="Buscar endereço"
+									actionListener="#{ClienteControle.buscarCep}" update="end" />
 
-                        <br />
+								<br />
+								
 
-                        <p:outputLabel value="Logradouro:" />
-                        <p:inputText value="#{ClienteControle.cliente.pessoa.endereco.logradouro}" />
+								<p:outputLabel value="Logradouro:" />
+								<p:inputText
+									value="#{ClienteControle.cliente.pessoa.endereco.logradouro}" />
 
-                        <p:outputLabel value="Complemento:" />
-                        <p:inputText value="#{ClienteControle.cliente.pessoa.endereco.complemento}" />
+								<p:outputLabel value="Complemento:" />
+								<p:inputText
+									value="#{ClienteControle.cliente.pessoa.endereco.complemento}" />
 
-                        <p:outputLabel value="Bairro:" />
-                        <p:inputText value="#{ClienteControle.cliente.pessoa.endereco.bairro}" />
+								<p:outputLabel value="Bairro:" />
+								<p:inputText
+									value="#{ClienteControle.cliente.pessoa.endereco.bairro}" />
 
-                        <p:outputLabel value="Número:" />
-                        <p:inputNumber value="#{ClienteControle.cliente.pessoa.endereco.numero}" decimalPlaces="0" />
+								<p:outputLabel value="Número:" />
+								<p:inputNumber
+									value="#{ClienteControle.cliente.pessoa.endereco.numero}"
+									decimalPlaces="0" />
 
-                     </h:panelGrid>
-                  </p:tab>
+							</h:panelGrid>
+						</p:tab>
 
-                  <p:tab title="Telefone" id="tel">
-                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Celular:" for="txt_celular" />
-                        <p:inputMask mask="(99) 9 9999-9999" id="txt_celular" value="#{ClienteControle.cliente.pessoa.telefone.celular}" />
+						<p:tab title="Telefone" id="tel">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Celular:" for="txt_celular" />
+								<p:inputMask mask="(99) 9 9999-9999" id="txt_celular"
+									value="#{ClienteControle.cliente.pessoa.telefone.celular}" />
 
-                        <p:outputLabel value="Fixo:" />
-                        <p:inputMask mask="(99) 9999-9999" value="#{ClienteControle.cliente.pessoa.telefone.fixo}" />
+								<p:outputLabel value="Fixo:" />
+								<p:inputMask mask="(99) 9999-9999"
+									value="#{ClienteControle.cliente.pessoa.telefone.fixo}" />
 
-                        <p:outputLabel value="Comercial:" />
-                        <p:inputMask mask="(99) 9999-9999" value="#{ClienteControle.cliente.pessoa.telefone.comercial}" />
+								<p:outputLabel value="Comercial:" />
+								<p:inputMask mask="(99) 9999-9999"
+									value="#{ClienteControle.cliente.pessoa.telefone.comercial}" />
 
-                        <p:outputLabel value="Contato:" />
-                        <p:inputText value="#{ClienteControle.cliente.pessoa.telefone.contato}" />
-                     </h:panelGrid>
-                  </p:tab>
+								<p:outputLabel value="Contato:" />
+								<p:inputText
+									value="#{ClienteControle.cliente.pessoa.telefone.contato}" />
+							</h:panelGrid>
+						</p:tab>
 
-               </p:tabView>
-            </p:panel>
-            <h:panelGrid columns="2">
-               <p:commandButton icon="ui-icon-check" value="Salvar" actionListener="#{ClienteControle.salvar}" update=":mensagem :frmListagem:tabela" />
-               <p:commandButton value="Cancelar" icon="ui-icon-closethick" oncomplete="PF('dialogo').hide();" />
-            </h:panelGrid>
-         </h:form>
-      </p:dialog>
-   </ui:define>
+					</p:tabView>
+				</p:panel>
+				<h:panelGrid columns="2">
+					<p:commandButton icon="ui-icon-check" value="Salvar"
+						actionListener="#{ClienteControle.salvar}"
+						update=":mensagem :frmListagem:tabela" />
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
 </ui:composition>
