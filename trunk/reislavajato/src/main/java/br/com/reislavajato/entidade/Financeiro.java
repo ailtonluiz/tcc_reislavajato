@@ -24,8 +24,8 @@ import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 public class Financeiro extends GenericEntity {
 
 	@Column(name = "tipo_documento")
-	@Enumerated(EnumType.STRING)
-	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CONTA_RECEBER;
+	@Enumerated(EnumType.ORDINAL)
+	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CR;
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)

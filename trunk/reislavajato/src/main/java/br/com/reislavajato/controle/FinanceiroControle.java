@@ -75,7 +75,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			context.getBean(FinanceiroNeg.class).alterar(financeiro);
+			context.getBean(FinanceiroNeg.class).incluir(financeiro);
 			novo();
 			addMensagemInfo(msgSucesso);
 		} catch (RuntimeException erro) {
