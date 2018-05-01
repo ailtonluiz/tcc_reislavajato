@@ -19,7 +19,8 @@ public class FuncionarioNegImpl extends NegocioGenerico<Funcionario> implements 
 		super(persistencia);
 	}
 
-	@Transactional
+	@Transactional // possibilita adicionar atributos relacionadas à transação do método como
+					// propagation, rollbackfor...
 	public List<Funcionario> listarPorCpfOuNome(String cpf, String nome) throws DadosInvalidosException {
 		return ((FuncionarioDao) persistencia).listarPorCpfOuNome(cpf, nome);
 	}
@@ -35,8 +36,11 @@ public class FuncionarioNegImpl extends NegocioGenerico<Funcionario> implements 
 		return ((FuncionarioDao) persistencia).consultarPorEmail(email);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.reislavajato.neg.FuncionarioNeg#autenticar(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.reislavajato.neg.FuncionarioNeg#autenticar(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public Funcionario autenticar(String email, String senha) throws DadosInvalidosException {

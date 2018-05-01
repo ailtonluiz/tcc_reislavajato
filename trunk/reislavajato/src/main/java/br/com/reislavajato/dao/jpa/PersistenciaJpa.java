@@ -19,7 +19,8 @@ public class PersistenciaJpa<E> implements Persistencia<E> {
 	private static final long serialVersionUID = -3629350481384523952L;
 
 	public Class<E> classeEntidade;
-
+	
+	//métodos construtores e casting de classes
 	public PersistenciaJpa() {
 		this.classeEntidade = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
