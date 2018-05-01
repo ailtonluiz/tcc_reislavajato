@@ -28,10 +28,13 @@ import br.com.reislavajato.util.Numero;
  * @Criado por: ailtonluiz
  * @Data: 14 de ago de 2017
  */
-@Controller("funcionarioControle")
+@Controller("funcionarioControle") // anotação do Spring para classe controladora, é uma especialização do
+									// @Conponent
 public class FuncionarioControle extends ReisLavajatoControle implements Serializable {
 	private static final long serialVersionUID = -1615057246414126565L;
 
+	// habilitado pelo @Configuration, permitindo o Scan de classes do Appconfig, e
+	// a chamade de classes por apelido dentro dos métodos
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 	private Funcionario funcionario;
@@ -47,7 +50,9 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	}
 
 	@Override
-	@PostConstruct
+	@PostConstruct // A anotação PostConstruct é usada em um método que precisa ser executado após
+					// a injeção de dependência ser feita para executar qualquer inicialização. Este
+					// método DEVE ser chamado antes que a classe seja colocada em serviço.
 	public String novo() {
 		funcionario = new Funcionario();
 		funcionario.setPessoa(new Pessoa());
@@ -105,10 +110,13 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	}
 
 	public List<Municipio> getMunicipios() throws DadosInvalidosException {
-		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null || funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
-			return context.getBean(MunicipioNeg.class).listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
+		if (funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == null
+				|| funcionario.getPessoa().getEndereco().getMunicipio().getCodigo() == 0L) {
+			return context.getBean(MunicipioNeg.class)
+					.listarPorUf(funcionario.getPessoa().getEndereco().getMunicipio().getUf());
 		} else {
-			return context.getBean(MunicipioNeg.class).listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
+			return context.getBean(MunicipioNeg.class)
+					.listarPorNome(funcionario.getPessoa().getEndereco().getMunicipio().getNome());
 		}
 	}
 
@@ -118,7 +126,8 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 
 	public void buscarCep() throws DadosInvalidosException {
 		try {
-			funcionario.getPessoa().setEndereco(CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
+			funcionario.getPessoa().setEndereco(
+					CepWs.getEnderecoPorCep(Numero.removerFormatoCEP(funcionario.getPessoa().getEndereco().getCep())));
 		} catch (Exception e) {
 			addMensagemErroFatal(e);
 		}
