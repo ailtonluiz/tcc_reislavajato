@@ -58,7 +58,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	public void salvar() throws DadosInvalidosException {
 		try {
 			servico.setFuncionario(null);
-			context.getBean(ServicoNeg.class).incluir(servico);
+			context.getBean(ServicoNeg.class).alterar(servico);
 			novo();
 			listar();
 			addMensagemInfo(msgIncluidoSucesso);
