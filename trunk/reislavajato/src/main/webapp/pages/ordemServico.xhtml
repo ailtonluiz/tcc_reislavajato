@@ -53,7 +53,7 @@
 					paginator="true" value="#{ordemServicoControle.ordensServicos}"
 					paginatorPosition="top" var="ordemServico" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" icon="ui-icon-plus"
+						<p:commandButton value="Lançar Serviço" icon="ui-icon-plus"
 							oncomplete="PF('dialogo').show();"
 							actionListener="#{ordemServicoControle.novo}"
 							update=":frmCadastro:painel">
@@ -62,7 +62,7 @@
 						</p:commandButton>
 					</f:facet>
 
-					<p:column headerText="Nome"
+					<p:column headerText="Cliente"
 						sortBy="#{ordemServico.cliente.pessoa.pessoaFisica.nome}"
 						filterBy="#{ordemServico.K.pessoa.pessoaFisica.nome}"
 						filterMatchMode="contains">
@@ -70,9 +70,21 @@
 							value="#{ordemServico.cliente.pessoa.pessoaFisica.nome}" />
 					</p:column>
 
+					<p:column headerText="Veículo" style="width:22%"
+						sortBy="#{ordemServico.veiculo.modelo} - #{ordemServico.veiculo.placa}"
+						filterBy="#{ordemServico.veiculo.modelo} - #{ordemServico.veiculo.placa}"
+						filterMatchMode="contains">
+						<h:outputText
+							value="#{ordemServico.veiculo.marca} - #{ordemServico.veiculo.placa}" />
+					</p:column>
+
 					<p:column headerText="Telefone" style="width:22%">
 						<h:outputText
 							value="#{ordemServico.cliente.pessoa.telefone.fixo} - #{ordemServico.cliente.pessoa.telefone.celular}" />
+					</p:column>
+					<p:column headerText="Status" style="width:22%">
+						<h:outputText
+							value="#{ordemServico.statusServico}" />
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">
@@ -109,7 +121,7 @@
 
 		<!-- Tela de Cadastros -->
 		<p:dialog header="Ordem de Serviço" widgetVar="dialogo"
-			draggable="true" resizable="false" modal="true">
+			maximizable="true" draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
 				<p:panel id="painel">
 					<p:tabView dynamic="true">
@@ -343,16 +355,25 @@
 						<!-- Dados de pagamento -->
 						<p:tab title="Dados de Pagamento">
 							<h:panelGrid columns="2" cellpadding="5" id="dadosPagto">
-							   <p:outputLabel value="Forma de Pagto:" />
-                        <p:selectOneMenu value="#{ordemServicoControle.ordemServico.formaPagamento}" style="width: 65pt !important;">
-                           <f:selectItems value="#{ControleEnumerador.listaEnumFormaPagamento}" />
-                        </p:selectOneMenu>	
+								<p:outputLabel value="Forma de Pagto:" />
+								<p:selectOneMenu
+									value="#{ordemServicoControle.ordemServico.formaPagamento}"
+									style="width: 65pt !important;">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumFormaPagamento}" />
+								</p:selectOneMenu>
 							</h:panelGrid>
 
 
 						</p:tab>
 					</p:tabView>
 				</p:panel>
+				<h:panelGrid columns="2">
+				<p:outputLabel value="Total R$: " />
+				<h:outputText value="#{ordemServicoControle.ordemServico.valorTotal}">
+				<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</h:outputText>
+				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton icon="ui-icon-check" value="Salvar"
 						actionListener="#{ordemServicoControle.salvar}"

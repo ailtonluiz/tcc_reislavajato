@@ -79,7 +79,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	public void salvar() throws DadosInvalidosException {
 		try {
 			funcionario.getPessoa().setPessoaJuridica(null);
-			context.getBean(FuncionarioNeg.class).incluir(funcionario);
+			context.getBean(FuncionarioNeg.class).alterar(funcionario);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {

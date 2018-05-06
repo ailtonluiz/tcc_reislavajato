@@ -43,7 +43,7 @@
 					paginator="true" value="#{ClienteControle.clientes}"
 					paginatorPosition="top" var="cliente" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" icon="ui-icon-plus"
+						<p:commandButton value="Cadastrar Cliente" icon="ui-icon-plus"
 							oncomplete="PF('dialogo').show();"
 							actionListener="#{ClienteControle.novo}"
 							update=":frmCadastro:painel">
@@ -83,7 +83,7 @@
 
 					<p:column headerText="Telefone" style="width:22%">
 						<p:outputLabel
-							value="#{cliente.pessoa.telefone.fixo} - #{cliente.pessoa.telefone.celular}" />
+							value=" Fixo: #{cliente.pessoa.telefone.fixo} Cel: #{cliente.pessoa.telefone.celular}" />
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">
@@ -119,7 +119,7 @@
 
 		<!-- Tela de Cadastros -->
 		<p:dialog header="Cadastro de Cliente" widgetVar="dialogo"
-			draggable="true" resizable="false" modal="true">
+			draggable="true" resizable="false" modal="true" maximizable="true">
 			<h:form id="frmCadastro">
 				<p:panel id="painel">
 					<h:panelGrid columns="2">

@@ -6,10 +6,10 @@
    <ui:define name="conteudo">
       <!-- Tela de listagem -->
       <h:form id="frmListagem">
-         <p:panel header="Listagem de veiculos">
+         <p:panel header="Listagem de veículos">
             <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{veiculoControle.veiculos}" paginatorPosition="top" var="veiculo" rows="5">
                <f:facet name="footer">
-                  <p:commandButton value="Novo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{veiculoControle.novo}" update=":frmCadastro:painel">
+                  <p:commandButton value="Cadastrar Veículo" icon="ui-icon-plus" oncomplete="PF('dialogo').show();" actionListener="#{veiculoControle.novo}" update=":frmCadastro:painel">
                      <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                   </p:commandButton>
                </f:facet>

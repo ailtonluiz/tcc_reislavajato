@@ -49,7 +49,7 @@ public class OrdemServico {
 	private List<Servico> servicos = new ArrayList<Servico>();
 
 	@Enumerated(EnumType.STRING)
-	private EnumStatusServico statusServico = EnumStatusServico.PARADO;
+	private EnumStatusServico statusServico = EnumStatusServico.EXECUCAO;
 
 	@Temporal(TemporalType.DATE)
 	private Date dataHoraEntrada = new Date();
