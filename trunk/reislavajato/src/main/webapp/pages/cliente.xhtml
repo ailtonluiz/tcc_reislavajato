@@ -72,13 +72,13 @@
 						filterBy="#{cliente.pessoa.pessoaFisica.nome}"
 						filterMatchMode="contains"
 						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
-						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.nome}" />
+						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.nome} #{cliente.pessoa.pessoaJuridica.razaoSocial}" />
 					</p:column>
 
-					<p:column headerText="CPF"
+					<p:column headerText="CPF/CNPJ"
 						filterBy="#{cliente.pessoa.pessoaFisica.cpf}" style="width:10%"
 						rendered="#{ClienteControle.cliente.pessoa.tipoPessoa.abreviado == 'PF'}">
-						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.cpf}" />
+						<p:outputLabel value="#{cliente.pessoa.pessoaFisica.cpf} #{cliente.pessoa.pessoaJuridica.cnpj}" />
 					</p:column>
 
 					<p:column headerText="Telefone" style="width:22%">

@@ -7,14 +7,18 @@
     <!-- Tela de listagem -->
     <h:form id="frmListagem">
       <p:panel header="Listagem de serviços">
-        <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{servicoControle.servicos}" paginatorPosition="top" var="servico" rows="5">
+        <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{servicoControle.servicos}" paginatorPosition="top" var="servico" rows="8">
           <f:facet name="footer">
             <p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus" actionListener="#{servicoControle.novo}" update=":frmCadastro:painel">
               <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
             </p:commandButton>
           </f:facet>
-          <p:column headerText="Serviço" sortBy="#{servico.descricao}" style="width:65%">
+          <p:column headerText="Serviço" sortBy="#{servico.descricao}" style="width:45%">
             <p:outputLabel value="#{servico.descricao}" />
+          </p:column>
+          
+          <p:column headerText="Detalhes" sortBy="#{servico.descricao}" style="width:65%">
+            <p:outputLabel value="#{servico.observacao}" />
           </p:column>
 
           <p:column headerText="Valor (R$)" style="width:15%">
@@ -23,14 +27,14 @@
             </p:outputLabel>
           </p:column>
 
-          <p:column headerText="Comissão (%)" style="width:15%">
+          <p:column headerText="Comissão (%)" style="width:13%">
             <p:outputLabel value="#{servico.percentualComissao} %">
               <f:convertNumber locale="pt_BR" />
             </p:outputLabel>
           </p:column>
 
           <!-- Edição / exclusão -->
-          <p:column headerText="Opções" style="width:8%">
+          <p:column headerText="Opções" style="width:9%">
             <p:commandButton icon="ui-icon-trash" actionListener="#{servicoControle.excluir}" update=":mensagem :frmListagem:tabela">
               <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
               <f:attribute name="registroSelecionado" value="#{servico}" />

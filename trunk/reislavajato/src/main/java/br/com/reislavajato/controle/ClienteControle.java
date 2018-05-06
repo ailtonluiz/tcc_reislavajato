@@ -61,6 +61,7 @@ public class ClienteControle extends ReisLavajatoControle implements Serializabl
 		pessoaJuridica = new PessoaJuridica();
 		endereco = new Endereco();
 		telefone = new Telefone();
+		
 
 		cpfConsulta = "";
 		nomeConsulta = "";
