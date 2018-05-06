@@ -9,7 +9,7 @@
       <p:panel header="Listagem de serviços">
         <p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado" paginator="true" value="#{servicoControle.servicos}" paginatorPosition="top" var="servico" rows="8">
           <f:facet name="footer">
-            <p:commandButton value="Novo" oncomplete="PF('dialogo').show();" icon="ui-icon-plus" actionListener="#{servicoControle.novo}" update=":frmCadastro:painel">
+            <p:commandButton value="Cadastrar Serviço" oncomplete="PF('dialogo').show();" icon="ui-icon-plus" actionListener="#{servicoControle.novo}" update=":frmCadastro:painel">
               <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
             </p:commandButton>
           </f:facet>
@@ -55,7 +55,7 @@
       </p:panel>
     </h:form>
     <!-- Tela de Cadastros -->
-    <p:dialog header="Cadastro de serviços" widgetVar="dialogo" draggable="true" resizable="false" modal="true">
+    <p:dialog header="Cadastro de serviços"  widgetVar="dialogo" draggable="true" resizable="false" modal="true" minimizable="false" maximizable="true">
       <h:form id="frmCadastro">
         <h:panelGrid id="painel" columns="2" cellpadding="5">
           <p:outputLabel for="desc" value="Descrição:" />

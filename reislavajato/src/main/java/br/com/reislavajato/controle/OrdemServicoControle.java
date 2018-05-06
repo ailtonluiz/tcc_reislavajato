@@ -1,12 +1,15 @@
 package br.com.reislavajato.controle;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Messages;
+import org.omnifaces.util.Messages.Message;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -39,6 +42,9 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	private OrdemServico ordemServico;
 	private List<OrdemServico> ordensServicos;
+	private Veiculo veiculo;
+	private List<Veiculo> veiculos;
+
 
 	private String cpfConsulta;
 	private String nomeConsulta;
@@ -56,6 +62,8 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
 
+		ordemServico.setValorTotal(new BigDecimal("0.00"));
+		
 		servicoSelecionado = new Servico();
 		servicosSelecionados = new ArrayList<Servico>();
 
@@ -72,9 +80,11 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void listarOrdensServico() throws DadosInvalidosException {
 		try {
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
-				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class)
+						.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
 			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class)
+						.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
 			} else {
 				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorStatus(statusServicoConsulta);
 			}
@@ -85,6 +95,11 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void salvar() throws DadosInvalidosException {
 		try {
+			if(ordemServico.getValorTotal().signum() == 0) {
+				Messages.addGlobalError("Valor não pode ser 0");
+				return;
+			}
+			
 			this.setarServicos(ordemServico);
 
 			context.getBean(OrdemServicoNeg.class).incluir(ordemServico);
@@ -112,8 +127,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 			addMensagemErroFatal(erro);
 		}
 	}
-
-
 
 	public String adicionarServico() {
 
@@ -160,6 +173,11 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		return null;
 	}
 
+	
+	public void calcular() {
+		ordemServico.setValorTotal(new BigDecimal("0.00"));
+		
+	}
 	// getters and setters
 
 	public OrdemServico getOrdemServico() {
@@ -241,5 +259,23 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void setServicosSelecionados(List<Servico> servicosSelecionados) {
 		this.servicosSelecionados = servicosSelecionados;
 	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
+	
+	
 
 }

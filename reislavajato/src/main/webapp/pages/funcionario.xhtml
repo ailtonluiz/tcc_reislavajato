@@ -33,7 +33,7 @@
 					paginator="true" value="#{funcionarioControle.funcionarios}"
 					paginatorPosition="top" var="funcionario" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" icon="ui-icon-plus"
+						<p:commandButton value="Cadastrar Funcionário" icon="ui-icon-plus"
 							oncomplete="PF('dialogo').show();"
 							actionListener="#{funcionarioControle.novo}"
 							update=":frmCadastro:painel">
@@ -88,7 +88,7 @@
 			</p:panel>
 		</h:form>
 		<!-- Tela de Cadastros -->
-		<p:dialog header="Cadastro de funcionário" widgetVar="dialogo"
+		<p:dialog header="Cadastro de funcionário" widgetVar="dialogo" maximizable="true"
 			draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
 				<p:panel id="painel">
