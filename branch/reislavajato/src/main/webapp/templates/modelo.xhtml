@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Reis Lavajato</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<link rel="icon" type="image/x-icon" href="../images/icon.icon" />
+
+</h:head>
+<h:body>
+	<p:ajaxStatus styleClass="ajax-status">
+		<f:facet name="start">
+			<h:graphicImage library="img" name="loading.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<p:outputLabel value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<p:growl id="mensagem" />
+
+	<div id="geral">
+		<div id="topo" class="divTopo">
+			<p:graphicImage library="img" name="banner.png"
+				styleClass="imagemCentralizada" />
+		</div>
+	</div>
+	<div id="cabecalho">
+		<h:form id="frmMenu">
+			<script type="text/javascript">
+			PrimeFaces.locales['pt'] = {
+				closeText : 'Fechar',
+				prevText : 'Anterior',
+				nextText : 'Próximo',
+				currentText : 'Começo',
+				monthNames : [ 'Janeiro',
+						'Fevereiro', 'Março',
+						'Abril', 'Maio', 'Junho',
+						'Julho', 'Agosto',
+						'Setembro', 'Outubro',
+						'Novembro', 'Dezembro' ],
+				monthNamesShort : [ 'Jan', 'Fev',
+						'Mar', 'Abr', 'Mai', 'Jun',
+						'Jul', 'Ago', 'Set', 'Out',
+						'Nov', 'Dez' ],
+				dayNames : [ 'Domingo', 'Segunda',
+						'Terça', 'Quarta',
+						'Quinta', 'Sexta', 'Sábado' ],
+				dayNamesShort : [ 'Dom', 'Seg',
+						'Ter', 'Qua', 'Qui', 'Sex',
+						'Sáb' ],
+				dayNamesMin : [ 'D', 'S', 'T', 'Q',
+						'Q', 'S', 'S' ],
+				weekHeader : 'Semana',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Horas',
+				timeText : 'Tempo',
+				hourText : 'Hora',
+				minuteText : 'Minuto',
+				secondText : 'Segundo',
+				currentText : 'Data/Hora Atual',
+				ampm : false,
+				month : 'Mês',
+				week : 'Semana',
+				day : 'Dia',
+				allDayText : 'Todo Dia'
+			};
+		</script>
+
+			<p:menubar>
+				<p:submenu label="Cadastros">
+					<p:submenu label="Endereços">
+						<p:menuitem value="Municípios"
+							action="/pages/municipio.xhtml?faces-redirect=true" />
+					</p:submenu>
+
+
+					<p:menuitem value="Clientes"
+						action="/pages/cliente.xhtml?faces-redirect=true" />
+
+
+					<p:submenu label="Funcionários">
+
+						<p:menuitem value="Cargos"
+							action="/pages/cargo.xhtml?faces-redirect=true" />
+						<p:menuitem value="Funcionários"
+							action="/pages/funcionario.xhtml?faces-redirect=true" />
+
+					</p:submenu>
+					<p:menuitem value="Serviços"
+						action="/pages/servico.xhtml?faces-redirect=true" />
+						
+					<p:menuitem value="Fornecedores"
+						action="/pages/fornecedor.xhtml?faces-redirect=true" />
+
+					<p:menuitem value="Veículos"
+						action="/pages/veiculo.xhtml?faces-redirect=true" />
+
+
+				</p:submenu>
+
+
+				<p:submenu label="Movimentações">
+					<p:menuitem value="Ordem de Serviço"
+						action="/pages/ordemServico.xhtml?faces-redirect=true" />
+					<p:menuitem value="Financeiro"
+						action="/pages/financeiro.xhtml?faces-redirect=true" />
+
+				</p:submenu>
+
+				<p:submenu label="Relatórios">
+					<p:submenu label="Cadastros">
+					
+						<p:menuitem value="Clientes"
+							action="/pages/relCliente.xhtml?faces-redirect=true" />
+
+						<p:menuitem value="Funcionários"
+							action="/pages/relFuncionario.xhtml?faces-redirect=true" />
+						<p:menuitem value="Funcionários"
+							action="/pages/relFuncionario.xhtml?faces-redirect=true" />
+
+
+						<p:menuitem value="Serviços" />
+					</p:submenu>
+					<p:submenu label="Movimentações">
+						<p:menuitem value="Lavagens"
+							action="/pages/ordemServico.xhtml?faces-redirect=true" />
+						
+						<p:menuitem value="Comissões"
+							action="/pages/relComissao.xhtml?faces-redirect=true" />
+						<p:menuitem value="Financeiro" disabled="true" />
+					</p:submenu>
+
+				</p:submenu>
+
+				<p:submenu label="Parâmetros">
+					<p:menuitem icon="ui-icon-bookmark" value="Empresa"
+						action="/pages/empresa.xhtml?faces-redirect=true" />
+				</p:submenu>
+
+				<p:submenu label="Ajuda">
+					<p:menuitem icon="ui-icon-close" value="Sair"
+						action="/pages/login.xhtml?faces-redirect=true" />
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+	</div>
+
+	<div id="conteudo2">
+		<div id="geral2">
+			<div id="topo2" class="divTopo">
+				<ui:insert name="conteudo" />
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

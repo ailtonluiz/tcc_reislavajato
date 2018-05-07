@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+
+			<p:panel header="Listagem de Fornecedores">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{FornecedorControle.nomeConsulta}" />
+
+					<p:outputLabel value="CPF:" />
+					<p:inputMask mask="999.999.999-99" size="15"
+						value="#{FornecedorControle.cpfConsulta}" maxlength="14"
+						converter="#{cpfConverter}" />
+
+					<p:outputLabel value="Nome Fantasia:"
+						title="Pesquise pelo nome fantasia" />
+					<p:inputText value="#{FornecedorControle.nomeFantasiaConsulta}" />
+
+					<p:outputLabel value="CNPJ:" />
+					<p:inputMask mask="99.999.999/9999-99"
+						value="#{FornecedorControle.cnpjConsulta}"
+						converter="#{cnpjConverter}" />
+				</h:panelGrid>
+				<br />
+				<p:commandButton icon="ui-icon-search" value="Listar"
+					action="#{FornecedorControle.listarFornecedores}" update="tabela"
+					title="Listar Cliente(s)" />
+
+				<br />
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{FornecedorControle.fornecedores}"
+					paginatorPosition="top" var="fornecedor" rows="5">
+					<f:facet name="footer">
+						<p:commandButton value="Cadastrar Fornecedor" icon="ui-icon-plus"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{FornecedorControle.novo}"
+							update=":frmCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Nome Fantasia"
+						sortBy="#{fornecedor.pessoa.pessoaJuridica.nomeFantasia}"
+						filterBy="#{fornecedor.pessoa.pessoaJuridica.nomeFantasia}"
+						filterMatchMode="contains"
+						rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PJ'}">
+						<p:outputLabel
+							value="#{fornecedor.pessoa.pessoaJuridica.nomeFantasia}" />
+					</p:column>
+
+					<p:column headerText="CNPJ"
+						filterBy="#{fornecedor.pessoa.pessoaJuridica.cnpj}"
+						style="width:10%"
+						rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PJ'}">
+						<p:outputLabel value="#{fornecedor.pessoa.pessoaJuridica.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Nome"
+						sortBy="#{fornecedor.pessoa.pessoaFisica.nome}"
+						filterBy="#{fornecedor.pessoa.pessoaFisica.nome}"
+						filterMatchMode="contains"
+						rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PF'}">
+						<p:outputLabel value="#{fornecedor.pessoa.pessoaFisica.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF"
+						filterBy="#{fornecedor.pessoa.pessoaFisica.cpf}" style="width:10%"
+						rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PF'}">
+						<p:outputLabel value="#{fornecedor.pessoa.pessoaFisica.cpf}" />
+					</p:column>
+
+					<p:column headerText="Telefone" style="width:22%">
+						<p:outputLabel
+							value="#{fornecedor.pessoa.telefone.fixo} - #{fornecedor.pessoa.telefone.celular}" />
+					</p:column>
+
+					<p:column headerText="Opções" style="width:8%">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{FornecedorControle.excluir}"
+							update=":mensagem :frmListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o registro?" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{fornecedor}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{FornecedorControle.editar}"
+							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="registroSelecionado" value="#{fornecedor}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
+
+		<!-- Tela de Cadastros -->
+		<p:dialog header="Cadastro de Fornecedor" widgetVar="dialogo"
+			draggable="true" resizable="false" modal="true">
+			<h:form id="frmCadastro">
+				<p:panel id="painel">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Tipo Pessoa?" />
+						<p:selectOneRadio
+							value="#{FornecedorControle.fornecedor.pessoa.tipoPessoa}">
+							<p:ajax update="painel" />
+							<f:selectItems value="#{ControleEnumerador.listaEnumTipoPessoa}"
+								var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="E-mail:" />
+						<p:inputText value="#{FornecedorControle.fornecedor.pessoa.email}"
+							size="70" />
+							
+
+						<p:outputLabel value="Permitir envio?" />
+						<p:selectOneRadio
+							value="#{FornecedorControle.fornecedor.pessoa.permitirEnvioEmail}">
+							<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
+								var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+
+					<p:tabView dynamic="true">
+						<p:tab title="Pessoa Física"
+							rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PF'}">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Nome:" />
+								<p:inputText
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.nome}"
+									maxlength="50" style="width: 160pt !important;" />
+
+								<p:outputLabel value="CPF:" />
+								<p:inputMask mask="999.999.999-99" size="15"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.cpf}"
+									maxlength="14" style="width: 150pt !important;"
+									converter="#{cpfConverter}" />
+
+								<p:outputLabel for="dtNasc" value="Data Nascimento:" />
+								<p:calendar id="dtNasc" yearRange="-100:+0"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.dataNascimento}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
+
+								<p:outputLabel value="Sexo:" />
+								<p:selectOneRadio
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.sexo}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumSexo}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Pessoa Jurídica"
+							rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PJ' }">
+							<h:panelGrid columns="6">
+								<p:outputLabel for="cnpj" value="CNPJ:" />
+								<p:inputMask id="cnpj"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.cnpj}"
+									mask="99.999.999/9999-99" required="true" size="32"
+									requiredMessage="É obrigatório informar o CNPJ" />
+
+								<p:outputLabel for="insc" value="Insc. Estadual:" />
+								<p:inputText id="insc"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.inscricaoEstadual}"
+									size="20" />
+
+								<p:outputLabel for="inscMun" value="Insc. Mun.:" />
+								<p:inputText id="inscMun"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.inscricaoMunicipal}"
+									size="18" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="razao" value="Razão Social:" />
+								<p:inputText id="razao"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.razaoSocial}"
+									maxlength="100" size="100" required="true"
+									requiredMessage="É obrigatório informar a Razão Social" />
+
+								<p:outputLabel for="fantasia" value="Fantasia:" />
+								<p:inputText id="fantasia"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.nomeFantasia}"
+									maxlength="100" size="100" />
+
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+								<p:outputLabel for="contato" value="Contato:" />
+								<p:inputText id="contato"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.contatoEmpresa}"
+									maxlength="70" size="66" />
+
+								<p:outputLabel for="dtAbert" value="Data Abertura:" />
+								<p:calendar id="dtAbert" yearRange="-100:+0"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaJuridica.dataAberturaEmpresa}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
+
+							</h:panelGrid>
+
+						</p:tab>
+						<p:tab title="Dados Pessoais"
+							rendered="#{FornecedorControle.fornecedor.pessoa.tipoPessoa.abreviado == 'PF'}">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Nome do Pai:" for="nomePai" />
+								<p:inputText id="nomePai" maxlength="50" size="85"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.nomePai}" />
+
+								<p:outputLabel value="Nome da Mãe:" for="nomeMae" />
+								<p:inputText id="nomeMae" maxlength="50" size="85"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.nomeMae}" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="4">
+								<p:outputLabel value="RG:" />
+								<p:inputNumber maxlength="20"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.rg}"
+									decimalPlaces="0" />
+
+								<p:outputLabel value="Orgão Emissor:" />
+								<p:selectOneMenu
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.orgaoRG}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumOrgaoRG}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
+
+								<p:outputLabel value="UF:" />
+								<p:selectOneMenu
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.municipio.uf}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<p:ajax update="municipio" />
+								</p:selectOneMenu>
+
+								<p:outputLabel for="dtExp" value="Data Expedição:" />
+								<p:calendar id="dtExp" yearRange="-100:+0"
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.dataExpedicaoRG}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
+
+								<p:outputLabel value="Estado Civil:" />
+								<p:selectOneMenu
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.estadoCivil}">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumEstadoCivil}" var="item"
+										itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Escolaridade:" />
+								<p:selectOneMenu
+									value="#{FornecedorControle.fornecedor.pessoa.pessoaFisica.escolaridade}">
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumEscolaridade}" var="item"
+										itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<!-- 									<p:ajax update="municipio" /> -->
+								</p:selectOneMenu>
+
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2" id="end">
+								<p:outputLabel value="UF:" />
+								<p:selectOneMenu
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.municipio.uf}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<p:ajax update="municipio" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Município:" />
+								<p:selectOneMenu id="municipio" filter="true"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.municipio}">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione um Município" />
+									<f:selectItems value="#{FornecedorControle.municipios}"
+										var="municipio" itemValue="#{municipio}"
+										itemLabel="#{municipio.nome}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="CEP:" />
+								<p:inputMask
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.cep}"
+									mask="99999-999" maxlength="10" />
+								<p:commandButton icon="ui-icon-search" value="Buscar endereço"
+									actionListener="#{FornecedorControle.buscarCep}" update="end" />
+
+								<br />
+
+								<p:outputLabel value="Logradouro:" />
+								<p:inputText
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.logradouro}" />
+
+								<p:outputLabel value="Complemento:" />
+								<p:inputText
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.complemento}" />
+
+								<p:outputLabel value="Bairro:" />
+								<p:inputText
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.bairro}" />
+
+								<p:outputLabel value="Número:" />
+								<p:inputNumber
+									value="#{FornecedorControle.fornecedor.pessoa.endereco.numero}"
+									decimalPlaces="0" />
+
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Telefone" id="tel">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Celular:" for="txt_celular" />
+								<p:inputMask mask="(99) 9 9999-9999" id="txt_celular"
+									value="#{FornecedorControle.fornecedor.pessoa.telefone.celular}" />
+
+								<p:outputLabel value="Fixo:" />
+								<p:inputMask mask="(99) 9999-9999"
+									value="#{FornecedorControle.fornecedor.pessoa.telefone.fixo}" />
+
+								<p:outputLabel value="Comercial:" />
+								<p:inputMask mask="(99) 9999-9999"
+									value="#{FornecedorControle.fornecedor.pessoa.telefone.comercial}" />
+
+								<p:outputLabel value="Contato:" />
+								<p:inputText
+									value="#{FornecedorControle.fornecedor.pessoa.telefone.contato}" />
+							</h:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+				</p:panel>
+				<h:panelGrid columns="2">
+					<p:commandButton icon="ui-icon-check" value="Salvar"
+						actionListener="#{FornecedorControle.salvar}"
+						update=":mensagem :frmListagem:tabela" />
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

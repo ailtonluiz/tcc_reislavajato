@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+
+			<p:panel header="Listagem de Empresas">
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{empresaControle.empresas}"
+					paginatorPosition="top" var="empresa" rows="5">
+					<f:facet name="footer">
+						<p:commandButton value="Novo" icon="ui-icon-plus"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{empresaControle.novo}"
+							update=":frmCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						<p:commandButton value="Listar" icon="ui-icon-search"
+							actionListener="#{empresaControle.listar}"
+							update=":mensagem :frmListagem:tabela">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="CNPJ"
+						filterBy="#{empresa.pessoaJuridica.cnpj}" style="width:10%">
+						<p:outputLabel value="#{empresa.pessoaJuridica.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Razão Social"
+						sortBy="#{empresa.pessoaJuridica.razaoSocial}"
+						filterBy="#{empresa.pessoaJuridica.razaoSocial}"
+						filterMatchMode="contains">
+						<p:outputLabel value="#{empresa.pessoaJuridica.razaoSocial}" />
+					</p:column>
+
+					<p:column headerText="Nome Fantasia"
+						sortBy="#{empresa.pessoaJuridica.nomeFantasia}"
+						filterBy="#{empresa.pessoaJuridica.nomeFantasia}"
+						filterMatchMode="contains">
+						<p:outputLabel value="#{empresa.pessoaJuridica.nomeFantasia}" />
+					</p:column>
+
+					<p:column headerText="Telefone" style="width:22%">
+						<p:outputLabel
+							value="#{empresa.telefone.fixo} - #{empresa.telefone.celular}" />
+					</p:column>
+
+					<!-- Edição / exclusão -->
+					<p:column headerText="Opções" style="width:8%">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{empresaControle.excluir}"
+							update=":mensagem :frmListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o registro?" icon="ui-icon-alert" />
+							<f:attribute name="registroSelecionado" value="#{empresa}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{empresaControle.editar}"
+							update=":frmCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="registroSelecionado" value="#{empresa}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+				<!-- Botão de opções -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
+
+		<!-- Tela de Cadastros -->
+		<p:dialog header="Cadastro de Empresa" widgetVar="dialogo"
+			draggable="true" resizable="false" modal="true">
+			<h:form id="frmCadastro">
+				<p:panel id="painel">
+					<p:tabView dynamic="true">
+						<p:tab title="Dados da empresa">
+							<h:panelGrid columns="6">
+								<p:outputLabel for="cnpj" value="CNPJ:" />
+								<p:inputMask id="cnpj"
+									value="#{empresaControle.empresa.pessoaJuridica.cnpj}"
+									mask="99.999.999/9999-99" required="true" size="18"
+									requiredMessage="É obrigatório informar o CNPJ" />
+
+								<p:outputLabel for="insc" value="Insc. Estadual:" />
+								<p:inputText id="insc"
+									value="#{empresaControle.empresa.pessoaJuridica.inscricaoEstadual}"
+									size="20" />
+
+								<p:outputLabel for="inscMun" value="Insc. Mun.:" />
+								<p:inputText id="inscMun"
+									value="#{empresaControle.empresa.pessoaJuridica.inscricaoMunicipal}"
+									size="18" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="razao" value="Razão Social:" />
+								<p:inputText id="razao"
+									value="#{empresaControle.empresa.pessoaJuridica.razaoSocial}"
+									maxlength="100" size="86" required="true"
+									requiredMessage="É obrigatório informar a Razão Social" />
+
+								<p:outputLabel for="fantasia" value="Fantasia:" />
+								<p:inputText id="fantasia"
+									value="#{empresaControle.empresa.pessoaJuridica.nomeFantasia}"
+									maxlength="100" size="86" />
+
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+								<p:outputLabel for="contato" value="Contato:" />
+								<p:inputText id="contato"
+									value="#{empresaControle.empresa.pessoaJuridica.contatoEmpresa}"
+									maxlength="70" size="52" />
+
+
+								<p:outputLabel for="dtAbert" value="Data Abertura:" />
+								<p:calendar id="dtAbert" yearRange="-100:+0"
+									value="#{empresaControle.empresa.pessoaJuridica.dataAberturaEmpresa}"
+									pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999"
+									navigator="true" showButtonPanel="true" locale="pt" />
+							</h:panelGrid>
+						</p:tab>
+
+						<!-- Endereço -->
+						<p:tab title="Endereço">
+							<h:panelGrid columns="4">
+								<p:outputLabel value="UF:" />
+								<p:selectOneMenu
+									value="#{empresaControle.empresa.endereco.municipio.uf}">
+									<f:selectItems value="#{ControleEnumerador.listaEnumUf}"
+										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+									<p:ajax update="municipio" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Município:" />
+								<p:selectOneMenu id="municipio" filter="true"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{empresaControle.empresa.endereco.municipio}">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione um Município" />
+									<f:selectItems value="#{empresaControle.municipios}"
+										var="municipio" itemValue="#{municipio}"
+										itemLabel="#{municipio.nome}" />
+								</p:selectOneMenu>
+
+							</h:panelGrid>
+							<h:panelGrid columns="3">
+
+								<p:outputLabel value="CEP:" />
+								<p:inputMask value="#{empresaControle.empresa.endereco.cep}"
+									size="10" mask="99999-999" maxlength="10" />
+								<p:commandButton icon="ui-icon-circle-zoomout"
+									title="Buscar endereço" action="#{empresaControle.buscarCep}" />
+
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+								<p:outputLabel value="Logradouro:" />
+								<p:inputText
+									value="#{empresaControle.empresa.endereco.logradouro}" />
+
+								<p:outputLabel value="Complemento:" />
+								<p:inputText
+									value="#{empresaControle.empresa.endereco.complemento}" />
+
+								<p:outputLabel value="Bairro:" />
+								<p:inputText value="#{empresaControle.empresa.endereco.bairro}" />
+
+								<p:outputLabel value="Número:" />
+								<p:inputText value="#{empresaControle.empresa.endereco.numero}" />
+							</h:panelGrid>
+						</p:tab>
+						<!-- Telefone -->
+						<p:tab title="Telefone" id="tel">
+							<h:panelGrid columns="4">
+								<p:outputLabel value="Celular:" for="txt_celular" />
+								<p:inputMask mask="(99) 9 9999-9999" id="txt_celular"
+									value="#{empresaControle.empresa.telefone.celular}" />
+
+								<p:outputLabel value="Fixo:" />
+								<p:inputMask mask="(99) 9999-9999"
+									value="#{empresaControle.empresa.telefone.fixo}" />
+
+								<p:outputLabel value="Comercial:" />
+								<p:inputMask mask="(99) 9999-9999"
+									value="#{empresaControle.empresa.telefone.comercial}" />
+
+								<p:outputLabel value="Contato:" />
+								<p:inputText value="#{empresaControle.empresa.telefone.contato}" />
+							</h:panelGrid>
+						</p:tab>
+
+						<!-- Configuração de E-mail -->
+						<p:tab title="Servidor SMTP">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="E-mail:" for="mail" />
+								<p:inputText id="mail" maxlength="100" size="85"
+									value="#{empresaControle.empresa.email}" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="4">
+								<p:outputLabel value="Smtp:" for="smtp" />
+								<p:inputText id="smtp" maxlength="80" size="58"
+									value="#{empresaControle.empresa.smtp}" />
+
+								<p:outputLabel value="Porta Smtp:" for="portaSmtp" />
+								<p:inputText id="portaSmtp" maxlength="6" size="10"
+									value="#{empresaControle.empresa.portaSmtp}" />
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+							</h:panelGrid>
+							<h:panelGrid columns="6">
+								<p:outputLabel value="Senha E-mail:" for="pwd" />
+								<p:password id="pwd" maxlength="60" size="27"
+									value="#{empresaControle.empresa.senhaEmail}" />
+
+								<p:outputLabel value="Utiliza autenticação no servidor" />
+								<p:selectBooleanCheckbox
+									value="#{empresaControle.empresa.utilizaAutenticacao}" />
+
+
+								<p:outputLabel value="Requer SSL" />
+								<p:selectBooleanCheckbox
+									value="#{empresaControle.empresa.requerSSL}" />
+
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+								<p:outputLabel value="Template de e-mail:" />
+								<p:inputTextarea value="#{empresaControle.empresa.txtMail}"
+									maxlength="150" style="width: 290pt !important;" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<p:commandButton icon="ui-icon-mail-closed"
+									value="Testar configuração"
+									actionListener="#{empresaControle.testarEnvioEmail}" />
+							</h:panelGrid>
+						</p:tab>
+
+
+					</p:tabView>
+				</p:panel>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{empresaControle.salvar}" icon="ui-icon-check"
+						update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+					<p:commandButton value="Cancelar" icon="ui-icon-closethick"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
