@@ -62,7 +62,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
 
-		ordemServico.setValorTotal(new BigDecimal("0.00"));
+		ordemServico.setValorTotal(new BigDecimal("50.00"));
 		
 		servicoSelecionado = new Servico();
 		servicosSelecionados = new ArrayList<Servico>();
@@ -102,7 +102,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 			
 			this.setarServicos(ordemServico);
 
-			context.getBean(OrdemServicoNeg.class).incluir(ordemServico);
+			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
