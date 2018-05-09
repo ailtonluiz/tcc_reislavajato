@@ -48,6 +48,10 @@ public class OrdemServico {
 	@JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
 	private List<Servico> servicos = new ArrayList<Servico>();
 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "funcionario_id"))
+	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+
 	@Enumerated(EnumType.STRING)
 	private EnumStatusServico statusServico = EnumStatusServico.EXECUCAO;
 
@@ -115,6 +119,14 @@ public class OrdemServico {
 
 	public List<Servico> getServicos() {
 		return servicos;
+	}
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	public void setServicos(List<Servico> servicos) {

@@ -4,8 +4,8 @@
 package br.com.reislavajato.util;
 
 /**
- * @Criado por: Ruben
- * @Data: 5 de set de 2017
+ *@author Ruben Delmondes
+ *  5 de set de 2017
  */
 
 import java.util.Properties;
@@ -19,13 +19,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class JavaMail {
-	// clase que retorna uma autenticacao para ser enviada e verificada pelo
-	// servidor smtp
+	/** clase que retorna uma autenticacao para ser enviada e verificada pelo
+	* servidor smtp
+	*/
 
 	private String mailSMTPServer;
 	private String mailSMTPServerPort;
 
-	/*
+	/**
 	 * quando instanciar um Objeto ja sera atribuido o servidor SMTP do GMAIL e a
 	 * porta usada por ele
 	 */
@@ -34,7 +35,7 @@ public class JavaMail {
 		mailSMTPServerPort = "465";
 	}
 
-	/*
+	/**
 	 * caso queira mudar o servidor e a porta, so enviar para o contrutor os valor
 	 * como string
 	 */
@@ -47,13 +48,13 @@ public class JavaMail {
 
 		Properties props = new Properties();
 
-		// quem estiver utilizando um SERVIDOR PROXY descomente essa parte e atribua as
-		// propriedades do SERVIDOR PROXY utilizado
-		/*
-		 * props.setProperty("proxySet","true");
-		 * props.setProperty("socksProxyHost","192.168.155.1"); // IP do Servidor Proxy
-		 * props.setProperty("socksProxyPort","1080"); // Porta do servidor Proxy
-		 */
+		/** quem estiver utilizando um SERVIDOR PROXY descomente essa parte e atribua as
+		*propriedades do SERVIDOR PROXY utilizado
+		*
+		* props.setProperty("proxySet","true");
+		* props.setProperty("socksProxyHost","192.168.155.1"); // IP do Servidor Proxy
+		* props.setProperty("socksProxyPort","1080"); // Porta do servidor Proxy
+		*/
 
 		props.put("mail.transport.protocol", "smtp"); // define protocolo de envio como SMTP
 		props.put("mail.smtp.starttls.enable", "true");

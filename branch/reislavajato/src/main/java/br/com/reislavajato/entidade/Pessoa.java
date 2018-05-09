@@ -19,6 +19,14 @@ import br.com.reislavajato.enumeradores.EnumPerfil;
 import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 
+/**
+ * @version 1.0
+ * 
+ * @author Ailton Luiz
+ * 
+ * */
+
+
 @Entity
 public class Pessoa { // extends GenericEntity {
 

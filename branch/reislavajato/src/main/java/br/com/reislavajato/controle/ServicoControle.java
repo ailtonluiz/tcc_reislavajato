@@ -19,9 +19,12 @@ import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.ServicoNeg;
 
 /**
- * @Criado por: ailtonluiz
- * @Data: 13 de ago de 2017
+ * @author Ailton Luiz
+ * 13 de ago de 2017
+ * @version 1.0
+ * 
  */
+
 @SuppressWarnings({ "serial" })
 @Controller
 @ViewScoped
@@ -55,6 +58,11 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 		}
 	}
 
+/**
+ * Método salvar, esse método é utilizado para salvar 
+ * 
+ * @author Ailton Luiz
+ * */
 	public void salvar() throws DadosInvalidosException {
 		try {
 			servico.setFuncionario(null);
