@@ -1,7 +1,9 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -74,6 +76,8 @@ public class Funcionario {
 
 	@Enumerated(EnumType.STRING)
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
+
+
 
 	// getters and setters
 	public Long getFuncionarioId() {

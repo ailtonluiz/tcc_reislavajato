@@ -17,6 +17,7 @@ import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.OrdemServico;
+import br.com.reislavajato.entidade.OrdemServicoMovimento;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
@@ -44,7 +45,8 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	private List<OrdemServico> ordensServicos;
 	private Veiculo veiculo;
 	private List<Veiculo> veiculos;
-
+	private OrdemServicoMovimento ordemServicoMovimento;
+	private List<OrdemServicoMovimento> ordemServicoMovimentos;
 
 	private String cpfConsulta;
 	private String nomeConsulta;
@@ -63,7 +65,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordensServicos = new ArrayList<OrdemServico>();
 
 		ordemServico.setValorTotal(new BigDecimal("50.00"));
-		
+
 		servicoSelecionado = new Servico();
 		servicosSelecionados = new ArrayList<Servico>();
 
@@ -95,12 +97,12 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			if(ordemServico.getValorTotal().signum() == 0) {
+			if (ordemServico.getValorTotal().signum() == 0) {
 				Messages.addGlobalError("Valor não pode ser 0");
 				return;
 			}
-			
-			this.setarServicos(ordemServico);
+
+			this.setarServicos(ordemServicoMovimento);
 
 			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
 			novo();
@@ -132,9 +134,10 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 		return "";
 	}
+	// getServicos
 
-	private void setarServicos(OrdemServico ordemServico) {
-		ordemServico.getServicos().addAll(servicosSelecionados);
+	private void setarServicos(OrdemServicoMovimento ordemServicoMovimento) {
+		ordemServicoMovimento.getServicos().addAll(servicosSelecionados);
 	}
 
 	public List<Cliente> getClientes() throws DadosInvalidosException {
@@ -173,10 +176,9 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		return null;
 	}
 
-	
 	public void calcular() {
 		ordemServico.setValorTotal(new BigDecimal("0.00"));
-		
+
 	}
 	// getters and setters
 
@@ -275,7 +277,22 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
-	
+
+	public OrdemServicoMovimento getOrdemServicoMovimento() {
+		return ordemServicoMovimento;
+	}
+
+	public void setOrdemServicoMovimento(OrdemServicoMovimento ordemServicoMovimento) {
+		this.ordemServicoMovimento = ordemServicoMovimento;
+	}
+
+	public List<OrdemServicoMovimento> getOrdemServicoMovimentos() {
+		return ordemServicoMovimentos;
+	}
+
+	public void setOrdemServicoMovimentos(List<OrdemServicoMovimento> ordemServicoMovimentos) {
+		this.ordemServicoMovimentos = ordemServicoMovimentos;
+	}
 	
 
 }
