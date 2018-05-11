@@ -20,11 +20,11 @@ import br.com.reislavajato.enumeradores.EnumOrgaoRG;
 import br.com.reislavajato.enumeradores.EnumSexo;
 import br.com.reislavajato.enumeradores.EnumUf;
 
-@Entity
+@Entity(name = "pessoa_fisica")
 public class PessoaFisica { 
 	
 	@Id
-	@Column(name = "pessoaFisica_id")
+	@Column(name = "pessoa_fisica_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long pessoaFisicaId;
 	
@@ -38,24 +38,31 @@ public class PessoaFisica {
 	private String nome = "";
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_nascimento")
 	private Date dataNascimento;
-
+	
+	@Column(name ="nome_pai")
 	private String nomeMae;
+	@Column(name = "nome_mae")
 	private String nomePai;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_exp_rg")
 	private Date dataExpedicaoRG;
 
 	@Enumerated(EnumType.STRING)
 	private EnumSexo sexo = EnumSexo.MASCULINO;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="uf_exp_rg")
 	private EnumUf ufExpedicaoRg = EnumUf.GO;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="orgao_rg")
 	private EnumOrgaoRG orgaoRG = EnumOrgaoRG.SSP;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="estado_civil")
 	private EnumEstadoCivil estadoCivil = EnumEstadoCivil.CASADO;
 
 	@Enumerated(EnumType.STRING)

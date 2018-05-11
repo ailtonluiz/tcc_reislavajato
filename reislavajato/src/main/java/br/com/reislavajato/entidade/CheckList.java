@@ -13,7 +13,7 @@ import br.com.reislavajato.enumeradores.EnumSimNao;
  */
 
 @SuppressWarnings("serial")
-@Entity
+@Entity(name = "check_list")
 public class CheckList extends GenericEntity {
 
 	private EnumSimNao estepe = EnumSimNao.SIM;

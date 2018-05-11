@@ -28,9 +28,11 @@ public class Pessoa { // extends GenericEntity {
 	private Long pessoaId;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "perm_envio_mail")
 	private EnumSimNao permitirEnvioEmail = EnumSimNao.SIM;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "usuario_sistema")
 	private EnumSimNao usuarioSistema = EnumSimNao.NAO;
 
 	@Enumerated(EnumType.STRING)
@@ -43,6 +45,7 @@ public class Pessoa { // extends GenericEntity {
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_pessoa")
 	private EnumTipoPessoa tipoPessoa = EnumTipoPessoa.PF;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
@@ -60,18 +63,20 @@ public class Pessoa { // extends GenericEntity {
 	@Column(length = 60)
 	private String login;
 
-	@Column(name = "data_cadastro")
+	@Column(name = "dt_cadastro")
 	@Temporal(TemporalType.DATE)
 	private Date dataCadastro = new Date();
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_senha")
 	private Date dataSenha;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_ult_acesso")
 	private Date dataUltimoAcesso;
 
 	private String observacao;
-
+	@Column(name = "ativo")
 	private Boolean cadastroAtivo = true;
 
 	// getters and setters

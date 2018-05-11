@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 @Entity
 public class Cargo extends GenericEntity {
 
-	@Column(unique = true)
+	@Column(unique = true, name="desc_cargo")
 	private String nomeCargo;
 
 	//getters and setters

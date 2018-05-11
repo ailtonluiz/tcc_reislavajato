@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Servico {
-	
+
 	@Id
 	@Column(name = "servico_id")
 	@GeneratedValue
@@ -25,10 +25,10 @@ public class Servico {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private Funcionario funcionario;
 
-	@Column(precision = 10, scale = 2, nullable = false)
+	@Column(name = "vlr_servico", precision = 10, scale = 2, nullable = false)
 	private BigDecimal valorServico;
 
-	@Column(precision = 10, scale = 2)
+	@Column(name = "pct_comissao", precision = 10, scale = 2)
 	private BigDecimal percentualComissao;
 
 	private String observacao;

@@ -20,19 +20,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessorOrder;
 
 import br.com.reislavajato.enumeradores.EnumFormaPagamento;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 
-@Entity
+@Entity(name = "ordem_servico")
 public class OrdemServico {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ordemServico_id")
+	@Column(name = "os_id")
 	private Long ordemServicoId;
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "num_os_servico")
 	private Long numeroOrdemServico;
 
 	@OneToOne(fetch = FetchType.EAGER)
@@ -44,33 +46,41 @@ public class OrdemServico {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private CheckList checkList = new CheckList();
 
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
-//	private List<Servico> servicos = new ArrayList<Servico>();
+	// @OneToMany(fetch = FetchType.LAZY)
+	// @JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name =
+	// "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
+	// private List<Servico> servicos = new ArrayList<Servico>();
 
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name = "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "funcionario_id"))
-//	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+	// @OneToMany(fetch = FetchType.LAZY)
+	// @JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name =
+	// "ordemServico_id"), inverseJoinColumns = @JoinColumn(name =
+	// "funcionario_id"))
+	// private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "status_servico")
 	private EnumStatusServico statusServico = EnumStatusServico.EXECUCAO;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_hr_entrada")
 	private Date dataHoraEntrada = new Date();
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_hr_saida_agendada")
 	private Date dataHoraSaidaAgendada = new Date();
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_hr_saida_real")
 	private Date dataHoraSaidaReal = new Date();
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "forma_pagto")
 	private EnumFormaPagamento formaPagamento = EnumFormaPagamento.DINHEIRO;
 
-	@Column(precision = 10, scale = 2)
+	@Column(precision = 10, scale = 2, name = "vlr_total")
 	private BigDecimal valorTotal;
 
-	@Column(precision = 10, scale = 2)
+	@Column(precision = 10, scale = 2, name = "pct_desconto")
 	private BigDecimal descontoServico;
 
 	private String observacao;
@@ -117,13 +127,13 @@ public class OrdemServico {
 		this.checkList = checkList;
 	}
 
-//	public List<Servico> getServicos() {
-//		return servicos;
-//	}
-//
-//	public void setServicos(List<Servico> servicos) {
-//		this.servicos = servicos;
-//	}
+	// public List<Servico> getServicos() {
+	// return servicos;
+	// }
+	//
+	// public void setServicos(List<Servico> servicos) {
+	// this.servicos = servicos;
+	// }
 
 	// public List<Funcionario> getFuncionarios() {
 	// return funcionarios;
