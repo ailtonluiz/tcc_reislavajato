@@ -31,8 +31,7 @@ import br.com.reislavajato.util.Numero;
 import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
- * @author Ailton Luiz
- * 14 de ago de 2017
+ * @author Ailton Luiz 14 de ago de 2017
  */
 @Controller("ordemServicoControle")
 public class OrdemServicoControle extends ReisLavajatoControle implements Serializable {
@@ -66,7 +65,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico.setValorTotal(new BigDecimal("50.00"));
 
 		servicoSelecionado = new Servico();
-		servicosSelecionados = new ArrayList<Servico>();		
+		servicosSelecionados = new ArrayList<Servico>();
 
 		cpfConsulta = "";
 		nomeConsulta = "";
@@ -101,10 +100,10 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 				return;
 			}
 
-				this.setarServicos(ordemServico, ordemServicoMovimento);
+			this.setarServicos(ordemServico, ordemServicoMovimento);
 
 			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
-			
+
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -112,8 +111,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		}
 	}
 
-
-	
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			ordemServico = (OrdemServico) evento.getComponent().getAttributes().get("registroSelecionado");
@@ -136,7 +133,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 		return "";
 	}
-	 
+
 	private void setarServicos(OrdemServico ordemServico, OrdemServicoMovimento ordemServicoMovimento) {
 		ordemServicoMovimento.getServicos().addAll(servicosSelecionados);
 		ordemServico.getOrdemServicoId();
@@ -182,20 +179,16 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico.setValorTotal(new BigDecimal("0.00"));
 
 	}
-	
 
 	public void listar() throws DadosInvalidosException {
 		try {
 			ordensServicos = context.getBean(OrdemServicoNeg.class).listar();
-			
+
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
 	}
-	
-	
-	
-	
+
 	// getters and setters
 
 	public OrdemServico getOrdemServico() {
@@ -309,6 +302,5 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void setOrdemServicoMovimentos(List<OrdemServicoMovimento> ordemServicoMovimentos) {
 		this.ordemServicoMovimentos = ordemServicoMovimentos;
 	}
-	
 
 }
