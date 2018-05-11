@@ -362,6 +362,11 @@
 									<f:selectItems
 										value="#{ControleEnumerador.listaEnumFormaPagamento}" />
 								</p:selectOneMenu>
+								
+								<h:outputLabel value="Ordem de Serviço:" for="os" />
+								<p:inputNumber id="os"
+									value="#{ordemServicoControle.ordemServico.numeroOrdemServico}"
+									decimalPlaces="0" size="15" />
 							</h:panelGrid>
 
 

@@ -44,8 +44,10 @@ public class Funcionario {
 	@ManyToOne
 	private Cargo cargo;
 
+	@Column(name = "num_carteira_trabalho")
 	private String carteiraTrabalho;
-
+	
+	@Column(name ="titulo_eleitor")
 	private String tituloEleitor;
 
 	private String zona;
@@ -55,9 +57,11 @@ public class Funcionario {
 	private String cnh;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name ="dt_entrada")
 	private Date dataEntradaExercicio;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name ="dt_saida")
 	private Date dataSaida;
 
 	private EnumSimNao ativo = EnumSimNao.SIM;
@@ -69,15 +73,16 @@ public class Funcionario {
 	private BigDecimal salario;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="cat_cnh")
 	private EnumCategoriaCNH categoriaCNH = EnumCategoriaCNH.A;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="tipo_sanguineo")
 	private EnumTipoSanguineo tipoSanguineo = EnumTipoSanguineo.O;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="fator_rh")
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
-
-
 
 	// getters and setters
 	public Long getFuncionarioId() {

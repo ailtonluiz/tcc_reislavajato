@@ -25,17 +25,19 @@ public class Empresa extends GenericEntity {
 	@Column(length = 80)
 	private String smtp;
 
-	@Column(length = 60)
+	@Column(length = 60, name = "senha_mail")
 	private String senhaEmail;
 
-	@Column(length = 6)
+	@Column(length = 6, name = "porta_smtp")
 	private Integer portaSmtp;
 
-	@Column(length = 100)
+	@Column(length = 100, name = "txt_mail")
 	private String txtMail;
 
+	@Column(name ="utiliza_autenticacao")
 	private Boolean utilizaAutenticacao = true;
 
+	@Column(name ="requer_ssl")
 	private Boolean requerSSL = true;
 
 	public PessoaJuridica getPessoaJuridica() {

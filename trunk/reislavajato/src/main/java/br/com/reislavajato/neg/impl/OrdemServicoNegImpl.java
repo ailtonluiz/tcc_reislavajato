@@ -16,8 +16,8 @@ import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.OrdemServicoNeg;
 
 /**
- * @Criado por: ailtonluiz
- * @Data: 13 de ago de 2017
+ * @author Ailton Luiz
+ *  13 de ago de 2017
  */
 @Service
 public class OrdemServicoNegImpl extends NegocioGenerico<OrdemServico> implements OrdemServicoNeg {

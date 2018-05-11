@@ -9,25 +9,30 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
-@Entity
+@Entity(name = "pessoa_juridica")
 public class PessoaJuridica extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
-	@Column(length = 80)
+	@Column(length = 80, name = "razao_social")
 	private String razaoSocial;
 
-	@Column(length = 100)
+	@Column(length = 100, name = "nome_fantasia")
 	private String nomeFantasia;
 
 	@CNPJ
 	private String cnpj;
 
+	@Column(name = "insc_estadual")
 	private String inscricaoEstadual;
+
+	@Column(name = "insc_municipal")
 	private String inscricaoMunicipal;
 
+	@Column(name ="contato_empresa")
 	private String contatoEmpresa;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_abertura")
 	private Date dataAberturaEmpresa;
 
 	// getters and setters

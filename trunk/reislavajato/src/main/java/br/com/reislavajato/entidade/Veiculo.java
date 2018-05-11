@@ -1,5 +1,6 @@
 package br.com.reislavajato.entidade;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,6 +18,7 @@ public class Veiculo extends GenericEntity {
 	private static final long serialVersionUID = 4996325251017697447L;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name ="tipo_veiculo")
 	private EnumTipoVeiculo tipoVeiculo = EnumTipoVeiculo.AUTOMOVEL;
 
 	@Enumerated(EnumType.STRING)

@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
-import org.omnifaces.util.Messages.Message;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -32,8 +31,8 @@ import br.com.reislavajato.util.Numero;
 import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
- * @Criado por: ailtonluiz
- * @Data: 14 de ago de 2017
+ * @author Ailton Luiz
+ * 14 de ago de 2017
  */
 @Controller("ordemServicoControle")
 public class OrdemServicoControle extends ReisLavajatoControle implements Serializable {
@@ -67,7 +66,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico.setValorTotal(new BigDecimal("50.00"));
 
 		servicoSelecionado = new Servico();
-		servicosSelecionados = new ArrayList<Servico>();
+		servicosSelecionados = new ArrayList<Servico>();		
 
 		cpfConsulta = "";
 		nomeConsulta = "";
@@ -102,9 +101,10 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 				return;
 			}
 
-			this.setarServicos(ordemServicoMovimento);
+				this.setarServicos(ordemServico, ordemServicoMovimento);
 
 			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
+			
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -112,6 +112,8 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		}
 	}
 
+
+	
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			ordemServico = (OrdemServico) evento.getComponent().getAttributes().get("registroSelecionado");
@@ -134,10 +136,10 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 		return "";
 	}
-	// getServicos
-
-	private void setarServicos(OrdemServicoMovimento ordemServicoMovimento) {
+	 
+	private void setarServicos(OrdemServico ordemServico, OrdemServicoMovimento ordemServicoMovimento) {
 		ordemServicoMovimento.getServicos().addAll(servicosSelecionados);
+		ordemServico.getOrdemServicoId();
 	}
 
 	public List<Cliente> getClientes() throws DadosInvalidosException {
@@ -180,6 +182,20 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico.setValorTotal(new BigDecimal("0.00"));
 
 	}
+	
+
+	public void listar() throws DadosInvalidosException {
+		try {
+			ordensServicos = context.getBean(OrdemServicoNeg.class).listar();
+			
+		} catch (RuntimeException erro) {
+			addMensagemErroFatal(erro);
+		}
+	}
+	
+	
+	
+	
 	// getters and setters
 
 	public OrdemServico getOrdemServico() {

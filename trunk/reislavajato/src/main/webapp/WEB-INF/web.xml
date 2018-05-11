@@ -73,7 +73,7 @@
 		<mime-type>image/svg+xml</mime-type>
 	</mime-mapping>
 	<welcome-file-list>
-		<welcome-file>pages/autenticacao.xhtml</welcome-file>
+		<welcome-file>pages/login.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<locale-encoding-mapping-list>
