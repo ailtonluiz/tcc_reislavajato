@@ -100,7 +100,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 				return;
 			}
 
-			this.setarServicos(ordemServico, ordemServicoMovimento);
+			//this.setarServicos(ordemServico, ordemServicoMovimento);
 
 			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
 
