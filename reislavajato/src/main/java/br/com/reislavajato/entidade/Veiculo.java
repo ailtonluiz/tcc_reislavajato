@@ -10,8 +10,11 @@ import br.com.reislavajato.enumeradores.EnumMarca;
 import br.com.reislavajato.enumeradores.EnumTipoVeiculo;
 
 /**
- * @Criado por: ailtonluiz
- * @Data: 12 de ago de 2017
+ * 
+ *  12 de ago de 2017
+ * 
+ * @author Ailton Luiz
+ * 
  */
 @Entity
 public class Veiculo extends GenericEntity {
@@ -28,10 +31,10 @@ public class Veiculo extends GenericEntity {
 
 	private String placa;
 
-	private Long km;
+	
 
 	@Enumerated(EnumType.STRING)
-	private EnumCor cor = EnumCor.VERMELHO;
+	private EnumCor cor = EnumCor.PRATA;
 
 	// getters and setters
 
@@ -67,13 +70,6 @@ public class Veiculo extends GenericEntity {
 		this.placa = placa;
 	}
 
-	public Long getKm() {
-		return km;
-	}
-
-	public void setKm(Long km) {
-		this.km = km;
-	}
 
 	public EnumCor getCor() {
 		return cor;

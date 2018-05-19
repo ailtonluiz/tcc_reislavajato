@@ -1,9 +1,7 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,15 +12,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlAccessorOrder;
 
 import br.com.reislavajato.enumeradores.EnumFormaPagamento;
+import br.com.reislavajato.enumeradores.EnumSimNao;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 
 @Entity(name = "ordem_servico")
@@ -45,17 +40,6 @@ public class OrdemServico {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private CheckList checkList = new CheckList();
-
-	// @OneToMany(fetch = FetchType.LAZY)
-	// @JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name =
-	// "ordemServico_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
-	// private List<Servico> servicos = new ArrayList<Servico>();
-
-	// @OneToMany(fetch = FetchType.LAZY)
-	// @JoinTable(name = "item_movimento", joinColumns = @JoinColumn(name =
-	// "ordemServico_id"), inverseJoinColumns = @JoinColumn(name =
-	// "funcionario_id"))
-	// private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_servico")
@@ -82,8 +66,30 @@ public class OrdemServico {
 
 	@Column(precision = 10, scale = 2, name = "pct_desconto")
 	private BigDecimal descontoServico;
+	
+	@Column(name = "obs_os")
+	private String obsOrdemServico;
 
-	private String observacao;
+	@Column(name = "obs_check_list")
+	private String obsCheckList;
+
+	private EnumSimNao estepe = EnumSimNao.SIM;
+
+	private EnumSimNao alarme = EnumSimNao.SIM;
+
+	private EnumSimNao ferramentas = EnumSimNao.SIM;
+
+	private EnumSimNao triangulo = EnumSimNao.SIM;
+
+	private EnumSimNao extintor = EnumSimNao.SIM;
+
+	private EnumSimNao som = EnumSimNao.SIM;
+
+	private EnumSimNao tapetes = EnumSimNao.SIM;
+
+	private EnumSimNao arranhoes = EnumSimNao.SIM;
+
+	private Long km;
 
 	// getters and setters
 
@@ -126,22 +132,6 @@ public class OrdemServico {
 	public void setCheckList(CheckList checkList) {
 		this.checkList = checkList;
 	}
-
-	// public List<Servico> getServicos() {
-	// return servicos;
-	// }
-	//
-	// public void setServicos(List<Servico> servicos) {
-	// this.servicos = servicos;
-	// }
-
-	// public List<Funcionario> getFuncionarios() {
-	// return funcionarios;
-	// }
-	//
-	// public void setFuncionarios(List<Funcionario> funcionarios) {
-	// this.funcionarios = funcionarios;
-	// }
 
 	public EnumStatusServico getStatusServico() {
 		return statusServico;
@@ -199,13 +189,97 @@ public class OrdemServico {
 		this.descontoServico = descontoServico;
 	}
 
-	public String getObservacao() {
-		return observacao;
+
+	public String getObsOrdemServico() {
+		return obsOrdemServico;
 	}
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+	public void setObsOrdemServico(String obsOrdemServico) {
+		this.obsOrdemServico = obsOrdemServico;
 	}
+
+	public String getObsCheckList() {
+		return obsCheckList;
+	}
+
+	public void setObsCheckList(String obsCheckList) {
+		this.obsCheckList = obsCheckList;
+	}
+
+	public EnumSimNao getEstepe() {
+		return estepe;
+	}
+
+	public void setEstepe(EnumSimNao estepe) {
+		this.estepe = estepe;
+	}
+
+	public EnumSimNao getAlarme() {
+		return alarme;
+	}
+
+	public void setAlarme(EnumSimNao alarme) {
+		this.alarme = alarme;
+	}
+
+	public EnumSimNao getFerramentas() {
+		return ferramentas;
+	}
+
+	public void setFerramentas(EnumSimNao ferramentas) {
+		this.ferramentas = ferramentas;
+	}
+
+	public EnumSimNao getTriangulo() {
+		return triangulo;
+	}
+
+	public void setTriangulo(EnumSimNao triangulo) {
+		this.triangulo = triangulo;
+	}
+
+	public EnumSimNao getExtintor() {
+		return extintor;
+	}
+
+	public void setExtintor(EnumSimNao extintor) {
+		this.extintor = extintor;
+	}
+
+	public EnumSimNao getSom() {
+		return som;
+	}
+
+	public void setSom(EnumSimNao som) {
+		this.som = som;
+	}
+
+	public EnumSimNao getTapetes() {
+		return tapetes;
+	}
+
+	public void setTapetes(EnumSimNao tapetes) {
+		this.tapetes = tapetes;
+	}
+
+	public EnumSimNao getArranhoes() {
+		return arranhoes;
+	}
+
+	public void setArranhoes(EnumSimNao arranhoes) {
+		this.arranhoes = arranhoes;
+	}
+
+	public Long getKm() {
+		return km;
+	}
+
+	public void setKm(Long km) {
+		this.km = km;
+	}
+	
+	
+	
 
 	@Override
 	public String toString() {

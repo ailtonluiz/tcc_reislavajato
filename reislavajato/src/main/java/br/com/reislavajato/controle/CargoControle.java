@@ -67,7 +67,7 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			context.getBean(CargoNeg.class).incluir(cargo);
+			context.getBean(CargoNeg.class).alterar(cargo);
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
