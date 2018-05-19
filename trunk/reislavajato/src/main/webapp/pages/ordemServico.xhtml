@@ -18,7 +18,7 @@
 					<p:inputText value="#{ordemServicoControle.nomeConsulta}" />
 
 					<p:outputLabel value="CPF:" />
-					<p:inputMask mask="999.999.999-99" size="15"
+					<p:inputMask mask="999.999.999-99"
 						value="#{ordemServicoControle.cpfConsulta}" maxlength="14"
 						converter="#{cpfConverter}" />
 
@@ -44,8 +44,8 @@
 				</h:panelGrid>
 				<br />
 				<p:commandButton icon="ui-icon-search" value="Listar"
-					action="#{ordemServicoControle.listarOrdensServico}"
-					update="tabela" title="Listar Cliente(s)" />
+					action="#{ordemServicoControle.listarOs}" update="tabela"
+					title="Listar" />
 
 				<br />
 
@@ -83,8 +83,7 @@
 							value="#{ordemServico.cliente.pessoa.telefone.fixo} - #{ordemServico.cliente.pessoa.telefone.celular}" />
 					</p:column>
 					<p:column headerText="Status" style="width:22%">
-						<h:outputText
-							value="#{ordemServico.statusServico}" />
+						<h:outputText value="#{ordemServico.statusServico}" />
 					</p:column>
 
 					<p:column headerText="Opções" style="width:8%">
@@ -120,13 +119,13 @@
 		</h:form>
 
 		<!-- Tela de Cadastros -->
-		<p:dialog header="Ordem de Serviço" widgetVar="dialogo" 
+		<p:dialog header="Ordem de Serviço" widgetVar="dialogo"
 			maximizable="true" draggable="true" resizable="false" modal="true">
 			<h:form id="frmCadastro">
 				<p:panel id="painel">
 					<p:tabView dynamic="true">
 						<p:tab title="Dados do Cliente">
-							<h:panelGrid columns="6" id="dadosCliente">
+							<h:panelGrid columns="4" id="dadosCliente">
 								<h:outputLabel for="cliente" value="Cliente" />
 								<p:selectOneMenu id="cliente" filter="true"
 									converter="omnifaces.SelectItemsConverter"
@@ -139,70 +138,41 @@
 										itemLabel="#{cliente.pessoa.pessoaFisica.nome}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel for="tipoVeiculo" value="Tipo Veículo:" />
-								<p:selectOneMenu id="tipoVeiculo" filter="true"
-									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.veiculo.tipoVeiculo}"
-									style="width: 117pt !important;">
-									<f:selectItem noSelectionOption="true"
-										itemLabel="Selecione o tipo do Veículo:" />
-									<f:selectItems
-										value="#{ControleEnumerador.listaEnumTipoVeiculo}"
-										var="tipoVeiculo" itemValue="#{tipoVeiculo}"
-										itemLabel="#{tipoVeiculo.descricao}" />
-								</p:selectOneMenu>
+								<h:outputLabel value="Os:" for="os" />
+								<p:inputNumber id="os"
+									value="#{ordemServicoControle.ordemServico.numeroOrdemServico}"
+									decimalPlaces="0" size="15" />
 
-								<h:outputLabel for="marca" value="Marca" />
-								<p:selectOneMenu id="marca" filter="true"
-									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.veiculo.marca}"
-									style="width: 117pt !important;">
-									<p:ajax update="modelo" process="dadosCliente" />
-									<f:selectItem noSelectionOption="true"
-										itemLabel="Selecione uma Marca:" />
-									<f:selectItems value="#{ControleEnumerador.listaEnumMarca}"
-										var="marca" itemValue="#{marca}"
-										itemLabel="#{marca.descricao}" />
-								</p:selectOneMenu>
-
-								<h:outputLabel value="Modelo:" />
-								<p:selectOneMenu id="modelo" filter="true"
-									converter="omnifaces.SelectItemsConverter"
-									value="#{ordemServicoControle.ordemServico.veiculo.modelo}"
+								<h:outputLabel value="Veículo:" />
+								<p:selectOneMenu id="veiculo" filter="true"
+									converter="omnifaces.SelectItemsConverter" filterMatchMode="contains"
+									value="#{ordemServicoControle.ordemServico.veiculo}"
 									style="width: 117pt !important;">
 									<f:selectItem noSelectionOption="true"
-										itemLabel="Selecione um Modelo" />
-									<f:selectItems value="#{ordemServicoControle.modelosVeiculo}"
+										itemLabel="Selecione um veículo" />
+									<f:selectItems value="#{ordemServicoControle.veiculos}"
 										var="veiculo" itemValue="#{veiculo}"
-										itemLabel="#{veiculo.modelo}" />
+										itemLabel="#{veiculo.marca} #{veiculo.modelo} #{veiculo.cor} - #{veiculo.placa}" />
 								</p:selectOneMenu>
-
-								<h:outputLabel value="Placa:" for="placa" />
-								<p:inputMask id="placa" mask="aaa-9999"
-									value="#{ordemServicoControle.ordemServico.veiculo.placa}"
-									style="width: 123pt !important;" />
 
 								<h:outputLabel value="Km:" for="km" />
 								<p:inputNumber id="km"
-									value="#{ordemServicoControle.ordemServico.veiculo.km}"
-									decimalPlaces="0" size="36" />
-							</h:panelGrid>
+									value="#{ordemServicoControle.ordemServico.km}"
+									decimalPlaces="0" size="15" />
 
-							<h:panelGrid columns="4">
-								<h:outputLabel value="Cor:" for="cor" />
-								<p:selectOneRadio id="cor"
-									value="#{ordemServicoControle.ordemServico.veiculo.cor}">
-									<f:selectItems value="#{ControleEnumerador.listaEnumCor}"
-										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
-								</p:selectOneRadio>
 							</h:panelGrid>
-
+							<h:panelGrid columns="6" id="dadosCliente1">
+								<p:outputLabel value="Observações:" />
+								<p:inputTextarea
+									value="#{ordemServicoControle.ordemServico.obsOrdemServico}"
+									id="obsOs" maxlength="150" style="width: 202pt !important;" />
+							</h:panelGrid>
 						</p:tab>
 						<p:tab title="Check List">
 							<h:panelGrid columns="2" id="checkList">
 								<h:outputLabel value="Alarme?" for="alarme" />
 								<p:selectOneRadio id="alarme"
-									value="#{ordemServicoControle.ordemServico.checkList.alarme}"
+									value="#{ordemServicoControle.ordemServico.alarme}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -210,7 +180,7 @@
 
 								<h:outputLabel value="Ferramentas?" for="ferramenta" />
 								<p:selectOneRadio id="ferramenta"
-									value="#{ordemServicoControle.ordemServico.checkList.ferramentas}"
+									value="#{ordemServicoControle.ordemServico.ferramentas}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -218,7 +188,7 @@
 
 								<h:outputLabel value="Estepe?" for="estepe" />
 								<p:selectOneRadio id="estepe"
-									value="#{ordemServicoControle.ordemServico.checkList.estepe}"
+									value="#{ordemServicoControle.ordemServico.estepe}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -226,7 +196,7 @@
 
 								<h:outputLabel value="Triangulo?" for="triangulo" />
 								<p:selectOneRadio id="triangulo"
-									value="#{ordemServicoControle.ordemServico.checkList.triangulo}"
+									value="#{ordemServicoControle.ordemServico.triangulo}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -234,7 +204,7 @@
 
 								<h:outputLabel value="Extintor?" for="extintor" />
 								<p:selectOneRadio id="extintor"
-									value="#{ordemServicoControle.ordemServico.checkList.extintor}"
+									value="#{ordemServicoControle.ordemServico.extintor}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -242,7 +212,7 @@
 
 								<h:outputLabel value="Som?" for="som" />
 								<p:selectOneRadio id="som"
-									value="#{ordemServicoControle.ordemServico.checkList.som}"
+									value="#{ordemServicoControle.ordemServico.som}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -250,7 +220,7 @@
 
 								<h:outputLabel value="Tapetes?" for="tapetes" />
 								<p:selectOneRadio id="tapetes"
-									value="#{ordemServicoControle.ordemServico.checkList.tapetes}"
+									value="#{ordemServicoControle.ordemServico.tapetes}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -258,7 +228,7 @@
 
 								<h:outputLabel value="Arranhões?" for="arranhoes" />
 								<p:selectOneRadio id="arranhoes"
-									value="#{ordemServicoControle.ordemServico.checkList.arranhoes}"
+									value="#{ordemServicoControle.ordemServico.arranhoes}"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ControleEnumerador.listaEnumSimNao}"
 										var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
@@ -266,7 +236,7 @@
 
 								<p:outputLabel value="Observações:" />
 								<p:inputTextarea
-									value="#{ordemServicoControle.ordemServico.checkList.observacao}"
+									value="#{ordemServicoControle.ordemServico.obsCheckList}"
 									id="obs" maxlength="150" style="width: 202pt !important;" />
 							</h:panelGrid>
 						</p:tab>
@@ -281,21 +251,32 @@
 								<p:calendar
 									value="#{ordemServicoControle.ordemServico.dataHoraSaidaAgendada}"
 									pattern="dd/MM/yyyy HH:mm" />
+								<h:outputLabel for="statusServico" value="Status do Serviço:" />
+								<p:selectOneMenu id="statusServico"
+									converter="omnifaces.SelectItemsConverter"
+									value="#{ordemServicoControle.statusServicoConsulta}">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione o status" />
+									<f:selectItems
+										value="#{ControleEnumerador.listaEnumStatusServico}"
+										var="status" itemValue="#{status}"
+										itemLabel="#{status.descricao}" />
+								</p:selectOneMenu>
 
 								<p:outputLabel value="Lista de serviços:" />
-								<p:selectOneRadio
-									value="#{ordemServicoControle.servicoSelecionado}"
-									layout="grid" columns="3"
-									converter="omnifaces.SelectItemsConverter">
-									<f:selectItems value="#{ordemServicoControle.servicos}"
-										var="servico" itemLabel="#{servico.descricao}"
-										itemValue="#{servico}" />
-								</p:selectOneRadio>
+									<p:selectOneRadio
+										value="#{ordemServicoControle.servicoSelecionado}"
+										layout="grid" columns="3" 
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItems value="#{ordemServicoControle.servicos}"
+											var="servico" itemLabel="#{servico.descricao}"
+											itemValue="#{servico}" />
+									</p:selectOneRadio>
 
 								<p:outputLabel value="Lista de funcionários:" />
 								<p:selectOneRadio
 									value="#{ordemServicoControle.servicoSelecionado.funcionario}"
-									layout="grid" columns="3"
+									layout="grid" columns="5"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ordemServicoControle.funcionarios}"
 										var="funcionario"
@@ -362,11 +343,14 @@
 									<f:selectItems
 										value="#{ControleEnumerador.listaEnumFormaPagamento}" />
 								</p:selectOneMenu>
-								
-								<h:outputLabel value="Ordem de Serviço:" for="os" />
-								<p:inputNumber id="os"
-									value="#{ordemServicoControle.ordemServico.numeroOrdemServico}"
-									decimalPlaces="0" size="15" />
+
+								<p:outputLabel value="Total R$: " />
+								<h:outputText
+									value="#{ordemServicoControle.ordemServico.valorTotal}">
+									<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+								</h:outputText>
+
+
 							</h:panelGrid>
 
 
@@ -374,10 +358,13 @@
 					</p:tabView>
 				</p:panel>
 				<h:panelGrid columns="2">
-				<p:outputLabel value="Total R$: " />
-				<h:outputText value="#{ordemServicoControle.ordemServico.valorTotal}">
-				<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
-				</h:outputText>
+					<p:outputLabel value="Total R$: " />
+					<h:outputText
+						value="#{ordemServicoControle.ordemServico.valorTotal}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
+
+
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton icon="ui-icon-check" value="Salvar"

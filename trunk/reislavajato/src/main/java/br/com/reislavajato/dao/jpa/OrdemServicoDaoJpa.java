@@ -33,6 +33,9 @@ public class OrdemServicoDaoJpa extends PersistenciaJpa<OrdemServico> implements
 	@PersistenceContext(unitName = "reisLavajato")
 	@Qualifier(value = "managerEntityManagerFactory")
 	private EntityManager em;
+	
+
+	
 
 	public List<OrdemServico> listarPorStatus(EnumStatusServico statusServico) throws DadosInvalidosException {
 		try {
@@ -44,6 +47,7 @@ public class OrdemServicoDaoJpa extends PersistenciaJpa<OrdemServico> implements
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<OrdemServico> listarPorCpfOuNome(String cpf, String nome) throws DadosInvalidosException {
 		try {
 			String jpaql = "select o from OrdemServico o where ";

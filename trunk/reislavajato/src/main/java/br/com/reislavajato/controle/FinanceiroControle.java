@@ -23,6 +23,7 @@ import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.FinanceiroNeg;
+import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -63,7 +64,8 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 		return "sucesso";
 	}
-
+	
+		
 	public void listar() throws DadosInvalidosException {
 		try {
 			financeiros = context.getBean(FinanceiroNeg.class).listar();
@@ -75,7 +77,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			context.getBean(FinanceiroNeg.class).incluir(financeiro);
+			context.getBean(FinanceiroNeg.class).alterar(financeiro);
 			novo();
 			addMensagemInfo(msgSucesso);
 		} catch (RuntimeException erro) {

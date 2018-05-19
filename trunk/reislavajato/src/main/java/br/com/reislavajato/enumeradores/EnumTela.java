@@ -7,7 +7,8 @@ public enum EnumTela implements Enumerador {
 
 	INCLUIR("01", "Incluir"), 
 	ALTERAR("02", "Altear"), 
-	CONSULTAR("03", "Consultar");
+	CONSULTAR("03", "Consultar"),
+	ORDEM_SERVICO("04","Ordem de Servico");
 
 	private final String abreviado;
 	private final String descricao;

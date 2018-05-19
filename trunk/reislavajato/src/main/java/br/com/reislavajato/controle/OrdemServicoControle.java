@@ -56,13 +56,15 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	private Servico servicoSelecionado;
 	private List<Servico> servicosSelecionados;
 
+	private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
+
 	@Override
 	@PostConstruct
 	public String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
 
-		ordemServico.setValorTotal(new BigDecimal("50.00"));
+		ordemServico.setValorTotal(new BigDecimal("90.00"));
 
 		servicoSelecionado = new Servico();
 		servicosSelecionados = new ArrayList<Servico>();
@@ -100,7 +102,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 				return;
 			}
 
-			//this.setarServicos(ordemServico, ordemServicoMovimento);
+			// this.setarServicos(ordemServico, ordemServicoMovimento);
 
 			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
 
@@ -176,14 +178,23 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	}
 
 	public void calcular() {
-		ordemServico.setValorTotal(new BigDecimal("0.00"));
+		ordemServico.setValorTotal(new BigDecimal("50.00"));
 
 	}
 
-	public void listar() throws DadosInvalidosException {
+	public void listarOs() throws DadosInvalidosException {
 		try {
 			ordensServicos = context.getBean(OrdemServicoNeg.class).listar();
 
+		} catch (RuntimeException erro) {
+			addMensagemErroFatal(erro);
+		}
+	}
+
+	@PostConstruct
+	public void listar() throws DadosInvalidosException {
+		try {
+			veiculos = veiculoNeg.listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

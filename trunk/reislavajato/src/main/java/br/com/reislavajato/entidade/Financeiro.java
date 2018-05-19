@@ -23,11 +23,11 @@ import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 @Entity
 public class Financeiro extends GenericEntity {
 
-	@Column(name = "tipo_documento")
-	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo_documento", length = 30)
+	@Enumerated(EnumType.STRING)
 	private EnumTipoFinanceiro tipoFinanceiro = EnumTipoFinanceiro.CR;
 
-	@Column(name = "status")
+	@Column(name = "status", length = 30)
 	@Enumerated(EnumType.STRING)
 	private EnumStatusFinanceiro statusFinanceiro = EnumStatusFinanceiro.ABERTO;
 
@@ -39,7 +39,7 @@ public class Financeiro extends GenericEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dtVecto;
 
-	@Column(nullable = false, length = 25)
+	@Column(nullable = false, length = 25, unique = true)
 	private String documento;
 
 	@Column(precision = 10, scale = 2, nullable = false, name = "vlr_docto")
