@@ -55,6 +55,9 @@ public class OrdemServicoAuditoria {
 	@Column(nullable = false, length = 30)
 	private String tela;
 
+	@Column(name = "cliente_codigo")
+	private Long clienteCodigo;
+
 	public Long getOrdemServicoAudId() {
 		return ordemServicoAudId;
 	}
@@ -133,6 +136,14 @@ public class OrdemServicoAuditoria {
 
 	public void setTela(String tela) {
 		this.tela = tela;
+	}
+
+	public Long getClienteCodigo() {
+		return clienteCodigo;
+	}
+
+	public void setClienteCodigo(Long clienteCodigo) {
+		this.clienteCodigo = clienteCodigo;
 	}
 
 }
