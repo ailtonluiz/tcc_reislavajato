@@ -17,12 +17,14 @@ import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Cliente;
 import br.com.reislavajato.entidade.Financeiro;
 import br.com.reislavajato.entidade.Fornecedor;
+import br.com.reislavajato.entidade.auditoria.FinanceiroAuditoria;
 import br.com.reislavajato.enumeradores.EnumStatusFinanceiro;
 import br.com.reislavajato.enumeradores.EnumTela;
 import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.FinanceiroNeg;
+import br.com.reislavajato.neg.FinanceiroNegAuditoria;
 
 /**
  * @Criado por: ailtonluiz
@@ -37,6 +39,8 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 	private Financeiro financeiro;
 	private List<Financeiro> financeiros;
+	private FinanceiroAuditoria financeiroAuditoria;
+	private List<FinanceiroAuditoria> financeiroAuditorias;
 	private Cliente cliente;
 	private List<Cliente> clientes;
 	private Fornecedor fornecedor;
@@ -63,17 +67,17 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 		return "sucesso";
 	}
-	
-		
+
 	public void listar() throws DadosInvalidosException {
 		try {
 			financeiros = context.getBean(FinanceiroNeg.class).listar();
 			clientes = context.getBean(ClienteNeg.class).listar();
+			financeiroAuditorias = context.getBean(FinanceiroNegAuditoria.class).listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
 	}
-	
+
 	public void salvar() throws DadosInvalidosException {
 		try {
 			context.getBean(FinanceiroNeg.class).alterar(financeiro);
@@ -167,6 +171,22 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 
 	public void setFornecedores(List<Fornecedor> fornecedores) {
 		this.fornecedores = fornecedores;
+	}
+
+	public FinanceiroAuditoria getFinanceiroAuditoria() {
+		return financeiroAuditoria;
+	}
+
+	public void setFinanceiroAuditoria(FinanceiroAuditoria financeiroAuditoria) {
+		this.financeiroAuditoria = financeiroAuditoria;
+	}
+
+	public List<FinanceiroAuditoria> getFinanceiroAuditorias() {
+		return financeiroAuditorias;
+	}
+
+	public void setFinanceiroAuditorias(List<FinanceiroAuditoria> financeiroAuditorias) {
+		this.financeiroAuditorias = financeiroAuditorias;
 	}
 
 }

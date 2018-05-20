@@ -19,12 +19,14 @@ import br.com.reislavajato.entidade.OrdemServico;
 import br.com.reislavajato.entidade.OrdemServicoMovimento;
 import br.com.reislavajato.entidade.Servico;
 import br.com.reislavajato.entidade.Veiculo;
+import br.com.reislavajato.entidade.auditoria.OrdemServicoAuditoria;
 import br.com.reislavajato.enumeradores.EnumStatusServico;
 import br.com.reislavajato.enumeradores.EnumTipoPessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.OrdemServicoNeg;
+import br.com.reislavajato.neg.OrdemServicoNegAuditoria;
 import br.com.reislavajato.neg.ServicoNeg;
 import br.com.reislavajato.neg.VeiculoNeg;
 import br.com.reislavajato.util.Numero;
@@ -41,10 +43,16 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	private OrdemServico ordemServico;
 	private List<OrdemServico> ordensServicos;
+	private Cliente cliente;
+	private List<Cliente> clientes;
 	private Veiculo veiculo;
 	private List<Veiculo> veiculos;
 	private OrdemServicoMovimento ordemServicoMovimento;
 	private List<OrdemServicoMovimento> ordemServicoMovimentos;
+	private List<Funcionario> funcionarios;
+	private Funcionario funcionario;
+	private OrdemServicoAuditoria ordemServicoAuditoria;
+	private List<OrdemServicoAuditoria> ordemServicoAuditorias;
 
 	private String cpfConsulta;
 	private String nomeConsulta;
@@ -63,8 +71,6 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public String novo() {
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
-
-	
 
 		servicoSelecionado = new Servico();
 		servicosSelecionados = new ArrayList<Servico>();
@@ -195,6 +201,9 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	public void listar() throws DadosInvalidosException {
 		try {
 			veiculos = veiculoNeg.listar();
+			ordensServicos = context.getBean(OrdemServicoNeg.class).listar();
+			ordemServicoAuditorias = context.getBean(OrdemServicoNegAuditoria.class).listar();
+			
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -312,6 +321,46 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 
 	public void setOrdemServicoMovimentos(List<OrdemServicoMovimento> ordemServicoMovimentos) {
 		this.ordemServicoMovimentos = ordemServicoMovimentos;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public OrdemServicoAuditoria getOrdemServicoAuditoria() {
+		return ordemServicoAuditoria;
+	}
+
+	public void setOrdemServicoAuditoria(OrdemServicoAuditoria ordemServicoAuditoria) {
+		this.ordemServicoAuditoria = ordemServicoAuditoria;
+	}
+
+	public List<OrdemServicoAuditoria> getOrdemServicoAuditorias() {
+		return ordemServicoAuditorias;
+	}
+
+	public void setOrdemServicoAuditorias(List<OrdemServicoAuditoria> ordemServicoAuditorias) {
+		this.ordemServicoAuditorias = ordemServicoAuditorias;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
 	}
 
 }
