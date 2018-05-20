@@ -50,10 +50,10 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 
 	public void salvar() throws DadosInvalidosException {
 		try {
-			veiculoNeg.incluir(veiculo);
+			veiculoNeg.alterar(veiculo);
 			novo();
 			listar();
-			addMensagemInfo(msgIncluidoSucesso);
+			addMensagemInfo(msgSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

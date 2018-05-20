@@ -10,40 +10,64 @@
 	<ui:define name="conteudo">
 		<!-- Tela de listagem -->
 		<h:form id="frmListagem">
-			<p:panel header="Painel de auditoria">
+			<p:panel header="Painel de Auditoria" style="text-align: center">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
-					paginator="true" value="#{servicoControle.servicos}"
+					paginator="true" value="#{servicoControle.servicoAuditorias}"
 					paginatorPosition="top" var="servico" rows="8">
-					<f:facet name="footer">
-						
-					</f:facet>
-					<p:column headerText="Usuário" sortBy="#{servico.descricao}"
-						style="width:45%">
-						<p:outputLabel value="#{servico.descricao}" />
+					
+					<p:column headerText="Código" sortBy="#{servico.servicoId}"
+						style="width:10px">
+						<p:outputLabel value="#{servico.servicoId}" />
+					</p:column>
+					
+
+					<p:column headerText="Serviço" sortBy="#{servico.descricao}"
+						style="width:65px; text-align: left">
+						<p:outputLabel value="#{servico.descricao}" title="Antes da alteração"/>
 					</p:column>
 
-					<p:column headerText="Detalhes" sortBy="#{servico.descricao}"
-						style="width:65%">
+					<p:column headerText="Detalhes" sortBy="#{servico.observacao}"
+						style="width:65px">
 						<p:outputLabel value="#{servico.observacao}" />
 					</p:column>
 
-					<p:column headerText="Valor (R$)" style="width:15%">
+					<p:column headerText="Valor (R$)" style="width:10px">
 						<p:outputLabel value="#{servico.valorServico}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</p:outputLabel>
 					</p:column>
 
-					<p:column headerText="Comissão (%)" style="width:13%">
+					<p:column headerText="Comissão (%)" style="width:13px">
 						<p:outputLabel value="#{servico.percentualComissao} %">
 							<f:convertNumber locale="pt_BR" />
 						</p:outputLabel>
 					</p:column>
+					
+					
+					<p:column headerText="Dt. Operação" style="width:8%"
+						sortBy="#{servico.dtOperacao}" filterMatchMode="contains">
+						<h:outputText value="#{servico.dtOperacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
 
-					<!-- Edição / exclusão -->
-		
+					<p:column headerText="Processo" sortBy="#{servico.processoOperacao}"
+						style="width:25px">
+						<p:outputLabel value="#{servico.processoOperacao}" />
+					</p:column>
+
+					<p:column headerText="Usuário" sortBy="#{servico.usuarioOperacao}"
+						style="width:25px">
+						<p:outputLabel value="#{servico.usuarioOperacao}" />
+					</p:column>
+
+					<p:column headerText="Tela" sortBy="#{servico.tela}"
+						style="width:25px">
+						<p:outputLabel value="#{servico.tela}" />
+					</p:column>
 
 				</p:dataTable>
-				<!-- Botão de opções -->
+				
 				
 
 			</p:panel>

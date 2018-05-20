@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -14,7 +15,8 @@ import javax.persistence.TemporalType;
  * @author Ailton Luiz
  * 
  **/
-@Entity(name = "financeiro_aud")
+@Entity
+@Table(name = "financeiro_aud")
 public class FinanceiroAuditoria {
 
 	@Id
@@ -39,8 +41,8 @@ public class FinanceiroAuditoria {
 	@Column(length = 80)
 	private String observacao;
 
-	@Column(length = 30, nullable = false)
-	private String status;
+	@Column(length = 30, nullable = false, name = "status")
+	private String statusFinanceiro;
 
 	@Column(name = "tipo_documento", length = 30)
 	private String tipoDocumento;
@@ -112,12 +114,12 @@ public class FinanceiroAuditoria {
 		this.observacao = observacao;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getStatusFinanceiro() {
+		return statusFinanceiro;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusFinanceiro(String statusFinanceiro) {
+		this.statusFinanceiro = statusFinanceiro;
 	}
 
 	public String getTipoDocumento() {

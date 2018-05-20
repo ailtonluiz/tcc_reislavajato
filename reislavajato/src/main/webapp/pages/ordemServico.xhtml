@@ -276,7 +276,7 @@
 
 								<p:outputLabel value="Lista de funcionários:" />
 								<p:selectOneRadio
-									value="#{ordemServicoControle.servicoSelecionado.funcionario}"
+									value="#{ordemServicoControle.funcionario}"
 									layout="grid" columns="5"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItems value="#{ordemServicoControle.funcionarios}"
@@ -320,7 +320,7 @@
 											<h:outputText value="Funcionário" />
 										</f:facet>
 										<h:outputText
-											value="#{servico.funcionario.pessoa.pessoaFisica.nome}" />
+											value="#{ordemServicoControle.funcionario.pessoa.pessoaFisica.nome}" />
 									</p:column>
 
 									<p:column style="font-size: 12px; text-align: center;">

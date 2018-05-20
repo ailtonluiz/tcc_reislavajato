@@ -15,6 +15,11 @@ import br.com.reislavajato.entidade.Servico;
 @Repository
 public class ServicoDaoJpa extends PersistenciaJpa<Servico> implements ServicoDao {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ServicoDaoJpa() {
 		super(Servico.class);
 	}

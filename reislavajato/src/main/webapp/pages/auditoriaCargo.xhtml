@@ -13,16 +13,43 @@
 	<ui:define name="conteudo">
 		<!-- Tela de listagem -->
 		<h:form id="frmListagem">
-			<p:panel header="Listagem de cargos">
+			<p:panel header="Painel de Auditoria" style="text-align: center">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
-					paginator="true" value="#{cargoControle.cargosAuditoria}"
+					paginator="true" value="#{cargoControle.cargoAuditorias}"
 					paginatorPosition="top" var="cargo" rows="5">
 					<f:facet name="footer">
 					</f:facet>
 
-					<p:column headerText="Cargo" sortBy="#{cargo.nomeCargo}"
-						style="width:65px">
-						<p:outputLabel value="#{cargo.nomeCargo}" />
+					<p:column headerText="Código" sortBy="#{cargo.codigo}"
+						style="width:3px">
+						<p:outputLabel value="#{cargo.codigo}" />
+					</p:column>
+
+					<p:column headerText="Descrição" sortBy="#{cargo.nomeCargo}" title="teste"
+						style="width:70px">
+						<p:outputLabel value="#{cargo.nomeCargo}" title="Descrição anterior" />
+					</p:column>
+
+					<p:column headerText="Dt. Operação" style="width:8%"
+						sortBy="#{cargo.dtOperacao}" filterMatchMode="contains">
+						<h:outputText value="#{cargo.dtOperacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Processo" sortBy="#{cargo.processoOperacao}"
+						style="width:25px">
+						<p:outputLabel value="#{cargo.processoOperacao}" />
+					</p:column>
+
+					<p:column headerText="Usuário" sortBy="#{cargo.usuarioOperacao}"
+						style="width:25px">
+						<p:outputLabel value="#{cargo.usuarioOperacao}" />
+					</p:column>
+
+					<p:column headerText="Tela" sortBy="#{cargo.tela}"
+						style="width:25px">
+						<p:outputLabel value="#{cargo.tela}" />
 					</p:column>
 
 

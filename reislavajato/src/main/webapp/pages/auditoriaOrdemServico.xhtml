@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+				<p:panel header="Painel Auditoria" style="text-align: center">
+			
+			
+				<p:dataTable id="tblCliente"
+					emptyMessage="Nenhum registro encontrado" paginator="true"
+					value="#{ordemServicoControle.ordensServicos}" paginatorPosition="top"
+					var="ordemServico" rows="4">
+
+
+					<p:column headerText="Código" style="width:5%"
+						sortBy="#{ordemServico.cliente.pessoa.pessoaFisica.pessoaFisicaId}"
+						filterMatchMode="contains">
+						<h:outputText
+							value="#{ordemServico.cliente.pessoa.pessoaFisica.pessoaFisicaId}" />
+
+					</p:column>
+
+					<p:column headerText="Nome do cliente" style="text-align: left"
+						sortBy="#{ordemServico.cliente.pessoa.pessoaFisica.nome}"
+						filterMatchMode="contains">
+						<h:outputText
+							value="#{ordemServico.cliente.pessoa.pessoaFisica.nome} #{ordemServico.cliente.pessoa.pessoaJuridica.razaoSocial}" />
+
+					</p:column>
+
+				</p:dataTable>
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{ordemServicoControle.ordemServicoAuditorias}"
+					paginatorPosition="top" var="ordemServico" rows="5">
+
+					<p:column headerText="Cód. Cliente" style="width:7%"
+						sortBy="#{ordemServico.clienteCodigo}">
+						<h:outputText value="#{ordemServico.clienteCodigo} " />
+					</p:column>
+
+					<p:column headerText="OS" style="width:22%"
+						sortBy="#{ordemServico.ordemServicoId}"					
+						filterMatchMode="contains">
+						<h:outputText
+							value="#{ordemServico.ordemServicoId}" />
+					</p:column>
+
+					<p:column headerText="Status Serviço" style="width:22%">
+						<h:outputText
+							value="#{ordemServico.statusServico}" />
+					</p:column>
+					<p:column headerText="Observação" style="width:22%">
+						<h:outputText value="#{ordemServico.obsOrdemServico}" />
+					</p:column>
+					
+					<p:column headerText="Processo" style="width:15%"
+						sortBy="#{ordemServico.processoOperacao}">
+						<h:outputText value="#{ordemServico.processoOperacao} " />
+					</p:column>
+
+					<p:column headerText="Usuário" style="width:15%"
+						sortBy="#{ordemServico.usuarioOperacao}">
+						<h:outputText value="#{ordemServico.usuarioOperacao} " />
+					</p:column>
+
+
+					<p:column headerText="Dt. operação" style="width:10%"
+						sortBy="#{financeiroControle.dtOperacao}"
+						filterMatchMode="contains">
+						<h:outputText value="#{ordemServico.dtOperacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Tela" style="width:15%"
+						sortBy="#{ordemServico.tela}">
+						<h:outputText value="#{ordemServico.tela} " />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

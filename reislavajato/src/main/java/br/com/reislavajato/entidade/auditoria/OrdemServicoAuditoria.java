@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,7 +18,8 @@ import javax.persistence.TemporalType;
  * @author Ailton Luiz Projeto: reislavajato @ @19 de mai de 2018 @17:49:42
  */
 
-@Entity(name = "ordem_servico_aud")
+@Entity
+@Table(name = "ordem_servico_aud")
 public class OrdemServicoAuditoria {
 
 	@Id

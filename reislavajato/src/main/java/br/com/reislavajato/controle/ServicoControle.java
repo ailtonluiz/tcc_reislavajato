@@ -14,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import br.com.reislavajato.config.AppConfig;
 import br.com.reislavajato.entidade.Funcionario;
 import br.com.reislavajato.entidade.Servico;
+import br.com.reislavajato.entidade.auditoria.ServicoAuditoria;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.FuncionarioNeg;
 import br.com.reislavajato.neg.ServicoNeg;
+import br.com.reislavajato.neg.ServicoNegAuditoria;
 
 /**
  * @Criado por: ailtonluiz
@@ -30,6 +32,9 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 
 	private Servico servico;
 	private List<Servico> servicos;
+
+	private ServicoAuditoria servicoAuditoria;
+	private List<ServicoAuditoria> servicoAuditorias;
 
 	public ServicoControle() throws DadosInvalidosException {
 		this.novo();
@@ -50,6 +55,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 	public void listar() throws DadosInvalidosException {
 		try {
 			servicos = context.getBean(ServicoNeg.class).listar();
+			servicoAuditorias = context.getBean(ServicoNegAuditoria.class).listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
@@ -104,6 +110,22 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
+	}
+
+	public ServicoAuditoria getServicoAuditoria() {
+		return servicoAuditoria;
+	}
+
+	public void setServicoAuditoria(ServicoAuditoria servicoAuditoria) {
+		this.servicoAuditoria = servicoAuditoria;
+	}
+
+	public List<ServicoAuditoria> getServicoAuditorias() {
+		return servicoAuditorias;
+	}
+
+	public void setServicoAuditorias(List<ServicoAuditoria> servicoAuditorias) {
+		this.servicoAuditorias = servicoAuditorias;
 	}
 
 }
