@@ -1,8 +1,9 @@
+DELIMITER $$
+
 CREATE 
-	DEFINER = 'reislavajato'@'%'
-TRIGGER lavajato.trg_insere_financeiro
+	TRIGGER trg_insere_financeiro
 	AFTER INSERT
-	ON lavajato.ordem_servico
+	ON ordem_servico
 	FOR EACH ROW
 BEGIN
  INSERT INTO financeiro 
@@ -24,4 +25,5 @@ NEW.cliente_codigo,
   'Conta a receber',
   'Ordem de Servico');
 
-END
+END$$
+DELIMITER;
