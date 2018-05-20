@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement // habilita anotações para o gerenciamento de transações do spring (@bean)
 @ComponentScans(value = { @ComponentScan("br.com.reislavajato.dao.jpa"), @ComponentScan("br.com.reislavajato.dao"),
-		@ComponentScan("br.com.reislavajato.neg"), @ComponentScan("br.com.reislavajato.neg.impl") })
+		@ComponentScan("br.com.reislavajato.neg"), @ComponentScan("br.com.reislavajato.neg.impl"),
+		@ComponentScan("br.com.reislavajato.dao.jpa.auditoria"), @ComponentScan("br.com.reislavajato.dao.auditoria"),
+		@ComponentScan("br.com.reislavajato.neg.auditoria"), @ComponentScan("br.com.reislavajato.neg.impl.auditoria") })
 
 // @ComponentScans faz parte de @Configuration, faz varredura nas annotations do
 // projeto (nos annotationconfigapplicationContext dos controllers)

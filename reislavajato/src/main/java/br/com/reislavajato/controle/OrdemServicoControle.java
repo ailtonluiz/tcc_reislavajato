@@ -64,7 +64,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		ordemServico = new OrdemServico();
 		ordensServicos = new ArrayList<OrdemServico>();
 
-		ordemServico.setValorTotal(new BigDecimal("90.00"));
+	
 
 		servicoSelecionado = new Servico();
 		servicosSelecionados = new ArrayList<Servico>();

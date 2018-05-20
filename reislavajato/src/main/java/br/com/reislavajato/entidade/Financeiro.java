@@ -19,9 +19,10 @@ import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
  * @Criado por: ailtonluiz
  * @Data: 12 de ago de 2017
  */
-@SuppressWarnings("serial")
+
 @Entity
 public class Financeiro extends GenericEntity {
+	private static final long serialVersionUID = 4996325251017697447L;
 
 	@Column(name = "tipo_documento", length = 30)
 	@Enumerated(EnumType.STRING)

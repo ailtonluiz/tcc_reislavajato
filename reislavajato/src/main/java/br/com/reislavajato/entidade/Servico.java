@@ -2,13 +2,10 @@ package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  * @Criado por: ailtonluiz
@@ -21,9 +18,6 @@ public class Servico {
 	@Column(name = "servico_id")
 	@GeneratedValue
 	private Long servicoId;
-
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-	private Funcionario funcionario;
 
 	@Column(name = "vlr_servico", precision = 10, scale = 2, nullable = false)
 	private BigDecimal valorServico;
@@ -42,14 +36,6 @@ public class Servico {
 
 	public void setServicoId(Long servicoId) {
 		this.servicoId = servicoId;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
 	}
 
 	public BigDecimal getValorServico() {

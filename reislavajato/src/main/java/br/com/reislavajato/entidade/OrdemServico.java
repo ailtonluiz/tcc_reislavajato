@@ -90,6 +90,8 @@ public class OrdemServico {
 	private EnumSimNao arranhoes = EnumSimNao.SIM;
 
 	private Long km;
+	
+	
 
 	// getters and setters
 

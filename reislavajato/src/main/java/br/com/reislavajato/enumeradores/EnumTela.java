@@ -6,7 +6,7 @@ import br.com.reislavajato.enumeradores.Enumerador;
 public enum EnumTela implements Enumerador {
 
 	INCLUIR("01", "Incluir"), 
-	ALTERAR("02", "Altear"), 
+	ALTERAR("02", "Alterar"), 
 	CONSULTAR("03", "Consultar"),
 	ORDEM_SERVICO("04","Ordem de Servico");
 
