@@ -77,77 +77,95 @@
 		</script>
 
 			<p:menubar>
-				<p:submenu label="Cadastros" >
-					<p:submenu label="Endereços">
-						<p:menuitem value="Municípios" disabled="true"
+				<p:submenu label="Cadastros" icon="ui-icon-circle-plus">
+					<p:submenu label="Endereços" icon="ui-icon-plusthick">
+						<p:menuitem value="Municípios" icon="ui-icon-home" disabled="true"
 							action="/pages/municipio.xhtml?faces-redirect=true" />
 					</p:submenu>
 
 
-					<p:menuitem value="Clientes" disabled="true"
+					<p:menuitem value="Clientes" icon="ui-icon-person" disabled="true"
 						action="/pages/cliente.xhtml?faces-redirect=true" />
 
 
-					<p:submenu label="Funcionários">
+					<p:submenu label="Funcionários" icon="ui-icon-contact">
 
-						<p:menuitem value="Cargos" disabled="true"
-							action="/pages/cargo.xhtml?faces-redirect=true" />
-						<p:menuitem value="Funcionários" disabled="true"
+						<p:menuitem value="Cargos" icon="ui-icon-clipboard"
+							disabled="true" action="/pages/cargo.xhtml?faces-redirect=true" />
+						<p:menuitem value="Funcionários" icon="ui-icon-suitcase"
+							disabled="true"
 							action="/pages/funcionario.xhtml?faces-redirect=true" />
 
 					</p:submenu>
-					<p:menuitem value="Serviços" disabled="true"
+					<p:menuitem value="Serviços" icon="ui-icon-flag" disabled="true"
 						action="/pages/servico.xhtml?faces-redirect=true" />
-						
-					<p:menuitem value="Fornecedores" disabled="true"
-						action="/pages/fornecedor.xhtml?faces-redirect=true" />
 
-					<p:menuitem value="Veículos" disabled="true"
+
+					<p:menuitem value="Veículos" icon="ui-icon-cart" disabled="true"
 						action="/pages/veiculo.xhtml?faces-redirect=true" />
 
 
 				</p:submenu>
 
 
-				<p:submenu label="Movimentações">
-					<p:menuitem value="Ordem de Serviço" disabled="true"
+				<p:submenu label="Movimentações" icon="ui-icon-bookmark">
+					<p:menuitem value="Dashboard" icon="ui-icon-bookmark"
+						disabled="true"
+						action="/pages/dashboard.xhtml?faces-redirect=true" />
+					<p:menuitem value="Ordem de Serviço" icon="ui-icon-play"
+						disabled="true"
 						action="/pages/ordemServico.xhtml?faces-redirect=true" />
-					<p:menuitem value="Financeiro" disabled="true"
+					<p:menuitem value="Financeiro" icon="ui-icon-calculator"
+						disabled="true"
 						action="/pages/financeiro.xhtml?faces-redirect=true" />
 
 				</p:submenu>
 
-				<p:submenu label="Relatórios">
-					<p:submenu label="Cadastros">
-					
-						<p:menuitem value="Clientes" disabled="true"
+				<p:submenu label="Relatórios" icon="ui-icon-document">
+					<p:submenu label="Cadastros" icon="ui-icon-circle-plus">
+
+						<p:menuitem value="Clientes" icon="ui-icon-person" disabled="true"
 							action="/pages/relCliente.xhtml?faces-redirect=true" />
 
-						<p:menuitem value="Funcionários" disabled="true"
-							action="/pages/relFuncionario.xhtml?faces-redirect=true" />
-						<p:menuitem value="Funcionários" disabled="true"
+						<p:menuitem value="Funcionários" icon="ui-icon-contact"
+							disabled="true"
 							action="/pages/relFuncionario.xhtml?faces-redirect=true" />
 
 
-						<p:menuitem value="Serviços" disabled="true" />
+
+						<p:menuitem value="Serviços" icon="ui-icon-flag" disabled="true" />
 					</p:submenu>
-					<p:submenu label="Movimentações">
-						<p:menuitem value="Lavagens" disabled="true"
+					<p:submenu label="Movimentações" icon="ui-icon-transferthick-e-w">
+						<p:menuitem value="Lavagens" icon="ui-icon-star" disabled="true"
 							action="/pages/ordemServico.xhtml?faces-redirect=true" />
-						
-						<p:menuitem value="Comissões"  disabled="true"
+
+						<p:menuitem value="Comissões" icon="ui-icon-grip-diagonal-se"
+							disabled="true"
 							action="/pages/relComissao.xhtml?faces-redirect=true" />
 						<p:menuitem value="Financeiro" disabled="true" />
 					</p:submenu>
 
 				</p:submenu>
 
-				<p:submenu label="Parâmetros">
+				<p:submenu label="Parâmetros" icon="ui-icon-gear">
 					<p:menuitem icon="ui-icon-bookmark" value="Empresa" disabled="true"
 						action="/pages/empresa.xhtml?faces-redirect=true" />
+					<p:submenu icon="ui-icon-key" label="Auditoria">
+						<p:menuitem value="Cadastro de Serviços" icon="ui-icon-flag"
+							disabled="true"
+							action="/pages/auditoriaCadastroServico.xhtml?faces-redirect=true" />
+						<p:menuitem value="Cadastro de Cargos" icon="ui-icon-clipboard"
+							disabled="true"
+							action="/pages/auditoriaCargo.xhtml?faces-redirect=true" />
+						<p:menuitem value="Financeiro" disabled="true" icon="ui-icon-calculator"
+							action="/pages/auditoriaFinanceiro.xhtml?faces-redirect=true" />
+						<p:menuitem value="Ordem de Serviço" disabled="true" icon="ui-icon-play"
+							action="/pages/auditoriaOrdemServico.xhtml?faces-redirect=true" />
+					</p:submenu>
+
 				</p:submenu>
 
-				<p:submenu label="Ajuda">
+				<p:submenu label="Ajuda" icon="ui-icon-help">
 					<p:menuitem icon="ui-icon-close" value="Sair"
 						action="/pages/login.xhtml?faces-redirect=true" />
 				</p:submenu>

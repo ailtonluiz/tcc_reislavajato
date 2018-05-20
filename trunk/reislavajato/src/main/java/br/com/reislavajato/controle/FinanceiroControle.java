@@ -23,7 +23,6 @@ import br.com.reislavajato.enumeradores.EnumTipoFinanceiro;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 import br.com.reislavajato.neg.ClienteNeg;
 import br.com.reislavajato.neg.FinanceiroNeg;
-import br.com.reislavajato.util.ReisLavajatoUtil;
 
 /**
  * @Criado por: ailtonluiz
@@ -74,7 +73,7 @@ public class FinanceiroControle extends ReisLavajatoControle implements Serializ
 			addMensagemErroFatal(erro);
 		}
 	}
-
+	
 	public void salvar() throws DadosInvalidosException {
 		try {
 			context.getBean(FinanceiroNeg.class).alterar(financeiro);

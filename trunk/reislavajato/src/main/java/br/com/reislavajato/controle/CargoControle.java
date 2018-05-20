@@ -38,6 +38,8 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 	private Cargo cargo;
 	private List<Cargo> cargos;
 
+
+
 	public CargoControle() {
 		this.novo();
 	}
@@ -57,9 +59,10 @@ public class CargoControle extends ReisLavajatoControle implements Serializable 
 	}
 
 	public void listar() throws DadosInvalidosException {
-		
+
 		try {
 			cargos = context.getBean(CargoNeg.class).listar();
+		
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

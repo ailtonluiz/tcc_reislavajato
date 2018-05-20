@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<ui:define name="conteudo">
+		<!-- Tela de listagem -->
+		<h:form id="frmListagem">
+			<p:panel header="Painel de auditoria">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{servicoControle.servicos}"
+					paginatorPosition="top" var="servico" rows="8">
+					<f:facet name="footer">
+						
+					</f:facet>
+					<p:column headerText="Usuário" sortBy="#{servico.descricao}"
+						style="width:45%">
+						<p:outputLabel value="#{servico.descricao}" />
+					</p:column>
+
+					<p:column headerText="Detalhes" sortBy="#{servico.descricao}"
+						style="width:65%">
+						<p:outputLabel value="#{servico.observacao}" />
+					</p:column>
+
+					<p:column headerText="Valor (R$)" style="width:15%">
+						<p:outputLabel value="#{servico.valorServico}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Comissão (%)" style="width:13%">
+						<p:outputLabel value="#{servico.percentualComissao} %">
+							<f:convertNumber locale="pt_BR" />
+						</p:outputLabel>
+					</p:column>
+
+					<!-- Edição / exclusão -->
+		
+
+				</p:dataTable>
+				<!-- Botão de opções -->
+				
+
+			</p:panel>
+		</h:form>
+		<!-- Tela de Cadastros -->
+
+
+	</ui:define>
+</ui:composition>

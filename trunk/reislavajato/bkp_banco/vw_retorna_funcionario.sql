@@ -1,4 +1,4 @@
-CREATE VIEW RETORNA_FUNCIONARIO AS
+CREATE VIEW VW_RETORNA_FUNCIONARIO AS
 SELECT
   `f`.`funcionario_id` AS `funcionario_id`,
   `pf`.`nome` AS `nome`
