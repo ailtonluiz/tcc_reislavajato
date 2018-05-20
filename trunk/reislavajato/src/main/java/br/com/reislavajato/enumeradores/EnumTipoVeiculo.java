@@ -8,7 +8,7 @@ public enum EnumTipoVeiculo implements Enumerador {
 	ONIBUS("04", "Ônibus"),
 	CAMINHAO("05","Caminhão"),
 	AMBULANCIA("06","Ambulância"),
-	Bicicleta("07","Bicicleta");
+	BICICLETA("07","Bicicleta");
 	
 
 	private final String abreviado;

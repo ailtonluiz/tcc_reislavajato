@@ -3,7 +3,7 @@ package br.com.reislavajato.enumeradores;
 public enum EnumMarca implements Enumerador {
 
 	CITROEN("", "Citroën"), 
-	GM("", "Chevrolet"), 
+	GM("", "GM"), 
 	FIAT("", "Fiat"), 
 	FORD("", "Ford"), 
 	HONDA("", "Honda"), 
@@ -13,7 +13,7 @@ public enum EnumMarca implements Enumerador {
 	RENAULT("", "Renault"), 
 	TOYOTA("", "Toyota"), 
 	VOLARE("", "Volare"),
-	VOLKSWAGEM("", "VolksWagem");
+	VOLKSWAGEM("", "VW");
 
 	private final String abreviado;
 	private final String descricao;
