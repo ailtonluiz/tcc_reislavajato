@@ -16,4 +16,6 @@ CHANGE COLUMN `servico_aud_id` `servico_aud_id` BIGINT(20) NOT NULL AUTO_INCREME
 ALTER TABLE `lavajato`.`cliente_aud` 
 CHANGE COLUMN `cliente_aud_id` `cliente_aud_id` BIGINT(20) NOT NULL AUTO_INCREMENT ;
 
+ALTER TABLE `lavajato`.`comissao` 
+CHANGE COLUMN `comissao_id` `comissao_id` BIGINT(20) NOT NULL AUTO_INCREMENT ;
 
