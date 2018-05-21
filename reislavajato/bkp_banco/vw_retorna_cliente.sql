@@ -1,4 +1,4 @@
-CREATE VIEW VW_RETORNA_CLIENTE AS 
+CREATE VIEW RETORNA_CLIENTE AS 
 SELECT
   `pf`.`nome` AS `nome`,
   `c`.`codigo` AS `codigo`
