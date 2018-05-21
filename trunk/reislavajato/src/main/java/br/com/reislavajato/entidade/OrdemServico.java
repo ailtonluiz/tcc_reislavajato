@@ -40,8 +40,7 @@ public class OrdemServico {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Veiculo veiculo = new Veiculo();
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private CheckList checkList = new CheckList();
+	
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_servico")
@@ -129,13 +128,7 @@ public class OrdemServico {
 		this.veiculo = veiculo;
 	}
 
-	public CheckList getCheckList() {
-		return checkList;
-	}
 
-	public void setCheckList(CheckList checkList) {
-		this.checkList = checkList;
-	}
 
 	public EnumStatusServico getStatusServico() {
 		return statusServico;

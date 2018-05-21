@@ -1,4 +1,4 @@
-CREATE VIEW VW_RETONAR_COMISSAO AS 
+CREATE VIEW RETONAR_COMISSAO AS 
 SELECT
   ROUND(((`os`.`vlr_total` * `om`.`pct_comissao`) / 100), 2) AS `vlr_comissao`
 FROM (`ordem_servico` `os`

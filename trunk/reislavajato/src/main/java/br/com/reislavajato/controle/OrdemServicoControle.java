@@ -203,7 +203,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 			veiculos = veiculoNeg.listar();
 			ordensServicos = context.getBean(OrdemServicoNeg.class).listar();
 			ordemServicoAuditorias = context.getBean(OrdemServicoNegAuditoria.class).listar();
-			
+
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
