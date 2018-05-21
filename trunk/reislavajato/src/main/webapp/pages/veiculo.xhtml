@@ -10,7 +10,7 @@
 	<ui:define name="conteudo">
 		<!-- Tela de listagem -->
 		<h:form id="frmListagem">
-			<p:panel header="Listagem de veículos">
+			<p:panel header="Listagem de veículos" style="text-align: center">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
 					paginator="true" value="#{veiculoControle.veiculos}"
 					paginatorPosition="top" var="veiculo" rows="5">
@@ -24,14 +24,19 @@
 						</p:commandButton>
 					</f:facet>
 
-					<p:column headerText="Marca" sortBy="#{veiculo.marca}"
+					<p:column headerText="Marca" sortBy="#{veiculo.marca}" style="text-align: left; width:22%"
 						filterBy="#{veiculo.marca}" filterMatchMode="contains">
 						<p:outputLabel value="#{veiculo.marca.descricao}" />
 					</p:column>
 
-					<p:column headerText="Modelo" sortBy="#{veiculo.modelo}"
+					<p:column headerText="Modelo" sortBy="#{veiculo.modelo}" style="text-align: left; width:50%" 
 						filterBy="#{veiculo.modelo}" filterMatchMode="contains">
 						<p:outputLabel value="#{veiculo.modelo}" />
+					</p:column>
+
+					<p:column headerText="Placa" sortBy="#{veiculo.placa}" style="text-align: left; width:8%"
+						filterBy="#{veiculo.placa}" filterMatchMode="contains">
+						<p:outputLabel value="#{veiculo.placa}" />
 					</p:column>
 
 
