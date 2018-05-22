@@ -48,11 +48,12 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	public FuncionarioControle() throws DadosInvalidosException {
 		this.novo();
 	}
+	// A anotação PostConstruct é usada em um método que precisa ser executado após
+	// a injeção de dependência ser feita para executar qualquer inicialização. Este
+	// método DEVE ser chamado antes que a classe seja colocada em serviço.
 
 	@Override
-	@PostConstruct // A anotação PostConstruct é usada em um método que precisa ser executado após
-					// a injeção de dependência ser feita para executar qualquer inicialização. Este
-					// método DEVE ser chamado antes que a classe seja colocada em serviço.
+	@PostConstruct 
 	public String novo() {
 		funcionario = new Funcionario();
 		funcionario.setPessoa(new Pessoa());

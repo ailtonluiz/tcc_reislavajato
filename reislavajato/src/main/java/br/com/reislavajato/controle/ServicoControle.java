@@ -66,7 +66,7 @@ public class ServicoControle extends ReisLavajatoControle implements Serializabl
 			context.getBean(ServicoNeg.class).alterar(servico);
 			novo();
 			listar();
-			addMensagemInfo(msgIncluidoSucesso);
+			addMensagemInfo(msgSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
