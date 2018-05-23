@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_ID" version="3.1"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 	<!-- Nome da Aplicação -->
 	<display-name>Reis Lavajato</display-name>
@@ -33,7 +34,7 @@
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>bootstrap</param-value>
-		<!--cruze cupertino overcast  bootstrap excite-bike-->
+		<!--cruze cupertino overcast bootstrap excite-bike -->
 	</context-param>
 
 	<listener>
@@ -82,4 +83,9 @@
 			<encoding>utf-8</encoding>
 		</locale-encoding-mapping>
 	</locale-encoding-mapping-list>
+
+	<!-- Configura tempo de sessao do usuario em 3 minutos -->
+	<session-config>
+		<session-timeout>3</session-timeout>
+	</session-config>
 </web-app>

@@ -36,16 +36,11 @@ public class FuncionarioNegImpl extends NegocioGenerico<Funcionario> implements 
 		return ((FuncionarioDao) persistencia).consultarPorEmail(email);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.reislavajato.neg.FuncionarioNeg#autenticar(java.lang.String,
-	 * java.lang.String)
-	 */
-	@Override
-	public Funcionario autenticar(String email, String senha) throws DadosInvalidosException {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Funcionario autenticar(String login, String senha) throws DadosInvalidosException {
+
+		return ((FuncionarioDao) persistencia).autenticar(login, senha);
+
 	}
 
 }

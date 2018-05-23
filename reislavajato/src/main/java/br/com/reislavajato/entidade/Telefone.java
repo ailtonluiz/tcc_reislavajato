@@ -20,6 +20,8 @@ public class Telefone {// extends GenericEntity {
 	private String comercial;
 
 	private String contato;
+	
+	//getters and setters
 
 	public String getCelular() {
 		return celular;

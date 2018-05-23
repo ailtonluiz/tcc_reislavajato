@@ -7,11 +7,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.omnifaces.util.Messages;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import br.com.reislavajato.dao.FuncionarioDao;
 import br.com.reislavajato.entidade.Funcionario;
+import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 
 @Repository
@@ -92,13 +94,33 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 		}
 	}
 
-	public Funcionario autenticar(String email, String senha) throws DadosInvalidosException {
+	public Funcionario autenticar(String login, String senha) throws DadosInvalidosException {
 		try {
 			Query query = em.createQuery(
-					"select distinct f from Funcionario f where f.pessoa.email = :email and f.senha = :senha");
-			query.setParameter("email", email);
+					"select distinct f from Funcionario f where f.pessoa.login = :login and f.pessoa.senha = :senha");
+			query.setParameter("login", login);
 			query.setParameter("senha", senha);
-			return (Funcionario) query.getSingleResult();
+			//Funcionario funcionarioLogado=(Funcionario) query.getParameter(login);
+			
+			
+			
+			
+			
+			Funcionario funcionarioLogado=(Funcionario) query.getSingleResult();
+			
+			if (funcionarioLogado.getPessoa().getLogin().equals(login)) {
+				System.out.println("funcionario encontrado");
+				return funcionarioLogado;
+			} else {
+				System.out.println("funcionario nao encontrado");
+				Pessoa pessoa = new Pessoa();
+				pessoa.setLogin(login);
+				funcionarioLogado.setPessoa(pessoa);
+				return funcionarioLogado;
+			}
+
+		} catch (NoResultException e) {
+			throw new DadosInvalidosException(e.getMessage());
 		} catch (Exception e) {
 			throw new DadosInvalidosException(e);
 		}

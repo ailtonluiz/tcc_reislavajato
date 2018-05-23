@@ -5,6 +5,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Reis Lavajato</title>
@@ -21,10 +22,10 @@
 			<p:panelGrid columns="2">
 				<p:outputLabel for="log" value="Login:" />
 				<p:inputText id="log" required="true"
-					requiredMessage="Por favor informe o E-mail"
-					value="#{autenticacaoControle.funcionario.pessoa.email}" />
+					requiredMessage="Por favor informe o Login!"
+					value="#{autenticacaoControle.funcionario.pessoa.login}" />
 				<p:outputLabel for="senha" value="Senha:" />
-				<p:password id="senha"
+				<p:password id="senha" 
 					value="#{autenticacaoControle.funcionario.pessoa.senha}" />
 			</p:panelGrid>
 
