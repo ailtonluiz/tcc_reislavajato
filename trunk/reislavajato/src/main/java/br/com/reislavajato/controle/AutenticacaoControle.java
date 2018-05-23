@@ -30,7 +30,7 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
 
 	private Funcionario funcionario;
-	private Funcionario funcionarioLogado;
+	private Funcionario funcionarioLog;
 
 	@PostConstruct
 	public void iniciar() {
@@ -39,8 +39,8 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 
 	public void autenticar() throws DadosInvalidosException {
 		try {
-			funcionarioLogado = funcionarioNeg.autenticar(funcionario.getPessoa().getEmail(), funcionario.getPessoa().getSenha());
-			if (funcionarioLogado == null) {
+			funcionarioLog = funcionarioNeg.autenticar(funcionario.getPessoa().getLogin(), funcionario.getPessoa().getSenha());
+			if (funcionarioLog==null) {
 				Messages.addGlobalError("Usuário e/ou senha inválido!");
 				return;
 			} else {
@@ -56,7 +56,7 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 	@Override
 	protected String novo() {
 		funcionario = new Funcionario();
-		funcionarioLogado = new Funcionario();
+		funcionarioLog = new Funcionario();
 		return "sucesso";
 	}
 
@@ -68,12 +68,12 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 		this.funcionario = funcionario;
 	}
 
-	public Funcionario getFuncionarioLogado() {
-		return funcionarioLogado;
+	public Funcionario getFuncionarioLog() {
+		return funcionarioLog;
 	}
 
-	public void setFuncionarioLogado(Funcionario funcionarioLogado) {
-		this.funcionarioLogado = funcionarioLogado;
+	public void setFuncionarioLog(Funcionario funcionarioLog) {
+		this.funcionarioLog = funcionarioLog;
 	}
 
 }

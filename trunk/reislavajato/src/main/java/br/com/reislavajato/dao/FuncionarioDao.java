@@ -12,4 +12,6 @@ public interface FuncionarioDao extends Persistencia<Funcionario> {
 	List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException;
 
 	Funcionario consultarPorEmail(String email) throws DadosInvalidosException;
+	
+	Funcionario autenticar(String email, String senha) throws DadosInvalidosException;
 }
