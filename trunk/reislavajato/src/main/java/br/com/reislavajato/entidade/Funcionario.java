@@ -1,9 +1,7 @@
 package br.com.reislavajato.entidade;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,8 +44,8 @@ public class Funcionario {
 
 	@Column(name = "num_carteira_trabalho")
 	private String carteiraTrabalho;
-	
-	@Column(name ="titulo_eleitor")
+
+	@Column(name = "titulo_eleitor")
 	private String tituloEleitor;
 
 	private String zona;
@@ -57,11 +55,11 @@ public class Funcionario {
 	private String cnh;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name ="dt_entrada")
+	@Column(name = "dt_entrada")
 	private Date dataEntradaExercicio;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name ="dt_saida")
+	@Column(name = "dt_saida")
 	private Date dataSaida;
 
 	private EnumSimNao ativo = EnumSimNao.SIM;
@@ -73,15 +71,15 @@ public class Funcionario {
 	private BigDecimal salario;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name ="cat_cnh")
+	@Column(name = "cat_cnh")
 	private EnumCategoriaCNH categoriaCNH = EnumCategoriaCNH.A;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name ="tipo_sanguineo")
+	@Column(name = "tipo_sanguineo")
 	private EnumTipoSanguineo tipoSanguineo = EnumTipoSanguineo.O;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name ="fator_rh")
+	@Column(name = "fator_rh")
 	private EnumFatorRH fatorRH = EnumFatorRH.POSITIVO;
 
 	// getters and setters

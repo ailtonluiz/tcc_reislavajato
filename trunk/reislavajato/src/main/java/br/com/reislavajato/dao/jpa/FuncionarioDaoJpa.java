@@ -7,13 +7,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.omnifaces.util.Messages;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import br.com.reislavajato.dao.FuncionarioDao;
 import br.com.reislavajato.entidade.Funcionario;
-import br.com.reislavajato.entidade.Pessoa;
 import br.com.reislavajato.excessao.DadosInvalidosException;
 
 @Repository
@@ -54,9 +52,7 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia)
-			throws DadosInvalidosException {
+	public List<Funcionario> listarPorCnpjOuNomeFantasia(String cnpj, String nomeFantasia) throws DadosInvalidosException {
 		try {
 			String jpaql = "funcionario from Funcionario funcionario where ";
 
@@ -83,12 +79,11 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 
 	public Funcionario consultarPorEmail(String email) throws DadosInvalidosException {
 		try {
-			Query query = em.createQuery(
-					"select funcionario from Funcionario funcionario where funcionario.pessoa.email = :email");
+			Query query = em.createQuery("select funcionario from Funcionario funcionario where funcionario.pessoa.email = :email");
 			query.setParameter("email", email);
 			return (Funcionario) query.getSingleResult();
 		} catch (NoResultException e) {
-			throw new DadosInvalidosException(e.getMessage());
+			return null;
 		} catch (Exception e) {
 			throw new DadosInvalidosException(e.getMessage());
 		}
@@ -96,34 +91,14 @@ public class FuncionarioDaoJpa extends PersistenciaJpa<Funcionario> implements F
 
 	public Funcionario autenticar(String login, String senha) throws DadosInvalidosException {
 		try {
-			Query query = em.createQuery(
-					"select distinct f from Funcionario f where f.pessoa.login = :login and f.pessoa.senha = :senha");
+			Query query = em.createQuery("select f from Funcionario f where f.pessoa.login = :login and f.pessoa.senha = :senha");
 			query.setParameter("login", login);
 			query.setParameter("senha", senha);
-			//Funcionario funcionarioLogado=(Funcionario) query.getParameter(login);
-			
-			
-			
-			
-			
-			Funcionario funcionarioLogado=(Funcionario) query.getSingleResult();
-			
-			if (funcionarioLogado.getPessoa().getLogin().equals(login)) {
-				System.out.println("funcionario encontrado");
-				return funcionarioLogado;
-			} else {
-				System.out.println("funcionario nao encontrado");
-				Pessoa pessoa = new Pessoa();
-				pessoa.setLogin(login);
-				funcionarioLogado.setPessoa(pessoa);
-				return funcionarioLogado;
-			}
-
+			return (Funcionario) query.getSingleResult();
 		} catch (NoResultException e) {
-			throw new DadosInvalidosException(e.getMessage());
+			return null;
 		} catch (Exception e) {
-			throw new DadosInvalidosException(e);
+			throw new DadosInvalidosException(e.getMessage());
 		}
 	}
-
 }

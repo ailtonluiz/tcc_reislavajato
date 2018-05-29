@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
 
 import org.omnifaces.util.Faces;
-import org.omnifaces.util.Messages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -21,42 +19,36 @@ import br.com.reislavajato.neg.FuncionarioNeg;
  * @Criado por: ailtonluiz
  * @Data: 1 de out de 2017
  */
-@SuppressWarnings({ "serial" })
-@Controller
-@SessionScoped
+@Controller("AutenticacaoControle")
 public class AutenticacaoControle extends ReisLavajatoControle implements Serializable {
+	private static final long serialVersionUID = 8627898853242895070L;
+
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private FuncionarioNeg funcionarioNeg = context.getBean(FuncionarioNeg.class);
-
 	private Funcionario funcionario;
-	private Funcionario funcionarioLog;
-
-	@PostConstruct
-	public void iniciar() {
-		funcionario = new Funcionario();
-	}
+	private String loginConsulta;
+	private String senhaConsulta;
 
 	public void autenticar() throws DadosInvalidosException {
 		try {
-			funcionarioLog = funcionarioNeg.autenticar(funcionario.getPessoa().getLogin(), funcionario.getPessoa().getSenha());
-			if (funcionarioLog==null) {
-				Messages.addGlobalError("Usuário e/ou senha inválido!");
-				return;
+			funcionario = context.getBean(FuncionarioNeg.class).autenticar(loginConsulta, senhaConsulta);
+			if (funcionario == null) {
+				addMensagemAviso("Usuário e/ou senha inválido!");
 			} else {
 				Faces.redirect("./pages/principal.xhtml");
-				Messages.addGlobalInfo("Seja bem vindo!");
+				addMensagemInfo("Seja bem vindo!");
 			}
-		} catch (IOException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError(erro.getMessage());
+		} catch (IOException e) {
+			addMensagemErroFatal(e);
 		}
 	}
 
 	@Override
+	@PostConstruct
 	protected String novo() {
 		funcionario = new Funcionario();
-		funcionarioLog = new Funcionario();
+		loginConsulta = "";
+		senhaConsulta = "";
 		return "sucesso";
 	}
 
@@ -68,12 +60,20 @@ public class AutenticacaoControle extends ReisLavajatoControle implements Serial
 		this.funcionario = funcionario;
 	}
 
-	public Funcionario getFuncionarioLog() {
-		return funcionarioLog;
+	public String getLoginConsulta() {
+		return loginConsulta;
 	}
 
-	public void setFuncionarioLog(Funcionario funcionarioLog) {
-		this.funcionarioLog = funcionarioLog;
+	public void setLoginConsulta(String loginConsulta) {
+		this.loginConsulta = loginConsulta;
+	}
+
+	public String getSenhaConsulta() {
+		return senhaConsulta;
+	}
+
+	public void setSenhaConsulta(String senhaConsulta) {
+		this.senhaConsulta = senhaConsulta;
 	}
 
 }
