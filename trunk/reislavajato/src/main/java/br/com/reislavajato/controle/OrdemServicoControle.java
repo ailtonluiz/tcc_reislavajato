@@ -60,6 +60,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 	private String nomeFantasiaConsulta;
 	private Long numeroOSConsulta;
 	private EnumStatusServico statusServicoConsulta;
+	private BigDecimal valorTotal;
 
 	private Servico servicoSelecionado;
 	private List<Servico> servicosSelecionados;
@@ -82,17 +83,16 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		numeroOSConsulta = 0L;
 		statusServicoConsulta = EnumStatusServico.EXECUCAO;
 
+		valorTotal = new BigDecimal(0);
 		return "sucess";
 	}
 
 	public void listarOrdensServico() throws DadosInvalidosException {
 		try {
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
-				ordensServicos = context.getBean(OrdemServicoNeg.class)
-						.listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorCpfOuNome(Numero.removerFormatoCPF(cpfConsulta), nomeConsulta);
 			} else if (!ReisLavajatoUtil.ehVazio(cnpjConsulta) || !ReisLavajatoUtil.ehVazio(nomeFantasiaConsulta)) {
-				ordensServicos = context.getBean(OrdemServicoNeg.class)
-						.listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
+				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorCnpjOuNomeFantasia(Numero.removerFormatoCNPJ(cnpjConsulta), nomeFantasiaConsulta);
 			} else {
 				ordensServicos = context.getBean(OrdemServicoNeg.class).listarPorStatus(statusServicoConsulta);
 			}
@@ -107,11 +107,9 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 				Messages.addGlobalError("Valor não pode ser 0");
 				return;
 			}
-
 			// this.setarServicos(ordemServico, ordemServicoMovimento);
-
+			calcularComissao(ordemServico);
 			context.getBean(OrdemServicoNeg.class).alterar(ordemServico);
-
 			novo();
 			addMensagemInfo(msgIncluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -183,8 +181,9 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		return null;
 	}
 
-	public void calcular() {
-		ordemServico.setValorTotal(new BigDecimal("50.00"));
+	public void calcularComissao(OrdemServico ordemServico) {
+//		ordemServico.get
+//		ordemServico.setValorTotal(new BigDecimal("50.00"));
 
 	}
 
@@ -209,7 +208,17 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		}
 	}
 
+	public BigDecimal getValorTotal() {
+		valorTotal = servicosSelecionados.stream().map(Servico::getValorServico).reduce(BigDecimal.ZERO, BigDecimal::add);
+		ordemServico.setValorTotal(valorTotal);
+		return valorTotal;
+	}
+
 	// getters and setters
+
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
+	}
 
 	public OrdemServico getOrdemServico() {
 		return ordemServico;
