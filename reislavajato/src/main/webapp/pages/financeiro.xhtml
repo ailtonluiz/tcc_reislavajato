@@ -51,9 +51,6 @@
 							var="status" itemValue="#{status}"
 							itemLabel="#{status.descricao}" />
 					</p:selectOneMenu>
-
-
-
 				</h:panelGrid>
 				<br />
 				<p:commandButton icon="ui-icon-search" value="Listar"
@@ -187,20 +184,22 @@
 
 					<h:outputLabel value="Valor: " for="valor" />
 					<p:inputNumber id="valor"
-						value="#{financeiroControle.financeiro.vlrDocto}" size="22" />
+						value="#{financeiroControle.financeiro.vlrDocto}" size="22"
+							disabled="#{financeiroControle.financeiro.tela.abreviado == '02'}" />
 
 					<p:outputLabel for="dataBaixa" value="Data Baixa:" />
 					<p:calendar id="dataBaixa" size="10"
 						value="#{financeiroControle.financeiro.dtBaixa}"
 						pattern="dd/MM/yyyy" maxlength="10" mask="99/99/9999" locale="pt"
-						disabled="true" />
+						disabled="false" />
 
 				</h:panelGrid>
 				<h:panelGrid id="painel3" columns="2">
 					<p:outputLabel for="obs" value="Observação:" />
 					<p:inputTextarea
 						value="#{financeiroControle.financeiro.observacao}" id="obs"
-						maxlength="200" style="width: 232pt !important;" />
+						maxlength="200" style="width: 232pt !important;"
+							disabled="#{financeiroControle.financeiro.tela.abreviado == '02'}" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar" icon="ui-icon-check"

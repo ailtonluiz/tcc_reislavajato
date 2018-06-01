@@ -28,7 +28,7 @@ import br.com.reislavajato.enumeradores.EnumTipoSanguineo;
  *
  */
 @Entity
-@Table(name = "Funcionario")
+@Table(name = "funcionario")
 public class Funcionario {
 
 	@Id

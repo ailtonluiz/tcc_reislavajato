@@ -53,7 +53,7 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 	// método DEVE ser chamado antes que a classe seja colocada em serviço.
 
 	@Override
-	@PostConstruct 
+	@PostConstruct
 	public String novo() {
 		funcionario = new Funcionario();
 		funcionario.setPessoa(new Pessoa());
@@ -69,9 +69,11 @@ public class FuncionarioControle extends ReisLavajatoControle implements Seriali
 		return "sucesso";
 	}
 
+	@PostConstruct
 	public void listarFuncionarios() throws DadosInvalidosException {
 		try {
 			funcionarios = context.getBean(FuncionarioNeg.class).listarPorCpfOuNome(cpfConsulta, nomeConsulta);
+			funcionarios = context.getBean(FuncionarioNeg.class).listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}

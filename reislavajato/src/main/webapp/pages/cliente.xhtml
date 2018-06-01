@@ -43,7 +43,7 @@
 					paginator="true" value="#{ClienteControle.clientes}"
 					paginatorPosition="top" var="cliente" rows="5">
 					<f:facet name="footer">
-						<p:commandButton value="Cadastrar Cliente" icon="ui-icon-plus"
+						<p:commandButton value="Cadastrar Cliente" icon="ui-icon-plus" styleClass="btn-primary"
 							oncomplete="PF('dialogo').show();"
 							actionListener="#{ClienteControle.novo}"
 							update=":frmCadastro:painel">
