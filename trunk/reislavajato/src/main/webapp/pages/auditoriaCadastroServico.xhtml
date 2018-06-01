@@ -10,12 +10,12 @@
 	<ui:define name="conteudo">
 		<!-- Tela de listagem -->
 		<h:form id="frmListagem">
-			<p:panel header="Painel de Auditoria" style="text-align: center">
+			<p:panel menuTitle="Painel de Auditirua de cadastro de serviços"  header="Painel de Auditoria" style="text-align: center">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
 					paginator="true" value="#{servicoControle.servicoAuditorias}"
 					paginatorPosition="top" var="servico" rows="8">
 					
-					<p:column headerText="Código" sortBy="#{servico.servicoId}"
+					<p:column  headerText="Código" sortBy="#{servico.servicoId}"
 						style="width:10px">
 						<p:outputLabel value="#{servico.servicoId}" />
 					</p:column>
@@ -71,6 +71,8 @@
 				
 
 			</p:panel>
+			
+			
 		</h:form>
 		<!-- Tela de Cadastros -->
 
