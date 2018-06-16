@@ -13,7 +13,8 @@ public enum EnumMarca implements Enumerador {
 	RENAULT("", "Renault"), 
 	TOYOTA("", "Toyota"), 
 	VOLARE("", "Volare"),
-	VOLKSWAGEM("", "VW");
+	VOLKSWAGEM("", "VW"),
+	BMW("","BMW") ;
 
 	private final String abreviado;
 	private final String descricao;

@@ -70,6 +70,12 @@ public class Funcionario {
 	@Column(precision = 10, scale = 2)
 	private BigDecimal salario;
 
+	@Column(precision = 10, scale = 2)
+	private BigDecimal comissao;
+	
+	@Column(name = "vlr_final_salario",precision = 10, scale = 2)
+	private BigDecimal vlrTotal;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "cat_cnh")
 	private EnumCategoriaCNH categoriaCNH = EnumCategoriaCNH.A;
@@ -185,6 +191,23 @@ public class Funcionario {
 
 	public void setSalario(BigDecimal salario) {
 		this.salario = salario;
+	}
+
+	public BigDecimal getComissao() {
+		return comissao;
+	}
+
+	public void setComissao(BigDecimal comissao) {
+		this.comissao = comissao;
+	}
+	
+
+	public BigDecimal getVlrTotal() {
+		return vlrTotal;
+	}
+
+	public void setVlrTotal(BigDecimal vlrTotal) {
+		this.vlrTotal = vlrTotal;
 	}
 
 	public EnumCategoriaCNH getCategoriaCNH() {

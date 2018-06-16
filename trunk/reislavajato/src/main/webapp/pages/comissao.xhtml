@@ -30,7 +30,7 @@
 				</h:panelGrid>
 				<br />
 				<p:commandButton icon="ui-icon-search" value="Listar" 
-					action="#{financeiroControle.listar}" update="tabela"
+					action="#{funcionarioControle.listarFuncionarios}" update="tabela"
 					title="Listar comissão" style="text-align: left" />
 
 				<br />
@@ -50,8 +50,20 @@
 					</p:column>
 
 					
-					<p:column headerText="Valor (R$)" style="width:10%; text-align: left">
+					<p:column headerText="Salário" style="width:10%; text-align: left">
 						<p:outputLabel value="#{funcionario.salario}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</p:outputLabel>
+					</p:column>
+					
+					<p:column headerText="Comissão" style="width:10%; text-align: left">
+						<p:outputLabel value="#{funcionario.comissao}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</p:outputLabel>
+					</p:column>
+					
+					<p:column headerText="Salário + Comissão" style="width:10%; text-align: left">
+						<p:outputLabel value="#{funcionario.vlrTotal}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</p:outputLabel>
 					</p:column>
