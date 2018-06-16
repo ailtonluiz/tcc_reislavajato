@@ -120,15 +120,14 @@
 				<p:submenu label="Relatórios" icon="ui-icon-document">
 					<p:submenu label="Cadastros" icon="ui-icon-circle-plus">
 
-						<p:menuitem value="Clientes" icon="ui-icon-person"
+						<p:menuitem value="Clientes" icon="ui-icon-person" disabled="true"
 							action="/pages/relCliente.xhtml?faces-redirect=true" />
 
-						<p:menuitem value="Funcionários" icon="ui-icon-contact"
+						<p:menuitem value="Funcionários" icon="ui-icon-contact" disabled="true"
 							action="/pages/relFuncionario.xhtml?faces-redirect=true" />
 
 
-
-						<p:menuitem value="Serviços" icon="ui-icon-flag" />
+						<p:menuitem value="Serviços" icon="ui-icon-flag" disabled="true" />
 					</p:submenu>
 					<p:submenu label="Movimentações" icon="ui-icon-transferthick-e-w">
 						<p:menuitem value="Lavagens" icon="ui-icon-star"
@@ -136,7 +135,7 @@
 
 						<p:menuitem value="Comissões" icon="ui-icon-grip-diagonal-se"
 							action="/pages/comissao.xhtml?faces-redirect=true" />
-						<p:menuitem value="Financeiro" disabled="true" />
+						<p:menuitem value="Financeiro" icon="ui-icon-calculator" disabled="true" />
 					</p:submenu>
 
 				</p:submenu>
@@ -158,8 +157,10 @@
 				</p:submenu>
 
 				<p:submenu label="Ajuda" icon="ui-icon-help">
+					<p:menuitem icon="ui-icon-help" value="Help On-line" disabled="true"
+						action="/pages/login.xhtml?faces-redirect=true" />
 					<p:menuitem icon="ui-icon-close" value="Sair"
-						action="/pages/autenticacao.xhtml?faces-redirect=true" />
+						action="/pages/login.xhtml?faces-redirect=true" />
 				</p:submenu>
 			</p:menubar>
 		</h:form>

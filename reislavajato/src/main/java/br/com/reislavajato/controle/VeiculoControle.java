@@ -21,36 +21,45 @@ import br.com.reislavajato.neg.VeiculoNeg;
  * @Data: 13 de ago de 2017
  */
 @SuppressWarnings({ "serial" })
-@Controller("veiculoControle")
+@Controller
 @ViewScoped
 public class VeiculoControle extends ReisLavajatoControle implements Serializable {
 	private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-	private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
+	//private VeiculoNeg veiculoNeg = context.getBean(VeiculoNeg.class);
 
 	private Veiculo veiculo;
 	private List<Veiculo> veiculos;
+	
+	public VeiculoControle() throws DadosInvalidosException {
+		this.novo();
+	}
+	
 
 	@PostConstruct
+	public String novo() {
+		veiculo = new Veiculo();
+		veiculos = new ArrayList<Veiculo>();
+		try {
+			this.listar();
+		} catch (DadosInvalidosException e) {
+			addMensagemErroFatal(e);
+		}
+		return "sucesso";
+	}
+
+
 	public void listar() throws DadosInvalidosException {
 		try {
-			veiculos = veiculoNeg.listar();
+			veiculos = context.getBean(VeiculoNeg.class).listar();
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);
 		}
 	}
 
-	@Override
-	@PostConstruct
-	public String novo() {
-		veiculo = new Veiculo();
-		veiculos = new ArrayList<Veiculo>();
-		return "sucesso";
-	}
-
 	public void salvar() throws DadosInvalidosException {
 		try {
-			veiculoNeg.alterar(veiculo);
+			context.getBean(VeiculoNeg.class).alterar(veiculo);
 			novo();
 			listar();
 			addMensagemInfo(msgSucesso);
@@ -62,7 +71,7 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 	public void excluir(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			veiculo = (Veiculo) evento.getComponent().getAttributes().get("registroSelecionado");
-			veiculoNeg.excluir(veiculo);
+			context.getBean(VeiculoNeg.class).excluir(veiculo);
 			listar();
 			addMensagemInfo(msgExcluidoSucesso);
 		} catch (RuntimeException erro) {
@@ -73,7 +82,7 @@ public class VeiculoControle extends ReisLavajatoControle implements Serializabl
 	public void editar(ActionEvent evento) throws DadosInvalidosException {
 		try {
 			veiculo = (Veiculo) evento.getComponent().getAttributes().get("registroSelecionado");
-			veiculoNeg.alterar(veiculo);
+			context.getBean(VeiculoNeg.class).alterar(veiculo);
 			addMensagemInfo(msgAlteradoSucesso);
 		} catch (RuntimeException erro) {
 			addMensagemErroFatal(erro);

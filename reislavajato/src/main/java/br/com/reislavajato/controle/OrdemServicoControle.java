@@ -86,7 +86,7 @@ public class OrdemServicoControle extends ReisLavajatoControle implements Serial
 		valorTotal = new BigDecimal(0);
 		return "sucess";
 	}
-
+	@PostConstruct
 	public void listarOrdensServico() throws DadosInvalidosException {
 		try {
 			if (!ReisLavajatoUtil.ehVazio(cpfConsulta) || !ReisLavajatoUtil.ehVazio(nomeConsulta)) {
