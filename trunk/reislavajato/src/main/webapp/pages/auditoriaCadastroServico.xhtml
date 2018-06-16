@@ -47,7 +47,7 @@
 					<p:column headerText="Dt. Operação" style="width:8%"
 						sortBy="#{servico.dtOperacao}" filterMatchMode="contains">
 						<h:outputText value="#{servico.dtOperacao}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
