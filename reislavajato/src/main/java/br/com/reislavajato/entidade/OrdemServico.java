@@ -40,8 +40,6 @@ public class OrdemServico {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Veiculo veiculo = new Veiculo();
 
-	
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_servico")
 	private EnumStatusServico statusServico = EnumStatusServico.EXECUCAO;

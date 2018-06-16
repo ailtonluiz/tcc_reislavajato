@@ -30,7 +30,7 @@ public class FinanceiroDaoJpa extends PersistenciaJpa<Financeiro> implements Fin
 
 	@Override
 	public List<Financeiro> listarPorStatus(EnumStatusFinanceiro statusFinanceiro) throws DadosInvalidosException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 }
